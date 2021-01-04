@@ -1,0 +1,77 @@
+#N canvas 367 23 627 709 12;
+#X obj 1 1 cnv 15 615 60 empty empty xy_splitter~ 3 12 0 20 -191797
+-1 0;
+#X obj 1 435 cnv 15 615 3 empty empty inlets 8 12 0 13 -216373 -1 0
+;
+#X obj 88 443 cnv 15 3 17 empty empty 0 5 9 0 16 -216373 -141475 0
+;
+#X obj 1 608 cnv 15 615 3 empty empty outlets 8 12 0 13 -216373 -1
+0;
+#X obj 88 617 cnv 15 3 17 empty empty 0 5 9 0 16 -216373 -141475 0
+;
+#X text 106 442 signal;
+#X obj 88 463 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
+;
+#X text 106 461 signal;
+#X obj 88 483 cnv 15 3 17 empty empty 2 5 9 0 16 -216373 -141475 0
+;
+#X text 106 615 signal;
+#X obj 88 647 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
+;
+#X text 106 646 signal;
+#X obj 1 675 cnv 15 615 3 empty empty arguments 8 12 0 13 -216373 -1
+0;
+#X text 197 614 - x out;
+#X text 197 646 - y out;
+#X text 15 23 splits an 2D signal vector with square waves;
+#X obj 187 289 xy_splitter~;
+#X obj 40 119 phasor~ 100;
+#X obj 40 143 osci/circle~ 0 0 1;
+#X obj 40 377 osci/out~;
+#X text 192 442 - x frequency;
+#X text 192 461 - y frequency;
+#X text 105 482 float;
+#X text 193 482 - x pulse width;
+#X obj 88 503 cnv 15 3 17 empty empty 3 5 9 0 16 -216373 -141475 0
+;
+#X obj 88 523 cnv 15 3 17 empty empty 4 5 9 0 16 -216373 -141475 0
+;
+#X text 193 502 - x min;
+#X text 193 522 - x max;
+#X obj 88 543 cnv 15 3 17 empty empty 5 5 9 0 16 -216373 -141475 0
+;
+#X text 105 542 float;
+#X obj 88 563 cnv 15 3 17 empty empty 6 5 9 0 16 -216373 -141475 0
+;
+#X obj 88 583 cnv 15 3 17 empty empty 7 5 9 0 16 -216373 -141475 0
+;
+#X text 105 502 signal;
+#X text 105 522 signal;
+#X text 105 562 signal;
+#X text 105 582 signal;
+#X text 193 542 - y pulse width;
+#X text 193 562 - y min;
+#X text 193 582 - y max;
+#X obj 187 165 sig~ 25.1;
+#X obj 197 195 sig~ 20;
+#X text 182 97 [xy_splitter~] splits and image by summing it with a
+square wave. The frequencies can either be linked or seperate. The
+Reset button returns the square waves to their intial state.;
+#X floatatom 271 192 5 0 0 0 - - -;
+#X obj 271 238 *~ -1;
+#X obj 271 215 sig~ 2;
+#X text 318 191 <= a set up like this controls;
+#X text 338 209 the spread of the splits;
+#X connect 16 0 19 0;
+#X connect 16 1 19 1;
+#X connect 17 0 18 0;
+#X connect 18 0 19 0;
+#X connect 18 1 19 1;
+#X connect 39 0 16 0;
+#X connect 40 0 16 1;
+#X connect 42 0 44 0;
+#X connect 43 0 16 3;
+#X connect 43 0 16 6;
+#X connect 44 0 43 0;
+#X connect 44 0 16 4;
+#X connect 44 0 16 7;

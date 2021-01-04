@@ -1,0 +1,95 @@
+#N canvas -877 43 570 687 12;
+#X floatatom 54 108 5 0 0 0 - - -;
+#X floatatom 83 154 5 0 0 0 - - -;
+#X floatatom 113 199 5 0 0 0 - - -;
+#X obj 88 362 cnv 15 3 20 empty empty 0 5 9 0 16 -216373 -141475 0
+;
+#X obj 88 526 cnv 15 3 17 empty empty 0 5 9 0 16 -216373 -141475 0
+;
+#X text 106 360 signal;
+#X obj 88 400 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
+;
+#X text 106 398 signal;
+#X obj 88 430 cnv 15 3 17 empty empty 2 5 9 0 16 -216373 -141475 0
+;
+#X text 106 428 signal;
+#X obj 88 457 cnv 15 3 17 empty empty 3 5 9 0 16 -216373 -141475 0
+;
+#X text 106 455 signal;
+#X text 106 524 signal;
+#X obj 88 556 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
+;
+#X text 106 554 signal;
+#X text 177 398 - sets the x position of the circle;
+#X text 177 428 - sets the y position of the circle;
+#X text 85 594 1) float;
+#X text 85 614 2) float;
+#X text 85 634 3) float;
+#X obj 88 487 cnv 15 3 17 empty empty 4 5 9 0 16 -216373 -141475 0
+;
+#X text 106 485 signal;
+#X text 177 455 - sets the width of the ellipse;
+#X text 177 485 - sets the height of the ellipse;
+#X text 177 594 - a (width);
+#X text 177 614 - b (height);
+#X text 177 634 - n;
+#X obj 25 245 osci/selipse~;
+#X obj 25 279 osci/out~;
+#X obj 54 131 sig~ 1;
+#X obj 83 177 sig~ 1;
+#X obj 25 80 phasor~ 200;
+#X obj 113 222 sig~ 0.5;
+#X text 96 107 2nd inlet controls width;
+#X text 120 155 3rd inlet controls height;
+#X text 152 201 4th inlet controls n (squashes or expands corners)
+;
+#X text 178 360 - controls the position of the dot on the super ellipse
+\, ramping from 0 to 1 results in a complete shape., f 49;
+#X obj 1 1 cnv 15 305 46 empty empty empty 20 12 0 14 -66577 -66577
+0;
+#X obj 4 3 cnv 15 301 42 empty empty selpise~ 20 20 2 37 -204786 -1
+0;
+#X obj 307 1 cnv 15 256 46 empty empty empty 20 12 0 14 -66577 -66577
+0;
+#X obj 310 4 cnv 15 250 40 empty empty empty 12 13 0 18 -128992 -233080
+0;
+#X obj 317 11 cnv 10 10 10 empty empty OSCI 0 15 2 30 -128992 -204786
+0;
+#X obj 10 34 cnv 5 10 10 empty \$0-description Draw\ a\ super\ ellipse
+30 30 2 17 -204786 -1 0;
+#X obj 1 344 cnv 1 552 1 empty empty inlets 8 12 0 13 -216373 -1 0
+;
+#X obj 1 517 cnv 1 552 1 empty empty outlets 8 12 0 13 -216373 -1 0
+;
+#X obj 2 584 cnv 1 552 1 empty empty arguments 8 12 0 13 -216373 -1
+0;
+#X obj 2 657 cnv 15 552 24 empty empty empty 20 12 0 14 -233017 -33289
+0;
+#X text 177 523 - x;
+#X text 177 553 - y;
+#X obj 413 25 cnv 10 10 10 empty empty Oscilloscope 0 6 2 13 -128992
+-204786 0;
+#X obj 480 25 cnv 10 10 10 empty empty Music 0 6 2 13 -128992 -204786
+0;
+#X obj 513 25 cnv 10 10 10 empty empty & 0 6 2 13 -128992 -204786 0
+;
+#X obj 454 11 cnv 10 10 10 empty empty Library 0 6 2 13 -128992 -204786
+0;
+#X obj 526 25 cnv 10 10 10 empty empty Art 0 6 2 13 -128992 -204786
+0;
+#X obj 497 11 cnv 10 10 10 empty empty for 0 6 2 13 -128992 -204786
+0;
+#N canvas 317 299 205 129 related_objects 0;
+#X obj 1 1 cnv 15 200 23 empty empty empty 3 12 0 20 -204786 -1 0;
+#X text 4 4 [selipse~] related objects;
+#X obj 17 50 supershape~;
+#X restore 15 660 pd related_objects;
+#X connect 0 0 29 0;
+#X connect 1 0 30 0;
+#X connect 2 0 32 0;
+#X connect 27 0 28 0;
+#X connect 27 1 28 1;
+#X connect 29 0 27 1;
+#X connect 30 0 27 2;
+#X connect 31 0 27 0;
+#X connect 32 0 27 3;

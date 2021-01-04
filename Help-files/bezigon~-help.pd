@@ -1,0 +1,70 @@
+#N canvas 202 47 582 543 12;
+#X obj 89 302 cnv 15 3 17 empty empty 0 5 9 0 16 -228856 -191407 0
+;
+#X obj 89 376 cnv 15 3 17 empty empty 0 5 9 0 16 -228856 -191407 0
+;
+#X obj 89 330 cnv 15 3 17 empty empty 1 5 9 0 16 -228856 -191407 0
+;
+#X text 107 375 signal;
+#X obj 7 101 phasor~ 50;
+#X obj 89 404 cnv 15 3 17 empty empty 1 5 9 0 16 -228856 -191407 0
+;
+#X text 107 403 signal;
+#X text 89 442 1) float;
+#X text 89 462 2) float;
+#X text 107 329 toggle;
+#X text 213 329 - close shape;
+#X text 202 442 number of points;
+#X text 202 462 toggle for close shape;
+#X obj 7 205 osci/bezigon~ 3 1;
+#X text 107 301 signal/list;
+#X text 213 301 - driver \, list (index \, x \, y);
+#X msg 98 115 0 -0.5 -0.5;
+#X obj 98 88 loadbang;
+#X msg 108 137 1 0.5 -0.5;
+#X msg 118 159 2 0.1 0.4;
+#X obj 123 181 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 1 1 cnv 15 305 46 empty empty empty 20 12 0 14 -66577 -66577
+0;
+#X obj 4 3 cnv 15 301 42 empty empty bezigon~ 20 20 2 37 -204786 -1
+0;
+#X obj 307 1 cnv 15 256 46 empty empty empty 20 12 0 14 -66577 -66577
+0;
+#X obj 310 4 cnv 15 250 40 empty empty empty 12 13 0 18 -128992 -233080
+0;
+#X obj 317 11 cnv 10 10 10 empty empty OSCI 0 15 2 30 -128992 -204786
+0;
+#X obj 413 25 cnv 10 10 10 empty empty Oscilloscope 0 6 2 13 -128992
+-204786 0;
+#X obj 480 25 cnv 10 10 10 empty empty Music 0 6 2 13 -128992 -204786
+0;
+#X obj 513 25 cnv 10 10 10 empty empty & 0 6 2 13 -128992 -204786 0
+;
+#X obj 454 11 cnv 10 10 10 empty empty Library 0 6 2 13 -128992 -204786
+0;
+#X obj 526 25 cnv 10 10 10 empty empty Art 0 6 2 13 -128992 -204786
+0;
+#X obj 497 11 cnv 10 10 10 empty empty for 0 6 2 13 -128992 -204786
+0;
+#X obj 10 34 cnv 5 10 10 empty \$0-description N-sided\ polygon\ w/\ cubic\ interpolation
+30 30 2 17 -204786 -1 0;
+#X obj 2 294 cnv 1 550 1 empty empty inlets 8 12 0 13 -228856 -1 0
+;
+#X obj 2 367 cnv 1 550 1 empty empty outlets 8 12 0 13 -228856 -1 0
+;
+#X obj 2 436 cnv 1 550 1 empty empty arguments 8 12 0 13 -228856 -1
+0;
+#X obj 2 497 cnv 15 552 21 empty empty empty 20 12 0 14 -233017 -33289
+0;
+#X text 193 377 - x;
+#X text 193 405 - y;
+#X obj 7 229 osci/out~;
+#X connect 4 0 13 0;
+#X connect 13 0 39 0;
+#X connect 13 1 39 1;
+#X connect 16 0 13 0;
+#X connect 17 0 16 0;
+#X connect 18 0 13 0;
+#X connect 19 0 13 0;
+#X connect 20 0 13 1;

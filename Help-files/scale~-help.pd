@@ -1,0 +1,103 @@
+#N canvas 544 104 584 661 12;
+#X obj 88 303 cnv 15 3 17 empty empty 0 5 9 0 16 -216373 -141475 0
+;
+#X obj 88 457 cnv 15 3 17 empty empty 0 5 9 0 16 -216373 -141475 0
+;
+#X text 106 302 signal;
+#X obj 88 326 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
+;
+#X text 106 325 signal;
+#X obj 88 372 cnv 15 3 17 empty empty 3 5 9 0 16 -216373 -141475 0
+;
+#X text 106 371 signal;
+#X obj 89 395 cnv 15 3 17 empty empty 4 5 9 0 16 -216373 -141475 0
+;
+#X text 106 394 signal;
+#X text 106 455 signal;
+#X obj 88 477 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
+;
+#X text 106 475 signal;
+#X text 85 545 1) float;
+#X obj 47 92 phasor~ 440;
+#X floatatom 162 151 5 0 0 0 - - -;
+#X obj 162 174 sig~;
+#X text 85 565 2) float;
+#X text 197 371 - x scalar;
+#X text 197 394 - y scalar;
+#X text 197 545 - x scalar;
+#X text 197 565 - y scalar;
+#X obj 47 205 osci/scale~, f 28;
+#X text 198 302 - x signal;
+#X text 198 325 - y signal;
+#X obj 88 349 cnv 15 3 17 empty empty 2 5 9 0 16 -216373 -141475 0
+;
+#X text 106 348 signal;
+#X obj 89 418 cnv 15 3 17 empty empty 5 5 9 0 16 -216373 -141475 0
+;
+#X text 106 417 signal;
+#X text 197 417 - z scalar;
+#X text 198 348 - z signal;
+#X text 197 453 - x out;
+#X obj 88 497 cnv 15 3 17 empty empty 2 5 9 0 16 -216373 -141475 0
+;
+#X text 106 495 signal;
+#X text 197 494 - z out;
+#X text 197 474 - y out;
+#X text 197 585 - z scalar;
+#X text 85 585 3) float;
+#X floatatom 201 151 5 0 0 0 - - -;
+#X obj 201 174 sig~;
+#X floatatom 240 151 5 0 0 0 - - -;
+#X obj 240 174 sig~;
+#X obj 1 2 cnv 15 305 46 empty empty empty 20 12 0 14 -66577 -66577
+0;
+#X obj 4 4 cnv 15 301 42 empty empty scale~ 20 20 2 37 -204786 -1 0
+;
+#X obj 307 2 cnv 15 256 46 empty empty empty 20 12 0 14 -66577 -66577
+0;
+#X obj 310 5 cnv 15 250 40 empty empty empty 12 13 0 18 -128992 -233080
+0;
+#X obj 317 12 cnv 10 10 10 empty empty OSCI 0 15 2 30 -128992 -204786
+0;
+#X obj 413 26 cnv 10 10 10 empty empty Oscilloscope 0 6 2 13 -128992
+-204786 0;
+#X obj 480 26 cnv 10 10 10 empty empty Music 0 6 2 13 -128992 -204786
+0;
+#X obj 513 26 cnv 10 10 10 empty empty & 0 6 2 13 -128992 -204786 0
+;
+#X obj 454 12 cnv 10 10 10 empty empty Library 0 6 2 13 -128992 -204786
+0;
+#X obj 526 26 cnv 10 10 10 empty empty Art 0 6 2 13 -128992 -204786
+0;
+#X obj 497 12 cnv 10 10 10 empty empty for 0 6 2 13 -128992 -204786
+0;
+#X obj 10 35 cnv 5 10 10 empty \$0-description Scale\ a\ 3D\ signal\ vector
+30 30 2 17 -204786 -1 0;
+#X obj 47 121 osci/circle~ 0 0 0.5;
+#X obj 47 230 osci/out~;
+#X obj 3 617 cnv 15 552 24 empty empty empty 20 12 0 14 -233017 -33289
+0;
+#N canvas 107 214 235 200 related_objects 1;
+#X obj 1 1 cnv 15 230 23 empty empty empty 3 12 0 20 -204786 -1 0;
+#X text 10 4 Other Transformations;
+#X obj 17 74 osci/shear~;
+#X obj 17 104 osci/translate~;
+#X obj 17 44 osci/rotate~;
+#X restore 17 620 pd related_objects;
+#X obj 1 295 cnv 1 550 1 empty empty inlets 8 12 0 13 -216373 -1 0
+;
+#X obj 1 448 cnv 1 550 1 empty empty outlets 8 12 0 13 -216373 -1 0
+;
+#X obj 1 535 cnv 1 550 1 empty empty arguments 8 12 0 13 -216373 -1
+0;
+#X connect 13 0 53 0;
+#X connect 14 0 15 0;
+#X connect 15 0 21 3;
+#X connect 21 0 54 0;
+#X connect 21 1 54 1;
+#X connect 37 0 38 0;
+#X connect 38 0 21 4;
+#X connect 39 0 40 0;
+#X connect 40 0 21 5;
+#X connect 53 0 21 0;
+#X connect 53 1 21 1;

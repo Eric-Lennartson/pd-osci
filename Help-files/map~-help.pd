@@ -1,0 +1,92 @@
+#N canvas 104 70 570 628 12;
+#X obj 88 302 cnv 15 3 17 empty empty 0 5 9 0 16 -216373 -141475 0
+;
+#X obj 88 465 cnv 15 3 17 empty empty 0 5 9 0 16 -216373 -141475 0
+;
+#X text 106 300 signal;
+#X obj 88 330 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
+;
+#X text 106 328 signal;
+#X obj 88 360 cnv 15 3 17 empty empty 2 5 9 0 16 -216373 -141475 0
+;
+#X text 106 358 signal;
+#X obj 88 387 cnv 15 3 17 empty empty 3 5 9 0 16 -216373 -141475 0
+;
+#X text 106 385 signal;
+#X text 106 463 signal;
+#X obj 88 417 cnv 15 3 17 empty empty 4 5 9 0 16 -216373 -141475 0
+;
+#X text 106 415 signal;
+#X obj 20 97 hsl 128 15 -1 1 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 0 1;
+#X obj 17 139 sig~;
+#X floatatom 27 117 5 0 0 0 - - -;
+#X obj 17 164 osci/map~ -1 1 0 1;
+#X text 230 182 [map~] takes a range of values and maps them onto another
+range of values. It takes 4 arguments min1 \, max1 \, min2 \, max2.
+, f 39;
+#X text 54 139 maps (-1 -> 1) onto (0 -> 1);
+#X text 168 300 - value to be mapped;
+#X text 167 328 - min1;
+#X text 167 358 - max1;
+#X text 167 385 - min2;
+#X text 167 415 - max2;
+#X text 166 462 - mapped value;
+#X text 85 508 1) float;
+#X text 85 528 2) float;
+#X text 85 548 3) float;
+#X text 85 568 4) float;
+#X text 166 508 - min1;
+#X text 166 528 - max1;
+#X text 166 548 - min2;
+#X text 166 568 - max2;
+#X obj 30 190 loadbang;
+#X obj 30 214 metro 100;
+#X obj 17 238 snapshot~;
+#X floatatom 17 262 5 0 0 0 - - -;
+#X obj 2 294 cnv 1 550 1 empty empty inlets 8 12 0 13 -228856 -1 0
+;
+#X obj 2 447 cnv 1 550 1 empty empty outlets 8 12 0 13 -228856 -1 0
+;
+#X obj 2 496 cnv 1 550 1 empty empty arguments 8 12 0 13 -228856 -1
+0;
+#X obj 2 592 cnv 15 552 21 empty empty empty 20 12 0 14 -233017 -33289
+0;
+#N canvas 255 207 228 167 related_objects 0;
+#X obj 1 1 cnv 15 220 18 empty empty empty 20 12 0 14 -204786 -66577
+0;
+#X obj 6 71 skew, f 13;
+#X obj 6 101 skew~, f 13;
+#X obj 5 41 map, f 13;
+#X text 5 1 Other value mapping objects;
+#X restore 5 593 pd related_objects;
+#X obj 1 1 cnv 15 305 46 empty empty empty 20 12 0 14 -66577 -66577
+0;
+#X obj 4 3 cnv 15 301 42 empty empty map~ 20 20 2 37 -204786 -1 0;
+#X obj 307 1 cnv 15 256 46 empty empty empty 20 12 0 14 -66577 -66577
+0;
+#X obj 310 4 cnv 15 250 40 empty empty empty 12 13 0 18 -128992 -233080
+0;
+#X obj 317 11 cnv 10 10 10 empty empty OSCI 0 15 2 30 -128992 -204786
+0;
+#X obj 413 25 cnv 10 10 10 empty empty Oscilloscope 0 6 2 13 -128992
+-204786 0;
+#X obj 480 25 cnv 10 10 10 empty empty Music 0 6 2 13 -128992 -204786
+0;
+#X obj 513 25 cnv 10 10 10 empty empty & 0 6 2 13 -128992 -204786 0
+;
+#X obj 454 11 cnv 10 10 10 empty empty Library 0 6 2 13 -128992 -204786
+0;
+#X obj 526 25 cnv 10 10 10 empty empty Art 0 6 2 13 -128992 -204786
+0;
+#X obj 497 11 cnv 10 10 10 empty empty for 0 6 2 13 -128992 -204786
+0;
+#X obj 10 34 cnv 5 10 10 empty \$0-description Linear\\\ mapping\\\ from\\\ one\\\ range\\\ to\\\ another
+30 30 2 17 -204786 -1 0;
+#X connect 12 0 13 0;
+#X connect 12 0 14 0;
+#X connect 13 0 15 0;
+#X connect 15 0 34 0;
+#X connect 32 0 33 0;
+#X connect 33 0 34 0;
+#X connect 34 0 35 0;

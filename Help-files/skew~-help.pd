@@ -1,0 +1,178 @@
+#N canvas -1330 1 576 730 12;
+#X obj 88 382 cnv 15 3 60 empty empty 0 5 9 0 16 -216373 -141475 0
+;
+#X obj 88 556 cnv 15 3 17 empty empty 0 5 9 0 16 -216373 -141475 0
+;
+#X obj 88 460 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
+;
+#X obj 88 490 cnv 15 3 17 empty empty 2 5 9 0 16 -216373 -141475 0
+;
+#X obj 88 517 cnv 15 3 17 empty empty 3 5 9 0 16 -216373 -141475 0
+;
+#X obj 11 99 hsl 128 15 -1 1 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 0 1;
+#X floatatom 18 119 5 0 0 0 - - -;
+#X text 238 380 - value to be mapped;
+#X text 85 604 1) float;
+#X text 85 624 2) float;
+#X text 85 644 3) float;
+#X text 85 664 4) float;
+#X text 106 380 float;
+#X text 106 458 float;
+#X text 106 488 float;
+#X text 106 515 float;
+#X text 106 555 float;
+#X text 167 458 - start of range;
+#X text 167 488 - end of range;
+#X text 167 515 - skew factor (0-N);
+#X text 166 555 - skewed value;
+#X text 166 604 - start;
+#X text 166 624 - end;
+#X text 166 644 - skew factor;
+#X text 166 664 - symmetric (0 or 1);
+#N canvas 0 23 832 424 example_graphs 1;
+#N canvas 0 22 450 278 (subpatch) 0;
+#X array \$0-symmetric 100 float 4;
+#X coords 0 100 99 0 200 140 1 0 0;
+#X restore 371 190 graph;
+#N canvas 0 22 450 278 (subpatch) 0;
+#X array \$0-not_symmetric 100 float 4;
+#X coords 0 100 99 0 200 140 1 0 0;
+#X restore 574 190 graph;
+#N canvas 187 131 322 252 loop 0;
+#X obj 109 38 inlet;
+#X obj 160 155 + 1;
+#X msg 208 96 0;
+#X obj 109 120 until;
+#X obj 109 70 trigger bang bang;
+#X obj 109 152 float;
+#X obj 109 185 outlet;
+#X msg 109 96 100;
+#X connect 0 0 4 0;
+#X connect 1 0 5 1;
+#X connect 2 0 5 1;
+#X connect 3 0 5 0;
+#X connect 4 0 7 0;
+#X connect 4 1 2 0;
+#X connect 5 0 1 0;
+#X connect 5 0 6 0;
+#X connect 7 0 3 0;
+#X restore 199 195 pd loop;
+#X obj 199 222 trigger float float;
+#X obj 199 168 trigger bang float;
+#N canvas 187 131 322 252 loop 0;
+#X obj 109 38 inlet;
+#X obj 160 155 + 1;
+#X msg 208 96 0;
+#X obj 109 120 until;
+#X obj 109 70 trigger bang bang;
+#X obj 109 152 float;
+#X obj 109 185 outlet;
+#X msg 109 96 100;
+#X connect 0 0 4 0;
+#X connect 1 0 5 1;
+#X connect 2 0 5 1;
+#X connect 3 0 5 0;
+#X connect 4 0 7 0;
+#X connect 4 1 2 0;
+#X connect 5 0 1 0;
+#X connect 5 0 6 0;
+#X connect 7 0 3 0;
+#X restore 18 196 pd loop;
+#X obj 18 223 trigger float float;
+#X obj 18 169 trigger bang float;
+#X floatatom 18 88 5 0 0 0 - - -;
+#X obj 199 256 skew 0 100 0.5 1;
+#X obj 18 312 tabwrite \$0-not_symmetric;
+#X obj 199 312 tabwrite \$0-symmetric;
+#X obj 18 27 loadbang;
+#X msg 18 60 0.5;
+#X obj 18 257 skew 0 100 0.5 0;
+#X connect 2 0 3 0;
+#X connect 3 0 9 0;
+#X connect 3 1 11 1;
+#X connect 4 0 2 0;
+#X connect 4 1 9 3;
+#X connect 5 0 6 0;
+#X connect 6 0 14 0;
+#X connect 6 1 10 1;
+#X connect 7 0 5 0;
+#X connect 7 1 14 3;
+#X connect 8 0 7 0;
+#X connect 8 0 4 0;
+#X connect 9 0 11 0;
+#X connect 12 0 13 0;
+#X connect 13 0 8 0;
+#X connect 14 0 10 0;
+#X restore 189 187 pd example_graphs;
+#X text 104 404 fromCenter <float>;
+#X text 104 424 symmetric <float>;
+#X text 187 260 skew == 1 => no skew;
+#X text 187 240 skew > 1 => expand lower;
+#X text 187 220 skew < 1 => expand upper;
+#X msg 71 146 fromCenter \$1;
+#X floatatom 71 123 5 -1 1 0 - - -;
+#X obj 72 174 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X msg 72 194 symmetric \$1;
+#X obj 1 1 cnv 15 305 46 empty empty empty 20 12 0 14 -66577 -66577
+0;
+#X obj 4 3 cnv 15 301 42 empty empty skew~ 20 20 2 37 -204786 -1 0
+;
+#X obj 307 1 cnv 15 256 46 empty empty empty 20 12 0 14 -66577 -66577
+0;
+#X obj 310 4 cnv 15 250 40 empty empty empty 12 13 0 18 -128992 -233080
+0;
+#X obj 317 11 cnv 10 10 10 empty empty OSCI 0 15 2 30 -128992 -204786
+0;
+#X obj 413 25 cnv 10 10 10 empty empty Oscilloscope 0 6 2 13 -128992
+-204786 0;
+#X obj 480 25 cnv 10 10 10 empty empty Music 0 6 2 13 -128992 -204786
+0;
+#X obj 513 25 cnv 10 10 10 empty empty & 0 6 2 13 -128992 -204786 0
+;
+#X obj 454 11 cnv 10 10 10 empty empty Library 0 6 2 13 -128992 -204786
+0;
+#X obj 526 25 cnv 10 10 10 empty empty Art 0 6 2 13 -128992 -204786
+0;
+#X obj 497 11 cnv 10 10 10 empty empty for 0 6 2 13 -128992 -204786
+0;
+#X obj 10 34 cnv 5 10 10 empty \$0-description Exponential\\\ value\\\ mapping
+30 30 2 17 -204786 -1 0;
+#X text 193 106 [skew] takes a range of values and maps them on to
+a exponential function. This way more fidelity can be had in different
+ranges of the slider \, for example on a filter where more control
+in the low end is necessary, f 51;
+#X obj 2 374 cnv 1 550 1 empty empty inlets 8 12 0 13 -228856 -1 0
+;
+#X obj 2 547 cnv 1 550 1 empty empty outlets 8 12 0 13 -228856 -1 0
+;
+#X obj 2 596 cnv 1 550 1 empty empty arguments 8 12 0 13 -228856 -1
+0;
+#X obj 2 690 cnv 15 552 21 empty empty empty 20 12 0 14 -233017 -33289
+0;
+#N canvas 255 207 228 167 related_objects 0;
+#X obj 1 1 cnv 15 220 18 empty empty empty 20 12 0 14 -204786 -66577
+0;
+#X text 5 1 Other value mapping objects;
+#X obj 5 41 map, f 13;
+#X obj 6 71 map~, f 13;
+#X obj 6 101 skew, f 13;
+#X restore 5 691 pd related_objects;
+#X text 238 403 - value to return when halfway through range;
+#X text 238 423 - (0 or 1) skewing is symmetrical or not;
+#X obj 8 224 osci/skew~ -1 1 1 1 1;
+#X obj 21 250 loadbang;
+#X obj 21 274 metro 100;
+#X obj 8 298 snapshot~;
+#X floatatom 8 322 5 0 0 0 - - -;
+#X connect 5 0 6 0;
+#X connect 5 0 55 0;
+#X connect 31 0 55 0;
+#X connect 32 0 31 0;
+#X connect 33 0 34 0;
+#X connect 34 0 55 0;
+#X connect 55 0 58 0;
+#X connect 56 0 57 0;
+#X connect 57 0 58 0;
+#X connect 58 0 59 0;

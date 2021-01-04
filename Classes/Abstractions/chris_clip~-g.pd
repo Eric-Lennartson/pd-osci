@@ -1,0 +1,110 @@
+#N canvas 393 220 786 558 12;
+#X obj 12 519 outlet~;
+#X obj 12 377 inlet~;
+#X msg 17 455 mod \$1;
+#X msg 112 443 mirror \$1;
+#X obj 227 372 inlet~ min;
+#X obj 12 485 chris_clip~ -1 1, f 56;
+#X obj 295 421 sig~;
+#X obj 228 445 xselect~ 2;
+#X obj 183 375 + 1;
+#X obj 467 416 sig~;
+#X obj 400 440 xselect~ 2;
+#X obj 360 376 + 1;
+#X obj 399 367 inlet~ max;
+#X obj 552 166 r \$0-min;
+#X msg 552 214 label \$1;
+#X obj 552 238 s \$0-min-display;
+#X msg 552 314 label \$1;
+#X obj 552 290 makefilename %.3f;
+#X obj 552 266 r \$0-max;
+#X obj 552 338 s \$0-max-display;
+#X obj 295 398 r \$0-min;
+#X obj 467 394 r \$0-max;
+#X obj 17 429 r \$0-mod;
+#X obj 112 417 r \$0-mirror;
+#X obj 183 345 r \$0-min-sig-select;
+#X obj 360 345 r \$0-max-sig-select;
+#X obj 101 101 cnv 15 115 15 empty header osci/chris_clip~ 15 7 0 10
+-37450 -228856 0;
+#X obj 103 104 tgl 10 0 \$0-menu-tgl \$0-set-menu-tgl empty 17 7 0
+10 -99865 -262144 -1 1 1;
+#X obj 101 117 cnv 15 115 88 empty primary-bg empty 20 12 0 14 -83221
+-66577 0;
+#X obj 192 166 tgl 17 0 \$0-mod \$0-set-mod Modulo -40 9 2 10 -162280
+-204786 -228856 0 1;
+#X obj 192 186 tgl 17 0 \$0-mirror \$0-set-mirror Mirror -40 9 2 10
+-162280 -204786 -228856 0 1;
+#X obj 192 121 tgl 17 0 \$0-min-sig-select \$0-set-min-sig-select empty
+17 7 0 10 -162280 -204786 -1 1 1;
+#X obj 192 145 tgl 17 0 \$0-max-sig-select \$0-set-max-sig-select empty
+17 7 0 10 -162280 -204786 -1 1 1;
+#X obj 132 120 nbx 4 20 -2 2 0 0 \$0-min \$0-set-min empty 0 -8 0 13
+-262144 -1 -1 -1 256;
+#X obj 132 120 cnv 15 58 20 empty \$0-min-display -1.000 2 12 0 15
+-204786 -1 0;
+#X obj 132 143 nbx 4 20 -2 2 0 0 \$0-max \$0-set-max empty 0 -8 0 13
+-262144 -1 -1 1 256;
+#X obj 132 143 cnv 15 58 20 empty \$0-max-display 1.000 2 12 0 15 -204786
+-1 0;
+#X obj 132 120 cnv 1 1 20 empty empty Min -25 10 2 12 -204786 -228856
+0;
+#X obj 132 143 cnv 1 1 20 empty empty Max -25 10 2 12 -204786 -228856
+0;
+#X obj 266 185 t b a;
+#X obj 317 185 sendcanvas;
+#X msg 266 209 map 0 \, map 1;
+#X obj 266 233 sendcanvas 1;
+#X text 398 184 update self;
+#X text 362 234 update parent;
+#X obj 266 87 r \$0-menu-tgl;
+#X obj 266 111 sel 1 0;
+#X msg 266 135 106;
+#X msg 298 135 17;
+#X msg 266 161 coords -1 -1 1 1 117 \$1 2 100 100;
+#X obj 101 101 cnv 1 7 1 empty empty empty 20 12 0 14 -262144 -66577
+0;
+#X obj 209 101 cnv 1 7 1 empty empty empty 20 12 0 14 -262144 -66577
+0;
+#X obj 155 101 cnv 1 7 1 empty empty empty 20 12 0 14 -262144 -66577
+0;
+#X obj 101 204 cnv 1 7 1 empty empty empty 20 12 0 14 -262144 -66577
+0;
+#X obj 552 190 makefilename %.3f;
+#X obj 552 39 else/initmess \; \$0-set-max 1 \; \$0-set-min -1 \; \$0-set-menu-tgl
+1 \; \$0-set-mod 0 \; \$0-set-mirror 0 \; \$0-set-min-sig-select 1
+\; \$0-set-max-sig-select 1 \;;
+#X connect 1 0 5 0;
+#X connect 2 0 5 0;
+#X connect 3 0 5 0;
+#X connect 4 0 7 0;
+#X connect 5 0 0 0;
+#X connect 6 0 7 1;
+#X connect 7 0 5 1;
+#X connect 8 0 7 0;
+#X connect 9 0 10 1;
+#X connect 10 0 5 2;
+#X connect 11 0 10 0;
+#X connect 12 0 10 0;
+#X connect 13 0 54 0;
+#X connect 14 0 15 0;
+#X connect 16 0 19 0;
+#X connect 17 0 16 0;
+#X connect 18 0 17 0;
+#X connect 20 0 6 0;
+#X connect 21 0 9 0;
+#X connect 22 0 2 0;
+#X connect 23 0 3 0;
+#X connect 24 0 8 0;
+#X connect 25 0 11 0;
+#X connect 39 0 41 0;
+#X connect 39 1 40 0;
+#X connect 41 0 42 0;
+#X connect 45 0 46 0;
+#X connect 46 0 47 0;
+#X connect 46 1 48 0;
+#X connect 47 0 49 0;
+#X connect 48 0 49 0;
+#X connect 49 0 39 0;
+#X connect 54 0 14 0;
+#X coords -1 -1 1 1 117 106 2 100 100;

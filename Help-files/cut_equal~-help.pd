@@ -1,0 +1,79 @@
+#N canvas -1213 152 579 528 12;
+#X obj 89 362 cnv 15 3 17 empty empty 0 5 9 0 16 -216373 -141475 0
+;
+#X obj 89 405 cnv 15 3 17 empty empty 0=>N 5 9 0 16 -216373 -141475
+0;
+#X text 107 361 signal;
+#X text 137 405 signal;
+#X obj 6 91 phasor~ 50;
+#X text 89 444 1) int (1-n);
+#X obj 6 165 osci/square~ 0 0 0.5;
+#X obj 162 165 osci/square~ 0 0 0.2;
+#X text 208 405 - adjusted phase \, ramps from 0 to 1;
+#X text 197 444 - number of cuts;
+#X obj 6 125 osci/cut_equal~ 2;
+#X obj 6 245 osci/out~;
+#X obj 6 201 osci/cut_idx~;
+#X obj 162 202 osci/cut_idx~;
+#X obj 1 1 cnv 15 305 46 empty empty empty 20 12 0 14 -66577 -66577
+0;
+#X obj 4 3 cnv 15 301 42 empty empty cut_equal~ 20 20 2 37 -204786
+-1 0;
+#X obj 307 1 cnv 15 256 46 empty empty empty 20 12 0 14 -66577 -66577
+0;
+#X obj 310 4 cnv 15 250 40 empty empty empty 12 13 0 18 -128992 -233080
+0;
+#X obj 317 11 cnv 10 10 10 empty empty OSCI 0 15 2 30 -128992 -204786
+0;
+#X obj 10 34 cnv 5 10 10 empty \$0-description Split\ phase\ into\ N\ cuts
+30 30 2 17 -204786 -1 0;
+#X obj 413 25 cnv 10 10 10 empty empty Oscilloscope 0 6 2 13 -128992
+-204786 0;
+#X obj 480 25 cnv 10 10 10 empty empty Music 0 6 2 13 -128992 -204786
+0;
+#X obj 513 25 cnv 10 10 10 empty empty & 0 6 2 13 -128992 -204786 0
+;
+#X obj 454 11 cnv 10 10 10 empty empty Library 0 6 2 13 -128992 -204786
+0;
+#X obj 526 25 cnv 10 10 10 empty empty Art 0 6 2 13 -128992 -204786
+0;
+#X obj 497 11 cnv 10 10 10 empty empty for 0 6 2 13 -128992 -204786
+0;
+#X obj 1 352 cnv 1 552 1 empty empty inlets 8 12 0 13 -216373 -1 0
+;
+#X obj 1 396 cnv 1 552 1 empty empty outlets 8 12 0 13 -216373 -1 0
+;
+#X obj 2 438 cnv 1 552 1 empty empty arguments 8 12 0 13 -216373 -1
+0;
+#X obj 2 476 cnv 15 552 24 empty empty empty 20 12 0 14 -233017 -33289
+0;
+#X text 193 361 - phase;
+#N canvas 54 358 262 204 related_objects 0;
+#X obj 127 64 osci/cut_weights~;
+#X obj 127 89 osci/cut_mix~;
+#X text 6 35 Phase Modifiers;
+#X text 122 35 Phase Cutters;
+#X obj 7 67 osci/knee~;
+#X obj 7 92 osci/bright~;
+#X obj 7 117 osci/trace~;
+#X obj 7 142 osci/dash~;
+#X obj 1 1 cnv 15 250 23 empty empty empty 3 12 0 20 -204786 -1 0;
+#X text 8 4 Other phase manipulation objects;
+#X restore 16 479 pd related_objects;
+#X text 111 244 [cut_equal~] splits a phasor up into equal parts to
+draw multiple images at the same time. [cut_equal~] is special in that
+it must be the first modifier in the chain as it becomes the new intial
+driver in order to draw multiple objects onto the scope.;
+#X connect 4 0 10 0;
+#X connect 6 0 12 0;
+#X connect 6 1 12 1;
+#X connect 7 0 13 0;
+#X connect 7 1 13 1;
+#X connect 10 0 6 0;
+#X connect 10 0 12 3;
+#X connect 10 1 7 0;
+#X connect 10 1 13 3;
+#X connect 12 0 11 0;
+#X connect 12 1 11 1;
+#X connect 13 0 11 0;
+#X connect 13 1 11 1;

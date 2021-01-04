@@ -1,0 +1,73 @@
+#N canvas 509 36 566 579 12;
+#X obj 1 264 cnv 1 552 1 empty empty inlets 8 12 0 13 -216373 -1 0
+;
+#X obj 1 367 cnv 1 552 1 empty empty outlets 8 12 0 13 -216373 -1 0
+;
+#X obj 88 376 cnv 15 3 17 empty empty 0 5 9 0 16 -216373 -141475 0
+;
+#X obj 88 280 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
+;
+#X text 106 278 signal;
+#X obj 88 310 cnv 15 3 17 empty empty 2 5 9 0 16 -216373 -141475 0
+;
+#X text 106 308 signal;
+#X obj 88 337 cnv 15 3 17 empty empty 3 5 9 0 16 -216373 -141475 0
+;
+#X text 106 335 signal;
+#X text 106 374 signal;
+#X obj 88 406 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
+;
+#X text 106 404 signal;
+#X obj 2 474 cnv 1 552 1 empty empty arguments 8 12 0 13 -216373 -1
+0;
+#X text 177 484 - x position;
+#X text 177 504 - y position;
+#X text 85 484 1) float;
+#X text 85 504 2) float;
+#X text 85 524 3) float;
+#X obj 1 1 cnv 15 305 46 empty empty empty 20 12 0 14 -66577 -66577
+0;
+#X obj 4 3 cnv 15 301 42 empty empty point~ 20 20 2 37 -204786 -1 0
+;
+#X obj 307 1 cnv 15 256 46 empty empty empty 20 12 0 14 -66577 -66577
+0;
+#X obj 310 4 cnv 15 250 40 empty empty empty 12 13 0 18 -128992 -233080
+0;
+#X obj 317 11 cnv 10 10 10 empty empty OSCI 0 15 2 30 -128992 -204786
+0;
+#X obj 413 25 cnv 10 10 10 empty empty Oscilloscope 0 6 2 13 -128992
+-204786 0;
+#X obj 10 34 cnv 5 10 10 empty \$0-description Draw\ a\ point 30 30
+2 17 -204786 -1 0;
+#X obj 480 25 cnv 10 10 10 empty empty Music 0 6 2 13 -128992 -204786
+0;
+#X obj 513 25 cnv 10 10 10 empty empty & 0 6 2 13 -128992 -204786 0
+;
+#X obj 454 11 cnv 10 10 10 empty empty Library 0 6 2 13 -128992 -204786
+0;
+#X obj 526 25 cnv 10 10 10 empty empty Art 0 6 2 13 -128992 -204786
+0;
+#X obj 497 11 cnv 10 10 10 empty empty for 0 6 2 13 -128992 -204786
+0;
+#X obj 2 547 cnv 15 552 24 empty empty empty 20 12 0 14 -233017 -33289
+0;
+#X text 177 373 - x;
+#X text 177 403 - y;
+#X text 177 278 - x position;
+#X text 177 308 - y position;
+#X obj 15 173 osci/out~;
+#X text 177 524 - z position;
+#X obj 88 436 cnv 15 3 17 empty empty 2 5 9 0 16 -216373 -141475 0
+;
+#X text 106 434 signal;
+#X text 177 433 - z;
+#X text 177 335 - z position;
+#X floatatom 15 105 5 0 0 0 - - -;
+#X floatatom 80 105 5 0 0 0 - - -;
+#X floatatom 145 105 5 0 0 0 - - -;
+#X obj 15 129 point~ -0.5 0.5 0.3;
+#X connect 41 0 44 0;
+#X connect 42 0 44 1;
+#X connect 43 0 44 2;
+#X connect 44 0 35 0;
+#X connect 44 1 35 1;

@@ -1,0 +1,91 @@
+#N canvas 45 33 569 621 12;
+#X floatatom 44 104 5 0 0 0 - - -;
+#X floatatom 73 125 5 0 0 0 - - -;
+#X floatatom 103 146 5 0 0 0 - - -;
+#X text 86 103 2nd inlet controls x position;
+#X text 110 126 3rd inlet controls y position;
+#X text 142 148 4th inlet controls the radius/size;
+#X obj 1 264 cnv 1 552 1 empty empty inlets 8 12 0 13 -216373 -1 0
+;
+#X obj 88 272 cnv 15 3 60 empty empty 0 5 9 0 16 -216373 -141475 0
+;
+#X obj 1 437 cnv 1 552 1 empty empty outlets 8 12 0 13 -216373 -1 0
+;
+#X obj 88 446 cnv 15 3 17 empty empty 0 5 9 0 16 -216373 -141475 0
+;
+#X text 106 270 signal;
+#X obj 88 350 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
+;
+#X text 106 348 signal;
+#X obj 88 380 cnv 15 3 17 empty empty 2 5 9 0 16 -216373 -141475 0
+;
+#X text 106 378 signal;
+#X obj 88 407 cnv 15 3 17 empty empty 3 5 9 0 16 -216373 -141475 0
+;
+#X text 106 405 signal;
+#X text 106 444 signal;
+#X obj 88 476 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
+;
+#X text 106 474 signal;
+#X obj 2 504 cnv 1 552 1 empty empty arguments 8 12 0 13 -216373 -1
+0;
+#X text 178 270 - controls the position of the dot on the circle \,
+ramping from 0 to 1 results in a complete rotation around the circle.
+Normally a phasor would be used to draw the circle \, but any signal
+source could be used., f 51;
+#X text 177 514 - x position;
+#X text 177 534 - y position;
+#X text 177 554 - r radius/size;
+#X text 85 514 1) float;
+#X text 85 534 2) float;
+#X text 85 554 3) float;
+#X obj 1 1 cnv 15 305 46 empty empty empty 20 12 0 14 -66577 -66577
+0;
+#X obj 4 3 cnv 15 301 42 empty empty circle~ 20 20 2 37 -204786 -1
+0;
+#X obj 307 1 cnv 15 256 46 empty empty empty 20 12 0 14 -66577 -66577
+0;
+#X obj 310 4 cnv 15 250 40 empty empty empty 12 13 0 18 -128992 -233080
+0;
+#X obj 317 11 cnv 10 10 10 empty empty OSCI 0 15 2 30 -128992 -204786
+0;
+#X obj 413 25 cnv 10 10 10 empty empty Oscilloscope 0 6 2 13 -128992
+-204786 0;
+#X obj 10 34 cnv 5 10 10 empty \$0-description Draw\\\ a\\\ circle
+30 30 2 17 -204786 -1 0;
+#X obj 480 25 cnv 10 10 10 empty empty Music 0 6 2 13 -128992 -204786
+0;
+#X obj 513 25 cnv 10 10 10 empty empty & 0 6 2 13 -128992 -204786 0
+;
+#X obj 454 11 cnv 10 10 10 empty empty Library 0 6 2 13 -128992 -204786
+0;
+#X obj 526 25 cnv 10 10 10 empty empty Art 0 6 2 13 -128992 -204786
+0;
+#X obj 497 11 cnv 10 10 10 empty empty for 0 6 2 13 -128992 -204786
+0;
+#X obj 2 577 cnv 15 552 24 empty empty empty 20 12 0 14 -233017 -33289
+0;
+#X obj 15 81 phasor~ 100;
+#X obj 15 169 circle~ 0 0 1;
+#X text 177 443 - x;
+#X text 177 473 - y;
+#X text 177 348 - x position;
+#X text 177 378 - y position;
+#X text 177 405 - radius/size;
+#X obj 15 193 osci/out~;
+#X text 100 80 1st inlet is the driver \, that draws the circle;
+#N canvas 271 151 208 199 related_objects 0;
+#X obj 1 1 cnv 15 200 23 empty empty empty 3 12 0 20 -204786 -1 0;
+#X text 4 4 [circle~] related objects;
+#X obj 17 44 osci/ellipse~;
+#X obj 17 74 osci/square~;
+#X obj 17 104 osci/triangle~;
+#X obj 17 134 osci/rectangle~;
+#X obj 17 164 osci/polygon~;
+#X restore 16 580 pd related_objects;
+#X connect 0 0 42 1;
+#X connect 1 0 42 2;
+#X connect 2 0 42 3;
+#X connect 41 0 42 0;
+#X connect 42 0 48 0;
+#X connect 42 1 48 1;

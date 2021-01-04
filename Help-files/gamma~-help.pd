@@ -1,0 +1,66 @@
+#N canvas 339 157 575 510 12;
+#X obj 1 1 cnv 15 305 46 empty empty empty 20 12 0 14 -66577 -66577
+0;
+#X obj 4 3 cnv 15 301 42 empty empty gamma~ 20 20 2 37 -204786 -1 0
+;
+#X obj 307 1 cnv 15 256 46 empty empty empty 20 12 0 14 -66577 -66577
+0;
+#X obj 310 4 cnv 15 250 40 empty empty empty 12 13 0 18 -128992 -233080
+0;
+#X obj 317 11 cnv 10 10 10 empty empty OSCI 0 15 2 30 -128992 -204786
+0;
+#X obj 413 25 cnv 10 10 10 empty empty Oscilloscope 0 6 2 13 -128992
+-204786 0;
+#X obj 480 25 cnv 10 10 10 empty empty Music 0 6 2 13 -128992 -204786
+0;
+#X obj 513 25 cnv 10 10 10 empty empty & 0 6 2 13 -128992 -204786 0
+;
+#X obj 454 11 cnv 10 10 10 empty empty Library 0 6 2 13 -128992 -204786
+0;
+#X obj 526 25 cnv 10 10 10 empty empty Art 0 6 2 13 -128992 -204786
+0;
+#X obj 497 11 cnv 10 10 10 empty empty for 0 6 2 13 -128992 -204786
+0;
+#X obj 2 314 cnv 1 550 1 empty empty inlets 8 12 0 13 -228856 -1 0
+;
+#X obj 2 350 cnv 1 550 1 empty empty outlets 8 12 0 13 -228856 -1 0
+;
+#X obj 2 396 cnv 1 550 1 empty empty arguments 8 12 0 13 -228856 -1
+0;
+#X obj 122 322 cnv 17 3 17 empty empty 0 5 9 0 16 -228856 -162280 0
+;
+#X obj 2 477 cnv 15 552 21 empty empty empty 20 12 0 14 -233017 -33289
+0;
+#X obj 3 98 phasor~ 50;
+#X obj 3 122 osci/circle~ 0 0 2;
+#X obj 3 217 osci/out~;
+#X obj 10 34 cnv 5 10 10 empty \$0-description Gamma\\\ correction
+30 30 2 17 -204786 -1 0;
+#X text 116 405 1) symbol;
+#X floatatom 147 85 5 0 100 0 - - -;
+#X obj 147 138 sig~;
+#X text 163 321 signal - brightness (0-1);
+#X obj 122 362 cnv 17 3 17 empty empty 0 5 9 0 16 -228856 -162280 0
+;
+#X text 163 361 signal - gamma correct brightness (0-1);
+#X text 185 405 '-g' option for drawing the gui version;
+#X text 185 425 sets the minimum value for brightness (0-1);
+#X text 185 445 sets the gamma amount (greater than 0);
+#X text 116 425 2) float;
+#X text 116 445 3) float;
+#X obj 147 162 osci/gamma~ 0.8 0.9;
+#X obj 147 108 / 100;
+#X obj 210 65 osci/gamma~ -g;
+#X text 304 85 [gamma~] with the -g argument;
+#X text 143 193 [gamma~] helps to make the brightness control on oscilloscopes
+more useful. [gamma~] is making the assumption that brightness on the
+scope has been turned all the way up and that it will be controlled
+from the pd patch. All scopes/displays will be slightly different and
+so controls for altering the minimum value of the brightness range
+and the amount of gamma correction have been provided., f 58;
+#X connect 16 0 17 0;
+#X connect 17 0 18 0;
+#X connect 17 1 18 1;
+#X connect 21 0 32 0;
+#X connect 22 0 31 0;
+#X connect 32 0 22 0;

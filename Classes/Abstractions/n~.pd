@@ -1,0 +1,6 @@
+#N canvas 406 166 450 300 12;
+#X obj 133 62 inlet~;
+#X obj 133 156 outlet~;
+#X text 139 88 node for signal rate;
+#X text 139 128 there's no good way to pack signals...;
+#X connect 0 0 1 0;

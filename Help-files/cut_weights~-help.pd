@@ -1,0 +1,96 @@
+#N canvas -845 106 572 651 12;
+#X obj 89 452 cnv 15 3 17 empty empty 0 5 9 0 16 -216373 -141475 0
+;
+#X obj 89 520 cnv 15 3 17 empty empty 2=>N 5 9 0 16 -216373 -141475
+0;
+#X text 107 451 signal;
+#X obj 89 480 cnv 15 3 17 empty empty 1=>N 5 9 0 16 -216373 -141475
+0;
+#X text 137 479 signal;
+#X text 137 520 signal;
+#X floatatom 71 147 5 0 10 0 - - -;
+#X floatatom 143 147 5 0 10 0 - - -;
+#X obj 6 265 osci/square~ 0 0 0.5;
+#X obj 159 266 osci/square~ 0 0 0.2;
+#X text 193 451 - main phase;
+#X text 193 520 - adjusted phase \, ramps from 0 to 1;
+#X text 192 576 - number of cuts;
+#X obj 6 195 osci/cut_weights~ 2;
+#X obj 6 101 phasor~ 100;
+#X obj 71 169 sig~ 0.15;
+#X obj 6 309 osci/cut_idx~;
+#X obj 159 311 osci/cut_idx~;
+#X obj 6 348 osci/out~;
+#X obj 156 385 s \$0-description;
+#X text 97 122 weights;
+#X obj 143 170 sig~ 1;
+#X text 86 576 1) int (1-N);
+#X obj 1 432 cnv 1 552 1 empty empty inlets 8 12 0 13 -216373 -1 0
+;
+#X obj 1 511 cnv 1 552 1 empty empty outlets 8 12 0 13 -216373 -1 0
+;
+#X obj 2 553 cnv 1 552 1 empty empty arguments 8 12 0 13 -216373 -1
+0;
+#X obj 2 604 cnv 15 552 24 empty empty empty 20 12 0 14 -233017 -33289
+0;
+#N canvas 271 151 256 188 related_objects 0;
+#X obj 127 66 osci/cut_equal~;
+#X obj 127 91 osci/cut_mix~;
+#X text 6 34 Phase Modifiers;
+#X text 122 34 Phase Cutters;
+#X obj 7 66 osci/knee~;
+#X obj 7 91 osci/bright~;
+#X obj 7 116 osci/trace~;
+#X obj 7 142 osci/dash~;
+#X obj 1 1 cnv 15 250 23 empty empty empty 3 12 0 20 -204786 -1 0;
+#X text 8 4 Other phase manipulation objects;
+#X restore 12 607 pd related_objects;
+#X text 193 479 - weights (0-1);
+#X obj 1 1 cnv 15 305 46 empty empty empty 20 12 0 14 -66577 -66577
+0;
+#X obj 4 3 cnv 15 301 42 empty empty cut_weights~ 20 20 2 37 -204786
+-1 0;
+#X obj 307 1 cnv 15 256 46 empty empty empty 20 12 0 14 -66577 -66577
+0;
+#X obj 310 4 cnv 15 250 40 empty empty empty 12 13 0 18 -128992 -233080
+0;
+#X obj 317 11 cnv 10 10 10 empty empty OSCI 0 15 2 30 -128992 -204786
+0;
+#X obj 10 34 cnv 5 10 10 empty \$0-description Split\\\ phase\\\ into\\\ N\\\ cuts\\\ based\\\ on\\\ weights
+30 30 2 17 -204786 -1 0;
+#X obj 413 25 cnv 10 10 10 empty empty Oscilloscope 0 6 2 13 -128992
+-204786 0;
+#X obj 480 25 cnv 10 10 10 empty empty Music 0 6 2 13 -128992 -204786
+0;
+#X obj 513 25 cnv 10 10 10 empty empty & 0 6 2 13 -128992 -204786 0
+;
+#X obj 454 11 cnv 10 10 10 empty empty Library 0 6 2 13 -128992 -204786
+0;
+#X obj 526 25 cnv 10 10 10 empty empty Art 0 6 2 13 -128992 -204786
+0;
+#X obj 497 11 cnv 10 10 10 empty empty for 0 6 2 13 -128992 -204786
+0;
+#X msg 156 361 label Split\ phase\ into\ N\ cuts\ based\ on\ weights
+;
+#X text 209 155 [cut_weights~] cuts a phase up into parts based on
+weights. [cut_weights~] must be the first modifier in the chain as
+it becomes the new intial phasor in order to draw multiple objects
+on the scope., f 49;
+#X connect 6 0 15 0;
+#X connect 7 0 21 0;
+#X connect 8 0 16 0;
+#X connect 8 1 16 1;
+#X connect 9 0 17 0;
+#X connect 9 1 17 1;
+#X connect 13 0 8 0;
+#X connect 13 0 16 3;
+#X connect 13 1 9 0;
+#X connect 13 1 17 3;
+#X connect 14 0 13 0;
+#X connect 15 0 13 1;
+#X connect 16 0 18 0;
+#X connect 16 1 18 1;
+#X connect 17 0 18 0;
+#X connect 17 1 18 1;
+#X connect 21 0 13 2;
+#X connect 41 0 19 0;

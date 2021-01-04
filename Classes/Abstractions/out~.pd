@@ -1,0 +1,384 @@
+#N canvas 60 112 1128 538 10;
+#X obj 605 91 cnv 15 124 12 empty \$0-header osci/out~ 20 6 0 10 -37450
+-228856 0;
+#X obj 605 104 cnv 15 124 35 empty \$0-primary-bg empty 20 12 0 14
+-99865 -66577 0;
+#X obj 605 140 cnv 15 124 17 empty \$0-header Settings 19 10 0 9 -33289
+-228856 0;
+#X obj 605 158 cnv 15 124 83 empty \$0-primary-bg empty 20 12 0 14
+-99865 -66577 0;
+#X obj 511 91 cnv 15 92 12 empty header osci/out~ 3 6 0 10 -33289 -228856
+0;
+#X obj 13 273 *~;
+#X obj 179 272 *~;
+#X obj 623 105 bng 15 250 50 0 empty empty empty 17 7 0 10 -191407
+-251611 -1;
+#X obj 606 160 vradio 13 1 0 6 \$0-sample-rate \$0-set-sample-rate
+empty 0 -8 0 12 -191407 -1 -1 0;
+#X obj 662 197 vradio 13 1 0 3 empty \$0-set-bit-depth empty 0 -8 0
+12 -191407 -1 -1 1;
+#X obj 662 255 + 2;
+#X obj 662 276 s \$0-bit-depth;
+#X obj 662 160 vradio 13 1 0 2 \$0-format \$0-set-format empty 0 -8
+0 12 -191407 -1 -1 0;
+#X obj 433 496 outlet record;
+#X obj 606 105 tgl 15 0 \$0-record none empty 17 7 0 10 -251611 -1
+-1 0 1;
+#X obj 623 40 r \$0-record;
+#X obj 623 62 metro 1000;
+#X obj 595 94 bng 8 250 50 0 \$0-right none empty 17 7 0 10 -162280
+-162280 -1;
+#X obj 606 94 bng 8 250 50 0 \$0-left none empty 17 7 0 10 -162280
+-162280 -1;
+#X obj 606 141 tgl 15 0 \$0-settings-menu \$0-set-settings-menu empty
+17 7 0 10 -191407 -1 -1 0 1;
+#X obj 619 174 else/note 425 10 courier empty 0 0 0 0 0 255 255 255
+0 0 48;
+#X obj 619 187 else/note 425 10 courier empty 0 0 0 0 0 255 255 255
+0 0 88.2;
+#X obj 619 200 else/note 425 10 courier empty 0 0 0 0 0 255 255 255
+0 0 96;
+#X obj 619 213 else/note 425 10 courier empty 0 0 0 0 0 255 255 255
+0 0 176.4;
+#X obj 619 226 else/note 425 10 courier empty 0 0 0 0 0 255 255 255
+0 0 192;
+#X obj 619 160 else/note 425 10 courier empty 0 0 0 0 0 255 255 255
+0 0 44.1;
+#X obj 675 161 else/note 425 10 courier empty 0 0 0 0 0 255 255 255
+0 0 .wav;
+#X obj 675 174 else/note 425 10 courier empty 0 0 0 0 0 255 255 255
+0 0 .aiff;
+#X obj 675 198 else/note 425 10 courier empty 0 0 0 0 0 255 255 255
+0 0 16;
+#X obj 675 211 else/note 425 10 courier empty 0 0 0 0 0 255 255 255
+0 0 24;
+#X obj 675 224 else/note 425 10 courier empty 0 0 0 0 0 255 255 255
+0 0 32;
+#N canvas 340 383 584 395 gui_guts 0;
+#X obj 202 45 v pos_\$0;
+#X obj 23 300 outlet update_canvas;
+#X obj 23 23 r \$0-left;
+#X obj 33 163 r \$0-right;
+#X obj 202 2 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X obj 33 184 expr pos_\$0 = pos_\$0 + 94;
+#X obj 23 122 expr pos_\$0 = pos_\$0 - 94;
+#X obj 273 172 r \$0-settings-menu;
+#X obj 273 193 sel 0 1;
+#X msg 273 214 68;
+#X msg 23 227 coords -1 -1 1 1 \$2 \$3 2 \$1 90;
+#X obj 33 205 pack f 126 68;
+#X msg 220 83 coords -1 -1 1 1 94 75 2 510 90;
+#X obj 202 25 initmess 510;
+#X text 288 27 initial x position;
+#X obj 23 143 pack f 94 75;
+#X msg 273 237 coords -1 -1 1 1 126 \$1 2 604 90;
+#X msg 50 74 0;
+#X obj 50 95 s \$0-set-settings-menu;
+#X obj 23 54 t b b;
+#X msg 304 214 152;
+#X connect 2 0 19 0;
+#X connect 3 0 5 0;
+#X connect 4 0 13 0;
+#X connect 5 0 11 0;
+#X connect 6 0 15 0;
+#X connect 7 0 8 0;
+#X connect 8 0 9 0;
+#X connect 8 1 20 0;
+#X connect 9 0 16 0;
+#X connect 10 0 1 0;
+#X connect 11 0 10 0;
+#X connect 12 0 1 0;
+#X connect 13 0 0 0;
+#X connect 13 0 12 0;
+#X connect 15 0 10 0;
+#X connect 16 0 1 0;
+#X connect 17 0 18 0;
+#X connect 19 0 6 0;
+#X connect 19 1 17 0;
+#X connect 20 0 16 0;
+#X restore 938 28 pd gui_guts;
+#N canvas 76 23 995 651 recording_guts 0;
+#X obj 693 202 sel 0;
+#X msg 693 225 symbol wav;
+#X msg 720 246 symbol aiff;
+#X obj 209 351 pack f f s;
+#X obj 209 255 f;
+#X obj 237 270 r \$0-sample-rate;
+#X obj 224 230 r \$0-bit-depth;
+#X obj 693 178 r \$0-format;
+#X obj 366 161 r \$0-file-name;
+#X obj 437 219 date, f 13;
+#X obj 566 219 time, f 13;
+#X text 464 308 name-month-day-year-hour-minute-second.<format>;
+#N canvas 172 39 325 336 month_to_symbol 0;
+#X obj 46 33 sel 1 2 3 4 5 6 7 8 9 10 11 12;
+#X msg 46 274 symbol Jan;
+#X msg 60 254 symbol Feb;
+#X msg 75 234 symbol Mar;
+#X msg 90 214 symbol Apr;
+#X msg 105 194 symbol May;
+#X msg 119 174 symbol Jun;
+#X msg 134 154 symbol Jul;
+#X msg 149 134 symbol Aug;
+#X msg 164 114 symbol Sept;
+#X msg 178 94 symbol Oct;
+#X msg 193 74 symbol Nov;
+#X msg 208 54 symbol Dec;
+#X obj 46 13 inlet month_as_number;
+#X obj 46 295 outlet month_as_symbol;
+#X connect 0 0 1 0;
+#X connect 0 1 2 0;
+#X connect 0 2 3 0;
+#X connect 0 3 4 0;
+#X connect 0 4 5 0;
+#X connect 0 5 6 0;
+#X connect 0 6 7 0;
+#X connect 0 7 8 0;
+#X connect 0 8 9 0;
+#X connect 0 9 10 0;
+#X connect 0 10 11 0;
+#X connect 0 11 12 0;
+#X connect 1 0 14 0;
+#X connect 2 0 14 0;
+#X connect 3 0 14 0;
+#X connect 4 0 14 0;
+#X connect 5 0 14 0;
+#X connect 6 0 14 0;
+#X connect 7 0 14 0;
+#X connect 8 0 14 0;
+#X connect 9 0 14 0;
+#X connect 10 0 14 0;
+#X connect 11 0 14 0;
+#X connect 12 0 14 0;
+#X connect 13 0 0 0;
+#X restore 452 245 pd month_to_symbol;
+#N canvas 0 23 450 300 sel_sample_rate 0;
+#X obj 84 39 sel 0 1 2 3 4 5;
+#X msg 156 57 192000;
+#X msg 142 75 176400;
+#X msg 127 93 96000;
+#X msg 113 111 882000;
+#X msg 98 129 48000;
+#X msg 84 147 44100;
+#X obj 84 16 inlet choice;
+#X obj 84 168 outlet samplerate;
+#X connect 0 0 6 0;
+#X connect 0 1 5 0;
+#X connect 0 2 4 0;
+#X connect 0 3 3 0;
+#X connect 0 4 2 0;
+#X connect 0 5 1 0;
+#X connect 1 0 8 0;
+#X connect 2 0 8 0;
+#X connect 3 0 8 0;
+#X connect 4 0 8 0;
+#X connect 5 0 8 0;
+#X connect 6 0 8 0;
+#X connect 7 0 0 0;
+#X restore 237 295 pd sel_sample_rate;
+#X obj 209 98 r \$0-record;
+#X text 483 162 date and time are from zexy;
+#X obj 366 307 else/any2symbol;
+#X msg 228 419 open -bytes \$1 -rate \$2 \$3;
+#X obj 209 370 t b l b;
+#X msg 248 482 stop;
+#X obj 209 504 outlet;
+#X obj 209 129 sel 1;
+#X text 101 149 1 starts \, 0 stops;
+#X obj 209 169 t b b b;
+#X obj 64 616 print -n;
+#X obj 64 597 else/format %s;
+#X obj 236 149 s \$0-stop;
+#X obj 257 446 r \$0-stop;
+#X msg 83 574 symbol recording\ stopped;
+#X obj 366 286 else/format %s-%s-%.2d-%d-%.2d-%.2d-%.2d.%s, f 55;
+#X msg 209 391 start;
+#X msg 64 545 recording...\ have\ you\ connected\ to\ [writesf~]?;
+#X connect 0 0 1 0;
+#X connect 0 1 2 0;
+#X connect 1 0 29 7;
+#X connect 2 0 29 7;
+#X connect 3 0 18 0;
+#X connect 4 0 3 0;
+#X connect 5 0 13 0;
+#X connect 6 0 4 1;
+#X connect 7 0 0 0;
+#X connect 8 0 29 0;
+#X connect 9 0 29 3;
+#X connect 9 1 12 0;
+#X connect 9 2 29 2;
+#X connect 10 0 29 4;
+#X connect 10 1 29 5;
+#X connect 10 2 29 6;
+#X connect 12 0 29 1;
+#X connect 13 0 3 1;
+#X connect 14 0 21 0;
+#X connect 16 0 3 2;
+#X connect 17 0 20 0;
+#X connect 18 0 31 0;
+#X connect 18 0 30 0;
+#X connect 18 1 17 0;
+#X connect 18 2 19 0;
+#X connect 19 0 20 0;
+#X connect 21 0 23 0;
+#X connect 21 1 26 0;
+#X connect 23 0 4 0;
+#X connect 23 1 29 0;
+#X connect 23 2 9 0;
+#X connect 23 2 10 0;
+#X connect 25 0 24 0;
+#X connect 27 0 19 0;
+#X connect 27 0 28 0;
+#X connect 28 0 25 0;
+#X connect 29 0 16 0;
+#X connect 30 0 20 0;
+#X connect 31 0 25 0;
+#X restore 433 475 pd recording_guts;
+#X obj 938 53 t b a;
+#X obj 979 53 sendcanvas;
+#X msg 938 77 map 0 \, map 1;
+#X obj 938 99 sendcanvas 1;
+#X obj 87 198 r \$0-mute;
+#X obj 13 163 *~;
+#X obj 179 163 *~;
+#X obj 71 100 r \$0-volume;
+#X obj 511 104 cnv 15 92 60 empty \$0-primary-bg empty 20 12 0 14 -99865
+-66577 0;
+#X obj 515 141 hsl 85 18 0 1 0 0 \$0-volume \$0-set-volume Volume 25
+10 0 10 -191407 -48774 -1 0 1;
+#X obj 512 105 tgl 15 0 empty empty DSP 17 7 0 10 -191407 -1 -228856
+0 1;
+#X obj 587 105 bng 15 250 50 0 \$0-mute \$0-set-mute Mute -26 7 0 10
+-191407 -1 -228856;
+#X msg 431 164 \; pd dsp \$1;
+#X obj 87 219 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+1;
+#X obj 13 16 inlet~ x;
+#X obj 179 16 inlet~ y;
+#X obj 13 496 outlet~ x;
+#X obj 179 496 outlet~ y;
+#X obj 901 332 s \$0-set-sample-rate;
+#X obj 970 278 s \$0-set-file-name;
+#X obj 947 296 s \$0-bit-depth;
+#X obj 924 314 s \$0-set-format;
+#X obj 485 240 r \$0-mute;
+#X obj 485 258 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+1;
+#X msg 512 320 label Volume;
+#X msg 531 300 label Muted;
+#X obj 901 235 unpack f f f s f;
+#X obj 994 259 s \$0-mute;
+#X obj 428 40 r pd;
+#X obj 428 61 route dsp;
+#X obj 431 143 change;
+#X obj 512 279 sel 1 0;
+#X obj 901 215 initmess 0 0 1 untitled 1;
+#X obj 71 121 osci/ramp~ 30;
+#X obj 87 239 osci/ramp~ 30;
+#X obj 607 122 cnv 15 120 14 empty empty empty 20 12 0 14 -191407 -66577
+0;
+#X symbolatom 606 122 20 0 0 0 - #0-set-file-name #0-file-name;
+#X obj 189 47 catch~ m-out-y;
+#X obj 26 47 catch~ m-out-x;
+#X obj 511 91 cnv 1 7 1 empty empty empty 20 12 0 14 -262144 -66577
+0;
+#X obj 596 91 cnv 1 7 1 empty empty empty 20 12 0 14 -262144 -66577
+0;
+#X obj 742 105 r \$0-record;
+#X msg 742 157 label \$1;
+#X obj 640 106 cnv 13 50 13 empty \$0-stopwatch-display 00:00:00 2
+7 0 10 -191407 -1 0;
+#X obj 742 178 s \$0-stopwatch-display;
+#X obj 742 126 util/stopwatch;
+#X obj 512 123 tgl 15 0 \$0-spot-killer \$0-set-spot-killer Spot\\\ Killer
+17 7 0 10 -191407 -1 -228856 0 1;
+#X obj 294 16 inlet~ bright;
+#X obj 294 496 outlet~ bright;
+#X obj 79 405 dac~ 1 2 3;
+#X text 671 372 TODO: When I make the spot killer extern \, add it
+to this patch.;
+#X obj 733 397 r \$0-spot-killer;
+#X obj 294 163 osci/n~;
+#X obj 891 123 initmess \; \$0-set-volume 0 \; \$0-set-spot-killer
+0 \; \$0-stopwatch-display label 00:00:00;
+#X text 895 194 init for recording stuff;
+#X obj 553 91 cnv 1 7 1 empty empty empty 20 12 0 14 -262144 -66577
+0;
+#X obj 511 163 cnv 1 7 1 empty empty empty 20 12 0 14 -262144 -66577
+0;
+#X obj 539 163 cnv 1 7 1 empty empty empty 20 12 0 14 -262144 -66577
+0;
+#X obj 568 163 cnv 1 7 1 empty empty empty 20 12 0 14 -262144 -66577
+0;
+#X obj 596 163 cnv 1 7 1 empty empty empty 20 12 0 14 -262144 -66577
+0;
+#X obj 605 240 cnv 1 7 1 empty empty empty 20 12 0 14 -262144 -66577
+0;
+#X obj 643 240 cnv 1 7 1 empty empty empty 20 12 0 14 -262144 -66577
+0;
+#X obj 683 240 cnv 1 7 1 empty empty empty 20 12 0 14 -262144 -66577
+0;
+#X obj 722 240 cnv 1 7 1 empty empty empty 20 12 0 14 -262144 -66577
+0;
+#X obj 605 91 cnv 1 7 1 empty empty empty 20 12 0 14 -262144 -66577
+0;
+#X obj 663 91 cnv 1 7 1 empty empty empty 20 12 0 14 -262144 -66577
+0;
+#X obj 722 91 cnv 1 7 1 empty empty empty 20 12 0 14 -262144 -66577
+0;
+#X obj 726 120 cnv 1 2 2 empty empty empty 20 12 0 14 -99865 -66577
+0;
+#X obj 727 121 cnv 1 2 2 empty empty empty 20 12 0 14 -99865 -66577
+0;
+#X obj 306 47 catch~ m-out-bright;
+#X connect 5 0 49 0;
+#X connect 5 0 82 0;
+#X connect 6 0 50 0;
+#X connect 6 0 82 1;
+#X connect 9 0 10 0;
+#X connect 10 0 11 0;
+#X connect 15 0 16 0;
+#X connect 16 0 7 0;
+#X connect 31 0 33 0;
+#X connect 32 0 13 0;
+#X connect 33 0 35 0;
+#X connect 33 1 34 0;
+#X connect 35 0 36 0;
+#X connect 37 0 46 0;
+#X connect 38 0 5 0;
+#X connect 39 0 6 0;
+#X connect 40 0 66 0;
+#X connect 43 0 63 0;
+#X connect 46 0 67 0;
+#X connect 47 0 38 0;
+#X connect 48 0 39 0;
+#X connect 55 0 56 0;
+#X connect 56 0 64 0;
+#X connect 57 0 42 0;
+#X connect 58 0 42 0;
+#X connect 59 0 51 0;
+#X connect 59 1 54 0;
+#X connect 59 2 53 0;
+#X connect 59 3 52 0;
+#X connect 59 4 60 0;
+#X connect 61 0 62 0;
+#X connect 62 0 43 0;
+#X connect 63 0 45 0;
+#X connect 64 0 57 0;
+#X connect 64 1 58 0;
+#X connect 65 0 59 0;
+#X connect 66 0 39 1;
+#X connect 66 0 38 1;
+#X connect 67 0 6 1;
+#X connect 67 0 5 1;
+#X connect 70 0 39 0;
+#X connect 71 0 38 0;
+#X connect 74 0 78 0;
+#X connect 75 0 77 0;
+#X connect 78 0 75 0;
+#X connect 80 0 85 0;
+#X connect 85 0 81 0;
+#X connect 85 0 82 2;
+#X connect 102 0 85 0;
+#X coords -1 -1 1 1 94 75 2 510 90;

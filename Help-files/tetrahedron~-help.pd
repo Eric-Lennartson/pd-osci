@@ -1,0 +1,95 @@
+#N canvas 362 29 582 716 12;
+#X obj 89 313 cnv 15 3 60 empty empty 0 5 9 0 16 -216373 -141475 0
+;
+#X obj 89 447 cnv 15 3 17 empty empty 0 5 9 0 16 -216373 -141475 0
+;
+#X text 107 312 signal;
+#X text 107 446 signal;
+#X obj 89 480 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
+;
+#X text 107 479 signal;
+#X text 198 555 - x position;
+#X text 198 575 - y position;
+#X text 86 555 1) float;
+#X text 86 575 2) float;
+#X text 86 595 3) float;
+#X text 86 615 4) float;
+#X text 198 595 - z position;
+#X text 198 615 - width;
+#X text 198 635 - height;
+#X text 198 655 - length;
+#X text 86 635 5) float;
+#X text 86 655 6) float;
+#X text 198 446 - x out;
+#X text 198 479 - y out;
+#X obj 89 515 cnv 15 3 17 empty empty 2 5 9 0 16 -216373 -141475 0
+;
+#X text 107 514 signal;
+#X text 198 514 - z out;
+#X obj 36 169 osci/rotate~ 45 23 0;
+#X obj 36 193 osci/project~;
+#X obj 36 101 phasor~ 50;
+#X floatatom 278 88 5 0 1 0 - - -;
+#X obj 278 111 sig~ 1;
+#X obj 88 390 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
+;
+#X text 106 389 signal;
+#X text 191 389 - amount of interpolation between the points (0-1)
+;
+#X obj 36 217 osci/out~;
+#X obj 2 2 cnv 15 305 46 empty empty empty 20 12 0 14 -66577 -66577
+0;
+#X obj 5 4 cnv 15 301 42 empty empty tetrahedron~ 20 20 2 37 -204786
+-1 0;
+#X obj 308 2 cnv 15 256 46 empty empty empty 20 12 0 14 -66577 -66577
+0;
+#X obj 311 5 cnv 15 250 40 empty empty empty 12 13 0 18 -128992 -233080
+0;
+#X obj 318 12 cnv 10 10 10 empty empty OSCI 0 15 2 30 -128992 -204786
+0;
+#X obj 414 26 cnv 10 10 10 empty empty Oscilloscope 0 6 2 13 -128992
+-204786 0;
+#X obj 11 35 cnv 5 10 10 empty \$0-description Draw\\\ a\\\ tetrahedron
+30 30 2 17 -204786 -1 0;
+#X obj 481 26 cnv 10 10 10 empty empty Music 0 6 2 13 -128992 -204786
+0;
+#X obj 514 26 cnv 10 10 10 empty empty & 0 6 2 13 -128992 -204786 0
+;
+#X obj 455 12 cnv 10 10 10 empty empty Library 0 6 2 13 -128992 -204786
+0;
+#X obj 527 26 cnv 10 10 10 empty empty Art 0 6 2 13 -128992 -204786
+0;
+#X obj 498 12 cnv 10 10 10 empty empty for 0 6 2 13 -128992 -204786
+0;
+#X obj 2 285 cnv 1 552 1 empty empty inlets 8 12 0 13 -216373 -1 0
+;
+#X obj 2 428 cnv 1 552 1 empty empty outlets 8 12 0 13 -216373 -1 0
+;
+#X obj 3 543 cnv 1 552 1 empty empty arguments 8 12 0 13 -216373 -1
+0;
+#X obj 3 678 cnv 15 552 24 empty empty empty 20 12 0 14 -233017 -33289
+0;
+#N canvas 89 224 235 200 related_objects 0;
+#X obj 1 1 cnv 15 230 23 empty empty empty 3 12 0 20 -204786 -1 0;
+#X obj 17 134 osci/icosahedron~;
+#X obj 17 44 osci/cuboid~;
+#X obj 17 74 osci/dodecahedron~;
+#X obj 17 104 osci/octahedron~;
+#X text 0 4 [tetrahedron~] related objects;
+#X restore 17 681 pd related_objects;
+#X text 168 224 the code for tetra needs to be updated;
+#X obj 36 135 osci/tetrahedron~ 0 0 0 0.2 0.4 0.3;
+#X text 193 312 - controls the position of the dot on the tetrahedron
+\, ramping from 0 to 1 results in the complete shape. Normally a phasor
+would be used but any signal source could be used., f 42;
+#X connect 23 0 24 0;
+#X connect 23 1 24 1;
+#X connect 23 2 24 2;
+#X connect 24 0 31 0;
+#X connect 24 1 31 1;
+#X connect 25 0 50 0;
+#X connect 26 0 27 0;
+#X connect 27 0 50 1;
+#X connect 50 0 23 0;
+#X connect 50 1 23 1;
+#X connect 50 2 23 2;

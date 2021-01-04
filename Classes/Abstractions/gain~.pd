@@ -1,0 +1,131 @@
+#N canvas 120 72 961 581 12;
+#X obj 28 52 inlet~ x;
+#X obj 28 146 *~;
+#X obj 46 93 r \$0-x-vol;
+#X obj 46 117 osci/ramp~ 20;
+#X obj 28 256 *~;
+#X obj 46 227 osci/ramp~ 20;
+#X obj 46 203 r \$0-master-vol;
+#X obj 28 340 outlet~;
+#X obj 168 146 *~;
+#X obj 186 93 r \$0-x-vol;
+#X obj 186 117 osci/ramp~ 20;
+#X obj 168 256 *~;
+#X obj 186 227 osci/ramp~ 20;
+#X obj 186 203 r \$0-master-vol;
+#X obj 168 340 outlet~;
+#X obj 325 146 *~;
+#X obj 343 93 r \$0-x-vol;
+#X obj 343 117 osci/ramp~ 20;
+#X obj 325 256 *~;
+#X obj 343 227 osci/ramp~ 20;
+#X obj 343 203 r \$0-master-vol;
+#X obj 325 340 outlet~;
+#X obj 325 52 inlet~ z;
+#X obj 168 52 inlet~ y;
+#X obj 451 301 cnv 15 138 15 empty header osci/gain~ 15 7 0 10 -37450
+-228856 0;
+#X obj 451 317 cnv 15 138 22 empty primary-bg empty 20 12 0 14 -99865
+-66577 0;
+#X obj 457 320 hsl 85 18 0 2 0 0 \$0-master-vol \$0-set-master-vol
+Vol\ 0.00 90 9 0 8 -204786 -1 -228856 0 1;
+#X obj 714 224 r \$0-menu-tgl;
+#X msg 745 266 86;
+#X obj 714 245 sel 0 1;
+#X obj 714 314 t b a;
+#X obj 765 314 sendcanvas;
+#X msg 714 338 map 0 \, map 1;
+#X obj 714 362 sendcanvas 1;
+#N canvas 0 23 450 300 set-x-vol 0;
+#X msg 133 138 label \$1;
+#X obj 133 93 r \$0-x-vol;
+#X obj 133 162 s \$0-set-x-vol;
+#X obj 133 114 makefilename X\ %.2f;
+#X connect 0 0 2 0;
+#X connect 1 0 3 0;
+#X connect 3 0 0 0;
+#X restore 714 123 pd set-x-vol;
+#N canvas 0 23 450 300 set-y-vol 0;
+#X msg 213 198 label \$1;
+#X obj 213 153 r \$0-y-vol;
+#X obj 213 174 makefilename Y\ %.2f;
+#X obj 213 222 s \$0-set-y-vol;
+#X connect 0 0 3 0;
+#X connect 1 0 2 0;
+#X connect 2 0 0 0;
+#X restore 714 145 pd set-y-vol;
+#N canvas 0 23 450 300 set-z-vol 0;
+#X msg 153 148 label \$1;
+#X obj 153 103 r \$0-z-vol;
+#X obj 153 172 s \$0-set-z-vol;
+#X obj 153 124 makefilename Z\ %.2f;
+#X connect 0 0 2 0;
+#X connect 1 0 3 0;
+#X connect 3 0 0 0;
+#X restore 714 166 pd set-z-vol;
+#N canvas 0 23 450 300 set-master-vol 0;
+#X msg 150 108 label \$1;
+#X obj 150 63 r \$0-master-vol;
+#X obj 150 132 s \$0-set-master-vol;
+#X obj 150 84 makefilename Vol\ %.2f;
+#X connect 0 0 2 0;
+#X connect 1 0 3 0;
+#X connect 3 0 0 0;
+#X restore 714 187 pd set-master-vol;
+#X obj 453 304 tgl 10 0 \$0-menu-tgl \$0-set-menu-tgl empty 17 7 0
+10 -99865 -262144 -1 0 1;
+#X msg 714 289 coords -1 -1 1 1 140 \$1 2 450 300;
+#X msg 714 266 40;
+#X obj 451 340 cnv 15 138 45 empty primary-bg empty 20 12 0 14 -99865
+-66577 0;
+#X obj 457 341 hsl 85 12 0 2 0 0 \$0-x-vol \$0-set-x-vol X\ 1.00 90
+6 0 8 -204786 -1 -228856 4200 1;
+#X obj 457 355 hsl 85 12 0 2 0 0 \$0-y-vol \$0-set-y-vol Y\ 1.00 90
+6 0 8 -204786 -1 -228856 4200 1;
+#X obj 457 369 hsl 85 12 0 2 0 0 \$0-z-vol \$0-set-z-vol Z\ 1.00 90
+6 0 8 -204786 -1 -228856 4200 1;
+#X obj 451 301 cnv 1 7 1 empty empty empty 20 12 0 14 -262144 -66577
+0;
+#X obj 582 301 cnv 1 7 1 empty empty empty 20 12 0 14 -262144 -66577
+0;
+#X obj 516 301 cnv 1 7 1 empty empty empty 20 12 0 14 -262144 -66577
+0;
+#X obj 582 384 cnv 1 7 1 empty empty empty 20 12 0 14 -262144 -66577
+0;
+#X obj 516 384 cnv 1 7 1 empty empty empty 20 12 0 14 -262144 -66577
+0;
+#X obj 451 384 cnv 1 7 1 empty empty empty 20 12 0 14 -262144 -66577
+0;
+#X obj 714 15 else/initmess \; \$0-set-x-vol 1 \; \$0-set-y-vol 1 \;
+\$0-set-z-vol 1 \; \$0-set-master-vol 0 \; \$0-set-menu-tgl 0 \;;
+#X connect 0 0 1 0;
+#X connect 1 0 4 0;
+#X connect 2 0 3 0;
+#X connect 3 0 1 1;
+#X connect 4 0 7 0;
+#X connect 5 0 4 1;
+#X connect 6 0 5 0;
+#X connect 8 0 11 0;
+#X connect 9 0 10 0;
+#X connect 10 0 8 1;
+#X connect 11 0 14 0;
+#X connect 12 0 11 1;
+#X connect 13 0 12 0;
+#X connect 15 0 18 0;
+#X connect 16 0 17 0;
+#X connect 17 0 15 1;
+#X connect 18 0 21 0;
+#X connect 19 0 18 1;
+#X connect 20 0 19 0;
+#X connect 22 0 15 0;
+#X connect 23 0 8 0;
+#X connect 27 0 29 0;
+#X connect 28 0 39 0;
+#X connect 29 0 40 0;
+#X connect 29 1 28 0;
+#X connect 30 0 32 0;
+#X connect 30 1 31 0;
+#X connect 32 0 33 0;
+#X connect 39 0 30 0;
+#X connect 40 0 39 0;
+#X coords -1 -1 1 1 140 40 2 450 300;

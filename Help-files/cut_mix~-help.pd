@@ -1,0 +1,96 @@
+#N canvas -1152 112 574 660 12;
+#X obj 89 432 cnv 15 3 17 empty empty 0 5 9 0 16 -216373 -141475 0
+;
+#X obj 89 535 cnv 15 3 17 empty empty 0=>N 5 9 0 16 -216373 -141475
+0;
+#X text 107 431 signal;
+#X obj 89 460 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
+;
+#X text 107 459 signal;
+#X obj 89 488 cnv 15 3 17 empty empty 2 5 9 0 16 -216373 -141475 0
+;
+#X text 107 487 signal;
+#X text 137 535 signal;
+#X obj 6 81 phasor~ 50;
+#X floatatom 57 116 5 0 0 0 - - -;
+#X floatatom 108 168 5 0 1 0 - - -;
+#X obj 108 191 sig~ 0.6;
+#X text 89 584 1) int (1-n);
+#X text 149 167 fade ratio (0-1);
+#X text 97 116 which cut (1-n);
+#X obj 6 215 osci/cut_mix~ 2;
+#X obj 57 139 phasor~ 0.1;
+#X obj 6 265 osci/square~ 0 0 0.5;
+#X obj 162 264 osci/square~ 0 0 0.2;
+#X text 193 431 - main phase;
+#X text 193 459 - which cut (1 - n);
+#X text 193 487 - fade ratio (0 - 1);
+#X text 193 535 - adjusted phase \, ramps from 0 to 1;
+#X text 193 583 - number of cuts;
+#X obj 6 289 osci/cut_idx~;
+#X obj 162 289 osci/cut_idx~;
+#X obj 6 343 osci/out~;
+#X obj 1 422 cnv 1 552 1 empty empty inlets 8 12 0 13 -216373 -1 0
+;
+#X obj 1 518 cnv 1 552 1 empty empty outlets 8 12 0 13 -216373 -1 0
+;
+#X obj 2 568 cnv 1 552 1 empty empty arguments 8 12 0 13 -216373 -1
+0;
+#X obj 2 616 cnv 15 552 24 empty empty empty 20 12 0 14 -233017 -33289
+0;
+#N canvas 68 399 284 188 related_objects 0;
+#X obj 7 116 osci/dash~;
+#X obj 127 66 osci/cut_equal~;
+#X obj 127 91 osci/cut_weights~;
+#X text 6 34 Phase Modifiers;
+#X text 122 34 Phase Cutters;
+#X obj 7 66 osci/knee~;
+#X obj 7 91 osci/bright~;
+#X obj 1 1 cnv 15 250 23 empty empty empty 3 12 0 20 -204786 -1 0;
+#X text 8 4 Other phase manipulation objects;
+#X obj 7 141 osci/trace~;
+#X restore 16 619 pd related_objects;
+#X text 145 328 [cut_mix~] splits a phasor up into equal parts to draw
+multiple images at the same time. [cut_mix~] is special in that it
+must be the first modifier in the chain as it splits up the incoming
+phase into new phases in order to draw multiple objects onto the scope.
+, f 56;
+#X obj 1 1 cnv 15 305 46 empty empty empty 20 12 0 14 -66577 -66577
+0;
+#X obj 4 3 cnv 15 301 42 empty empty cut_mix~ 20 20 2 37 -204786 -1
+0;
+#X obj 307 1 cnv 15 256 46 empty empty empty 20 12 0 14 -66577 -66577
+0;
+#X obj 310 4 cnv 15 250 40 empty empty empty 12 13 0 18 -128992 -233080
+0;
+#X obj 317 11 cnv 10 10 10 empty empty OSCI 0 15 2 30 -128992 -204786
+0;
+#X obj 10 34 cnv 5 10 10 empty \$0-description Split\ phase\ into\ N\ cuts\ and\ fade\ b/w\ them
+30 30 2 17 -204786 -1 0;
+#X obj 413 25 cnv 10 10 10 empty empty Oscilloscope 0 6 2 13 -128992
+-204786 0;
+#X obj 480 25 cnv 10 10 10 empty empty Music 0 6 2 13 -128992 -204786
+0;
+#X obj 513 25 cnv 10 10 10 empty empty & 0 6 2 13 -128992 -204786 0
+;
+#X obj 454 11 cnv 10 10 10 empty empty Library 0 6 2 13 -128992 -204786
+0;
+#X obj 526 25 cnv 10 10 10 empty empty Art 0 6 2 13 -128992 -204786
+0;
+#X obj 497 11 cnv 10 10 10 empty empty for 0 6 2 13 -128992 -204786
+0;
+#X connect 8 0 15 0;
+#X connect 9 0 16 0;
+#X connect 10 0 11 0;
+#X connect 11 0 15 2;
+#X connect 15 0 17 0;
+#X connect 15 0 24 3;
+#X connect 15 1 18 0;
+#X connect 15 1 25 3;
+#X connect 16 0 15 1;
+#X connect 17 0 24 0;
+#X connect 18 0 25 0;
+#X connect 24 0 26 0;
+#X connect 24 1 26 1;
+#X connect 25 0 26 0;
+#X connect 25 1 26 1;

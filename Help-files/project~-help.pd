@@ -1,0 +1,59 @@
+#N canvas 275 102 578 463 12;
+#X obj 88 282 cnv 15 3 17 empty empty 0 5 9 0 16 -216373 -141475 0
+;
+#X obj 88 326 cnv 15 3 17 empty empty 0 5 9 0 16 -216373 -141475 0
+;
+#X text 106 280 signal;
+#X text 106 324 signal;
+#X text 85 374 1) float;
+#X text 85 394 2) float;
+#X text 165 185 proj~ is a good short hand;
+#X obj 25 185 project~;
+#X obj 24 90 phasor~ 50;
+#X obj 24 114 osci/cuboid~;
+#X text 198 280 - components of Rn vector;
+#X text 197 323 - components of Rm vector;
+#X text 197 374 - N dimensions;
+#X text 197 393 - M dimensions;
+#X text 168 166 flag for projection mode;
+#X obj 25 209 osci/out~;
+#X obj 1 1 cnv 15 305 46 empty empty empty 20 12 0 14 -66577 -66577
+0;
+#X obj 4 3 cnv 15 301 42 empty empty project~ 20 20 2 37 -204786 -1
+0;
+#X obj 307 1 cnv 15 256 46 empty empty empty 20 12 0 14 -66577 -66577
+0;
+#X obj 310 4 cnv 15 250 40 empty empty empty 12 13 0 18 -128992 -233080
+0;
+#X obj 317 11 cnv 10 10 10 empty empty OSCI 0 15 2 30 -128992 -204786
+0;
+#X obj 413 25 cnv 10 10 10 empty empty Oscilloscope 0 6 2 13 -128992
+-204786 0;
+#X obj 480 25 cnv 10 10 10 empty empty Music 0 6 2 13 -128992 -204786
+0;
+#X obj 513 25 cnv 10 10 10 empty empty & 0 6 2 13 -128992 -204786 0
+;
+#X obj 454 11 cnv 10 10 10 empty empty Library 0 6 2 13 -128992 -204786
+0;
+#X obj 526 25 cnv 10 10 10 empty empty Art 0 6 2 13 -128992 -204786
+0;
+#X obj 497 11 cnv 10 10 10 empty empty for 0 6 2 13 -128992 -204786
+0;
+#X obj 10 34 cnv 5 10 10 empty \$0-description Project\ from\ N\ to\ M\ dimensions
+30 30 2 17 -204786 -1 0;
+#X text 138 130 THIS OBJECT CURRENTLY DOESN'T DO ANYTHING!!! IF I EVER
+GET AROUND TO IT I'LL WRITE THE CODE TO DO IT PROPERLY!!!;
+#X obj 2 274 cnv 1 550 1 empty empty inlets 8 12 0 13 -228856 -1 0
+;
+#X obj 2 317 cnv 1 550 1 empty empty outlets 8 12 0 13 -228856 -1 0
+;
+#X obj 2 366 cnv 1 550 1 empty empty arguments 8 12 0 13 -228856 -1
+0;
+#X obj 2 420 cnv 15 552 21 empty empty empty 20 12 0 14 -233017 -33289
+0;
+#X connect 7 0 15 0;
+#X connect 7 1 15 1;
+#X connect 8 0 9 0;
+#X connect 9 0 7 0;
+#X connect 9 1 7 1;
+#X connect 9 2 7 2;

@@ -1,0 +1,62 @@
+#N canvas 119 23 572 596 12;
+#X obj 1 1 cnv 15 305 46 empty empty empty 20 12 0 14 -66577 -66577
+0;
+#X obj 4 3 cnv 15 301 42 empty empty gain~ 20 20 2 37 -204786 -1 0
+;
+#X obj 307 1 cnv 15 256 46 empty empty empty 20 12 0 14 -66577 -66577
+0;
+#X obj 310 4 cnv 15 250 40 empty empty empty 12 13 0 18 -128992 -233080
+0;
+#X obj 317 11 cnv 10 10 10 empty empty OSCI 0 15 2 30 -128992 -204786
+0;
+#X obj 413 25 cnv 10 10 10 empty empty Oscilloscope 0 6 2 13 -128992
+-204786 0;
+#X obj 480 25 cnv 10 10 10 empty empty Music 0 6 2 13 -128992 -204786
+0;
+#X obj 513 25 cnv 10 10 10 empty empty & 0 6 2 13 -128992 -204786 0
+;
+#X obj 454 11 cnv 10 10 10 empty empty Library 0 6 2 13 -128992 -204786
+0;
+#X obj 526 25 cnv 10 10 10 empty empty Art 0 6 2 13 -128992 -204786
+0;
+#X obj 497 11 cnv 10 10 10 empty empty for 0 6 2 13 -128992 -204786
+0;
+#X obj 2 374 cnv 3 550 3 empty empty inlets 8 12 0 13 -228856 -1 0
+;
+#X obj 2 450 cnv 3 550 3 empty empty outlets 8 12 0 13 -228856 -1 0
+;
+#X obj 2 526 cnv 3 550 3 empty empty arguments 8 12 0 13 -228856 -1
+0;
+#X obj 2 562 cnv 15 552 21 empty empty empty 20 12 0 14 -233017 -33289
+0;
+#X obj 3 98 phasor~ 50;
+#X obj 3 122 osci/circle~ 0 0 2;
+#X obj 3 238 osci/out~;
+#X obj 10 34 cnv 5 10 10 empty \$0-description 3D\ Vector\ Volume\ control
+30 30 2 17 -204786 -1 0;
+#X obj 92 462 cnv 17 3 17 empty empty 0 5 9 0 16 -228856 -162280 0
+;
+#X obj 92 482 cnv 17 3 17 empty empty 1 5 9 0 16 -228856 -162280 0
+;
+#X obj 92 502 cnv 17 3 17 empty empty 2 5 9 0 16 -228856 -162280 0
+;
+#X text 134 481 signal - y;
+#X text 133 501 signal - z;
+#X text 133 461 signal - x;
+#X obj 3 146 osci/gain~;
+#X obj 92 382 cnv 17 3 17 empty empty 0 5 9 0 16 -228856 -162280 0
+;
+#X obj 92 402 cnv 17 3 17 empty empty 1 5 9 0 16 -228856 -162280 0
+;
+#X obj 92 422 cnv 17 3 17 empty empty 2 5 9 0 16 -228856 -162280 0
+;
+#X text 134 401 signal - y;
+#X text 133 421 signal - z;
+#X text 133 381 signal - x;
+#X text 142 268 [gain~] is a basic volume controller. There's a slider
+for each axis as well as master slider to control overall volume.;
+#X connect 15 0 16 0;
+#X connect 16 0 25 0;
+#X connect 16 1 25 1;
+#X connect 25 0 17 0;
+#X connect 25 1 17 1;

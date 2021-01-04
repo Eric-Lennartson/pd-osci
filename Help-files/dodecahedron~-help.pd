@@ -1,0 +1,96 @@
+#N canvas 155 27 570 714 12;
+#X obj 88 312 cnv 15 3 60 empty empty 0 5 9 0 16 -216373 -141475 0
+;
+#X obj 88 446 cnv 15 3 17 empty empty 0 5 9 0 16 -216373 -141475 0
+;
+#X text 106 311 signal;
+#X text 106 445 signal;
+#X obj 88 479 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
+;
+#X text 106 478 signal;
+#X text 197 554 - x position;
+#X text 197 574 - y position;
+#X text 85 554 1) float;
+#X text 85 574 2) float;
+#X text 85 594 3) float;
+#X text 85 614 4) float;
+#X text 197 594 - z position;
+#X text 197 614 - width;
+#X text 197 634 - height;
+#X text 197 654 - length;
+#X text 85 634 5) float;
+#X text 85 654 6) float;
+#X text 197 445 - x out;
+#X text 197 478 - y out;
+#X obj 88 514 cnv 15 3 17 empty empty 2 5 9 0 16 -216373 -141475 0
+;
+#X text 106 513 signal;
+#X text 197 513 - z out;
+#X obj 35 168 osci/rotate~ 45 23 0;
+#X obj 35 192 osci/project~;
+#X obj 35 100 phasor~ 50;
+#X floatatom 284 87 5 0 1 0 - - -;
+#X obj 284 110 sig~ 1;
+#X obj 87 389 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
+;
+#X text 105 388 signal;
+#X text 190 388 - amount of interpolation between the points (0-1)
+;
+#X obj 35 216 osci/out~;
+#X obj 1 1 cnv 15 305 46 empty empty empty 20 12 0 14 -66577 -66577
+0;
+#X obj 4 3 cnv 15 301 42 empty empty dodecahedron~ 20 20 2 37 -204786
+-1 0;
+#X obj 307 1 cnv 15 256 46 empty empty empty 20 12 0 14 -66577 -66577
+0;
+#X obj 310 4 cnv 15 250 40 empty empty empty 12 13 0 18 -128992 -233080
+0;
+#X obj 317 11 cnv 10 10 10 empty empty OSCI 0 15 2 30 -128992 -204786
+0;
+#X obj 413 25 cnv 10 10 10 empty empty Oscilloscope 0 6 2 13 -128992
+-204786 0;
+#X obj 10 34 cnv 5 10 10 empty \$0-description Draw\ a\ dodecahedron
+30 30 2 17 -204786 -1 0;
+#X obj 480 25 cnv 10 10 10 empty empty Music 0 6 2 13 -128992 -204786
+0;
+#X obj 513 25 cnv 10 10 10 empty empty & 0 6 2 13 -128992 -204786 0
+;
+#X obj 454 11 cnv 10 10 10 empty empty Library 0 6 2 13 -128992 -204786
+0;
+#X obj 526 25 cnv 10 10 10 empty empty Art 0 6 2 13 -128992 -204786
+0;
+#X obj 497 11 cnv 10 10 10 empty empty for 0 6 2 13 -128992 -204786
+0;
+#X obj 1 284 cnv 1 552 1 empty empty inlets 8 12 0 13 -216373 -1 0
+;
+#X obj 1 427 cnv 1 552 1 empty empty outlets 8 12 0 13 -216373 -1 0
+;
+#X obj 2 542 cnv 1 552 1 empty empty arguments 8 12 0 13 -216373 -1
+0;
+#X obj 2 677 cnv 15 552 24 empty empty empty 20 12 0 14 -233017 -33289
+0;
+#N canvas 271 151 235 200 related_objects 0;
+#X obj 1 1 cnv 15 230 23 empty empty empty 3 12 0 20 -204786 -1 0;
+#X obj 17 74 osci/octahedron~;
+#X obj 17 104 osci/tetrahedron~;
+#X obj 17 134 osci/icosahedron~;
+#X text 0 4 [dodecahedron~] related objects;
+#X obj 17 44 osci/cuboid~;
+#X restore 16 680 pd related_objects;
+#X obj 35 134 osci/dodecahedron~ 0 0 0 0.2 0.4 0.3;
+#X text 167 223 the code for dodeca needs to be updated;
+#X text 192 311 - controls the position of the dot on the dodecahedron
+\, ramping from 0 to 1 results in a complete dodecahedron. Normally
+a phasor would be used but any signal source could be used., f 42
+;
+#X connect 23 0 24 0;
+#X connect 23 1 24 1;
+#X connect 23 2 24 2;
+#X connect 24 0 31 0;
+#X connect 24 1 31 1;
+#X connect 25 0 49 0;
+#X connect 26 0 27 0;
+#X connect 27 0 49 1;
+#X connect 49 0 23 0;
+#X connect 49 1 23 1;
+#X connect 49 2 23 2;

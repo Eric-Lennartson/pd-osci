@@ -1,0 +1,12 @@
+#N canvas 0 23 450 300 12;
+#X obj 91 56 inlet~ x;
+#X obj 160 56 inlet~ y;
+#X obj 232 56 inlet~ z;
+#X obj 91 118 outlet~ x;
+#X obj 160 118 outlet~ y;
+#X text 10 9 since we're multiplying the others by 0 \, this is mostly
+just to look nice...;
+#X text 29 150 TODO: project any N down to M;
+#X text 29 170 TODO: choose projection mode/method;
+#X connect 0 0 3 0;
+#X connect 1 0 4 0;
