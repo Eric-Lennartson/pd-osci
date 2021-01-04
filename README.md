@@ -1,2 +1,2 @@
 # pd-osci
-A collection of externals useful for making oscilloscope music
+A collection of useful externals for making oscilloscope music
