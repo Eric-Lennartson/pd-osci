@@ -4,7 +4,7 @@ A collection of useful externals for making oscilloscope music and art
 --------------------------------------------------------------------------
 
    This work is free. You can redistribute it and/or modify it under the
-   terms of the GPUv3 license. See License.txt for more details
+   terms of the GNU Affero General Public License v3.0. See LICENSE for more details
 
 --------------------------------------------------------------------------
 
