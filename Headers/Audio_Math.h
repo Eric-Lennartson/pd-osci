@@ -38,6 +38,7 @@ double mod1(const double value)
 }
 
 // doesn't avoid gimbal lock problems
+// this should probably be in vec3.h
 void rotate(t_vec3* v, t_sample ax, t_sample ay, t_sample az)
 {
     t_sample a = cosf(DEG_TO_RAD * ax);

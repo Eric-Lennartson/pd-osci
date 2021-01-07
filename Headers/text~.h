@@ -1,11 +1,3 @@
-//
-//  text~.h
-//
-// basically coPIed and from OsciStudio and adjusted to work for in c.
-//
-
-
-
 #ifndef text_h
 #define text_h
 
