@@ -1,15 +1,8 @@
-//
-//  utils.h
-//  
-//
-//  Created by Eric Lennartson on 5/27/20.
-//
-
 #ifndef utils_h
 #define utils_h
 
 #include "stdarg.h"
-#include "m_pd.h"
+//#include "m_pd.h"
 
 #define min(a, b) a < b ? a : b
 #define max(a, b) a > b ? a : b
@@ -17,18 +10,18 @@
 
 #define FLT_EPSILON 1.19209290E-07F
 
-t_float va_minf(t_float num_args, ...)
+double va_minf(double num_args, ...)
 {
-    t_float min;
+    double min;
     
     va_list values;
     va_start(values, num_args);
     
-    min = va_arg(values, t_float);
+    min = va_arg(values, double);
     
-    for(t_float i = 1; i < num_args; ++i)
+    for(double i = 1; i < num_args; ++i)
     {
-        t_float temp =  va_arg(values, t_float);
+        double temp =  va_arg(values, double);
         min = min < temp ? min : temp;
     }
     
@@ -57,18 +50,18 @@ int va_mini(int num_args, ...)
     return min;
 }
 
-t_float va_maxf(t_float num_args, ...)
+double va_maxf(double num_args, ...)
 {
-    t_float max;
+    double max;
     
     va_list values;
     va_start(values, num_args);
     
-    max = va_arg(values, t_float);
+    max = va_arg(values, double);
     
-    for(t_float i = 1; i < num_args; ++i)
+    for(double i = 1; i < num_args; ++i)
     {
-        t_float temp =  va_arg(values, t_float);
+        double temp =  va_arg(values, double);
         max = max > temp ? max : temp;
     }
     
@@ -97,7 +90,6 @@ int va_maxi(int num_args, ...)
     return max;
 }
 
-// basically the map function, should I rename it map and map to unit?
 double map_lin( double value,  double inputMin,  double inputMax,  double outputMin,  double outputMax, bool clamp)
 {
     if(fabs(inputMin - inputMax) < FLT_EPSILON) // check if distance is basically zero
@@ -131,5 +123,5 @@ double map_to_unit(double value, double inputMin, double inputMax, double clamp)
 }
 
 float mod1(float val) { return val - (int)val; }
-    
+
 #endif /* utils_h */

@@ -1,10 +1,3 @@
-//
-//  Audio_Math.h
-//
-//  Created by Eric Lennartson on 4/18/20.
-//  Copyright © 2020 Eric Lennartson. All rights reserved.
-//
-
 #ifndef Audio_Math_h
 #define Audio_Math_h
 
@@ -31,12 +24,12 @@ double lerp(const double t, const double a, const double b)
     return a + (t * (b - a));
 }
 
-vec3 blend(float t, vec3 a, vec3 b)
+t_vec3 blend(float t, t_vec3 a, t_vec3 b)
 {
-    return (vec3) { lerp(t, a.x, b.x),
+    return (t_vec3) { lerp(t, a.x, b.x),
                     lerp(t, a.y, b.y),
                     lerp(t, a.z, b.z)
-                  };
+                    };
 }
 
 double mod1(const double value)
@@ -45,7 +38,7 @@ double mod1(const double value)
 }
 
 // doesn't avoid gimbal lock problems
-void rotate(vec3* v, t_sample ax, t_sample ay, t_sample az)
+void rotate(t_vec3* v, t_sample ax, t_sample ay, t_sample az)
 {
     t_sample a = cosf(DEG_TO_RAD * ax);
     t_sample b = sinf(DEG_TO_RAD * ax);
