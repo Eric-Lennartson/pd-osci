@@ -1,28 +1,11 @@
-//
-//  Square~.c
-//  Square~
-//
-//  Created by Eric Lennartson on 4/08/20.
-
 
 #include "m_pd.h"
 #include "Audio_Math.h"
 
 static t_class *square_tilde_class;
 
-typedef struct vec3
-{
-    t_float x, y, z;
-} vec3;
-
-
-t_float points[4][2] = {{-1,   1},
-                        {  1,  1},
-                        {  1, -1},
-                        { -1, -1}
-                       };
-
-vec3 points2[4] = {{-1, 1, 0},{1,1,0},{1,-1,0},{-1,-1,0}};
+t_vec3 points[4] = { {-1, 1, 0}, {1,1,0},
+                     {1,-1,0}, {-1,-1,0} };
 
 typedef struct _square_tilde
 {
@@ -54,10 +37,10 @@ static t_int *square_tilde_perform(t_int *w)
         t_sample t2 = t * 4;
         int  int_t2 = t2;
         
-        t_float x1 = points2[int_t2].x;
-        t_float y1 = points2[int_t2].y;
-        t_float x2 = points2[(int_t2 + 1 < 4) ? int_t2 + 1 : 0].x;
-        t_float y2 = points2[(int_t2 + 1 < 4) ? int_t2 + 1 : 0].y;
+        t_float x1 = points[int_t2].x;
+        t_float y1 = points[int_t2].y;
+        t_float x2 = points[(int_t2 + 1 < 4) ? int_t2 + 1 : 0].x;
+        t_float y2 = points[(int_t2 + 1 < 4) ? int_t2 + 1 : 0].y;
         
         *xChan_out++ = lerp( x1, x2, mod1(t2) ) * size + xPos;
         *yChan_out++ = lerp( y1, y2, mod1(t2) ) * size + yPos;

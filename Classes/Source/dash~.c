@@ -1,12 +1,6 @@
-//
-//  dash~.c
-//  dash~
-//
-//  Created by Eric Lennartson on 3/26/20.
 
 #include "m_pd.h"
-
-static t_sample mod1(t_sample val) {return val - (int)val; }
+#include "Audio_Math.h"
 
 static t_class *dash_class;
 
@@ -69,7 +63,7 @@ static void *dash_new(t_floatarg num_pnts, t_floatarg dash_length)
 {
     t_dash *x = (t_dash *)pd_new(dash_class);
     
-    x->num_pnts   = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
+    x->num_pnts    = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
     x->dash_length = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
     
     pd_float((t_pd*)x->num_pnts, num_pnts);

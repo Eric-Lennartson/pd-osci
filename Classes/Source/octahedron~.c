@@ -8,7 +8,7 @@ typedef struct _octahedron_tilde
     t_object  x_obj;
     t_sample f; // dummy arg
     t_sample xPos, yPos, zPos, xScale, yScale, zScale;
-    vec3 points[12], v1, v2; // v1 and v2 are temp vecs
+    t_vec3 points[12], v1, v2; // v1 and v2 are temp vecs
     t_inlet *interp_amt;
     t_outlet *x_out, *y_out, *z_out;
 } t_octahedron_tilde;
@@ -31,8 +31,8 @@ t_int *octahedron_tilde_perform(t_int *w)
       int idx = t2;
       int idx_next = (idx + 1 < 12) ? idx + 1 : 0;
       
-      x->v1 = set(x->points[idx].x, x->points[idx].y, x->points[idx].z);
-      x->v2 = set(x->points[idx_next].x, x->points[idx_next].y, x->points[idx_next].z);
+      x->v1 = vec3(x->points[idx].x, x->points[idx].y, x->points[idx].z);
+      x->v2 = vec3(x->points[idx_next].x, x->points[idx_next].y, x->points[idx_next].z);
       
       *x_out++ = lerp(mod1(t2 * amt), x->v1.x, x->v2.x) * x->xScale + x->xPos;
       *y_out++ = lerp(mod1(t2 * amt), x->v1.y, x->v2.y) * x->yScale + x->yPos;
@@ -59,18 +59,18 @@ void *octahedron_tilde_new(t_symbol *s, int argc, t_atom *argv) // this is becau
     t_octahedron_tilde *x = (t_octahedron_tilde *)pd_new(octahedron_tilde_class);
     
     // this could be done better, but this works, and I don't need to change them later
-    x->points[0]  = set(-0.5, -0.5,  0.0);
-    x->points[1]  = set(-0.5,  0.5,  0.0);
-    x->points[2]  = set( 0.0,  0.0, -0.5);
-    x->points[3]  = set(-0.5, -0.5,  0.0);
-    x->points[4]  = set( 0.5, -0.5,  0.0);
-    x->points[5]  = set( 0.0,  0.0, -0.5);
-    x->points[6]  = set( 0.5,  0.5,  0.0);
-    x->points[7]  = set( 0.5, -0.5,  0.0);
-    x->points[8]  = set( 0.0,  0.0,  0.5);
-    x->points[9]  = set( 0.5,  0.5,  0.0);
-    x->points[10] = set(-0.5,  0.5,  0.0);
-    x->points[11] = set( 0.0,  0.0,  0.5);
+    x->points[0]  = vec3(-0.5, -0.5,  0.0);
+    x->points[1]  = vec3(-0.5,  0.5,  0.0);
+    x->points[2]  = vec3( 0.0,  0.0, -0.5);
+    x->points[3]  = vec3(-0.5, -0.5,  0.0);
+    x->points[4]  = vec3( 0.5, -0.5,  0.0);
+    x->points[5]  = vec3( 0.0,  0.0, -0.5);
+    x->points[6]  = vec3( 0.5,  0.5,  0.0);
+    x->points[7]  = vec3( 0.5, -0.5,  0.0);
+    x->points[8]  = vec3( 0.0,  0.0,  0.5);
+    x->points[9]  = vec3( 0.5,  0.5,  0.0);
+    x->points[10] = vec3(-0.5,  0.5,  0.0);
+    x->points[11] = vec3( 0.0,  0.0,  0.5);
         
     switch(argc)
     {

@@ -1,6 +1,7 @@
 #include "m_pd.h"
 #include <math.h>
 
+// PDBIGORSMALL ??
 #define FLT_EPSILON 1.19209290E-07F
 
 typedef struct _bezier_tilde
@@ -10,8 +11,6 @@ typedef struct _bezier_tilde
     t_inlet  *min_in, *max_in, *min_out, *max_out;
     t_outlet *x_out, *y_out;
 } t_bezier_tilde;
-
-
 
 t_float bezier(t_float value,  t_float inputMin,  t_float inputMax,  t_float outputMin,  t_float outputMax)
 {

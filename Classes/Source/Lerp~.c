@@ -1,12 +1,4 @@
-//
-//  Lerp~.c
-//  Lerp~
-//
-//  Created by Eric Lennartson on 4/6/20.
-
 #include "m_pd.h"
-
-// SOMETHING IS HORRIBLY WRONG HERE!!! SECOND OPTION IN LERP IS REALLY ODD!!!!!!
 
 static t_class *lerp_tilde_class;
 

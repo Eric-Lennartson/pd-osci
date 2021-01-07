@@ -5,9 +5,7 @@
 //  Created by Eric Lennartson on 3/26/20.
 
 #include "m_pd.h"
-#include <math.h>
-
-static t_sample mod1(t_sample val) {return val - (int)val; }
+#include "Audio_Math.h"
 
 static t_class *bright_class;
 

@@ -7,7 +7,7 @@
 
 - 1. Figure out what's going on with alignments
 - 1b. Potentially change it be called justify?
-- 2. Fonts will be a fair amount of work, I'll work with them during winter break.
+- 2. Fonts will be a fair amount of work, I'll work with them one day over the rainbow...
 - space => _ newline => .
  
 */
@@ -18,7 +18,7 @@ typedef struct _text_tilde
     t_object x_obj;
     t_sample f; // dummy variable for 1st inlet
     OsciText text;
-    vec3 v_out;
+    t_vec3 v_out;
     
     t_inlet *line_height_in, *letter_spacing_in, *ratio_in; // *driver_in default provided
     t_outlet *yChan_out; // *xChan_out default provided

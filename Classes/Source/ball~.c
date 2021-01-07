@@ -7,7 +7,7 @@ typedef struct _ball_tilde
 {
     t_object  x_obj;
     t_sample f;
-    vec3 a, b, out;
+    t_vec3 a, b, out;
     t_inlet  *y_in, *z_in, *amt_in, *r_in;
     t_outlet *x_out, *y_out, *z_out;
 } t_ball_tilde;
@@ -28,10 +28,10 @@ t_int *ball_tilde_perform(t_int *w)
     while (n--)
     {
         t_sample r = *r_in++;
-        x->a = set(*x_in++, *y_in++, *z_in++);
+        x->a = vec3(*x_in++, *y_in++, *z_in++);
 
-        t_float len = length(&x->a);
-        x->b = len > 0.f ? div(&x->a, len) : NEW_VEC3;
+        t_float len = v3_len(x->a);
+        x->b = (len > 0.f) ? v3_divf(x->a, len) : NEW_VEC3;
         x->out = blend(*amt_in++, x->a, x->b);
 
         *x_out++ = x->out.x * r;

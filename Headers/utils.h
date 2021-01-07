@@ -10,6 +10,13 @@
 
 #define FLT_EPSILON 1.19209290E-07F
 
+// copied from geeksforgeeks
+static inline int gcd(int a, int b) {
+    if (b == 0)
+        return a;
+    return gcd(b, a % b);
+}
+
 double va_minf(double num_args, ...)
 {
     double min;

@@ -7,7 +7,7 @@ typedef struct _rotate_tilde
 {
     t_object  x_obj;
     t_sample f; // dummy arg
-    vec3 rot, v; // rotation vector, in vector
+    t_vec3 rot, v; // rotation vector, in vector
     t_inlet /* *x_in, */ *y_in, *z_in, *xRot_in, *yRot_in, *zRot_in;
     t_outlet *x_out, *y_out, *z_out;
 } t_rotate_tilde;
@@ -28,10 +28,13 @@ t_int *rotate_tilde_perform(t_int *w)
     
   while (n--)
   {
-      x->v = set(*x_in++, *y_in++, *z_in++);
-      x->rot = set(*xRot_in++, *yRot_in++, *zRot_in++);
-      
-      rotate(&x->v, &x->rot);
+      x->v = vec3(*x_in++, *y_in++, *z_in++);
+      x->rot = vec3(*xRot_in++, *yRot_in++, *zRot_in++);
+      t_float ax = *xRot_in++;
+      t_float ay = *yRot_in++;
+      t_float az = *zRot_in++;
+
+      rotate(&x->v, ax, ay, az);
       
       *x_out++ = x->v.x;
       *y_out++ = x->v.y;

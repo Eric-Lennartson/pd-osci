@@ -2,6 +2,7 @@
 #include "math.h"
 #include "stdbool.h"
 
+// might want to refactor FLT_EPISLON later
 #define FLT_EPSILON 1.19209290E-07F
 
 static t_class *chris_clip_tilde_class;

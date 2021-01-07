@@ -43,9 +43,8 @@ static inline t_vec3 v3_norm(t_vec3 v)
 }
 
 // basic transformations
-// isn't translate covered by addition?
-// isn't scale covered by mult?
-void v3_shear(t_vec3 *v, t_float angle, const char* axis) // possibly change to a regular char
+// char* because of t_symbol
+void v3_shear(t_vec3 *v, t_float angle, const char* axis)
 {
     
     if(axis && v) // check for nullptr

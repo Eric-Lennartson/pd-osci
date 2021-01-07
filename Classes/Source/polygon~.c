@@ -1,14 +1,7 @@
-//
-//  Square~.c
-//  Square~
-//
-//  Created by Eric Lennartson on 4/08/20.
-
-
 #include "m_pd.h"
 #include "Audio_Functions.h"
 
-vec3 v = NEW_VEC3;
+t_vec3 v = NEW_VEC3;
 
 static t_class *polygon_tilde_class;
 

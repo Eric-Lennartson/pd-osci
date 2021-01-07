@@ -7,7 +7,7 @@ typedef struct _shear_tilde
 {
     t_object  x_obj;
     t_sample f; // dummy arg
-    vec3 v;
+    t_vec3 v;
     t_symbol axis;
     t_inlet  *y_in, *z_in, *angle_in;
     t_outlet *x_out, *y_out, *z_out;
@@ -27,8 +27,8 @@ t_int *shear_tilde_perform(t_int *w)
     
     while (n--)
     {
-        x->v = set(*x_in++, *y_in++, *z_in++);
-        shear(&x->v, *angle_in++, x->axis.s_name);
+        x->v = vec3(*x_in++, *y_in++, *z_in++);
+        v3_shear(&x->v, *angle_in++, x->axis.s_name);
         
         *x_out++ = x->v.x;
         *y_out++ = x->v.y;

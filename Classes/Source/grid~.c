@@ -1,15 +1,10 @@
 #include "m_pd.h"
 #include "vec3.h"
+#include "utils.h"
 
 static t_class *grid_tilde_class;
 
 // fucking rip, this needs to be cleaned up big time
-
-// these could be made better and except variadic amount of args
-t_float mod1(t_float val) { return val - (int)val; }
-
-t_float max(t_float a, t_float b) { return a > b ? a : b; }
-t_float min(t_float a, t_float b) { return a < b ? a : b; }
 
 /*
  Not quite the same as oscistudio's grid.
@@ -22,7 +17,7 @@ typedef struct _grid_tilde
 {
     t_object    x_obj;
     t_sample    f; // dummy arg
-    vec3 v;
+    t_vec3 v;
     t_inlet     *nx_in, *ny_in, *nz_in, *spread_in;
     t_outlet    *t2_out, *scale_out, *x_out, *y_out, *z_out;
 } t_grid_tilde;
@@ -73,9 +68,9 @@ t_int *grid_tilde_perform(t_int *w)
         t_float scale = min(space_x,space_y);
         scale = min(scale,space_z);
 
-        //vec3 v = input(t2)*scale + vec3(off_x, off_y, off_z)*spread;
-        x->v = mult(&x->v, scale);
-        x->v = add_vec(&x->v, (vec3){off_x * spread, off_y * spread, off_z * spread} );
+        //t_vec3 v = input(t2)*scale + t_vec3(off_x, off_y, off_z)*spread; <-- what oscistudio would be
+        x->v = v3_multf(x->v, scale);
+        x->v = v3_add(x->v, (t_vec3){off_x * spread, off_y * spread, off_z * spread} );
 
         *t2_out++ = t2;
         *scale_out++ = scale;

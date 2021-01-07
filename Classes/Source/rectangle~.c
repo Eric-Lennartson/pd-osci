@@ -1,10 +1,3 @@
-//
-//  Square~.c
-//  Square~
-//
-//  Created by Eric Lennartson on 4/08/20.
-
-
 #include "m_pd.h"
 #include "Audio_Math.h"
 

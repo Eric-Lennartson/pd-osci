@@ -7,7 +7,7 @@ typedef struct _scale_tilde
 {
     t_object  x_obj;
     t_sample f; // dummy arg
-    vec3 v2, v; // v2ation vector, in vector
+    t_vec3 v, v2; // v2ation vector, in vector
     t_inlet /* *x_in, */ *y_in, *z_in, *xScalar_in, *yScalar_in, *zScalar_in;
     t_outlet *x_out, *y_out, *z_out;
 } t_scale_tilde;
@@ -28,10 +28,10 @@ t_int *scale_tilde_perform(t_int *w)
     
   while (n--)
   {
-      x->v = set(*x_in++, *y_in++, *z_in++);
-      x->v2 = set(*xScalar_in++, *yScalar_in++, *zScalar_in++);
+      x->v = vec3(*x_in++, *y_in++, *z_in++);
+      x->v2 = vec3(*xScalar_in++, *yScalar_in++, *zScalar_in++);
       
-      scale(&x->v, &x->v2);
+      x->v = v3_mult(x->v, x->v2);
       
       *x_out++ = x->v.x;
       *y_out++ = x->v.y;

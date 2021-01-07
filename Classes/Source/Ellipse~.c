@@ -1,14 +1,3 @@
-//
-//  Ellipse~.c
-//  Ellipse~
-//
-//  Created by Eric Lennartson on 3/26/20.
-
-/*
- Maybe add?
- - list msgs to change creation args?
- */
-
 #include "m_pd.h"
 #include <math.h>
 

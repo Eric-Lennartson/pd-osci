@@ -3,7 +3,7 @@
 
 static t_class *icosahedron_tilde_class;
 
-vec3 points[] = {{0,0,-1},
+t_vec3 points[] = {{0,0,-1},
                  {0.7236,-0.52572,-0.447215},
                  {-0.276385,-0.85064,-0.447215},
                  {-0.894425,0,-0.447215},
@@ -23,7 +23,7 @@ typedef struct _icosahedron_tilde
     t_sample f; // dummy arg
     t_sample xPos, yPos, zPos, xScale, yScale, zScale;
     int lines[36];
-    vec3 v1, v2; // v1 and v2 are temp vecs
+    t_vec3 v1, v2; // v1 and v2 are temp vecs
     t_inlet *interp_amt;
     t_outlet *x_out, *y_out, *z_out;
 } t_icosahedron_tilde;

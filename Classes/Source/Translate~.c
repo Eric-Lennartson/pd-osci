@@ -1,14 +1,3 @@
-//
-//  Translate~.c
-//  Translate~
-//
-//  Created by Eric Lennartson on 3/26/20.
-
-/*
- Maybe add?
- - list msgs to change creation args?
- */
-
 #include "m_pd.h"
 
 static t_class *translate_tilde_class;
