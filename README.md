@@ -16,11 +16,15 @@ A collection of useful externals for making oscilloscope music and art
 
 ​	This project is mostly for myself, but I put it on github incase others wished to contribute.
 
+​	I'm a amateur programmer, but I do take suggestions and will make an effort to implement them if I can.
+
 ​	This library's repository resides at <https://github.com/Eric-Lennartson/pd-osci/>.
 
 --------------------------------------------------------------------------
 
 ### Downloading osci:
+
+TODO: Add osci to the pd deken, currently you must use make to build the library
 
 ​	You can get osci from https://github.com/Eric-Lennartson/pd-osci/releases - where all releases are available, but osci is also found via Pd's external manager (In Pd, just go for Help => Find Externals and search for 'osci').  In any case, you should download the folder to a place Pd automatically searches for, and the common place is the ~/documents/pd/externals folder.
 
@@ -30,8 +34,6 @@ A collection of useful externals for making oscilloscope music and art
 
 #### Building osci for Pd Vanilla:
 
-Once I make the makefile, It'll do this, but right now, I don't know anythin about makefiles.
-
 osci relies on the build system called "pd-lib-builder" by Katja Vetter (check the project in: <https://github.com/pure-data/pd-lib-builder>). PdLibBuilder tries to find the Pd source directory at several common locations, but when this fails, you have to specify the path yourself using the pdincludepath variable. Example:
 
 <pre>make pdincludepath=~/pd-0.51-1/src/  (for Windows/MinGW add 'pdbinpath=~/pd-0.51-1/bin/)</pre>
@@ -40,7 +42,7 @@ osci relies on the build system called "pd-lib-builder" by Katja Vetter (check t
 
 Go to the pd-osci folder and use "objectsdir" to set a relative path for your build, something like:
 
-<pre>make install objectsdir=../else-build</pre>
+<pre>make install objectsdir=../osci-build</pre>
 Then move it to your preferred install folder for Pd and add it to the path.
 
 Cross compiling is also possible with something like this
