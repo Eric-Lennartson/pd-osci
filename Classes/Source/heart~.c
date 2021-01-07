@@ -1,7 +1,6 @@
 #include "m_pd.h"
 #include "math.h"
-
-const float PI = 3.14159265358979323846;
+#include "Audio_Math.h"
 
 static t_class *heart_tilde_class;
 

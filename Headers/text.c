@@ -1,18 +1,4 @@
-#ifndef text_h
-#define text_h
-
-#include "vec3.h"
-#include "stdbool.h"
-
-#define FLT_EPSILON 1.19209290E-07F
-const float PI = 3.14159265358979323846;
-
-#define clamp(val,min,max) ((val) < (min) ? (min) : ((val > max) ? (max) : (val)))
-#define MAX(x,y) (((x) > (y)) ? (x) : (y))
-
-t_sample mod1(const t_sample value) {
-    return value - (int)value;
-}
+#include "text.h"
 
 t_float scale_lin(t_float value, t_float inputMin, t_float inputMax, t_float outputMin, t_float outputMax, bool clamp) {
 
@@ -858,29 +844,6 @@ t_vec3 drawLetter(char letter, float t){
     return NEW_VEC3;
 }
 
-
-
-// assigning numbers isn't strictly necessary here
-typedef enum Align { Default = 0, Left = 1, Right = 2, Center = 3 } Align;
-typedef enum vAlign { None = 0, Top = 1, Bottom = 2, Middle = 3 } vAlign;
-
-typedef struct OsciText // add in alignment variables
-{
-    const char* text;
-    int length;
-    int numSpaces;
-    int numLines;
-    int longest_line;
-    Align horz_align;
-    vAlign vert_align;
-    int text_map[100]; // TODO: use some template crazyness instead
-    int letter_pos[100]; // templates don't exist in c land. Guess this doesn't need to be changed?
-    int letter_line[100]; // "
-    int line_length[100]; // "
-    
-} OsciText;
-#define NEW_OSCITEXT (OsciText){NULL, 0, 0, 0, 0, Default, None}
-
 // These were originally private functions used to for various helpful things regarding text
 
 // length of string
@@ -1051,6 +1014,3 @@ t_vec3 gen(OsciText* o_text, t_float t, t_float line_height, t_float letter_spac
 
     return v;
 }
-
-
-#endif /* text_h */

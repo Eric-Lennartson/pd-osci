@@ -1,4 +1,4 @@
-#include "text~.h" // contains vec3, and m_pd
+#include "text.h" // contains vec3, and m_pd
 #include <string.h> // for strcmp and strncpy
 // for now all that will happen is that it takes a symbol message and sends it out as audio.
 
