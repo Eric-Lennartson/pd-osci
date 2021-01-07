@@ -51,6 +51,12 @@ Cross compiling is also possible with something like this
 
 --------------------------------------------------------------------------
 
+### Acknowledgements
+
+I'm thankful for the Pd community and their willingness to help. Also, much of my code is fashioned after Alexandre Torres Porres's ELSE. I've learned so much from looking at his code. Thank You.
+
+--------------------------------------------------------------------------
+
 ## Current Object list (52 objects):
 
 **2D Primitives: [08]**
