@@ -10,7 +10,7 @@ A collection of useful externals for making oscilloscope music and art
 
 ###   About osci
 
-​	This version of osci needs **Pd 0.51-0* or above, download Pure Data from: http://msp.ucsd.edu/software.html
+​	This version of osci needs **Pd 0.51-2* or above, download Pure Data from: http://msp.ucsd.edu/software.html
 
 ​	osci is a library for Pure Data that provides a system for creating oscilloscop music and art.
 
