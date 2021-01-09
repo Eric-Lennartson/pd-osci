@@ -1,37 +1,37 @@
-#N canvas 260 39 620 648 12;
-#X obj 88 302 cnv 15 3 17 empty empty 0 5 9 0 16 -216373 -141475 0
+#N canvas 260 39 620 683 12;
+#X obj 88 322 cnv 15 3 17 empty empty 0 5 9 0 16 -216373 -141475 0
 ;
-#X obj 88 436 cnv 15 3 17 empty empty 0 5 9 0 16 -216373 -141475 0
+#X obj 88 456 cnv 15 3 17 empty empty 0 5 9 0 16 -216373 -141475 0
 ;
-#X obj 88 335 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
+#X obj 88 355 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
 ;
-#X text 106 334 signal;
-#X obj 88 401 cnv 15 3 17 empty empty 3 5 9 0 16 -216373 -141475 0
+#X text 106 354 signal;
+#X obj 88 421 cnv 15 3 17 empty empty 3 5 9 0 16 -216373 -141475 0
 ;
-#X text 106 434 signal;
-#X obj 88 466 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
+#X text 106 454 signal;
+#X obj 88 486 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
 ;
-#X text 106 464 signal;
-#X text 85 544 1) float;
+#X text 106 484 signal;
+#X text 85 564 1) float;
 #X floatatom 197 151 5 0 0 0 - - -;
-#X text 208 334 - y signal;
-#X obj 88 368 cnv 15 3 17 empty empty 2 5 9 0 16 -216373 -141475 0
+#X text 208 354 - y signal;
+#X obj 88 388 cnv 15 3 17 empty empty 2 5 9 0 16 -216373 -141475 0
 ;
-#X text 106 367 signal;
-#X text 208 367 - z signal;
-#X text 197 432 - x out;
-#X obj 88 496 cnv 15 3 17 empty empty 2 5 9 0 16 -216373 -141475 0
+#X text 106 387 signal;
+#X text 208 387 - z signal;
+#X text 197 452 - x out;
+#X obj 88 516 cnv 15 3 17 empty empty 2 5 9 0 16 -216373 -141475 0
 ;
-#X text 106 494 signal;
-#X text 197 493 - z out;
-#X text 197 463 - y out;
+#X text 106 514 signal;
+#X text 197 513 - z out;
+#X text 197 483 - y out;
 #X obj 47 194 osci/shear~ 0 y;
-#X text 106 400 signal;
-#X text 197 574 - shear axis;
+#X text 106 420 signal;
+#X text 197 594 - shear axis;
 #X msg 60 148 symbol z;
-#X text 106 301 signal/symbol;
-#X text 208 301 - x signal / shear axis;
-#X text 189 227 If a symbol is sent that isn't x \, y \, z or an axis
+#X text 106 321 signal/symbol;
+#X text 208 321 - x signal / shear axis;
+#X text 169 227 If a symbol is sent that isn't x \, y \, z or an axis
 isn't specified then the axis defaults to x. The symbol must be lowercase.
 ;
 #X obj 47 120 osci/cuboid~;
@@ -54,29 +54,29 @@ once;
 0;
 #X obj 454 11 cnv 10 10 10 empty empty Library 0 6 2 13 -128992 -204786
 0;
-#X obj 10 34 cnv 5 10 10 empty \$0-description Shear\ a\ 3D\ signal\ vector
+#X obj 10 34 cnv 5 10 10 empty \$0-description Shear\\\ a\\\ 3D\\\ signal\\\ vector
 30 30 2 17 -204786 -1 0;
 #X obj 47 218 osci/out~;
-#X obj 1 284 cnv 1 550 1 empty empty inlets 8 12 0 13 -216373 -1 0
+#X obj 1 304 cnv 1 550 1 empty empty inlets 8 12 0 13 -216373 -1 0
 ;
-#X obj 1 427 cnv 1 550 1 empty empty outlets 8 12 0 13 -216373 -1 0
+#X obj 1 447 cnv 1 550 1 empty empty outlets 8 12 0 13 -216373 -1 0
 ;
-#X obj 1 528 cnv 1 550 1 empty empty arguments 8 12 0 13 -216373 -1
+#X obj 1 548 cnv 1 550 1 empty empty arguments 8 12 0 13 -216373 -1
 0;
-#X obj 3 616 cnv 15 552 24 empty empty empty 20 12 0 14 -233017 -33289
+#X obj 3 636 cnv 15 552 24 empty empty empty 20 12 0 14 -233017 -33289
 0;
-#N canvas 107 214 235 200 related_objects 1;
+#N canvas 107 214 235 200 related_objects 0;
 #X obj 1 1 cnv 15 230 23 empty empty empty 3 12 0 20 -204786 -1 0;
 #X text 10 4 Other Transformations;
 #X obj 17 104 osci/translate~;
 #X obj 17 44 osci/rotate~;
 #X obj 17 74 osci/scale~;
-#X restore 17 619 pd related_objects;
-#X text 85 574 2) symbol;
-#X text 197 544 - shear angle (degrees);
-#X text 207 400 - shear angle (degrees);
+#X restore 17 639 pd related_objects;
+#X text 85 594 2) symbol;
+#X text 197 564 - shear angle (degrees);
+#X text 207 420 - shear angle (degrees);
 #X obj 147 90 sig~ 1;
-#X obj 197 174 sig~ 15;
+#X obj 197 174 sig~ 0.5;
 #X connect 9 0 48 0;
 #X connect 19 0 38 0;
 #X connect 19 1 38 1;
