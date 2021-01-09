@@ -79,20 +79,20 @@ t_vec3 drawLetter(char letter, float t);
 // These were originally private functions used to for various helpful things regarding text
 
 // length of string
-static int len(OsciText *o_text);
+int len(OsciText *o_text);
 // count spaces given some text
-static int count_spaces(OsciText *o_text);
+int count_spaces(OsciText *o_text);
 //count the lines given some text
-static int count_lines(OsciText *o_text);
+int count_lines(OsciText *o_text);
 void positions(OsciText *o_text, const char *text, int *map, int *pos, int *line, int *line_length);
-static inline int pos(OsciText *o_text, int i);
-static inline int line(OsciText *o_text, int i);
-static inline int map(OsciText *o_text, int i);
-static inline int longestLine(OsciText *o_text);
-static inline int lineLength(OsciText *o_text, int i);
-static inline void set_horz_align(OsciText *o_text, Align alignment);
-static inline void set_vert_align(OsciText *o_text, vAlign alignment);
-static void setText(OsciText *o_text, const char *text);
+int pos(OsciText *o_text, int i);
+int line(OsciText *o_text, int i);
+int map(OsciText *o_text, int i);
+int longestLine(OsciText *o_text);
+int lineLength(OsciText *o_text, int i);
+void set_horz_align(OsciText *o_text, Align alignment);
+void set_vert_align(OsciText *o_text, vAlign alignment);
+void setText(OsciText *o_text, const char *text);
 
 //============== Gen Function
 

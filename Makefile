@@ -3,7 +3,6 @@
 ############
 
 # library name
-
 lib.name = osci
 
 #add /Headers to the search path
@@ -25,13 +24,16 @@ m_wrap.class.sources := Classes/Source/m_wrap.c
 map.class.sources    := Classes/Source/map.c
 skew.class.sources   := Classes/Source/skew.c
 
+#there is some serious include weirdness
+#but it works now so that's good?
+#solution: clean up my header file system?
 # signal:
 bezier~.class.sources       := Classes/Source/bezier~.c
 bezigon~.class.sources      := Classes/Source/bezigon~.c
 chris_clip~.class.sources   := Classes/Source/chris_clip~.c
 circle~.class.sources       := Classes/Source/circle~.c 
 ellipse~.class.sources      := Classes/Source/ellipse~.c 
-grid~.class.sources         := Classes/Source/grid~.c  
+grid~.class.sources         := Classes/Source/grid~.c  $(A_Math) $(utils) $(vec3)
 heart~.class.sources        := Classes/Source/heart~.c $(A_Math)
 lerp~.class.sources         := Classes/Source/lerp~.c
 map~.class.sources          := Classes/Source/map~.c 
@@ -39,9 +41,9 @@ selipse~.class.sources      := Classes/Source/selipse~.c
 skew~.class.sources         := Classes/Source/skew~.c 
 supershape~.class.sources   := Classes/Source/supershape~.c
 translate~.class.sources    := Classes/Source/translate~.c
-ball~.class.sources         := Classes/Source/ball~.c $(A_Math)
+ball~.class.sources         := Classes/Source/ball~.c $(A_Math) $(vec3)
 bright~.class.sources       := Classes/Source/bright~.c $(A_Math)
-cuboid~.class.sources       := Classes/Source/cuboid~.c $(A_Math)
+cuboid~.class.sources       := Classes/Source/cuboid~.c $(A_Math) $(vec3)
 dash~.class.sources         := Classes/Source/dash~.c $(A_Math)
 dodecahedron~.class.sources := Classes/Source/dodecahedron~.c $(A_Math)
 icosahedron~.class.sources  := Classes/Source/icosahedron~.c $(A_Math)
@@ -53,9 +55,9 @@ square~.class.sources       := Classes/Source/square~.c $(A_Math)
 tetrahedron~.class.sources  := Classes/Source/tetrahedron~.c $(A_Math)
 trace~.class.sources        := Classes/Source/trace~.c $(A_Math)
 triangle~.class.sources     := Classes/Source/triangle~.c $(A_Math)
-polygon~.class.sources      := Classes/Source/polygon~.c $(A_Funcs)
-cut_equal~.class.sources    := Classes/Source/cut_equal~.c $(cut)
-cut_mix~.class.sources      := Classes/Source/cut_mix~.c $(cut)
+polygon~.class.sources      := Classes/Source/polygon~.c $(A_Funcs) $(cut)
+cut_equal~.class.sources    := Classes/Source/cut_equal~.c $(cut) $(utils)
+cut_mix~.class.sources      := Classes/Source/cut_mix~.c $(cut) $(utils)
 cut_weights~.class.sources  := Classes/Source/cut_weights~.c $(cut)
 hypotrochoid~.class.sources := Classes/Source/hypotrochoid~.c $(utils)
 scale~.class.sources        := Classes/Source/scale~.c $(vec3)

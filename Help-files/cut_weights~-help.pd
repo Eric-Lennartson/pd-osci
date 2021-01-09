@@ -21,7 +21,6 @@
 #X obj 6 309 osci/cut_idx~;
 #X obj 159 311 osci/cut_idx~;
 #X obj 6 348 osci/out~;
-#X obj 156 385 s \$0-description;
 #X text 97 122 weights;
 #X obj 143 170 sig~ 1;
 #X text 86 576 1) int (1-N);
@@ -70,14 +69,12 @@
 0;
 #X obj 497 11 cnv 10 10 10 empty empty for 0 6 2 13 -128992 -204786
 0;
-#X msg 156 361 label Split\ phase\ into\ N\ cuts\ based\ on\ weights
-;
 #X text 209 155 [cut_weights~] cuts a phase up into parts based on
 weights. [cut_weights~] must be the first modifier in the chain as
 it becomes the new intial phasor in order to draw multiple objects
 on the scope., f 49;
 #X connect 6 0 15 0;
-#X connect 7 0 21 0;
+#X connect 7 0 20 0;
 #X connect 8 0 16 0;
 #X connect 8 1 16 1;
 #X connect 9 0 17 0;
@@ -92,5 +89,4 @@ on the scope., f 49;
 #X connect 16 1 18 1;
 #X connect 17 0 18 0;
 #X connect 17 1 18 1;
-#X connect 21 0 13 2;
-#X connect 41 0 19 0;
+#X connect 20 0 13 2;

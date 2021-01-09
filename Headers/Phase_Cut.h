@@ -4,7 +4,8 @@
 #include <stdbool.h>
 #include <math.h>
 #include <stdlib.h>
-#include "utils.h"
+#include "Audio_Math.h" // for mod1()
+#include "utils.h" 
 
 /* I have two versions running around, one with va_args, another with arrays
    I think the one with arrays is a better design?

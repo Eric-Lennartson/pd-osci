@@ -4,6 +4,7 @@
 #include "stdarg.h"
 //#include "m_pd.h"
 #include "stdbool.h"
+#include <math.h> // fabs()
 
 #define min(a, b) a < b ? a : b
 #define max(a, b) a > b ? a : b
@@ -12,7 +13,7 @@
 #define FLT_EPSILON 1.19209290E-07F
 
 // copied from geeksforgeeks
-static inline int gcd(int a, int b);
+int gcd(int a, int b);
 double va_minf(double num_args, ...);
 int va_mini(int num_args, ...);
 double va_maxf(double num_args, ...);

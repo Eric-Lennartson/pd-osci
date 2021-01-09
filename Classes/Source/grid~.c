@@ -1,4 +1,5 @@
 #include "m_pd.h"
+#include "Audio_Math.h"
 #include "vec3.h"
 #include "utils.h"
 

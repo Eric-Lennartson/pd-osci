@@ -1,5 +1,6 @@
 #include "text.h"
 
+// this is also in utils??
 t_float scale_lin(t_float value, t_float inputMin, t_float inputMax, t_float outputMin, t_float outputMax, bool clamp) {
 
    if (fabsf(inputMin - inputMax) < FLT_EPSILON){
@@ -847,7 +848,7 @@ t_vec3 drawLetter(char letter, float t){
 // These were originally private functions used to for various helpful things regarding text
 
 // length of string
-static int len(OsciText *o_text){
+int len(OsciText *o_text){
     int i = 0;
     while(o_text->text[i] != 0)    i++;
     return i;
@@ -855,7 +856,7 @@ static int len(OsciText *o_text){
 
 
 // count spaces given some text
-static int count_spaces(OsciText *o_text) {
+int count_spaces(OsciText *o_text) {
     int spaces = 0;
 
     for(int i = 0; i < o_text->length; ++i) {
@@ -866,7 +867,7 @@ static int count_spaces(OsciText *o_text) {
 }
 
 //count the lines given some text
-static int count_lines(OsciText *o_text) {
+int count_lines(OsciText *o_text) {
     int lines = 0;
 
     for(int i = 0; i < o_text->length; ++i) {
@@ -904,35 +905,35 @@ void positions(OsciText *o_text, const char *text, int *map, int *pos, int *line
     o_text->line_length[l] = npos;
 }
 
-static inline int pos(OsciText *o_text, int i) {
+int pos(OsciText *o_text, int i) {
     return o_text->letter_pos[i];
 }
 
-static inline int line(OsciText *o_text, int i) {
+int line(OsciText *o_text, int i) {
     return o_text->letter_line[i];
 }
 
-static inline int map(OsciText *o_text, int i) {
+int map(OsciText *o_text, int i) {
     return o_text->text_map[i];
 }
 
-static inline int longestLine(OsciText *o_text) {
+int longestLine(OsciText *o_text) {
     return o_text->longest_line;
 }
 
-static inline int lineLength(OsciText *o_text, int i) {
+int lineLength(OsciText *o_text, int i) {
     return o_text->line_length[i];
 }
 
-static inline void set_horz_align(OsciText *o_text, Align alignment) {
+void set_horz_align(OsciText *o_text, Align alignment) {
     o_text->horz_align = alignment;
 }
 
-static inline void set_vert_align(OsciText *o_text, vAlign alignment) {
+void set_vert_align(OsciText *o_text, vAlign alignment) {
     o_text->vert_align = alignment;
 }
 
-static void setText(OsciText *o_text, const char *text){
+void setText(OsciText *o_text, const char *text){
     o_text->text = text;
     
     o_text->length = len(o_text);
