@@ -38,6 +38,8 @@ osci relies on the build system called "pd-lib-builder" by Katja Vetter (check t
 
 <pre>make pdincludepath=~/pd-0.51-1/src/  (for Windows/MinGW add 'pdbinpath=~/pd-0.51-1/bin/)</pre>
 
+Some of the abstractions are dependent on objects from the ELSE library. ELSE can be installed either from Pd's external manager or from the command line. ELSE can be found at <https://github.com/porres/pd-else>.
+
 * Installing with pdlibbuilder
 
 Go to the pd-osci folder and use "objectsdir" to set a relative path for your build, something like:
