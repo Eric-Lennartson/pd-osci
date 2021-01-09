@@ -8,13 +8,13 @@
 #X obj 68 409 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
 ;
 #X text 86 407 signal;
-#X obj 35 130 phasor~ 50;
-#X obj 35 164 heart~;
-#X obj 35 196 osci/out~;
+#X obj 35 90 phasor~ 50;
+#X obj 35 124 heart~;
+#X obj 35 156 osci/out~;
 #X text 168 280 - controls the position of the dot on the heart \,
 ramping from 0 to 1 results in the complete shape. Normally a phasor
 is used \, but any signal source could be used., f 53;
-#X text 154 167 [heart~] helps show the world how much you love them.
+#X text 154 127 [heart~] helps show the world how much you love them.
 ;
 #X obj 1 1 cnv 15 305 46 empty empty empty 20 12 0 14 -66577 -66577
 0;

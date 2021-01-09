@@ -32,7 +32,7 @@
 ;
 #X text 106 474 signal;
 #X text 265 644 4) float;
-#X obj 16 249 osci/out~;
+#X obj 16 229 osci/out~;
 #X obj 16 99 phasor~ 50;
 #X obj 16 195 supershape~, f 35;
 #X text 101 97 1st inlet is a driver \, that draws the supershape;

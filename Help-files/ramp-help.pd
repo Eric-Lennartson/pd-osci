@@ -5,7 +5,7 @@
 ;
 #X obj 88 330 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
 ;
-#X obj 28 219 osci/out~;
+#X obj 28 199 osci/out~;
 #X obj 2 294 cnv 1 550 1 empty empty inlets 8 12 0 13 -228856 -1 0
 ;
 #X obj 2 357 cnv 1 550 1 empty empty outlets 8 12 0 13 -228856 -1 0
@@ -52,7 +52,7 @@
 #X text 75 29 Osci;
 #X obj 75 61 ramp~;
 #X restore 5 441 pd related_objects;
-#X text 134 212 [ramp] generates linear ramps b/w values at the control
+#X text 134 192 [ramp] generates linear ramps b/w values at the control
 rate. The left inlet sets the target value \, and the right inlet sets
 the ramp time in milliseconds. There's an optional argument to set
 the ramp time as well.;

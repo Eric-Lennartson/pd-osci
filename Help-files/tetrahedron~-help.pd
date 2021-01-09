@@ -1,42 +1,42 @@
-#N canvas 362 29 582 716 12;
-#X obj 89 313 cnv 15 3 60 empty empty 0 5 9 0 16 -216373 -141475 0
+#N canvas 362 29 591 741 12;
+#X obj 89 333 cnv 15 3 60 empty empty 0 5 9 0 16 -216373 -141475 0
 ;
-#X obj 89 447 cnv 15 3 17 empty empty 0 5 9 0 16 -216373 -141475 0
+#X obj 89 467 cnv 15 3 17 empty empty 0 5 9 0 16 -216373 -141475 0
 ;
-#X text 107 312 signal;
-#X text 107 446 signal;
-#X obj 89 480 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
+#X text 107 332 signal;
+#X text 107 466 signal;
+#X obj 89 500 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
 ;
-#X text 107 479 signal;
-#X text 198 555 - x position;
-#X text 198 575 - y position;
-#X text 86 555 1) float;
-#X text 86 575 2) float;
-#X text 86 595 3) float;
-#X text 86 615 4) float;
-#X text 198 595 - z position;
-#X text 198 615 - width;
-#X text 198 635 - height;
-#X text 198 655 - length;
-#X text 86 635 5) float;
-#X text 86 655 6) float;
-#X text 198 446 - x out;
-#X text 198 479 - y out;
-#X obj 89 515 cnv 15 3 17 empty empty 2 5 9 0 16 -216373 -141475 0
+#X text 107 499 signal;
+#X text 198 575 - x position;
+#X text 198 595 - y position;
+#X text 86 575 1) float;
+#X text 86 595 2) float;
+#X text 86 615 3) float;
+#X text 86 635 4) float;
+#X text 198 615 - z position;
+#X text 198 635 - width;
+#X text 198 655 - height;
+#X text 198 675 - length;
+#X text 86 655 5) float;
+#X text 86 675 6) float;
+#X text 198 466 - x out;
+#X text 198 499 - y out;
+#X obj 89 535 cnv 15 3 17 empty empty 2 5 9 0 16 -216373 -141475 0
 ;
-#X text 107 514 signal;
-#X text 198 514 - z out;
-#X obj 36 169 osci/rotate~ 45 23 0;
-#X obj 36 193 osci/project~;
-#X obj 36 101 phasor~ 50;
-#X floatatom 278 88 5 0 1 0 - - -;
-#X obj 278 111 sig~ 1;
-#X obj 88 390 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
+#X text 107 534 signal;
+#X text 198 534 - z out;
+#X obj 36 159 osci/rotate~ 45 23 0;
+#X obj 36 183 osci/project~;
+#X obj 36 91 phasor~ 50;
+#X floatatom 278 78 5 0 1 0 - - -;
+#X obj 278 101 sig~ 1;
+#X obj 88 410 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
 ;
-#X text 106 389 signal;
-#X text 191 389 - amount of interpolation between the points (0-1)
+#X text 106 409 signal;
+#X text 191 409 - amount of interpolation between the points (0-1)
 ;
-#X obj 36 217 osci/out~;
+#X obj 36 207 osci/out~;
 #X obj 2 2 cnv 15 305 46 empty empty empty 20 12 0 14 -66577 -66577
 0;
 #X obj 5 4 cnv 15 301 42 empty empty tetrahedron~ 20 20 2 37 -204786
@@ -61,13 +61,13 @@
 0;
 #X obj 498 12 cnv 10 10 10 empty empty for 0 6 2 13 -128992 -204786
 0;
-#X obj 2 285 cnv 1 552 1 empty empty inlets 8 12 0 13 -216373 -1 0
+#X obj 2 305 cnv 1 552 1 empty empty inlets 8 12 0 13 -216373 -1 0
 ;
-#X obj 2 428 cnv 1 552 1 empty empty outlets 8 12 0 13 -216373 -1 0
+#X obj 2 448 cnv 1 552 1 empty empty outlets 8 12 0 13 -216373 -1 0
 ;
-#X obj 3 543 cnv 1 552 1 empty empty arguments 8 12 0 13 -216373 -1
+#X obj 3 563 cnv 1 552 1 empty empty arguments 8 12 0 13 -216373 -1
 0;
-#X obj 3 678 cnv 15 552 24 empty empty empty 20 12 0 14 -233017 -33289
+#X obj 3 698 cnv 15 552 24 empty empty empty 20 12 0 14 -233017 -33289
 0;
 #N canvas 89 224 235 200 related_objects 0;
 #X obj 1 1 cnv 15 230 23 empty empty empty 3 12 0 20 -204786 -1 0;
@@ -76,10 +76,9 @@
 #X obj 17 74 osci/dodecahedron~;
 #X obj 17 104 osci/octahedron~;
 #X text 0 4 [tetrahedron~] related objects;
-#X restore 17 681 pd related_objects;
-#X text 168 224 the code for tetra needs to be updated;
-#X obj 36 135 osci/tetrahedron~ 0 0 0 0.2 0.4 0.3;
-#X text 193 312 - controls the position of the dot on the tetrahedron
+#X restore 17 701 pd related_objects;
+#X obj 36 125 osci/tetrahedron~ 0 0 0 0.2 0.4 0.3;
+#X text 193 332 - controls the position of the dot on the tetrahedron
 \, ramping from 0 to 1 results in the complete shape. Normally a phasor
 would be used but any signal source could be used., f 42;
 #X connect 23 0 24 0;
@@ -87,9 +86,9 @@ would be used but any signal source could be used., f 42;
 #X connect 23 2 24 2;
 #X connect 24 0 31 0;
 #X connect 24 1 31 1;
-#X connect 25 0 50 0;
+#X connect 25 0 49 0;
 #X connect 26 0 27 0;
-#X connect 27 0 50 1;
-#X connect 50 0 23 0;
-#X connect 50 1 23 1;
-#X connect 50 2 23 2;
+#X connect 27 0 49 1;
+#X connect 49 0 23 0;
+#X connect 49 1 23 1;
+#X connect 49 2 23 2;

@@ -48,7 +48,6 @@
 #X text 185 445 sets the gamma amount (greater than 0);
 #X text 116 425 2) float;
 #X text 116 445 3) float;
-#X obj 147 162 osci/gamma~ 0.8 0.9;
 #X obj 147 108 / 100;
 #X obj 210 65 osci/gamma~ -g;
 #X text 304 85 [gamma~] with the -g argument;
@@ -58,9 +57,10 @@ scope has been turned all the way up and that it will be controlled
 from the pd patch. All scopes/displays will be slightly different and
 so controls for altering the minimum value of the brightness range
 and the amount of gamma correction have been provided., f 58;
+#X obj 147 162 osci/gamma~;
 #X connect 16 0 17 0;
 #X connect 17 0 18 0;
 #X connect 17 1 18 1;
-#X connect 21 0 32 0;
-#X connect 22 0 31 0;
-#X connect 32 0 22 0;
+#X connect 21 0 31 0;
+#X connect 22 0 35 0;
+#X connect 31 0 22 0;

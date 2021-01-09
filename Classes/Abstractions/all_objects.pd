@@ -2,28 +2,24 @@
 #X text 27 52 =============================================================================
 , f 77;
 #X obj 73 1279 ball~, f 10;
-#X obj 73 2199 bezier~, f 12;
-#X obj 73 2229 bezigon~;
+#X obj 73 2159 bezier~, f 12;
+#X obj 73 2189 bezigon~;
 #X obj 73 929 bright~;
 #X obj 74 369 cuboid~;
 #X obj 73 1159 cut_equal~;
 #X obj 73 1099 cut_mix~;
 #X obj 73 959 dash~;
-#X obj 73 1459 osci/demux~;
 #X obj 74 399 dodecahedron~;
 #X obj 73 1309 grid~, f 14;
 #X obj 74 429 icosahedron~, f 14;
 #X obj 73 989 knee~, f 7;
-#X obj 73 1489 lerp~, f 14;
-#X obj 73 1669 map, f 14;
-#X obj 73 1699 map~, f 14;
-#X obj 73 1429 osci/mux~, f 14;
+#X obj 73 1429 lerp~, f 14;
+#X obj 73 1609 map, f 14;
+#X obj 73 1639 map~, f 14;
 #X obj 74 459 octahedron~, f 14;
-#X obj 73 1579 project~, f 14;
-#X obj 73 1519 osci/ramp, f 14;
-#X obj 73 1549 osci/ramp~, f 14;
-#X obj 73 744 rotate~, f 14;
-#X obj 73 774 scale~, f 14;
+#X obj 73 1519 project~, f 14;
+#X obj 73 1459 osci/ramp, f 14;
+#X obj 73 1489 osci/ramp~, f 14;
 #X obj 73 804 shear~, f 14;
 #X obj 74 489 tetrahedron~, f 14;
 #X obj 73 1019 trace~, f 7;
@@ -53,10 +49,10 @@
 #X text 27 1372 =============================================================================
 , f 77;
 #X text 54 1395 Glue:;
-#X text 27 2062 =============================================================================
+#X text 27 2022 =============================================================================
 , f 77;
-#X text 54 2085 Misc:;
-#X text 27 2472 =============================================================================
+#X text 54 2045 Misc:;
+#X text 27 2432 =============================================================================
 , f 77;
 #X text 51 30 ALL OBJECTS IN THE OSCI LIBRARY:;
 #X obj 73 139 osci/line~, f 15;
@@ -66,36 +62,37 @@
 #X obj 78 574 heart~;
 #X obj 78 604 selipse~;
 #X obj 78 634 supershape~;
-#X obj 73 2169 text~, f 12;
+#X obj 73 2129 text~, f 12;
 #X obj 73 229 rectangle~, f 14;
 #X obj 78 664 hypotrochoid~;
-#X text 27 1882 =============================================================================
+#X text 27 1842 =============================================================================
 , f 77;
-#X text 54 1905 Signal send and receive:;
-#X obj 73 1729 skew, f 15;
-#X obj 73 1759 skew~, f 15;
-#X text 27 1612 =============================================================================
+#X text 54 1865 Signal send and receive:;
+#X obj 73 1669 skew, f 15;
+#X obj 73 1699 skew~, f 15;
+#X text 27 1552 =============================================================================
 , f 77;
 #X obj 73 1339 chris_clip~, f 14;
-#X obj 73 2259 shroom~, f 20;
-#X obj 73 2299 xy_splitter~;
-#X obj 73 1939 thrower~ baz, f 14;
-#X obj 73 1969 catcher~ baz, f 14;
+#X obj 73 2219 shroom~, f 20;
+#X obj 73 2259 xy_splitter~;
+#X obj 73 1899 thrower~ baz, f 14;
+#X obj 73 1929 catcher~ baz, f 14;
 #X obj 73 259 triangle~;
-#X obj 73 2109 n~;
-#X obj 73 2137 n;
-#X text 175 1447 MUX AND DEMUX ARE DEPRECATED!!!;
-#X obj 73 2379 osci/out~, f 14;
-#X text 54 1635 Value mapping:;
+#X obj 73 2069 n~;
+#X obj 73 2097 n;
+#X obj 73 2339 osci/out~, f 14;
+#X text 54 1575 Value mapping:;
 #X obj 3 8 tgl 15 1 empty empty empty 17 7 0 10 -262144 -1 -1 0 1;
 #X obj 3 29 switch~;
-#X obj 73 1999 snd~ bar, f 14;
-#X obj 73 2029 rcv~ bar, f 14;
+#X obj 73 1959 snd~ bar, f 14;
+#X obj 73 1989 rcv~ bar, f 14;
 #X text 23 7 <== DO NOT TURN DSP ON IN THE PATCH!!! PD WILL CRASH!!!!
 ;
-#X text 180 2322 <== do I need this object?;
-#X text 27 1782 =============================================================================
+#X text 27 1722 =============================================================================
 , f 77;
-#X text 54 1805 Brightness Control:;
-#X obj 73 1837 osci/gamma~;
-#X connect 76 0 77 0;
+#X text 54 1745 Brightness Control:;
+#X obj 73 1777 osci/gamma~;
+#X obj 73 744 osci/rotate~, f 14;
+#X obj 73 773 osci/scale~, f 14;
+#X text 180 2274 <== may remove this in the future;
+#X connect 71 0 72 0;
