@@ -243,11 +243,6 @@ void dodecahedron_tilde_setup(void)
                                   A_GIMME, // xPos, yPos, zPos, xScale, yScale, zScale
                                   0);
     
-    class_addcreator((t_newmethod)dodecahedron_tilde_new,
-                     gensym("dodeca~"),
-                     A_GIMME, // xPos, yPos, zPos, xScale, yScale, zScale
-                     0);
-    
     class_sethelpsymbol(dodecahedron_tilde_class, gensym("dodecahedron~"));
     
     class_addmethod(dodecahedron_tilde_class, (t_method)dodecahedron_tilde_dsp, gensym("dsp"), A_CANT, 0);

@@ -174,21 +174,6 @@ void octahedron_tilde_setup(void)
                                   A_GIMME, // xPos, yPos, zPos, xScale, yScale, zScale
                                   0);
     
-    class_addcreator((t_newmethod)octahedron_tilde_new,
-                     gensym("octa~"),
-                     A_GIMME, // xPos, yPos, zPos, xScale, yScale, zScale
-                     0);
-    
-    class_addcreator((t_newmethod)octahedron_tilde_new,
-                     gensym("osci/octahedron~"),
-                     A_GIMME, // xPos, yPos, zPos, xScale, yScale, zScale
-                     0);
-    
-    class_addcreator((t_newmethod)octahedron_tilde_new,
-                     gensym("osci/octa~"),
-                     A_GIMME, // xPos, yPos, zPos, xScale, yScale, zScale
-                     0);
-    
     class_sethelpsymbol(octahedron_tilde_class, gensym("octahedron~"));
     
     class_addmethod(octahedron_tilde_class, (t_method)octahedron_tilde_dsp, gensym("dsp"), A_CANT, 0);

@@ -215,21 +215,6 @@ void icosahedron_tilde_setup(void)
                                   A_GIMME, // xPos, yPos, zPos, xScale, yScale, zScale
                                   0);
     
-    class_addcreator((t_newmethod)icosahedron_tilde_new,
-                     gensym("icosa~"),
-                     A_GIMME, // xPos, yPos, zPos, xScale, yScale, zScale
-                     0);
-    
-    class_addcreator((t_newmethod)icosahedron_tilde_new,
-                     gensym("osci/icosahedron~"),
-                     A_GIMME, // xPos, yPos, zPos, xScale, yScale, zScale
-                     0);
-    
-    class_addcreator((t_newmethod)icosahedron_tilde_new,
-                     gensym("osci/icosa~"),
-                     A_GIMME, // xPos, yPos, zPos, xScale, yScale, zScale
-                     0);
-    
     class_sethelpsymbol(icosahedron_tilde_class, gensym("icosahedron~"));
     
     class_addmethod(icosahedron_tilde_class, (t_method)icosahedron_tilde_dsp, gensym("dsp"), A_CANT, 0);

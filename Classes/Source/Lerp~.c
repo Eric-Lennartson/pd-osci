@@ -111,11 +111,6 @@ void lerp_tilde_setup(void)
                             A_GIMME, // 6 or more args
                             0); // no more args
     
-    class_addcreator((t_newmethod)lerp_tilde_new,
-                     gensym("osci/lerp~"),
-                     A_GIMME, // 6 or more args
-                     0); // no more args
-    
     class_sethelpsymbol(lerp_tilde_class, gensym("lerp~")); // links to the help patch
     
     class_addmethod(lerp_tilde_class, (t_method)lerp_tilde_dsp, gensym("dsp"), A_CANT, 0); // add dsp method to data space

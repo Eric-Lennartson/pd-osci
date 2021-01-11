@@ -178,12 +178,7 @@ void cuboid_tilde_setup(void)
                                   A_GIMME, // xPos, yPos, zPos, xLen, yLen, zLen
                                    // A_GIMME used for six or more args
                                   0);
-    
-    class_addcreator((t_newmethod)cuboid_tilde_new,
-                     gensym("osci/cuboid~"),
-                     A_GIMME, // xPos, yPos, zPos, xLen, yLen, zLen
-                     0);
-    
+
     class_sethelpsymbol(cuboid_tilde_class, gensym("cuboid~"));
     
     class_addmethod(cuboid_tilde_class, (t_method)cuboid_tilde_dsp, gensym("dsp"), A_CANT, 0);

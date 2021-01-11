@@ -74,19 +74,6 @@ void heart_tilde_setup(void)
                             sizeof(t_heart_tilde), // data space
                             CLASS_DEFAULT, // gui apperance
                             0); // no more args
-
-    class_addcreator((t_newmethod)heart_tilde_new,
-                     gensym("<3~"),
-                     0); // no more args
-    
-    class_addcreator((t_newmethod)heart_tilde_new,
-                     gensym("osci/<3~"),
-                     0); // no more args
-    
-    class_addcreator((t_newmethod)heart_tilde_new,
-                     gensym("osci/heart~"),
-                     0); // no more args
-
     
     class_sethelpsymbol(heart_tilde_class, gensym("heart~")); // links to the help patch
     

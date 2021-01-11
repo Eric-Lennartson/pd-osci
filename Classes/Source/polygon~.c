@@ -110,30 +110,6 @@ void polygon_tilde_setup(void)
                             A_DEFFLOAT, // size
                             0); // no more args
 
-    class_addcreator((t_newmethod)polygon_tilde_new,
-                     gensym("gon~"),
-                     A_DEFFLOAT, // xPos
-                     A_DEFFLOAT, // yPos
-                     A_DEFFLOAT, // sides
-                     A_DEFFLOAT, // size
-                     0); // no more args
-    
-    class_addcreator((t_newmethod)polygon_tilde_new,
-                     gensym("osci/polygon~"),
-                     A_DEFFLOAT, // xPos
-                     A_DEFFLOAT, // yPos
-                     A_DEFFLOAT, // sides
-                     A_DEFFLOAT, // size
-                     0); // no more args
-    
-    class_addcreator((t_newmethod)polygon_tilde_new,
-                     gensym("osci/gon~"),
-                     A_DEFFLOAT, // xPos
-                     A_DEFFLOAT, // yPos
-                     A_DEFFLOAT, // sides
-                     A_DEFFLOAT, // size
-                     0); // no more args
-    
     class_sethelpsymbol(polygon_tilde_class, gensym("polygon~")); // links to the help patch
     
     class_addmethod(polygon_tilde_class, (t_method)polygon_tilde_dsp, gensym("dsp"), A_CANT, 0); // add a dsp method to data space

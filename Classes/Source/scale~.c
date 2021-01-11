@@ -109,13 +109,6 @@ void scale_tilde_setup(void)
                                   A_DEFFLOAT, //zScalar
                                   0);
     
-    class_addcreator((t_newmethod)scale_tilde_new,
-                     gensym("osci/scale~"),
-                     A_DEFFLOAT, //xScalar
-                     A_DEFFLOAT, //yScalar
-                     A_DEFFLOAT, //zScalar
-                     0);
-    
     class_addmethod(scale_tilde_class, (t_method)scale_tilde_dsp, gensym("dsp"), A_CANT, 0);
     CLASS_MAINSIGNALIN(scale_tilde_class, t_scale_tilde, f); // dummy arg for singal into first inlet
 }

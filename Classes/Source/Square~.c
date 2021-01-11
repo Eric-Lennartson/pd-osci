@@ -113,13 +113,6 @@ void square_tilde_setup(void)
                             A_DEFFLOAT, // size
                             0); // no more args
     
-    class_addcreator((t_newmethod)square_tilde_new,
-                     gensym("osci/square~"),
-                     A_DEFFLOAT, // xPos
-                     A_DEFFLOAT, // yPos
-                     A_DEFFLOAT, // size
-                     0); // no more args
-    
     class_sethelpsymbol(square_tilde_class, gensym("square~")); // links to the help patch
     
     class_addmethod(square_tilde_class, (t_method)square_tilde_dsp, gensym("dsp"), A_CANT, 0); // add a dsp method to data space

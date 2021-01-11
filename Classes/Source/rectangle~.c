@@ -46,8 +46,8 @@ static t_int *rectangle_tilde_perform(t_int *w)
         t_float y1 = points[idx][1];
         t_float y2 = points[idx_next][1];
         
-        *xChan_out++ = lerp( x1, x2, mod1(tn) ) * width + xPos;
-        *yChan_out++ = lerp( y1, y2, mod1(tn) ) * height + yPos;
+        *xChan_out++ = lerp( mod1(tn), x1, x2) * width + xPos;
+        *yChan_out++ = lerp( mod1(tn), y1, y2) * height + yPos;
     }
     
     return (w + 9);
@@ -114,30 +114,6 @@ void rectangle_tilde_setup(void)
                             A_DEFFLOAT, // height
                             A_DEFFLOAT, // width
                             0); // no more args
-    
-    class_addcreator((t_newmethod)rectangle_tilde_new,
-                     gensym("osci/rectangle~"),
-                     A_DEFFLOAT, // xPos
-                     A_DEFFLOAT, // yPos
-                     A_DEFFLOAT, // height
-                     A_DEFFLOAT, // width
-                     0); // no more args
-    
-    class_addcreator((t_newmethod)rectangle_tilde_new,
-                    gensym("rect~"),
-                    A_DEFFLOAT, // xPos
-                    A_DEFFLOAT, // yPos
-                    A_DEFFLOAT, // height
-                    A_DEFFLOAT, // width
-                    0); // no more args
-    
-    class_addcreator((t_newmethod)rectangle_tilde_new,
-                    gensym("osci/rect~"),
-                    A_DEFFLOAT, // xPos
-                    A_DEFFLOAT, // yPos
-                    A_DEFFLOAT, // height
-                    A_DEFFLOAT, // width
-                    0); // no more args
     
     class_sethelpsymbol(rectangle_tilde_class, gensym("rectangle~")); // links to the help patch
     

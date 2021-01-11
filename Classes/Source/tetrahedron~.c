@@ -179,17 +179,6 @@ void tetrahedron_tilde_setup(void)
                                   A_GIMME, // xPos, yPos, zPos, xScale, yScale, zScale
                                   0);
     
-    class_addcreator((t_newmethod)tetrahedron_tilde_new,
-                     gensym("osci/tetrahedron~"),
-                     A_GIMME, // xPos, yPos, zPos, xScale, yScale, zScale
-                     0);
-    
-    class_addcreator((t_newmethod)tetrahedron_tilde_new,
-                     gensym("osci/tetra~"),
-                     A_GIMME, // xPos, yPos, zPos, xScale, yScale, zScale
-                     0);
-
-    
     class_sethelpsymbol(tetrahedron_tilde_class, gensym("tetrahedron~"));
     
     class_addmethod(tetrahedron_tilde_class, (t_method)tetrahedron_tilde_dsp, gensym("dsp"), A_CANT, 0);

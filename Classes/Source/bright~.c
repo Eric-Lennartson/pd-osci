@@ -85,12 +85,6 @@ void bright_tilde_setup(void)
                             A_DEFFLOAT, //strength
                             0); // no more args
     
-    class_addcreator((t_newmethod)bright_new,
-                     gensym("osci/bright~"),
-                     A_DEFFLOAT, // offset
-                     A_DEFFLOAT, //strength
-                     0); // no more args
-    
     class_sethelpsymbol(bright_class, gensym("bright~")); // links to the help patch
     
     class_addmethod(bright_class, (t_method)bright_dsp, gensym("dsp"), A_CANT, 0);

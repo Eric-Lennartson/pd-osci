@@ -112,27 +112,6 @@ void translate_tilde_setup(void)
                             A_DEFFLOAT, // zOffset
                             0); // no more args
     
-    class_addcreator((t_newmethod)translate_tilde_new,
-                     gensym("osci/translate~"),
-                     A_DEFFLOAT, // xOffset
-                     A_DEFFLOAT, // yOffset
-                     A_DEFFLOAT, // zOffset
-                     0); // no more args
-    
-    class_addcreator((t_newmethod)translate_tilde_new,
-                     gensym("trans~"),
-                     A_DEFFLOAT, // xOffset
-                     A_DEFFLOAT, // yOffset
-                     A_DEFFLOAT, // zOffset
-                     0); // no more args
-    
-    class_addcreator((t_newmethod)translate_tilde_new,
-                     gensym("osci/trans~"),
-                     A_DEFFLOAT, // xOffset
-                     A_DEFFLOAT, // yOffset
-                     A_DEFFLOAT, // zOffset
-                     0); // no more args
-    
     class_sethelpsymbol(translate_tilde_class, gensym("translate~")); // links to the help patch
     
     class_addmethod(translate_tilde_class, (t_method)translate_tilde_dsp, gensym("dsp"), A_CANT, 0); // add a dsp method to data space

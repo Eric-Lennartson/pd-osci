@@ -85,12 +85,6 @@ void dash_tilde_setup(void)
                             A_DEFFLOAT, //dash_length
                             0); // no more args
     
-    class_addcreator((t_newmethod)dash_new,
-                     gensym("osci/dash~"),
-                     A_DEFFLOAT, //num_pnts
-                     A_DEFFLOAT, //dash_length
-                     0); // no more args
-    
     class_sethelpsymbol(dash_class, gensym("dash~")); // links to the help patch
     
     class_addmethod(dash_class, (t_method)dash_dsp, gensym("dsp"), A_CANT, 0);

@@ -110,14 +110,6 @@ void ellipse_tilde_setup(void)
                             A_DEFFLOAT, // height
                             0); // no more args
     
-    class_addcreator((t_newmethod)ellipse_tilde_new,
-                     gensym("osci/ellipse~"),
-                     A_DEFFLOAT, // xPos
-                     A_DEFFLOAT, // yPos
-                     A_DEFFLOAT, // width
-                     A_DEFFLOAT, // height
-                     0); // no more args
-    
     class_sethelpsymbol(ellipse_tilde_class, gensym("ellipse~")); // links to the help patch
     
     class_addmethod(ellipse_tilde_class, (t_method)ellipse_tilde_dsp, gensym("dsp"), A_CANT, 0);

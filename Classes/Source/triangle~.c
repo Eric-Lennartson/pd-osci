@@ -109,27 +109,6 @@ void triangle_tilde_setup(void)
                             A_DEFFLOAT, // size
                             0); // no more args
     
-    class_addcreator((t_newmethod)triangle_tilde_new,
-                     gensym("osci/triangle~"),
-                     A_DEFFLOAT, // xPos
-                     A_DEFFLOAT, // yPos
-                     A_DEFFLOAT, // size
-                     0); // no more args
-    
-    class_addcreator((t_newmethod)triangle_tilde_new,
-                     gensym("tri~"),
-                     A_DEFFLOAT, // xPos
-                     A_DEFFLOAT, // yPos
-                     A_DEFFLOAT, // size
-                     0); // no more args
-    
-    class_addcreator((t_newmethod)triangle_tilde_new,
-                     gensym("osci/tri~"),
-                     A_DEFFLOAT, // xPos
-                     A_DEFFLOAT, // yPos
-                     A_DEFFLOAT, // size
-                     0); // no more args
-    
     class_sethelpsymbol(triangle_tilde_class, gensym("triangle~")); // links to the help patch
     
     class_addmethod(triangle_tilde_class, (t_method)triangle_tilde_dsp, gensym("dsp"), A_CANT, 0); // add a dsp method to data space

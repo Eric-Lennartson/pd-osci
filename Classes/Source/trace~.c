@@ -82,10 +82,6 @@ void trace_tilde_setup(void)
                             A_DEFFLOAT, // interp_amt
                             0); // no more args
     
-    class_addcreator((t_newmethod)trace_new,
-                     gensym("osci/trace~"),
-                     0); // no more args
-    
     class_sethelpsymbol(trace_class, gensym("trace~")); // links to the help patch
     
     class_addmethod(trace_class, (t_method)trace_dsp, gensym("dsp"), A_CANT, 0);

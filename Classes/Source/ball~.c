@@ -101,8 +101,6 @@ void ball_tilde_setup(void)
                                   A_DEFFLOAT, //amt
                                   A_DEFFLOAT, // radius
                                   0);
-    
-    class_addcreator((t_newmethod)ball_tilde_new, gensym("osci/ball~"), A_DEFFLOAT, A_DEFFLOAT, 0);
 
     class_sethelpsymbol(ball_tilde_class, gensym("ball~"));
     

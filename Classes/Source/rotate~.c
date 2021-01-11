@@ -112,29 +112,6 @@ void rotate_tilde_setup(void)
                                   A_DEFFLOAT, //zRot
                                   0);
     
-    class_addcreator((t_newmethod)rotate_tilde_new,
-                     gensym("rot~"),
-                     A_DEFFLOAT, //xRot
-                     A_DEFFLOAT, //yRot
-                     A_DEFFLOAT, //zRot
-                     0);
-    
-    class_addcreator((t_newmethod)rotate_tilde_new,
-                     gensym("osci/rotate~"),
-                     A_DEFFLOAT, //xRot
-                     A_DEFFLOAT, //yRot
-                     A_DEFFLOAT, //zRot
-                     0);
-    
-    class_addcreator((t_newmethod)rotate_tilde_new,
-                     gensym("osci/rot~"),
-                     A_DEFFLOAT, //xRot
-                     A_DEFFLOAT, //yRot
-                     A_DEFFLOAT, //zRot
-                     0);
-                     
-    
-    
     class_addmethod(rotate_tilde_class, (t_method)rotate_tilde_dsp, gensym("dsp"), A_CANT, 0);
     CLASS_MAINSIGNALIN(rotate_tilde_class, t_rotate_tilde, f); // dummy arg for singal into first inlet
 }

@@ -103,28 +103,6 @@ void selipse_tilde_setup(void)
                             A_DEFFLOAT, // b
                             A_DEFFLOAT, // n
                             0); // no more args
-
-    class_addcreator((t_newmethod)selipse_tilde_new,
-                     gensym("super_ellipse~"),
-                     A_DEFFLOAT, // a
-                     A_DEFFLOAT, // b
-                     A_DEFFLOAT, // n
-                     0); // no more args
-    
-    class_addcreator((t_newmethod)selipse_tilde_new,
-                     gensym("osci/super_ellipse~"),
-                     A_DEFFLOAT, // a
-                     A_DEFFLOAT, // b
-                     A_DEFFLOAT, // n
-                     0); // no more args
-    
-    class_addcreator((t_newmethod)selipse_tilde_new,
-                     gensym("osci/selipse~"),
-                     A_DEFFLOAT, // a
-                     A_DEFFLOAT, // b
-                     A_DEFFLOAT, // n
-                     0); // no more args
-
     
     class_sethelpsymbol(selipse_tilde_class, gensym("selipse~")); // links to the help patch
     

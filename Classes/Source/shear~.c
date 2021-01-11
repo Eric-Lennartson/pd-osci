@@ -103,12 +103,6 @@ void shear_tilde_setup(void)
                                   A_DEFSYM, // axis
                                   0);
     
-    class_addcreator((t_newmethod)shear_tilde_new,
-                     gensym("osci/shear~"),
-                     A_DEFFLOAT, //angle
-                     A_DEFSYM, // axis
-                     0);
-    
     class_addsymbol(shear_tilde_class, set_axis);
     
     class_sethelpsymbol(shear_tilde_class, gensym("shear~"));

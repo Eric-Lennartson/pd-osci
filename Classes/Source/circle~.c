@@ -101,13 +101,6 @@ void circle_tilde_setup(void)
                             A_DEFFLOAT, // radius
                             0); // no more args
     
-    class_addcreator((t_newmethod)circle_new,
-                     gensym("osci/circle~"),
-                     A_DEFFLOAT, // xPos
-                     A_DEFFLOAT, // yPos
-                     A_DEFFLOAT, // radius
-                     0); // no more args
-    
     class_sethelpsymbol(circle_class, gensym("circle~")); // links to the help patch
     
     class_addmethod(circle_class, (t_method)circle_dsp, gensym("dsp"), A_CANT, 0);

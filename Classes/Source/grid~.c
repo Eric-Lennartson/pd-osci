@@ -151,14 +151,6 @@ void grid_tilde_setup(void)
                                 A_DEFFLOAT, // spread
                                 0);
     
-    class_addcreator((t_newmethod)grid_tilde_new,
-                     gensym("osci/grid~"),
-                     A_DEFFLOAT, // nx
-                     A_DEFFLOAT, // ny
-                     A_DEFFLOAT, // nz
-                     A_DEFFLOAT, // spread
-                     0);
-    
     class_sethelpsymbol(grid_tilde_class, gensym("grid~"));
     
     class_addmethod(grid_tilde_class, (t_method)grid_tilde_dsp, gensym("dsp"), A_CANT, 0);

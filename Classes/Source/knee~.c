@@ -82,7 +82,6 @@ static void *knee_tilde_new(t_floatarg split_point, t_floatarg length)
     split_point = mod1(split_point);
     length = mod1(length);
     
-    
     // inlet memory alloc
     x->phase_split_point_in = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
     x->segment_length_in    = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
@@ -106,13 +105,6 @@ void knee_tilde_setup(void)
                                 A_DEFFLOAT, // phase split point
                                 A_DEFFLOAT, // length
                                 0);
-    
-    class_addcreator((t_newmethod)knee_tilde_new,
-                     gensym("osci/knee~"),
-                     A_DEFFLOAT, // phase split point
-                     A_DEFFLOAT, // length
-                     0); // no more args
-
     
     class_sethelpsymbol(knee_tilde_class, gensym("knee~")); // links to the help patch
     

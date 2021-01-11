@@ -111,28 +111,6 @@ void hypotrochoid_tilde_setup(void)
                             A_DEFFLOAT, // r
                             A_DEFFLOAT, // d
                             0); // no more args
-
-    class_addcreator((t_newmethod)hypotrochoid_tilde_new,
-                     gensym("trochoid~"),
-                     A_DEFFLOAT, // R
-                     A_DEFFLOAT, // r
-                     A_DEFFLOAT, // d
-                     0); // no more args
-    
-    class_addcreator((t_newmethod)hypotrochoid_tilde_new,
-                     gensym("osci/trochoid~"),
-                     A_DEFFLOAT, // R
-                     A_DEFFLOAT, // r
-                     A_DEFFLOAT, // d
-                     0); // no more args
-    
-    class_addcreator((t_newmethod)hypotrochoid_tilde_new,
-                     gensym("osci/hypotrochoid~"),
-                     A_DEFFLOAT, // R
-                     A_DEFFLOAT, // r
-                     A_DEFFLOAT, // d
-                     0); // no more args
-
     
     class_sethelpsymbol(hypotrochoid_tilde_class, gensym("hypotrochoid~")); // links to the help patch
     

@@ -176,17 +176,6 @@ void supershape_tilde_setup(void)
                             CLASS_DEFAULT, // gui apperance
                             A_GIMME,
                             0); // no more args
-
-    class_addcreator((t_newmethod)supershape_tilde_new,
-                     gensym("super~"),
-                     A_GIMME,
-                     0); // no more args
-    
-    class_addcreator((t_newmethod)supershape_tilde_new,
-                     gensym("osci/super~"),
-                     A_GIMME,
-                     0); // no more args
-
     
     class_sethelpsymbol(supershape_tilde_class, gensym("supershape~")); // links to the help patch
     
