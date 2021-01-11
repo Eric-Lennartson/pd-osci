@@ -63,7 +63,7 @@
 #X text 198 554 - x;
 #X text 198 574 - y;
 #X text 198 596 - z;
-#X obj 6 264 osci/out~;
+#X obj 6 254 osci/out~;
 #X text 199 362 - x;
 #X text 199 390 - y;
 #X text 199 418 - z;
@@ -93,6 +93,8 @@
 #X obj 17 74 osci/scale~;
 #X obj 17 104 osci/shear~;
 #X restore 17 699 pd related_objects;
+#X text 368 261 (abbreviation);
+#X obj 281 260 osci/trans~;
 #X connect 15 0 16 0;
 #X connect 16 0 47 3;
 #X connect 17 0 18 0;

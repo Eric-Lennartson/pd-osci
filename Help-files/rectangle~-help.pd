@@ -91,6 +91,8 @@ phasor would be used but any signal source could be used., f 47;
 #X text 177 638 - width;
 #X text 177 658 - height;
 #X obj 15 199 osci/rectangle~ 0 0 1 1;
+#X text 358 211 (abbreviation);
+#X obj 281 210 osci/rect~;
 #X connect 0 0 57 1;
 #X connect 1 0 57 2;
 #X connect 2 0 57 3;

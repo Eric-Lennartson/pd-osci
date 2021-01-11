@@ -82,6 +82,8 @@
 \, ramping from 0 to 1 results in a complete dodecahedron. Normally
 a phasor would be used but any signal source could be used., f 42
 ;
+#X obj 281 180 osci/dodeca~;
+#X text 378 181 (abbreviation);
 #X connect 23 0 24 0;
 #X connect 23 1 24 1;
 #X connect 23 2 24 2;

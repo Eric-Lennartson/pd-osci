@@ -82,6 +82,8 @@
 would be used but any signal source could be used., f 51;
 #X text 177 594 - size;
 #X text 177 445 - size;
+#X text 353 200 (abbreviation);
+#X obj 281 200 osci/tri~;
 #X connect 0 0 45 1;
 #X connect 1 0 45 2;
 #X connect 2 0 45 3;

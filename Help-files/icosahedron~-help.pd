@@ -81,6 +81,8 @@
 #X text 192 331 - controls the position of the dot on the icosahedron
 \, ramping from 0 to 1 results in the complete shape. Normally a phasor
 would be used but any signal source could be used., f 42;
+#X text 370 181 (abbreviation);
+#X obj 281 180 osci/icosa~;
 #X connect 23 0 24 0;
 #X connect 23 1 24 1;
 #X connect 23 2 24 2;

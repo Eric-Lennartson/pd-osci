@@ -1,4 +1,4 @@
-#N canvas 153 23 576 716 12;
+#N canvas 152 23 579 726 12;
 #X floatatom 51 104 5 0 0 0 - - -;
 #X floatatom 87 127 5 0 0 0 - - -;
 #X floatatom 123 154 5 0 0 0 - - -;
@@ -90,6 +90,8 @@ would be used but any signal source could be used., f 47;
 #X text 177 483 - size;
 #X text 177 638 - (3-N) sides;
 #X text 177 658 - size;
+#X text 348 230 (abbreviation);
+#X obj 281 230 osci/gon~;
 #X connect 0 0 52 1;
 #X connect 1 0 52 2;
 #X connect 2 0 52 3;

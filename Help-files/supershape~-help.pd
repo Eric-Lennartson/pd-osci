@@ -1,10 +1,10 @@
 #N canvas 661 23 575 748 12;
-#X floatatom 56 148 5 0 0 0 - - -;
-#X obj 56 171 sig~;
-#X floatatom 96 148 5 0 0 0 - - -;
-#X obj 96 171 sig~;
-#X floatatom 137 148 5 0 0 0 - - -;
-#X obj 137 171 sig~;
+#X floatatom 59 148 5 0 0 0 - - -;
+#X obj 59 171 sig~;
+#X floatatom 103 148 5 0 0 0 - - -;
+#X obj 103 171 sig~;
+#X floatatom 147 148 5 0 0 0 - - -;
+#X obj 147 171 sig~;
 #X obj 88 322 cnv 15 3 60 empty empty 0 5 9 0 16 -216373 -141475 0
 ;
 #X obj 88 566 cnv 15 3 17 empty empty 0 5 9 0 16 -216373 -141475 0
@@ -34,20 +34,19 @@
 #X text 265 644 4) float;
 #X obj 16 229 osci/out~;
 #X obj 16 99 phasor~ 50;
-#X obj 16 195 supershape~, f 35;
 #X text 101 97 1st inlet is a driver \, that draws the supershape;
-#X text 60 127 n1;
-#X text 100 127 n2;
-#X text 140 127 n3;
-#X text 180 127 m;
-#X text 220 127 a;
-#X text 260 127 b;
-#X floatatom 177 148 5 0 0 0 - - -;
-#X obj 177 171 sig~;
-#X floatatom 217 148 5 0 0 0 - - -;
-#X obj 217 171 sig~;
-#X floatatom 258 148 5 0 0 0 - - -;
-#X obj 258 171 sig~;
+#X text 63 127 n1;
+#X text 107 127 n2;
+#X text 150 127 n3;
+#X text 194 127 m;
+#X text 238 127 a;
+#X text 281 129 b;
+#X floatatom 191 148 5 0 0 0 - - -;
+#X obj 191 171 sig~;
+#X floatatom 235 148 5 0 0 0 - - -;
+#X obj 235 171 sig~;
+#X floatatom 279 150 5 0 0 0 - - -;
+#X obj 279 173 sig~;
 #X obj 88 500 cnv 15 3 17 empty empty 3 5 9 0 16 -216373 -141475 0
 ;
 #X text 106 499 signal;
@@ -108,20 +107,23 @@
 a phasor is used \, but any signal source works., f 47;
 #X text 198 499 - a \, height;
 #X text 197 524 - b \, width;
-#X obj 312 231 else/openfile http://paulbourke.net/geometry/supershape/
+#X obj 196 271 else/openfile http://paulbourke.net/geometry/supershape/
 -h More about supershapes;
+#X text 284 237 (abbreviation);
+#X obj 197 238 osci/super~;
+#X obj 16 195 osci/supershape~ 0.36 0.84 2.19 12 5 2;
 #X connect 0 0 1 0;
-#X connect 1 0 28 1;
+#X connect 1 0 80 1;
 #X connect 2 0 3 0;
-#X connect 3 0 28 2;
+#X connect 3 0 80 2;
 #X connect 4 0 5 0;
-#X connect 5 0 28 3;
-#X connect 27 0 28 0;
-#X connect 28 0 26 0;
-#X connect 28 1 26 1;
-#X connect 36 0 37 0;
-#X connect 37 0 28 4;
-#X connect 38 0 39 0;
-#X connect 39 0 28 5;
-#X connect 40 0 41 0;
-#X connect 41 0 28 6;
+#X connect 5 0 80 3;
+#X connect 27 0 80 0;
+#X connect 35 0 36 0;
+#X connect 36 0 80 4;
+#X connect 37 0 38 0;
+#X connect 38 0 80 5;
+#X connect 39 0 40 0;
+#X connect 40 0 80 6;
+#X connect 80 0 26 0;
+#X connect 80 1 26 1;

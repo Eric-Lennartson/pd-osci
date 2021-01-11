@@ -28,7 +28,6 @@
 #X text 198 534 - z out;
 #X obj 36 159 osci/rotate~ 45 23 0;
 #X obj 36 183 osci/project~;
-#X obj 36 91 phasor~ 50;
 #X floatatom 278 78 5 0 1 0 - - -;
 #X obj 278 101 sig~ 1;
 #X obj 88 410 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
@@ -77,18 +76,21 @@
 #X obj 17 104 osci/octahedron~;
 #X text 0 4 [tetrahedron~] related objects;
 #X restore 17 701 pd related_objects;
-#X obj 36 125 osci/tetrahedron~ 0 0 0 0.2 0.4 0.3;
 #X text 193 332 - controls the position of the dot on the tetrahedron
 \, ramping from 0 to 1 results in the complete shape. Normally a phasor
 would be used but any signal source could be used., f 42;
+#X obj 36 125 osci/tetrahedron~ 0 0 0 5 5 5;
+#X text 367 180 (abbreviation);
+#X obj 281 180 osci/tetra~;
+#X obj 36 91 phasor~ 50;
 #X connect 23 0 24 0;
 #X connect 23 1 24 1;
 #X connect 23 2 24 2;
-#X connect 24 0 31 0;
-#X connect 24 1 31 1;
-#X connect 25 0 49 0;
-#X connect 26 0 27 0;
-#X connect 27 0 49 1;
+#X connect 24 0 30 0;
+#X connect 24 1 30 1;
+#X connect 25 0 26 0;
+#X connect 26 0 49 1;
 #X connect 49 0 23 0;
 #X connect 49 1 23 1;
 #X connect 49 2 23 2;
+#X connect 52 0 49 0;
