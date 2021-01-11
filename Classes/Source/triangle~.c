@@ -4,7 +4,6 @@
 t_float points[3][2] = {{-0.5, -0.5},
                         { 0.0,  0.366},
                         { 0.5, -0.5}};
-// there's some problem with using the class dataspace in the perform and dsp_add functions
 
 static t_class *triangle_tilde_class;
 typedef struct _triangle_tilde
@@ -12,22 +11,19 @@ typedef struct _triangle_tilde
     t_object x_obj;
     t_sample f; // dummy variable for 1st inlet
     t_float xPos, yPos, size;
-    //t_sample points[3][2]; // 3 xy (2) points
     t_inlet *xPos_in, *yPos_in, *size_in; // driver default provided
     t_outlet *x_out, *y_out;
 } t_triangle_tilde;
 
-// something weird happens when I try to add member variables to the data space
 static t_int *triangle_tilde_perform(t_int *w)
 {
-//    t_triangle_tilde *x = (t_triangle_tilde*)(w[1]);
-    t_sample *driver_in =        (t_sample *)(w[1]);
-    t_sample *xPos_in   =        (t_sample *)(w[2]);
-    t_sample *yPos_in   =        (t_sample *)(w[3]);
-    t_sample *size_in   =        (t_sample *)(w[4]);
-    t_sample *x_out     =        (t_sample *)(w[5]);
-    t_sample *y_out     =        (t_sample *)(w[6]);
-    int      nblock     =               (int)(w[7]); // get blocksize
+    t_sample *driver_in = (t_sample *)(w[1]);
+    t_sample *xPos_in   = (t_sample *)(w[2]);
+    t_sample *yPos_in   = (t_sample *)(w[3]);
+    t_sample *size_in   = (t_sample *)(w[4]);
+    t_sample *x_out     = (t_sample *)(w[5]);
+    t_sample *y_out     = (t_sample *)(w[6]);
+    int      nblock     =        (int)(w[7]); // get blocksize
     
     while (nblock--) // dsp here
     {
@@ -37,19 +33,17 @@ static t_int *triangle_tilde_perform(t_int *w)
         t_sample size = *size_in++;
         
         t_sample t2 = t * 3;
-        int  int_t2 = t2;
+        int idx = t2;
+        int idx_next = (idx + 1 < 3) ? idx + 1 : 0;
         
         // get each point and interpolate between them
-//        t_float x1 = x->points[int_t2][0];
-//        t_float x2 = x->points[(int_t2 + 1 < 3) ? int_t2 + 1 : 0][0];
-//        t_float y1 = x->points[int_t2][1];
-        t_float x1 = points[int_t2][0];
-        t_float y1 = points[int_t2][1];
-        t_float x2 = points[(int_t2 + 1 < 3) ? int_t2 + 1 : 0][0];
-        t_float y2 = points[(int_t2 + 1 < 3) ? int_t2 + 1 : 0][1];
+        t_float x1 = points[idx][0];
+        t_float y1 = points[idx][1];
+        t_float x2 = points[idx_next][0];
+        t_float y2 = points[idx_next][1];
         
-        *x_out++ = lerp( x1, x2, mod1(t2) ) * size + xPos;
-        *y_out++ = lerp( y1, y2, mod1(t2) ) * size + yPos;
+        *x_out++ = lerp(mod1(t2), x1, x2) * size + xPos;
+        *y_out++ = lerp(mod1(t2), y1, y2) * size + yPos;
     }
     
     return (w + 8);
@@ -68,8 +62,6 @@ static void triangle_tilde_dsp(t_triangle_tilde *x, t_signal **sp)
             );
 }
 
-
-// ctor
 static void *triangle_tilde_new(t_floatarg xPos, t_floatarg yPos, t_floatarg size)
 {
     t_triangle_tilde *x = (t_triangle_tilde *)pd_new(triangle_tilde_class);
@@ -86,13 +78,6 @@ static void *triangle_tilde_new(t_floatarg xPos, t_floatarg yPos, t_floatarg siz
     pd_float((t_pd*)x->xPos_in, xPos); // send creation args to inlets, allows for floats to inlets
     pd_float((t_pd*)x->yPos_in, yPos);
     pd_float((t_pd*)x->size_in, size);
-    
-//    x->points[0][0] = -0.5; // bottom left
-//    x->points[0][1] = -0.5;
-//    x->points[1][0] =  0.0; // top
-//    x->points[1][1] =  0.366;
-//    x->points[2][0] =  0.5; // bottom right
-//    x->points[2][1] = -0.5;
     
     x->x_out = outlet_new(&x->x_obj, &s_signal); // outlet we made
     x->y_out = outlet_new(&x->x_obj, &s_signal); // outlet we made
