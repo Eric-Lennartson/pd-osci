@@ -4,8 +4,8 @@
 
 static t_class *square_tilde_class;
 
-t_vec3 points[4] = { {-1, 1, 0}, {1,1,0},
-                     {1,-1,0}, {-1,-1,0} };
+int x_pts[4] = {-1,-1,1,1};
+int y_pts[4] = {-1,1,1,-1};
 
 typedef struct _square_tilde
 {
@@ -35,15 +35,16 @@ static t_int *square_tilde_perform(t_int *w)
         t_sample size = *size_in++;
         
         t_sample t2 = t * 4;
-        int  int_t2 = t2;
+        int idx = t2;
+        int idx_next = (idx + 1) % 4;
         
-        t_float x1 = points[int_t2].x;
-        t_float y1 = points[int_t2].y;
-        t_float x2 = points[(int_t2 + 1 < 4) ? int_t2 + 1 : 0].x;
-        t_float y2 = points[(int_t2 + 1 < 4) ? int_t2 + 1 : 0].y;
+        int x1 = x_pts[idx];
+        int y1 = y_pts[idx];
+        int x2 = x_pts[idx_next];
+        int y2 = y_pts[idx_next];
         
-        *xChan_out++ = lerp( x1, x2, mod1(t2) ) * size + xPos;
-        *yChan_out++ = lerp( y1, y2, mod1(t2) ) * size + yPos;
+        *xChan_out++ = lerp(mod1(t2), x1, x2) * size + xPos;
+        *yChan_out++ = lerp(mod1(t2), y1, y2) * size + yPos;
     }
     
     return (w + 8);

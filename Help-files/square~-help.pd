@@ -1,38 +1,38 @@
-#N canvas 47 23 571 619 12;
+#N canvas 47 23 571 665 12;
 #X floatatom 56 104 5 0 0 0 - - -;
 #X floatatom 97 125 5 0 0 0 - - -;
 #X floatatom 138 146 5 0 0 0 - - -;
 #X text 98 103 2nd inlet controls x position;
 #X text 134 126 3rd inlet controls y position;
-#X obj 1 264 cnv 1 552 1 empty empty inlets 8 12 0 13 -216373 -1 0
+#X obj 1 304 cnv 1 552 1 empty empty inlets 8 12 0 13 -216373 -1 0
 ;
-#X obj 88 272 cnv 15 3 60 empty empty 0 5 9 0 16 -216373 -141475 0
+#X obj 88 312 cnv 15 3 60 empty empty 0 5 9 0 16 -216373 -141475 0
 ;
-#X obj 1 437 cnv 1 552 1 empty empty outlets 8 12 0 13 -216373 -1 0
+#X obj 1 477 cnv 1 552 1 empty empty outlets 8 12 0 13 -216373 -1 0
 ;
-#X obj 88 446 cnv 15 3 17 empty empty 0 5 9 0 16 -216373 -141475 0
+#X obj 88 486 cnv 15 3 17 empty empty 0 5 9 0 16 -216373 -141475 0
 ;
-#X text 106 270 signal;
-#X obj 88 350 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
+#X text 106 310 signal;
+#X obj 88 390 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
 ;
-#X text 106 348 signal;
-#X obj 88 380 cnv 15 3 17 empty empty 2 5 9 0 16 -216373 -141475 0
+#X text 106 388 signal;
+#X obj 88 420 cnv 15 3 17 empty empty 2 5 9 0 16 -216373 -141475 0
 ;
-#X text 106 378 signal;
-#X obj 88 407 cnv 15 3 17 empty empty 3 5 9 0 16 -216373 -141475 0
+#X text 106 418 signal;
+#X obj 88 447 cnv 15 3 17 empty empty 3 5 9 0 16 -216373 -141475 0
 ;
-#X text 106 405 signal;
-#X text 106 444 signal;
-#X obj 88 476 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
+#X text 106 445 signal;
+#X text 106 484 signal;
+#X obj 88 516 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
 ;
-#X text 106 474 signal;
-#X obj 2 504 cnv 1 552 1 empty empty arguments 8 12 0 13 -216373 -1
+#X text 106 514 signal;
+#X obj 2 544 cnv 1 552 1 empty empty arguments 8 12 0 13 -216373 -1
 0;
-#X text 177 514 - x position;
-#X text 177 534 - y position;
-#X text 85 514 1) float;
-#X text 85 534 2) float;
-#X text 85 554 3) float;
+#X text 177 554 - x position;
+#X text 177 574 - y position;
+#X text 85 554 1) float;
+#X text 85 574 2) float;
+#X text 85 594 3) float;
 #X obj 1 1 cnv 15 305 46 empty empty empty 20 12 0 14 -66577 -66577
 0;
 #X obj 4 3 cnv 15 301 42 empty empty square~ 20 20 2 37 -204786 -1
@@ -57,14 +57,13 @@
 0;
 #X obj 497 11 cnv 10 10 10 empty empty for 0 6 2 13 -128992 -204786
 0;
-#X obj 2 577 cnv 15 552 24 empty empty empty 20 12 0 14 -233017 -33289
+#X obj 2 617 cnv 15 552 24 empty empty empty 20 12 0 14 -233017 -33289
 0;
 #X obj 15 81 phasor~ 100;
-#X text 177 443 - x;
-#X text 177 473 - y;
-#X text 177 348 - x position;
-#X text 177 378 - y position;
-#X obj 15 193 osci/out~;
+#X text 177 483 - x;
+#X text 177 513 - y;
+#X text 177 388 - x position;
+#X text 177 418 - y position;
 #N canvas 271 151 208 199 related_objects 0;
 #X obj 1 1 cnv 15 200 23 empty empty empty 3 12 0 20 -204786 -1 0;
 #X obj 17 44 osci/ellipse~;
@@ -73,18 +72,19 @@
 #X obj 17 164 osci/polygon~;
 #X obj 17 74 osci/circle~;
 #X text 4 4 [square~] related objects;
-#X restore 16 580 pd related_objects;
+#X restore 16 620 pd related_objects;
 #X obj 15 169 osci/square~ 0 0 1;
 #X text 100 80 1st inlet is the driver \, that draws the square;
-#X text 178 270 - controls the position of the dot on the square \,
+#X text 178 310 - controls the position of the dot on the square \,
 ramping from 0 to 1 results in a complete square. Normally a phasor
 would be used but any signal source could be used., f 51;
-#X text 177 405 - size;
-#X text 177 554 - size;
+#X text 177 445 - size;
+#X text 177 594 - size;
 #X text 177 148 4th inlet controls the size;
-#X connect 0 0 45 1;
-#X connect 1 0 45 2;
-#X connect 2 0 45 3;
-#X connect 38 0 45 0;
-#X connect 45 0 43 0;
-#X connect 45 1 43 1;
+#X obj 15 193 osci/out~;
+#X connect 0 0 44 1;
+#X connect 1 0 44 2;
+#X connect 2 0 44 3;
+#X connect 38 0 44 0;
+#X connect 44 0 50 0;
+#X connect 44 1 50 1;

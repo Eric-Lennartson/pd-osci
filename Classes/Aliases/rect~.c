@@ -1,23 +1,23 @@
 #include "m_pd.h"
 #include "Audio_Math.h"
 
-static t_class *rectangle_tilde_class;
+static t_class *rect_tilde_class;
 
-t_float points[4][2] = {{-1,   1},
-                        {  1,  1},
-                        {  1, -1},
-                        { -1, -1}
+t_float points[4][2] = {{-1, -1},
+                        {-1,  1},
+                        { 1,  1},
+                        { 1, -1}
                        };
 
-typedef struct _rectangle_tilde
+typedef struct _rect_tilde
 {
     t_object x_obj;
     t_sample f; // dummy variable for 1st inlet
     t_inlet *xPos_in, *yPos_in, *height_in, *width_in; // driver default provided
     t_outlet *yChan_out; // *xChan_out default provided
-} t_rectangle_tilde;
+} t_rect_tilde;
 
-static t_int *rectangle_tilde_perform(t_int *w)
+static t_int *rect_tilde_perform(t_int *w)
 {
     t_sample *driver_in = (t_sample *)(w[1]);
     t_sample *xPos_in   = (t_sample *)(w[2]);
@@ -37,7 +37,7 @@ static t_int *rectangle_tilde_perform(t_int *w)
         t_sample height = *height_in++;
         t_sample width  = *width_in++;
         
-        t_sample tn = mod1(t) * 4;
+        t_sample tn = t * 4;
         int idx = tn;
         int idx_next = (idx + 1) % 4;
         
@@ -46,16 +46,16 @@ static t_int *rectangle_tilde_perform(t_int *w)
         t_float y1 = points[idx][1];
         t_float y2 = points[idx_next][1];
         
-        *xChan_out++ = lerp( mod1(tn), x1, x2) * width + xPos;
-        *yChan_out++ = lerp( mod1(tn), y1, y2) * height + yPos;
+        *xChan_out++ = lerp(mod1(tn), x1, x2) * height + xPos;
+        *yChan_out++ = lerp(mod1(tn), y1, y2) * width + yPos;
     }
     
     return (w + 9);
 }
 
-static void rectangle_tilde_dsp(t_rectangle_tilde *x, t_signal **sp)
+static void rect_tilde_dsp(t_rect_tilde *x, t_signal **sp)
 {
-    dsp_add(rectangle_tilde_perform, 8,
+    dsp_add(rect_tilde_perform, 8,
             sp[0]->s_vec, // driver
             sp[1]->s_vec, // xPos
             sp[2]->s_vec, // yPos
@@ -69,9 +69,9 @@ static void rectangle_tilde_dsp(t_rectangle_tilde *x, t_signal **sp)
 
 
 // ctor
-static void *rectangle_tilde_new(t_floatarg xPos, t_floatarg yPos, t_floatarg height, t_floatarg width)
+static void *rect_tilde_new(t_floatarg xPos, t_floatarg yPos, t_floatarg height, t_floatarg width)
 {
-    t_rectangle_tilde *x = (t_rectangle_tilde *)pd_new(rectangle_tilde_class);
+    t_rect_tilde *x = (t_rect_tilde *)pd_new(rect_tilde_class);
    
     x->xPos_in   = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
     x->yPos_in   = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
@@ -90,7 +90,7 @@ static void *rectangle_tilde_new(t_floatarg xPos, t_floatarg yPos, t_floatarg he
 }
 
 // dtor / free
-static void *rectangle_tilde_free(t_rectangle_tilde *x)
+static void *rect_tilde_free(t_rect_tilde *x)
 {
     inlet_free(x->xPos_in);
     inlet_free(x->yPos_in);
@@ -102,12 +102,12 @@ static void *rectangle_tilde_free(t_rectangle_tilde *x)
     return (void *)x;
 }
 
-void rectangle_tilde_setup(void)
+void rect_tilde_setup(void)
 {
-    rectangle_tilde_class = class_new(gensym("rect~"),
-                            (t_newmethod)rectangle_tilde_new, //ctor
-                            (t_method)rectangle_tilde_free, //dtor
-                            sizeof(t_rectangle_tilde), // data space
+    rect_tilde_class = class_new(gensym("rect~"),
+                            (t_newmethod)rect_tilde_new, //ctor
+                            (t_method)rect_tilde_free, //dtor
+                            sizeof(t_rect_tilde), // data space
                             CLASS_DEFAULT, // gui apperance
                             A_DEFFLOAT, // xPos
                             A_DEFFLOAT, // yPos
@@ -115,8 +115,8 @@ void rectangle_tilde_setup(void)
                             A_DEFFLOAT, // width
                             0); // no more args
     
-    class_sethelpsymbol(rectangle_tilde_class, gensym("rectangle~")); // links to the help patch
+    class_sethelpsymbol(rect_tilde_class, gensym("rectangle~")); // links to the help patch
     
-    class_addmethod(rectangle_tilde_class, (t_method)rectangle_tilde_dsp, gensym("dsp"), A_CANT, 0); // add a dsp method to data space
-    CLASS_MAINSIGNALIN(rectangle_tilde_class, t_rectangle_tilde, f); // signal inlet as first inlet
+    class_addmethod(rect_tilde_class, (t_method)rect_tilde_dsp, gensym("dsp"), A_CANT, 0); // add a dsp method to data space
+    CLASS_MAINSIGNALIN(rect_tilde_class, t_rect_tilde, f); // signal inlet as first inlet
 }

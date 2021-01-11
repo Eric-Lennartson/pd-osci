@@ -5,17 +5,17 @@ t_float points[3][2] = {{-0.5, -0.5},
                         { 0.0,  0.366},
                         { 0.5, -0.5}};
 
-static t_class *triangle_tilde_class;
-typedef struct _triangle_tilde
+static t_class *tri_tilde_class;
+typedef struct _tri_tilde
 {
     t_object x_obj;
     t_sample f; // dummy variable for 1st inlet
     t_float xPos, yPos, size;
     t_inlet *xPos_in, *yPos_in, *size_in; // driver default provided
     t_outlet *x_out, *y_out;
-} t_triangle_tilde;
+} t_tri_tilde;
 
-static t_int *triangle_tilde_perform(t_int *w)
+static t_int *tri_tilde_perform(t_int *w)
 {
     t_sample *driver_in = (t_sample *)(w[1]);
     t_sample *xPos_in   = (t_sample *)(w[2]);
@@ -49,9 +49,9 @@ static t_int *triangle_tilde_perform(t_int *w)
     return (w + 8);
 }
 
-static void triangle_tilde_dsp(t_triangle_tilde *x, t_signal **sp)
+static void tri_tilde_dsp(t_tri_tilde *x, t_signal **sp)
 {
-    dsp_add(triangle_tilde_perform, 7,
+    dsp_add(tri_tilde_perform, 7,
             sp[0]->s_vec, // driver
             sp[1]->s_vec, // xPos
             sp[2]->s_vec, // yPos
@@ -62,9 +62,9 @@ static void triangle_tilde_dsp(t_triangle_tilde *x, t_signal **sp)
             );
 }
 
-static void *triangle_tilde_new(t_floatarg xPos, t_floatarg yPos, t_floatarg size)
+static void *tri_tilde_new(t_floatarg xPos, t_floatarg yPos, t_floatarg size)
 {
-    t_triangle_tilde *x = (t_triangle_tilde *)pd_new(triangle_tilde_class);
+    t_tri_tilde *x = (t_tri_tilde *)pd_new(tri_tilde_class);
     
     //Init inlets and variables
     x->xPos = xPos;
@@ -86,7 +86,7 @@ static void *triangle_tilde_new(t_floatarg xPos, t_floatarg yPos, t_floatarg siz
 }
 
 // dtor / free
-static void *triangle_tilde_free(t_triangle_tilde *x)
+static void *tri_tilde_free(t_tri_tilde *x)
 {
     inlet_free(x->size_in);
     inlet_free(x->xPos_in);
@@ -97,20 +97,20 @@ static void *triangle_tilde_free(t_triangle_tilde *x)
     return (void *)x;
 }
 
-void triangle_tilde_setup(void)
+void tri_tilde_setup(void)
 {
-    triangle_tilde_class = class_new(gensym("tri~"),
-                            (t_newmethod)triangle_tilde_new, //ctor
-                            (t_method)triangle_tilde_free, //dtor
-                            sizeof(t_triangle_tilde), // data space
+    tri_tilde_class = class_new(gensym("tri~"),
+                            (t_newmethod)tri_tilde_new, //ctor
+                            (t_method)tri_tilde_free, //dtor
+                            sizeof(t_tri_tilde), // data space
                             CLASS_DEFAULT, // gui apperance
                             A_DEFFLOAT, // xPos
                             A_DEFFLOAT, // yPos
                             A_DEFFLOAT, // size
                             0); // no more args
     
-    class_sethelpsymbol(triangle_tilde_class, gensym("triangle~")); // links to the help patch
+    class_sethelpsymbol(tri_tilde_class, gensym("triangle~")); // links to the help patch
     
-    class_addmethod(triangle_tilde_class, (t_method)triangle_tilde_dsp, gensym("dsp"), A_CANT, 0); // add a dsp method to data space
-    CLASS_MAINSIGNALIN(triangle_tilde_class, t_triangle_tilde, f); // signal inlet as first inlet
+    class_addmethod(tri_tilde_class, (t_method)tri_tilde_dsp, gensym("dsp"), A_CANT, 0); // add a dsp method to data space
+    CLASS_MAINSIGNALIN(tri_tilde_class, t_tri_tilde, f); // signal inlet as first inlet
 }

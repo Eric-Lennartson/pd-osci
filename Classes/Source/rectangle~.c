@@ -3,10 +3,10 @@
 
 static t_class *rectangle_tilde_class;
 
-t_float points[4][2] = {{-1,   1},
-                        {  1,  1},
-                        {  1, -1},
-                        { -1, -1}
+t_float points[4][2] = {{-1, -1},
+                        {-1,  1},
+                        { 1,  1},
+                        { 1, -1}
                        };
 
 typedef struct _rectangle_tilde
@@ -31,23 +31,23 @@ static t_int *rectangle_tilde_perform(t_int *w)
     
     while (nblock--) // dsp here
     {
-        t_sample t      = *driver_in++;
+       t_sample t      = *driver_in++;
         t_sample xPos   = *xPos_in++;
         t_sample yPos   = *yPos_in++;
         t_sample height = *height_in++;
         t_sample width  = *width_in++;
         
-        t_sample tn = mod1(t) * 4;
+        t_sample tn = t * 4;
         int idx = tn;
-        int idx_next = (idx + 1) % 4;
+        int idx_next = (idx + 1) < 4 ? idx + 1 : 0;
         
         t_float x1 = points[idx][0];
         t_float x2 = points[idx_next][0];
         t_float y1 = points[idx][1];
         t_float y2 = points[idx_next][1];
         
-        *xChan_out++ = lerp( mod1(tn), x1, x2) * width + xPos;
-        *yChan_out++ = lerp( mod1(tn), y1, y2) * height + yPos;
+        *xChan_out++ = lerp(mod1(tn), x1, x2) * height + xPos;
+        *yChan_out++ = lerp(mod1(tn), y1, y2) * width + yPos; 
     }
     
     return (w + 9);

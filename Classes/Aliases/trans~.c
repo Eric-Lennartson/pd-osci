@@ -1,17 +1,17 @@
 #include "m_pd.h"
 
-static t_class *translate_tilde_class;
+static t_class *trans_tilde_class;
 
-typedef struct _translate_tilde
+typedef struct _trans_tilde
 {
     t_object x_obj;
     t_sample f; // dummy variable for 1st inlet
     t_float xOffset, yOffset, zOffset;
     t_inlet *yChan_in, *zChan_in, *xOffset_in, *yOffset_in, *zOffset_in; // xChan_in default provided
     t_outlet *yChan_out, *zChan_out; // xChan_out default provided
-} t_translate_tilde;
+} t_trans_tilde;
 
-static t_int *translate_tilde_perform(t_int *w)
+static t_int *trans_tilde_perform(t_int *w)
 {
     t_sample *xChan_in     = (t_sample *)(w[1]);
     t_sample *yChan_in     = (t_sample *)(w[2]);
@@ -41,9 +41,9 @@ static t_int *translate_tilde_perform(t_int *w)
     return (w + 11);
 }
 
-static void translate_tilde_dsp(t_translate_tilde *x, t_signal **sp)
+static void trans_tilde_dsp(t_trans_tilde *x, t_signal **sp)
 {
-    dsp_add(translate_tilde_perform, 10,
+    dsp_add(trans_tilde_perform, 10,
             sp[0]->s_vec, // xChan_in
             sp[1]->s_vec, // yChan_in
             sp[2]->s_vec, // zChan_in
@@ -58,9 +58,9 @@ static void translate_tilde_dsp(t_translate_tilde *x, t_signal **sp)
 
 
 // ctor
-static void *translate_tilde_new(t_floatarg xOffset, t_floatarg yOffset, t_floatarg zOffset)
+static void *trans_tilde_new(t_floatarg xOffset, t_floatarg yOffset, t_floatarg zOffset)
 {
-    t_translate_tilde *x = (t_translate_tilde *)pd_new(translate_tilde_class);
+    t_trans_tilde *x = (t_trans_tilde *)pd_new(trans_tilde_class);
     
     //Init inlets and variables
     x->xOffset      = xOffset;
@@ -86,7 +86,7 @@ static void *translate_tilde_new(t_floatarg xOffset, t_floatarg yOffset, t_float
 }
 
 // dtor / free
-static void *translate_tilde_free(t_translate_tilde *x)
+static void *trans_tilde_free(t_trans_tilde *x)
 {
     inlet_free(x->yChan_in);
     inlet_free(x->zChan_in);
@@ -100,20 +100,20 @@ static void *translate_tilde_free(t_translate_tilde *x)
     return (void *)x;
 }
 
-void translate_tilde_setup(void)
+void trans_tilde_setup(void)
 {
-    translate_tilde_class = class_new(gensym("trans~"),
-                            (t_newmethod)translate_tilde_new, //ctor
-                            (t_method)translate_tilde_free, //dtor
-                            sizeof(t_translate_tilde), // data space
+    trans_tilde_class = class_new(gensym("trans~"),
+                            (t_newmethod)trans_tilde_new, //ctor
+                            (t_method)trans_tilde_free, //dtor
+                            sizeof(t_trans_tilde), // data space
                             CLASS_DEFAULT, // gui apperance
                             A_DEFFLOAT, // xOffset
                             A_DEFFLOAT, // yOffset
                             A_DEFFLOAT, // zOffset
                             0); // no more args
     
-    class_sethelpsymbol(translate_tilde_class, gensym("translate~")); // links to the help patch
+    class_sethelpsymbol(trans_tilde_class, gensym("translate~")); // links to the help patch
     
-    class_addmethod(translate_tilde_class, (t_method)translate_tilde_dsp, gensym("dsp"), A_CANT, 0); // add a dsp method to data space
-    CLASS_MAINSIGNALIN(translate_tilde_class, t_translate_tilde, f); // signal inlet as first inlet
+    class_addmethod(trans_tilde_class, (t_method)trans_tilde_dsp, gensym("dsp"), A_CANT, 0); // add a dsp method to data space
+    CLASS_MAINSIGNALIN(trans_tilde_class, t_trans_tilde, f); // signal inlet as first inlet
 }

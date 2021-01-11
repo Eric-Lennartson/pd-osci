@@ -3,17 +3,17 @@
 
 const float PI = 3.14159265358979323846;
 
-static t_class *supershape_tilde_class;
+static t_class *super_tilde_class;
 
-typedef struct _supershape_tilde
+typedef struct _super_tilde
 {
     t_object x_obj;
     t_sample f; // dummy variable for 1st inlet
     t_inlet *n1_in, *n2_in, *n3_in, *m_in, *a_in, *b_in; // driver default provided
     t_outlet *yChan_out; // *xChan_out default provided
-} t_supershape_tilde;
+} t_super_tilde;
 
-static t_int *supershape_tilde_perform(t_int *w)
+static t_int *super_tilde_perform(t_int *w)
 {
     t_sample *driver_in =      (t_sample *)(w[1]);
     t_sample *n1_in     =      (t_sample *)(w[2]);
@@ -54,9 +54,9 @@ static t_int *supershape_tilde_perform(t_int *w)
     return (w + 11); // 1 larger than number of pointers (10 + 1 = 11)
 }
 
-static void supershape_tilde_dsp(t_supershape_tilde *x, t_signal **sp)
+static void super_tilde_dsp(t_super_tilde *x, t_signal **sp)
 {
-    dsp_add(supershape_tilde_perform, 10,
+    dsp_add(super_tilde_perform, 10,
             sp[0]->s_vec, // driver
             sp[1]->s_vec, // n1
             sp[2]->s_vec, // n2
@@ -72,9 +72,9 @@ static void supershape_tilde_dsp(t_supershape_tilde *x, t_signal **sp)
 
 
 // ctor                     // name used for creation, number of args, pointer to arg list
-static void *supershape_tilde_new(t_symbol *s, int argc, t_atom *argv) // this is because of A_GIMME
+static void *super_tilde_new(t_symbol *s, int argc, t_atom *argv) // this is because of A_GIMME
 {
-    t_supershape_tilde *x = (t_supershape_tilde *)pd_new(supershape_tilde_class);
+    t_super_tilde *x = (t_super_tilde *)pd_new(super_tilde_class);
    
     t_float n1 = 1, n2 = 1, n3 = 1, m = 1, a = 1, b = 1;
     
@@ -153,7 +153,7 @@ static void *supershape_tilde_new(t_symbol *s, int argc, t_atom *argv) // this i
 }
 
 // dtor / free
-static void *supershape_tilde_free(t_supershape_tilde *x)
+static void *super_tilde_free(t_super_tilde *x)
 {
     inlet_free(x->n1_in);
     inlet_free(x->n2_in);
@@ -167,18 +167,18 @@ static void *supershape_tilde_free(t_supershape_tilde *x)
     return (void *)x;
 }
 
-void supershape_tilde_setup(void)
+void super_tilde_setup(void)
 {
-    supershape_tilde_class = class_new(gensym("super~"),
-                            (t_newmethod)supershape_tilde_new, //ctor
-                            (t_method)supershape_tilde_free, //dtor
-                            sizeof(t_supershape_tilde), // data space
+    super_tilde_class = class_new(gensym("super~"),
+                            (t_newmethod)super_tilde_new, //ctor
+                            (t_method)super_tilde_free, //dtor
+                            sizeof(t_super_tilde), // data space
                             CLASS_DEFAULT, // gui apperance
                             A_GIMME,
                             0); // no more args
     
-    class_sethelpsymbol(supershape_tilde_class, gensym("supershape~")); // links to the help patch
+    class_sethelpsymbol(super_tilde_class, gensym("supershape~")); // links to the help patch
     
-    class_addmethod(supershape_tilde_class, (t_method)supershape_tilde_dsp, gensym("dsp"), A_CANT, 0); // add a dsp method to data space
-    CLASS_MAINSIGNALIN(supershape_tilde_class, t_supershape_tilde, f); // signal inlet as first inlet
+    class_addmethod(super_tilde_class, (t_method)super_tilde_dsp, gensym("dsp"), A_CANT, 0); // add a dsp method to data space
+    CLASS_MAINSIGNALIN(super_tilde_class, t_super_tilde, f); // signal inlet as first inlet
 }

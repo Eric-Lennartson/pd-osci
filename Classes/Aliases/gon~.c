@@ -3,18 +3,18 @@
 
 t_vec3 v = NEW_VEC3;
 
-static t_class *polygon_tilde_class;
+static t_class *gon_tilde_class;
 
-typedef struct _polygon_tilde
+typedef struct _gon_tilde
 {
     t_object x_obj;
     t_sample f; // dummy variable for 1st inlet
     //t_float xPos, yPos, size, sides;
     t_inlet *xPos_in, *yPos_in, *sides_in, *size_in; // driver default provided
     t_outlet *yChan_out; // *xChan_out default provided
-} t_polygon_tilde;
+} t_gon_tilde;
 
-static t_int *polygon_tilde_perform(t_int *w)
+static t_int *gon_tilde_perform(t_int *w)
 {
     t_sample *driver_in =      (t_sample *)(w[1]);
     t_sample *xPos_in   =      (t_sample *)(w[2]);
@@ -39,9 +39,9 @@ static t_int *polygon_tilde_perform(t_int *w)
     return (w + 9);
 }
 
-static void polygon_tilde_dsp(t_polygon_tilde *x, t_signal **sp)
+static void gon_tilde_dsp(t_gon_tilde *x, t_signal **sp)
 {
-    dsp_add(polygon_tilde_perform, 8,
+    dsp_add(gon_tilde_perform, 8,
             sp[0]->s_vec, // driver
             sp[1]->s_vec, // xPos
             sp[2]->s_vec, // yPos
@@ -55,9 +55,9 @@ static void polygon_tilde_dsp(t_polygon_tilde *x, t_signal **sp)
 
 
 // ctor
-static void *polygon_tilde_new(t_floatarg xPos, t_floatarg yPos, t_floatarg sides, t_floatarg size)
+static void *gon_tilde_new(t_floatarg xPos, t_floatarg yPos, t_floatarg sides, t_floatarg size)
 {
-    t_polygon_tilde *x = (t_polygon_tilde *)pd_new(polygon_tilde_class);
+    t_gon_tilde *x = (t_gon_tilde *)pd_new(gon_tilde_class);
     
     //Init inlets and variables
 //    x->xPos = xPos;
@@ -85,7 +85,7 @@ static void *polygon_tilde_new(t_floatarg xPos, t_floatarg yPos, t_floatarg side
 }
 
 // dtor / free
-static void *polygon_tilde_free(t_polygon_tilde *x)
+static void *gon_tilde_free(t_gon_tilde *x)
 {
     inlet_free(x->xPos_in);
     inlet_free(x->yPos_in);
@@ -97,12 +97,12 @@ static void *polygon_tilde_free(t_polygon_tilde *x)
     return (void *)x;
 }
 
-void polygon_tilde_setup(void)
+void gon_tilde_setup(void)
 {
-    polygon_tilde_class = class_new(gensym("gon~"),
-                            (t_newmethod)polygon_tilde_new, //ctor
-                            (t_method)polygon_tilde_free, //dtor
-                            sizeof(t_polygon_tilde), // data space
+    gon_tilde_class = class_new(gensym("gon~"),
+                            (t_newmethod)gon_tilde_new, //ctor
+                            (t_method)gon_tilde_free, //dtor
+                            sizeof(t_gon_tilde), // data space
                             CLASS_DEFAULT, // gui apperance
                             A_DEFFLOAT, // xPos
                             A_DEFFLOAT, // yPos
@@ -110,8 +110,8 @@ void polygon_tilde_setup(void)
                             A_DEFFLOAT, // size
                             0); // no more args
 
-    class_sethelpsymbol(polygon_tilde_class, gensym("polygon~")); // links to the help patch
+    class_sethelpsymbol(gon_tilde_class, gensym("polygon~")); // links to the help patch
     
-    class_addmethod(polygon_tilde_class, (t_method)polygon_tilde_dsp, gensym("dsp"), A_CANT, 0); // add a dsp method to data space
-    CLASS_MAINSIGNALIN(polygon_tilde_class, t_polygon_tilde, f); // signal inlet as first inlet
+    class_addmethod(gon_tilde_class, (t_method)gon_tilde_dsp, gensym("dsp"), A_CANT, 0); // add a dsp method to data space
+    CLASS_MAINSIGNALIN(gon_tilde_class, t_gon_tilde, f); // signal inlet as first inlet
 }

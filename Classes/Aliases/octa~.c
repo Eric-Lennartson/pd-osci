@@ -1,9 +1,9 @@
 #include "m_pd.h"
 #include "Audio_Math.h"
 
-static t_class *octahedron_tilde_class;
+static t_class *octa_tilde_class;
 
-typedef struct _octahedron_tilde
+typedef struct _octa_tilde
 {
     t_object  x_obj;
     t_sample f; // dummy arg
@@ -11,11 +11,11 @@ typedef struct _octahedron_tilde
     t_vec3 points[12], v1, v2; // v1 and v2 are temp vecs
     t_inlet *interp_amt;
     t_outlet *x_out, *y_out, *z_out;
-} t_octahedron_tilde;
+} t_octa_tilde;
 
-t_int *octahedron_tilde_perform(t_int *w)
+t_int *octa_tilde_perform(t_int *w)
 {
-    t_octahedron_tilde *x = (t_octahedron_tilde *)(w[1]); // access data space
+    t_octa_tilde *x = (t_octa_tilde *)(w[1]); // access data space
     t_sample *driver_in   =           (t_sample *)(w[2]);
     t_sample *interp_amt  =           (t_sample *)(w[3]);
     t_sample *x_out       =           (t_sample *)(w[4]);
@@ -42,9 +42,9 @@ t_int *octahedron_tilde_perform(t_int *w)
   return (w + 8); // num ptrs + 1
 }
 
-void octahedron_tilde_dsp(t_octahedron_tilde *x, t_signal **sp)
+void octa_tilde_dsp(t_octa_tilde *x, t_signal **sp)
 {
-    dsp_add(octahedron_tilde_perform, 7, x,
+    dsp_add(octa_tilde_perform, 7, x,
             sp[0]->s_vec, // driver_in
             sp[1]->s_vec, // interp_amt
             sp[2]->s_vec, // x_out
@@ -54,9 +54,9 @@ void octahedron_tilde_dsp(t_octahedron_tilde *x, t_signal **sp)
 }
 
                      // name used for creation, number of args, pointer to arg list
-void *octahedron_tilde_new(t_symbol *s, int argc, t_atom *argv) // this is because of A_GIMME
+void *octa_tilde_new(t_symbol *s, int argc, t_atom *argv) // this is because of A_GIMME
 {
-    t_octahedron_tilde *x = (t_octahedron_tilde *)pd_new(octahedron_tilde_class);
+    t_octa_tilde *x = (t_octa_tilde *)pd_new(octa_tilde_class);
     
     // this could be done better, but this works, and I don't need to change them later
     x->points[0]  = vec3(-0.5, -0.5,  0.0);
@@ -155,7 +155,7 @@ void *octahedron_tilde_new(t_symbol *s, int argc, t_atom *argv) // this is becau
     return (void *)x;
 }
 
-void octahedron_tilde_free(t_octahedron_tilde *x)
+void octa_tilde_free(t_octa_tilde *x)
 {
     inlet_free(x->interp_amt);
     
@@ -164,18 +164,18 @@ void octahedron_tilde_free(t_octahedron_tilde *x)
     outlet_free(x->z_out);
 }
 
-void octahedron_tilde_setup(void)
+void octa_tilde_setup(void)
 {
-    octahedron_tilde_class = class_new(gensym("octa~"),
-                                  (t_newmethod)octahedron_tilde_new,
-                                  (t_method)octahedron_tilde_free,
-                                  sizeof(t_octahedron_tilde),
+    octa_tilde_class = class_new(gensym("octa~"),
+                                  (t_newmethod)octa_tilde_new,
+                                  (t_method)octa_tilde_free,
+                                  sizeof(t_octa_tilde),
                                   CLASS_DEFAULT,
                                   A_GIMME, // xPos, yPos, zPos, xScale, yScale, zScale
                                   0);
     
-    class_sethelpsymbol(octahedron_tilde_class, gensym("octahedron~"));
+    class_sethelpsymbol(octa_tilde_class, gensym("octahedron~"));
     
-    class_addmethod(octahedron_tilde_class, (t_method)octahedron_tilde_dsp, gensym("dsp"), A_CANT, 0);
-    CLASS_MAINSIGNALIN(octahedron_tilde_class, t_octahedron_tilde, f); // dummy arg for singal into first inlet
+    class_addmethod(octa_tilde_class, (t_method)octa_tilde_dsp, gensym("dsp"), A_CANT, 0);
+    CLASS_MAINSIGNALIN(octa_tilde_class, t_octa_tilde, f); // dummy arg for singal into first inlet
 }
