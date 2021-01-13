@@ -25,6 +25,6 @@ double mod1(const double value);
 
 // doesn't avoid gimbal lock problems
 // this should probably be in vec3.h
-void rotate(t_vec3* v, t_sample ax, t_sample ay, t_sample az);
+void rotate(t_vec3* v, t_vec3* rot);
 
 #endif /* Audio_Math_h */

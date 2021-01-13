@@ -24,9 +24,8 @@ m_wrap.class.sources := Classes/Source/m_wrap.c
 map.class.sources    := Classes/Source/map.c
 skew.class.sources   := Classes/Source/skew.c
 
-#there is some serious include weirdness
-#but it works now so that's good?
-#solution: clean up my header file system?
+# I REALLY need to clean up my header files to make more sense
+# is one giant header the solution?
 # signal:
 bezier~.class.sources       := Classes/Source/bezier~.c
 bezigon~.class.sources      := Classes/Source/bezigon~.c
@@ -56,7 +55,7 @@ octahedron~.class.sources   := Classes/Source/octahedron~.c $(A_Math)
 octa~.class.sources   		:= Classes/Aliases/octa~.c $(A_Math)
 rectangle~.class.sources    := Classes/Source/rectangle~.c $(A_Math)
 rect~.class.sources    		:= Classes/Aliases/rect~.c $(A_Math)
-rotate~.class.sources       := Classes/Source/rotate~.c $(A_Math)
+rotate~.class.sources       := Classes/Source/rotate~.c $(A_Math) $(vec3)
 square~.class.sources       := Classes/Source/square~.c $(A_Math)
 tetrahedron~.class.sources  := Classes/Source/tetrahedron~.c $(A_Math)
 tetra~.class.sources  		:= Classes/Aliases/tetra~.c $(A_Math)

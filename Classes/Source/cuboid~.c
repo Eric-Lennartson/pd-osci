@@ -29,7 +29,7 @@ t_int *cuboid_tilde_perform(t_int *w)
       double t = mod1(*driver_in++);
       double t2 = t * 16;
       int idx = t2;
-      int idx_next = (idx + 1 < 16) ? idx + 1 : 0;
+      int idx_next = (idx + 1) % 16;
       
       x->v1 = vec3(x->points[idx].x, x->points[idx].y, x->points[idx].z);
       x->v2 = vec3(x->points[idx_next].x, x->points[idx_next].y, x->points[idx_next].z);

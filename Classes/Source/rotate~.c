@@ -1,5 +1,6 @@
 #include "m_pd.h"
 #include "Audio_Math.h"
+#include "vec3.h"
 
 static t_class *rotate_tilde_class;
 
@@ -30,11 +31,8 @@ t_int *rotate_tilde_perform(t_int *w)
   {
       x->v = vec3(*x_in++, *y_in++, *z_in++);
       x->rot = vec3(*xRot_in++, *yRot_in++, *zRot_in++);
-      t_float ax = *xRot_in++;
-      t_float ay = *yRot_in++;
-      t_float az = *zRot_in++;
-
-      rotate(&x->v, ax, ay, az);
+      
+      rotate(&x->v, &x->rot);
       
       *x_out++ = x->v.x;
       *y_out++ = x->v.y;
