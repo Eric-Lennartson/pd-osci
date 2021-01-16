@@ -1,3 +1,19 @@
+#General
 .DS_Store
+.AppleDouble
+.LSOverride
+
+#Windows
+Thumbs.db
+
+#Files for me
 TODO
 .vscode
+
+#Post Compilation Files
+*.pd_linux
+*.pd_darwin
+*.dll
+*.o
+*.so
+*.dylib
