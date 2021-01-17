@@ -56,6 +56,7 @@ Cross compiling is also possible with something like this
 ### Acknowledgements
 
 Alexandre Torres Porres, Most of this library and what I've learned is from looking at the code from ELSE.
+
 Hansi Raber, Most concepts and code relating to oscilloscopes comes from using/being inspired by OsciStudio.
 
 --------------------------------------------------------------------------
