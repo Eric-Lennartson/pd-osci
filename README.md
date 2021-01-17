@@ -55,7 +55,8 @@ Cross compiling is also possible with something like this
 
 ### Acknowledgements
 
-I'm thankful for the Pd community and their willingness to help. Also, much of my code is fashioned after Alexandre Torres Porres's ELSE. I've learned so much from looking at his code. Thank You.
+Alexandre Torres Porres, Most of this library and what I've learned is from looking at the code from ELSE.
+Hansi Raber, Most concepts and code relating to oscilloscopes comes from using/being inspired by OsciStudio.
 
 --------------------------------------------------------------------------
 
