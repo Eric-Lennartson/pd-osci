@@ -1,7 +1,9 @@
+//Code ported from Hansi Raber's OsciText
+//copyright (c) 2018, Jerobeam Fenderson
+
 #ifndef text_h
 #define text_h
 
-#include "vec3.h"
 #include "Audio_Math.h"
 #include "stdbool.h"
 
@@ -87,7 +89,7 @@ int count_lines(OsciText *o_text);
 void positions(OsciText *o_text, const char *text, int *map, int *pos, int *line, int *line_length);
 int pos(OsciText *o_text, int i);
 int line(OsciText *o_text, int i);
-int map(OsciText *o_text, int i);
+int map_text(OsciText *o_text, int i);
 int longestLine(OsciText *o_text);
 int lineLength(OsciText *o_text, int i);
 void set_horz_align(OsciText *o_text, Align alignment);

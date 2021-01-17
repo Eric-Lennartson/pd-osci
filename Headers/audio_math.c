@@ -4,6 +4,19 @@ const double PI = 3.14159265358979323846;
 const double TWO_PI = 6.28318530717958647693;
 const double HALF_PI = 1.57079632679489661923;
 
+t_float map(t_float value,  t_float inputMin,  t_float inputMax,  t_float outputMin,  t_float outputMax)
+{
+    if(fabs(inputMin - inputMax) < FLT_EPSILON) // check if distance is basically zero
+    {
+        return outputMin;
+    }
+    else
+    {
+        double outVal = ((value - inputMin) / (inputMax - inputMin) * (outputMax - outputMin) + outputMin);
+        return outVal;
+   }
+}
+
 double lerp(const double t, const double a, const double b)
 {
     return a + (t * (b - a));

@@ -1,6 +1,6 @@
 #include "text.h"
 
-// this is also in utils??
+// this should be refactored
 t_float scale_lin(t_float value, t_float inputMin, t_float inputMax, t_float outputMin, t_float outputMax, bool clamp) {
 
    if (fabsf(inputMin - inputMax) < FLT_EPSILON){
@@ -913,7 +913,7 @@ int line(OsciText *o_text, int i) {
     return o_text->letter_line[i];
 }
 
-int map(OsciText *o_text, int i) {
+int map_text(OsciText *o_text, int i) {
     return o_text->text_map[i];
 }
 
@@ -955,17 +955,17 @@ t_vec3 gen(OsciText* o_text, t_float t, t_float line_height, t_float letter_spac
     t_float phase = mod1(t*(o_text->length - o_text->numSpaces));
     int stair = t*(o_text->length - o_text->numSpaces) - phase;
 
-    v = drawLetter(o_text->text[map(o_text, stair)], phase);
+    v = drawLetter(o_text->text[map_text(o_text, stair)], phase);
 
     t_float val = 0;
     switch (o_text->horz_align){
     case Default:
-        v.x = v.x*ratio + pos(o_text, map(o_text, stair))*(ratio + letter_spacing);
-        v.y = v.y - line(o_text, map(o_text, stair))*line_height;
+        v.x = v.x*ratio + pos(o_text, map_text(o_text, stair))*(ratio + letter_spacing);
+        v.y = v.y - line(o_text, map_text(o_text, stair))*line_height;
         break;
     case Left:
-        v.x = v.x*ratio + pos(o_text, map(o_text, stair))*(ratio + letter_spacing);
-        v.y = v.y - line(o_text, map(o_text, stair))*line_height;
+        v.x = v.x*ratio + pos(o_text, map_text(o_text, stair))*(ratio + letter_spacing);
+        v.y = v.y - line(o_text, map_text(o_text, stair))*line_height;
 
         val = (lineLength(o_text, longestLine(o_text) )*(ratio + letter_spacing) - letter_spacing);
 
@@ -976,8 +976,8 @@ t_vec3 gen(OsciText* o_text, t_float t, t_float line_height, t_float letter_spac
         v.x -= 1;
         break;
     case Right:
-        v.x = v.x*ratio + (pos(o_text, map(o_text, stair)) + lineLength(o_text, longestLine(o_text))-lineLength(o_text, line(o_text, map(o_text, stair))))*(ratio + letter_spacing);
-        v.y = v.y - line(o_text, map(o_text, stair)) * line_height;
+        v.x = v.x*ratio + (pos(o_text, map_text(o_text, stair)) + lineLength(o_text, longestLine(o_text))-lineLength(o_text, line(o_text, map_text(o_text, stair))))*(ratio + letter_spacing);
+        v.y = v.y - line(o_text, map_text(o_text, stair)) * line_height;
 
         val = (lineLength(o_text, longestLine(o_text) )*(ratio + letter_spacing) - letter_spacing);
         v.x *= 2.f / val;
@@ -987,8 +987,8 @@ t_vec3 gen(OsciText* o_text, t_float t, t_float line_height, t_float letter_spac
         v.x -= 1;
         break;
     case Center:
-        v.x = v.x*ratio + (pos(o_text, map(o_text, stair)) + (lineLength(o_text, longestLine(o_text)) - lineLength(o_text, line(o_text, map(o_text, stair))))/2)*(ratio + letter_spacing);
-        v.y = v.y - line(o_text, map(o_text, stair))*line_height;
+        v.x = v.x*ratio + (pos(o_text, map_text(o_text, stair)) + (lineLength(o_text, longestLine(o_text)) - lineLength(o_text, line(o_text, map_text(o_text, stair))))/2)*(ratio + letter_spacing);
+        v.y = v.y - line(o_text, map_text(o_text, stair))*line_height;
 
         val = (lineLength(o_text, longestLine(o_text))*(ratio + letter_spacing) - letter_spacing);
         v.x *= 2.f / val;

@@ -1,8 +1,4 @@
-#include "m_pd.h"
-#include <math.h>
-
-// PDBIGORSMALL ??
-#define FLT_EPSILON 1.19209290E-07F
+#include "Audio_Math.h"
 
 static t_class *map_tilde_class;
 
@@ -13,19 +9,6 @@ typedef struct _map_tilde
     t_inlet  *min_in, *max_in, *min_out, *max_out;
     t_outlet *result_out;
 } t_map_tilde;
-
-t_float map(t_float value,  t_float inputMin,  t_float inputMax,  t_float outputMin,  t_float outputMax)
-{
-    if(fabs(inputMin - inputMax) < FLT_EPSILON) // check if distance is basically zero
-    {
-        return outputMin;
-    }
-    else
-    {
-        double outVal = ((value - inputMin) / (inputMax - inputMin) * (outputMax - outputMin) + outputMin);
-        return outVal;
-   }
-}
 
 static t_int *map_tilde_perform(t_int *w)
 {

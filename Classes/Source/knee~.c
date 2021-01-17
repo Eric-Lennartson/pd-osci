@@ -2,24 +2,6 @@
 #include <math.h>
 #include "Audio_Math.h"
 
-#define FLT_EPSILON 1.19209290E-07F
-
-/* Algorithm similar to the one from OsciStudio. */
-
-// map is used in several places... Refactor??
-t_float map(t_float value,  t_float inputMin,  t_float inputMax,  t_float outputMin,  t_float outputMax)
-{
-    if(fabs(inputMin - inputMax) < FLT_EPSILON) // check if distance is basically zero
-    {
-        return outputMin;
-    }
-    else
-    {
-        double outVal = ((value - inputMin) / (inputMax - inputMin) * (outputMax - outputMin) + outputMin);
-        return outVal;
-    }
-}
-
 static t_class *knee_tilde_class;
 
 typedef struct _knee_tilde

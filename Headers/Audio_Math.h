@@ -18,7 +18,9 @@ const double HALF_PI;
 #endif
 
 #define DEG_TO_RAD (PI / 180.0)
+#define FLT_EPSILON 1.19209290E-07F
 
+t_float map(t_float value, t_float inputMin, t_float inputMax, t_float outputMin, t_float outputMax);
 double lerp(const double t, const double a, const double b);
 t_vec3 blend(float t, t_vec3 a, t_vec3 b);
 double mod1(const double value);

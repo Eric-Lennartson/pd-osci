@@ -1,5 +1,8 @@
-#ifndef Phase_Cut_h
-#define Phase_Cut_h
+//Code ported from Hansi Raber's PhaseCut
+//copyright (c) 2018, Hansi Raber
+
+#ifndef __PHASE_CUT_H
+#define __PHASE_CUT_H
 
 #include <stdbool.h>
 #include <math.h>
@@ -7,8 +10,9 @@
 #include "Audio_Math.h" // for mod1()
 #include "utils.h" 
 
-/* I have two versions running around, one with va_args, another with arrays
-   I think the one with arrays is a better design?
+/* 
+I have two versions running around, one with va_args, another with arrays
+I think the one with arrays is a better design?
 */
 typedef struct PhaseCut
 {
@@ -25,4 +29,4 @@ PhaseCut cut_weights(int n_args, double t, double *weights);
 PhaseCut cut_mix(float t, int n_cuts, float which, float fadeRatio);
 PhaseCut cut_equal(float t, int n_cuts);
 
-#endif /* Phase_Cut_h */
+#endif /* __PHASE_CUT_H */
