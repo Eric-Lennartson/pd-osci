@@ -14,15 +14,17 @@ cut     := Headers/phase_cut.c
 utils   := Headers/utils.c
 vec3    := Headers/vec3.c
 text    := Headers/text.c
+P_Map	:= Headers/phase_map.c
 
 #########################################################################
 # Sources: ##############################################################
 #########################################################################
 
 # control:
-m_wrap.class.sources := Classes/Source/m_wrap.c
-map.class.sources    := Classes/Source/map.c
-skew.class.sources   := Classes/Source/skew.c
+m_wrap.class.sources 	:= Classes/Source/m_wrap.c
+map.class.sources    	:= Classes/Source/map.c
+skew.class.sources   	:= Classes/Source/skew.c
+phase_map.class.sources := Classes/Source/phase_map.c $(P_Map) $(A_Math)
 
 # I REALLY need to clean up my header files to make more sense
 # is one giant header the solution?
@@ -35,7 +37,7 @@ ellipse~.class.sources      := Classes/Source/ellipse~.c
 grid~.class.sources         := Classes/Source/grid~.c  $(A_Math) $(utils) $(vec3)
 heart~.class.sources        := Classes/Source/heart~.c $(A_Math)
 lerp~.class.sources         := Classes/Source/lerp~.c
-map~.class.sources          := Classes/Source/map~.c 
+map~.class.sources          := Classes/Source/map~.c $(A_Math)
 selipse~.class.sources      := Classes/Source/selipse~.c
 skew~.class.sources         := Classes/Source/skew~.c 
 supershape~.class.sources   := Classes/Source/supershape~.c
@@ -62,7 +64,7 @@ tetra~.class.sources  		:= Classes/Aliases/tetra~.c $(A_Math)
 trace~.class.sources        := Classes/Source/trace~.c $(A_Math)
 triangle~.class.sources     := Classes/Source/triangle~.c $(A_Math)
 tri~.class.sources     		:= Classes/Aliases/tri~.c $(A_Math)
-polygon~.class.sources      := Classes/Source/polygon~.c $(A_Funcs) $(cut)
+polygon~.class.sources      := Classes/Source/polygon~.c $(A_Funcs) $(cut) $(A_Math) $(utils)
 gon~.class.sources      	:= Classes/Aliases/gon~.c $(A_Funcs) $(cut)
 cut_equal~.class.sources    := Classes/Source/cut_equal~.c $(cut) $(utils)
 cut_mix~.class.sources      := Classes/Source/cut_mix~.c $(cut) $(utils)
