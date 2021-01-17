@@ -70,7 +70,7 @@ I'm thankful for the Pd community and their willingness to help. Also, much of m
 - [rectangle~]
 - [square~]
 - [triangle~]
-- [polygon~]
+- [polygon~] BROKEN
 
 **3D Primitives: [05]**
 
