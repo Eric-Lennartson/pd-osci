@@ -16,7 +16,7 @@
 #X obj 5 319 osci/map~ -1 1 -1 1;
 #X obj 245 322 osci/map~ -1 1 -1 1;
 #X obj 245 346 outlet~ y;
-#X obj 245 192 xselect~ 2;
+#X obj 245 192 else/xselect~ 2;
 #X obj 245 135 r \$0-link-freq;
 #X obj 245 159 + 1;
 #X obj 5 5 inlet~ freq x;
