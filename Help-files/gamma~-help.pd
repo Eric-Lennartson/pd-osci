@@ -1,4 +1,4 @@
-#N canvas 339 157 575 510 12;
+#N canvas -1288 174 606 520 12;
 #X obj 1 1 cnv 15 305 46 empty empty empty 20 12 0 14 -66577 -66577
 0;
 #X obj 4 3 cnv 15 301 42 empty empty gamma~ 20 20 2 37 -204786 -1 0
@@ -49,18 +49,16 @@
 #X text 116 425 2) float;
 #X text 116 445 3) float;
 #X obj 147 108 / 100;
-#X obj 210 65 osci/gamma~ -g;
-#X text 304 85 [gamma~] with the -g argument;
+#X obj 147 162 osci/gamma~ 0.8 0.9;
 #X text 143 193 [gamma~] helps to make the brightness control on oscilloscopes
 more useful. [gamma~] is making the assumption that brightness on the
 scope has been turned all the way up and that it will be controlled
 from the pd patch. All scopes/displays will be slightly different and
-so controls for altering the minimum value of the brightness range
-and the amount of gamma correction have been provided., f 58;
-#X obj 147 162 osci/gamma~;
+so you'll need to experiment to find what settings work best for your
+setup., f 58;
 #X connect 16 0 17 0;
 #X connect 17 0 18 0;
 #X connect 17 1 18 1;
 #X connect 21 0 31 0;
-#X connect 22 0 35 0;
+#X connect 22 0 32 0;
 #X connect 31 0 22 0;
