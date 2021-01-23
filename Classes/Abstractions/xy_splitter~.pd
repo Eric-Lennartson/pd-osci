@@ -54,7 +54,7 @@
 -66577 0;
 #X obj 661 201 cnv 1 7 1 empty gui-sig-inlet empty 20 12 0 14 -262144
 -66577 0;
-#X obj 714 28 initmess \; \$0-set-link-freq 0 \; \$0-pulse-width-x
+#X obj 714 28 else/initmess \; \$0-set-link-freq 0 \; \$0-pulse-width-x
 0.5 \; \$0-pulse-width-y 0.5 \; \$0-set-phase-x 0 0 \; \$0-set-phase-y
 0.25 0;
 #X connect 0 0 14 0;

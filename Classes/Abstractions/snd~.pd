@@ -8,7 +8,7 @@
 #X obj 26 205 s \$0-this;
 #X obj 226 125 makefilename %s-y;
 #X obj 26 117 makefilename %s-z;
-#X obj 129 17 loadbanger -init;
+#X obj 129 17 else/loadbanger -init;
 #X msg 226 149 obj 210 100 inlet~ \, obj 210 130 send~ \$1 \, connect
 4 0 5 0, f 22;
 #X msg 26 141 obj 410 100 inlet~ \, obj 410 130 send~ \$1 \, connect
