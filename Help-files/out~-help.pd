@@ -1,4 +1,4 @@
-#N canvas -1139 37 593 697 12;
+#N canvas -1139 37 593 664 12;
 #X obj 1 404 cnv 1 552 1 empty empty inlets 8 12 0 13 -216373 -1 0
 ;
 #X obj 88 412 cnv 15 3 17 empty empty 0 5 9 0 16 -216373 -141475 0
@@ -15,14 +15,10 @@
 #X obj 88 534 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
 ;
 #X text 106 533 signal;
-#X obj 1 624 cnv 1 551 1 empty empty arguments 8 12 0 13 -216373 -1
+#X obj 1 594 cnv 1 551 1 empty empty arguments 8 12 0 13 -216373 -1
 0;
-#X obj 88 590 cnv 15 3 17 empty empty 3 5 9 0 16 -216373 -141475 0
-;
-#X text 106 589 signal;
-#X obj 16 157 osci/out~;
-#X obj 16 93 osc~ 440;
-#X text 106 628 (none);
+#X obj 7 197 osci/out~;
+#X text 106 598 (none);
 #X obj 1 1 cnv 15 305 46 empty empty empty 20 12 0 14 -66577 -66577
 0;
 #X obj 4 3 cnv 15 301 42 empty empty out~ 20 20 2 37 -204786 -1 0;
@@ -34,7 +30,7 @@
 0;
 #X obj 413 25 cnv 10 10 10 empty empty Oscilloscope 0 6 2 13 -128992
 -204786 0;
-#X obj 10 34 cnv 5 10 10 empty \$0-description Stereo\ output\ |\ Brightness\ control\ |\ Recording
+#X obj 10 34 cnv 5 10 10 empty \$0-description Stereo\ Output\ +\ Brightness\ Control
 30 30 2 17 -204786 -1 0;
 #X obj 480 25 cnv 10 10 10 empty empty Music 0 6 2 13 -128992 -204786
 0;
@@ -46,40 +42,29 @@
 0;
 #X obj 497 11 cnv 10 10 10 empty empty for 0 6 2 13 -128992 -204786
 0;
-#X obj 2 657 cnv 15 552 24 empty empty empty 20 12 0 14 -233017 -33289
+#X obj 2 627 cnv 15 552 24 empty empty empty 20 12 0 14 -233017 -33289
 0;
-#X text 197 589 - [writesf~] settings message;
 #X obj 88 562 cnv 15 3 17 empty empty 2 5 9 0 16 -216373 -141475 0
 ;
 #X text 106 561 signal;
 #X text 197 505 - Left channel (x);
 #X text 197 533 - Right channel (y);
-#X text 145 318 TODO:// add in spot killer when that gets written.
-also figure out what the hell the writesf bug is. Figure out how spot
-killer settings are adjusted, f 50;
 #X text 198 410 - Left channel (x);
 #X text 197 438 - Right channel (y);
 #X obj 88 469 cnv 15 3 17 empty empty 2 5 9 0 16 -216373 -141475 0
 ;
 #X text 106 467 signal;
 #X text 197 467 - Brightness;
-#X text 145 92 [out~] is a convenient stereo input and output abstraction
-with an optional third signal for brightness control. It has controls
-for muting \, DSP on/off \, and maximum gain. It also has recording
-functionality \, which can be accessed by clicking on the bang in the
-top right corner. From there you can control samplerate \, file format
-\, and bit depth. The file is automatically date and time stamped.
-There's a bug I don't know how to get rid of \, where you need to always
-set the settings yourself \, even if the default ones are what you
-want. [writesf~] doesn't pick it up for whatever reason.;
-#X obj 16 360 writesf~ 3;
 #X text 197 561 - Brightness (z mod input on scope);
-#X text 145 251 Optionally [out~] also has catches named m-out-x \,
-m-out-y \, and m-out-bright which can be useful for keeping patches
-clean.;
-#X connect 13 0 41 0;
-#X connect 13 1 41 1;
-#X connect 13 2 41 2;
-#X connect 13 3 41 0;
-#X connect 14 0 13 0;
-#X connect 14 0 13 1;
+#X obj 7 123 phasor~ 50;
+#X obj 7 147 osci/circle~ 0 0 1;
+#X text 145 182 [out~] is a convenient stereo output abstraction with
+an optional third signal for brightness control. [out~] also has optional
+catches named m-out-x \, m-out-y \, and m-out-bright which can be useful
+for keeping your patches clean.;
+#X text 145 268 TODO:// add in spot killer when that gets written.
+Figure out how spot killer settings I want spot killer settings to
+be adjusted., f 50;
+#X connect 36 0 37 0;
+#X connect 37 0 11 0;
+#X connect 37 1 11 1;

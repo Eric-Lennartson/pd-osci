@@ -9,7 +9,6 @@ typedef struct _gon_tilde
 {
     t_object x_obj;
     t_sample f; // dummy variable for 1st inlet
-    //t_float xPos, yPos, size, sides;
     t_inlet *xPos_in, *yPos_in, *sides_in, *size_in; // driver default provided
     t_outlet *yChan_out; // *xChan_out default provided
 } t_gon_tilde;
@@ -58,12 +57,6 @@ static void gon_tilde_dsp(t_gon_tilde *x, t_signal **sp)
 static void *gon_tilde_new(t_floatarg xPos, t_floatarg yPos, t_floatarg sides, t_floatarg size)
 {
     t_gon_tilde *x = (t_gon_tilde *)pd_new(gon_tilde_class);
-    
-    //Init inlets and variables
-//    x->xPos = xPos;
-//    x->yPos = yPos;
-//    x->sides = sides;
-//    x->size = size;
    
     x->xPos_in  = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
     x->yPos_in  = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
