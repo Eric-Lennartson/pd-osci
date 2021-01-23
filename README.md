@@ -72,7 +72,7 @@ Hansi Raber, Most concepts and code relating to oscilloscopes comes from using/b
 - [rectangle~]
 - [square~]
 - [triangle~]
-- [polygon~] BROKEN
+- [polygon~]
 
 **3D Primitives: [05]**
 
