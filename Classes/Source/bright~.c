@@ -1,9 +1,3 @@
-//
-//  bright~.c
-//  bright~
-//
-//  Created by Eric Lennartson on 3/26/20.
-
 #include "m_pd.h"
 #include "Audio_Math.h"
 

@@ -19,6 +19,9 @@ text    := Headers/text.c
 # Sources: ##############################################################
 #########################################################################
 
+# lib:
+osci.class.sources := Classes/Source/osci_lib.c
+
 # control:
 m_wrap.class.sources := Classes/Source/m_wrap.c
 map.class.sources    := Classes/Source/map.c
