@@ -14,7 +14,7 @@
 4 0 5 0, f 22;
 #X msg 26 141 obj 410 100 catch~ \$1 \, obj 410 130 outlet~ \, connect
 6 0 7 0, f 22;
-#X obj 129 17 loadbanger -init;
+#X obj 129 17 else/loadbanger -init;
 #X connect 0 0 4 0;
 #X connect 1 0 3 0;
 #X connect 3 0 2 0;
