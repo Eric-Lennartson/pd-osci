@@ -2,8 +2,8 @@
 #X text 27 52 =============================================================================
 , f 77;
 #X obj 73 1309 ball~, f 10;
-#X obj 73 2189 bezier~, f 12;
-#X obj 73 2219 bezigon~;
+#X obj 73 2249 bezier~, f 12;
+#X obj 73 2279 bezigon~;
 #X obj 73 959 bright~;
 #X obj 74 399 cuboid~;
 #X obj 73 1189 cut_equal~;
@@ -52,7 +52,7 @@
 #X text 27 2052 =============================================================================
 , f 77;
 #X text 54 2075 Misc:;
-#X text 27 2462 =============================================================================
+#X text 27 2702 =============================================================================
 , f 77;
 #X text 51 30 ALL OBJECTS IN THE OSCI LIBRARY:;
 #X obj 73 139 osci/line~, f 15;
@@ -62,7 +62,7 @@
 #X obj 78 604 heart~;
 #X obj 78 634 selipse~;
 #X obj 78 664 supershape~;
-#X obj 73 2159 text~, f 12;
+#X obj 73 2219 text~, f 12;
 #X obj 73 229 rectangle~, f 14;
 #X obj 78 694 hypotrochoid~;
 #X text 27 1872 =============================================================================
@@ -73,14 +73,14 @@
 #X text 27 1582 =============================================================================
 , f 77;
 #X obj 73 1369 chris_clip~, f 14;
-#X obj 73 2249 shroom~, f 20;
-#X obj 73 2289 xy_splitter~;
+#X obj 73 2309 shroom~, f 20;
+#X obj 73 2349 xy_splitter~;
 #X obj 73 1929 thrower~ baz, f 14;
 #X obj 73 1959 catcher~ baz, f 14;
 #X obj 73 289 triangle~;
 #X obj 73 2099 n~;
 #X obj 73 2127 n;
-#X obj 73 2369 osci/out~, f 14;
+#X obj 73 2616 osci/out~, f 14;
 #X text 54 1605 Value mapping:;
 #X obj 3 8 tgl 15 1 empty empty empty 17 7 0 10 -262144 -1 -1 0 1;
 #X obj 3 29 switch~;
@@ -94,6 +94,9 @@
 #X obj 73 1807 osci/gamma~;
 #X obj 73 774 osci/rotate~, f 14;
 #X obj 73 803 osci/scale~, f 14;
-#X text 180 2304 <== may remove this in the future;
+#X text 180 2364 <== may remove this in the future;
 #X obj 73 259 square~;
+#X obj 73 2429 record~;
+#X obj 73 2158 date, f 11;
+#X obj 73 2190 time, f 14;
 #X connect 71 0 72 0;
