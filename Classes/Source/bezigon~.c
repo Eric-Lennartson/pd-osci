@@ -14,6 +14,7 @@ typedef struct _bezigon_tilde
     t_outlet *out1, *out2;
 } t_bezigon_tilde;
 
+// TODO refactor so to include Audio_Math
 static t_float mod1(t_float val) { return val - (int)val; }
 
 static void onlistmsg(t_bezigon_tilde *x, t_symbol *s, int argc, t_atom *argv)
@@ -113,11 +114,10 @@ static void *bezigon_tilde_new(t_floatarg n_points, t_floatarg end)
 {
     t_bezigon_tilde *x = (t_bezigon_tilde *)pd_new(bezigon_tilde_class);
     
-    x->n_points = (int)n_points;
+    // n_points can't be less than 1 (or maybe 3?)
+    x->n_points = (int)n_points > 0 ? (int)n_points : 1;
     
-    end = (end) ? 1.f : 0.f; // float to bool
-    
-    x->end = end;
+    x->end = end ? 1.f : 0.f; // float to bool
 
     floatinlet_new(&x->x_obj, &x->end);
     

@@ -1,9 +1,10 @@
-#N canvas 199 23 536 728 10;
+#N canvas 480 23 536 728 10;
+#X declare -lib osci;
 #X text 27 52 =============================================================================
 , f 77;
 #X obj 73 1309 ball~, f 10;
-#X obj 73 2249 bezier~, f 12;
-#X obj 73 2279 bezigon~;
+#X obj 73 2329 bezier~, f 12;
+#X obj 73 2359 bezigon~;
 #X obj 73 959 bright~;
 #X obj 74 399 cuboid~;
 #X obj 73 1189 cut_equal~;
@@ -49,10 +50,10 @@
 #X text 27 1402 =============================================================================
 , f 77;
 #X text 54 1425 Glue:;
-#X text 27 2052 =============================================================================
+#X text 27 2132 =============================================================================
 , f 77;
-#X text 54 2075 Misc:;
-#X text 27 2702 =============================================================================
+#X text 54 2155 Misc:;
+#X text 27 2782 =============================================================================
 , f 77;
 #X text 51 30 ALL OBJECTS IN THE OSCI LIBRARY:;
 #X obj 73 139 osci/line~, f 15;
@@ -62,41 +63,51 @@
 #X obj 78 604 heart~;
 #X obj 78 634 selipse~;
 #X obj 78 664 supershape~;
-#X obj 73 2219 text~, f 12;
+#X obj 73 2299 text~, f 12;
 #X obj 73 229 rectangle~, f 14;
 #X obj 78 694 hypotrochoid~;
-#X text 27 1872 =============================================================================
+#X text 27 1952 =============================================================================
 , f 77;
-#X text 54 1895 Signal send and receive:;
+#X text 54 1975 Signal send and receive:;
 #X obj 73 1699 skew, f 15;
 #X obj 73 1729 skew~, f 15;
 #X text 27 1582 =============================================================================
 , f 77;
 #X obj 73 1369 chris_clip~, f 14;
-#X obj 73 2309 shroom~, f 20;
-#X obj 73 2349 xy_splitter~;
-#X obj 73 1929 thrower~ baz, f 14;
-#X obj 73 1959 catcher~ baz, f 14;
+#X obj 73 2389 shroom~, f 20;
+#X obj 73 2429 xy_splitter~;
+#X obj 73 2009 thrower~ baz, f 14;
+#X obj 73 2039 catcher~ baz, f 14;
 #X obj 73 289 triangle~;
-#X obj 73 2099 n~;
-#X obj 73 2127 n;
-#X obj 73 2616 osci/out~, f 14;
+#X obj 73 2179 n~;
+#X obj 73 2207 n;
+#X obj 73 2696 osci/out~, f 14;
 #X text 54 1605 Value mapping:;
-#X obj 3 8 tgl 15 1 empty empty empty 17 7 0 10 -262144 -1 -1 0 1;
-#X obj 3 29 switch~;
-#X obj 73 1989 snd~ bar, f 14;
-#X obj 73 2019 rcv~ bar, f 14;
-#X text 23 7 <== DO NOT TURN DSP ON IN THE PATCH!!! PD WILL CRASH!!!!
-;
+#X obj 413 10 tgl 15 1 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 413 31 switch~;
+#X obj 73 2069 snd~ bar, f 14;
+#X obj 73 2099 rcv~ bar, f 14;
 #X text 27 1752 =============================================================================
 , f 77;
 #X text 54 1775 Brightness Control:;
 #X obj 73 1807 osci/gamma~;
 #X obj 73 774 osci/rotate~, f 14;
 #X obj 73 803 osci/scale~, f 14;
-#X text 180 2364 <== may remove this in the future;
+#X text 180 2454 <== may remove this in the future;
 #X obj 73 259 square~;
-#X obj 73 2429 record~;
-#X obj 73 2158 date, f 11;
-#X obj 73 2190 time, f 14;
+#X obj 73 2509 record~;
+#X obj 73 2238 date, f 11;
+#X obj 73 2270 time, f 14;
+#X obj 305 31 declare -lib osci;
+#X text 27 1837 =============================================================================
+, f 77;
+#X text 54 1860 Binary Operators:;
+#X obj 73 1892 ==~;
+#X obj 113 1892 !=~;
+#X obj 153 1892 <~;
+#X obj 193 1892 >~;
+#X obj 73 1922 <=~;
+#X obj 113 1922 >=~;
+#X obj 153 1922 %~;
 #X connect 71 0 72 0;
