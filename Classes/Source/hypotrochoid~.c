@@ -1,8 +1,4 @@
-#include "m_pd.h"
-#include "math.h"
-#include "utils.h"
-
-const float PI = 3.14159265358979323846;
+#include "Audio_Math.h"
 
 static t_class *hypotrochoid_tilde_class;
 

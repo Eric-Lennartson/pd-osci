@@ -1,7 +1,6 @@
 #include "m_pd.h"
 #include "Audio_Math.h"
 #include "vec3.h"
-#include "utils.h"
 
 static t_class *grid_tilde_class;
 

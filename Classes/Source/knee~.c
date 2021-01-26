@@ -27,10 +27,10 @@ static t_int *knee_tilde_perform(t_int *w)
         t_float length = mod1( segment_length_in[nblock] );
         
         if(t < split_point) {
-            t = map(t, 0, split_point, 0, length);
+            t = map_lin(t, 0, split_point, 0, length, false);
         }
         else {
-            t = length + map(t, split_point, 1, 0, 1-length);
+            t = length + map_lin(t, split_point, 1, 0, 1-length, false);
         }
         
         phase_out[nblock] = t;

@@ -20,10 +20,16 @@ const double HALF_PI;
 #define DEG_TO_RAD (PI / 180.0)
 #define FLT_EPSILON 1.19209290E-07F
 
-t_float map(t_float value, t_float inputMin, t_float inputMax, t_float outputMin, t_float outputMax);
-double lerp(const double t, const double a, const double b);
+#define min(a, b) a < b ? a : b
+#define max(a, b) a > b ? a : b
+#define clamp(val,min,max) ((val) < (min) ? (min) : ((val > max) ? (max) : (val)))
+
+int gcd(int a, int b);
+t_float map_lin( t_float value,  t_float inputMin,  t_float inputMax,  t_float outputMin,  t_float outputMax, bool clamp);
+t_float map_to_unit(t_float value, t_float inputMin, t_float inputMax, bool clamp);
+t_float lerp(const t_float t, const t_float a, const t_float b);
 t_vec3 blend(float t, t_vec3 a, t_vec3 b);
-double mod1(const double value);
+t_float mod1(const t_float value);
 
 // doesn't avoid gimbal lock problems
 // this should probably be in vec3.h

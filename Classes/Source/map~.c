@@ -1,5 +1,7 @@
 #include "Audio_Math.h"
 
+// add a optional clamping argument?
+
 static t_class *map_tilde_class;
 
 typedef struct _map_tilde
@@ -29,7 +31,7 @@ static t_int *map_tilde_perform(t_int *w)
         t_float max2 = max_out[nblock];
         t_float output = 1;
 
-        output = map(val, min1, max1, min2, max2);
+        output = map_lin(val, min1, max1, min2, max2, false);
 
         out[nblock] = output;
     }
