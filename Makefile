@@ -28,14 +28,12 @@ skew.class.sources   := Classes/Source/skew.c
 date.class.sources   := Classes/Source/date.c
 time.class.sources 	 := Classes/Source/time.c
 
-# I REALLY need to clean up my header files to make more sense
-# is one giant header the solution?
 # signal:
 bezier~.class.sources       := Classes/Source/bezier~.c
 bezigon~.class.sources      := Classes/Source/bezigon~.c
 chris_clip~.class.sources   := Classes/Source/chris_clip~.c
 circle~.class.sources       := Classes/Source/circle~.c 
-ellipse~.class.sources      := Classes/Source/ellipse~.c 
+ellipse~.class.sources      := Classes/Source/ellipse~.c
 grid~.class.sources         := Classes/Source/grid~.c  $(A_Math) $(vec3)
 heart~.class.sources        := Classes/Source/heart~.c $(A_Math)
 lerp~.class.sources         := Classes/Source/lerp~.c
