@@ -26,6 +26,7 @@ m_wrap.class.sources := Classes/Source/m_wrap.c
 map.class.sources    := Classes/Source/map.c
 skew.class.sources   := Classes/Source/skew.c
 date.class.sources   := Classes/Source/date.c
+time.class.sources 	 := Classes/Source/time.c
 
 # I REALLY need to clean up my header files to make more sense
 # is one giant header the solution?
