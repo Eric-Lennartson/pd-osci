@@ -10,7 +10,7 @@ A collection of useful externals for making oscilloscope music and art
 
 ###   About osci
 
-​	This version of osci needs **Pd 0.51-2* or above, download Pure Data from: http://msp.ucsd.edu/software.html
+​	This version of osci needs **Pd 0.51-4* or above, download Pure Data from: http://msp.ucsd.edu/software.html
 
 ​	osci is a library for Pure Data that provides a system for creating oscilloscop music and art.
 
@@ -24,9 +24,9 @@ A collection of useful externals for making oscilloscope music and art
 
 ### Downloading osci:
 
-TODO: Add osci to the pd deken, currently you must use make to build the library
-
 ​	You can get osci from https://github.com/Eric-Lennartson/pd-osci/releases - where all releases are available, but osci is also found via Pd's external manager (In Pd, just go for Help => Find Externals and search for 'osci').  In any case, you should download the folder to a place Pd automatically searches for, and the common place is the ~/documents/pd/externals folder.
+
+Some of the abstractions are dependent on objects from the ELSE library. ELSE can be installed either from Pd's external manager or from the command line. ELSE can be found at <https://github.com/porres/pd-else>.
 
 ​	Instructions on how to build osci are provided below.
 
@@ -37,8 +37,6 @@ TODO: Add osci to the pd deken, currently you must use make to build the library
 osci relies on the build system called "pd-lib-builder" by Katja Vetter (check the project in: <https://github.com/pure-data/pd-lib-builder>). PdLibBuilder tries to find the Pd source directory at several common locations, but when this fails, you have to specify the path yourself using the pdincludepath variable. Example:
 
 <pre>make pdincludepath=~/pd-0.51-1/src/  (for Windows/MinGW add 'pdbinpath=~/pd-0.51-1/bin/)</pre>
-
-Some of the abstractions are dependent on objects from the ELSE library. ELSE can be installed either from Pd's external manager or from the command line. ELSE can be found at <https://github.com/porres/pd-else>.
 
 * Installing with pdlibbuilder
 
