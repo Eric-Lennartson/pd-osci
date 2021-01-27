@@ -3,7 +3,7 @@
 0;
 #X obj 13 273 *~;
 #X obj 179 272 *~;
-#X obj 87 198 r \$0-mute;
+#X obj 87 168 r \$0-mute;
 #X obj 13 163 *~;
 #X obj 179 163 *~;
 #X obj 71 100 r \$0-volume;
@@ -16,14 +16,14 @@
 #X obj 587 105 bng 15 250 50 0 \$0-mute \$0-set-mute Mute -26 7 0 10
 -191407 -1 -228856;
 #X msg 431 164 \; pd dsp \$1;
-#X obj 87 219 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 87 219 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 13 16 inlet~ x;
 #X obj 179 16 inlet~ y;
 #X obj 13 496 outlet~ x;
 #X obj 179 496 outlet~ y;
-#X obj 614 77 r \$0-mute;
-#X obj 614 95 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+#X obj 614 47 r \$0-mute;
+#X obj 614 95 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X msg 614 157 label Volume;
 #X msg 633 137 label Muted;
@@ -55,6 +55,8 @@
 0;
 #X obj 306 47 catch~ m-out-bright;
 #X obj 614 178 s \$0-set-volume;
+#X obj 98 194 loadbang;
+#X obj 622 71 loadbang;
 #X connect 1 0 15 0;
 #X connect 1 0 34 0;
 #X connect 2 0 16 0;
@@ -86,4 +88,6 @@
 #X connect 35 0 33 0;
 #X connect 35 0 34 2;
 #X connect 40 0 35 0;
+#X connect 42 0 12 0;
+#X connect 43 0 18 0;
 #X coords -1 -1 1 1 94 75 2 510 90;
