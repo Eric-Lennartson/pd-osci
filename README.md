@@ -131,8 +131,8 @@ Pd Community/Dev-list, For answering my questions which may or may not have made
 - [>~]
 - [<=~]
 - [>=~]
-- [||]
-- [&&]
+- [||~]
+- [&&~]
 - [%~]
 
 **Value Mapping: [04]**
