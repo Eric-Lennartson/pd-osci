@@ -61,7 +61,7 @@ Pd Community/Dev-list, For answering my questions which may or may not have made
 
 --------------------------------------------------------------------------
 
-## Current Object list (52 objects):
+## Current Object list (61 objects):
 
 **2D Primitives: [08]**
 
@@ -122,6 +122,18 @@ Pd Community/Dev-list, For answering my questions which may or may not have made
 - [ramp]
 - [ramp~]
 - [project~]
+
+**Binary Operators: [09]**
+
+- [==~]
+- [!=~]
+- [<~]
+- [>~]
+- [<=~]
+- [>=~]
+- [||]
+- [&&]
+- [%~]
 
 **Value Mapping: [04]**
 
