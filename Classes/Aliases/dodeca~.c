@@ -3,7 +3,7 @@
 
 #define NUM_LINES 40
 
-static t_class *dodecahedron_tilde_class;
+static t_class *dodeca_tilde_class;
 
 // copied from an oscisctudio txt file
 t_vec3 points[] = {{-0.401779,-0.29191,-0.620608},
@@ -28,7 +28,7 @@ t_vec3 points[] = {{-0.401779,-0.29191,-0.620608},
                  {0.401779,-0.29191,0.620608},
                 };
 
-typedef struct _dodecahedron_tilde
+typedef struct _dodeca_tilde
 {
     t_object  x_obj;
     t_sample f; // dummy arg
@@ -37,11 +37,11 @@ typedef struct _dodecahedron_tilde
     t_vec3 v1, v2; // v1 and v2 are temp vecs
     t_inlet *xPos_in, *yPos_in, *zPos_in, *xLen_in, *yLen_in, *zLen_in,*interp_amt_in;
     t_outlet *x_out, *y_out, *z_out;
-} t_dodecahedron_tilde;
+} t_dodeca_tilde;
 
-t_int *dodecahedron_tilde_perform(t_int *w)
+t_int *dodeca_tilde_perform(t_int *w)
 {
-    t_dodecahedron_tilde *x = (t_dodecahedron_tilde *)(w[1]); // access data space
+    t_dodeca_tilde *x = (t_dodeca_tilde *)(w[1]); // access data space
     t_sample *phase_in       = (t_sample *)(w[2]);
     t_sample *xPos_in        = (t_sample *)(w[3]);
     t_sample *yPos_in        = (t_sample *)(w[4]);
@@ -80,9 +80,9 @@ t_int *dodecahedron_tilde_perform(t_int *w)
   return (w + 14); // num ptrs + 1
 }
 
-void dodecahedron_tilde_dsp(t_dodecahedron_tilde *x, t_signal **sp)
+void dodeca_tilde_dsp(t_dodeca_tilde *x, t_signal **sp)
 {
-    dsp_add(dodecahedron_tilde_perform, 13, x,
+    dsp_add(dodeca_tilde_perform, 13, x,
             sp[0]->s_vec, // phase_in
             sp[1]->s_vec, // xPos_in
             sp[2]->s_vec, // yPos_in
@@ -98,9 +98,9 @@ void dodecahedron_tilde_dsp(t_dodecahedron_tilde *x, t_signal **sp)
 }
 
                      // name used for creation, number of args, pointer to arg list
-void *dodecahedron_tilde_new(t_symbol *s, int argc, t_atom *argv) // this is because of A_GIMME
+void *dodeca_tilde_new(t_symbol *s, int argc, t_atom *argv) // this is because of A_GIMME
 {
-    t_dodecahedron_tilde *x = (t_dodecahedron_tilde *)pd_new(dodecahedron_tilde_class);
+    t_dodeca_tilde *x = (t_dodeca_tilde *)pd_new(dodeca_tilde_class);
 
     // one array with the points
     // another array with the order of points to interpolate generating (lines)
@@ -185,7 +185,7 @@ void *dodecahedron_tilde_new(t_symbol *s, int argc, t_atom *argv) // this is bec
     return (void *)x;
 }
 
-void dodecahedron_tilde_free(t_dodecahedron_tilde *x)
+void dodeca_tilde_free(t_dodeca_tilde *x)
 {
     inlet_free(x->xPos_in);
     inlet_free(x->yPos_in);
@@ -200,18 +200,18 @@ void dodecahedron_tilde_free(t_dodecahedron_tilde *x)
     outlet_free(x->z_out);
 }
 
-void dodecahedron_tilde_setup(void)
+void dodeca_tilde_setup(void)
 {
-    dodecahedron_tilde_class = class_new(gensym("dodecahedron~"),
-                                  (t_newmethod)dodecahedron_tilde_new,
-                                  (t_method)dodecahedron_tilde_free,
-                                  sizeof(t_dodecahedron_tilde),
+    dodeca_tilde_class = class_new(gensym("dodeca~"),
+                                  (t_newmethod)dodeca_tilde_new,
+                                  (t_method)dodeca_tilde_free,
+                                  sizeof(t_dodeca_tilde),
                                   CLASS_DEFAULT,
                                   A_GIMME, // xPos, yPos, zPos, xLen, yLen, zLen
                                   0);
     
-    class_sethelpsymbol(dodecahedron_tilde_class, gensym("dodecahedron~"));
+    class_sethelpsymbol(dodeca_tilde_class, gensym("dodeca~"));
     
-    class_addmethod(dodecahedron_tilde_class, (t_method)dodecahedron_tilde_dsp, gensym("dsp"), A_CANT, 0);
-    CLASS_MAINSIGNALIN(dodecahedron_tilde_class, t_dodecahedron_tilde, f); // dummy arg for singal into first inlet
+    class_addmethod(dodeca_tilde_class, (t_method)dodeca_tilde_dsp, gensym("dsp"), A_CANT, 0);
+    CLASS_MAINSIGNALIN(dodeca_tilde_class, t_dodeca_tilde, f); // dummy arg for singal into first inlet
 }

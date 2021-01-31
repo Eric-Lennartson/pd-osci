@@ -1,40 +1,6 @@
-#N canvas 362 29 591 741 12;
-#X obj 89 333 cnv 15 3 60 empty empty 0 5 9 0 16 -216373 -141475 0
-;
-#X obj 89 467 cnv 15 3 17 empty empty 0 5 9 0 16 -216373 -141475 0
-;
-#X text 107 332 signal;
-#X text 107 466 signal;
-#X obj 89 500 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
-;
-#X text 107 499 signal;
-#X text 198 575 - x position;
-#X text 198 595 - y position;
-#X text 86 575 1) float;
-#X text 86 595 2) float;
-#X text 86 615 3) float;
-#X text 86 635 4) float;
-#X text 198 615 - z position;
-#X text 198 635 - width;
-#X text 198 655 - height;
-#X text 198 675 - length;
-#X text 86 655 5) float;
-#X text 86 675 6) float;
-#X text 198 466 - x out;
-#X text 198 499 - y out;
-#X obj 89 535 cnv 15 3 17 empty empty 2 5 9 0 16 -216373 -141475 0
-;
-#X text 107 534 signal;
-#X text 198 534 - z out;
+#N canvas 646 23 591 741 12;
 #X obj 36 159 osci/rotate~ 45 23 0;
 #X obj 36 183 osci/project~;
-#X floatatom 278 78 5 0 1 0 - - -;
-#X obj 278 101 sig~ 1;
-#X obj 88 410 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
-;
-#X text 106 409 signal;
-#X text 191 409 - amount of interpolation between the points (0-1)
-;
 #X obj 36 207 osci/out~;
 #X obj 2 2 cnv 15 305 46 empty empty empty 20 12 0 14 -66577 -66577
 0;
@@ -60,14 +26,58 @@
 0;
 #X obj 498 12 cnv 10 10 10 empty empty for 0 6 2 13 -128992 -204786
 0;
-#X obj 2 305 cnv 1 552 1 empty empty inlets 8 12 0 13 -216373 -1 0
+#X obj 36 125 tetrahedron~ 0 0 0 2 2 2;
+#X text 367 180 (abbreviation);
+#X obj 36 91 phasor~ 50;
+#X obj 281 180 osci/tetra~;
+#X obj 88 331 cnv 15 3 60 empty empty 0 5 9 0 16 -216373 -141475 0
 ;
-#X obj 2 448 cnv 1 552 1 empty empty outlets 8 12 0 13 -216373 -1 0
+#X obj 88 495 cnv 15 3 17 empty empty 0 5 9 0 16 -216373 -141475 0
 ;
-#X obj 3 563 cnv 1 552 1 empty empty arguments 8 12 0 13 -216373 -1
+#X text 106 330 signal;
+#X text 106 494 signal;
+#X obj 88 518 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
+;
+#X text 106 517 signal;
+#X text 197 583 - x position;
+#X text 197 603 - y position;
+#X text 85 583 1) float;
+#X text 85 603 2) float;
+#X text 85 623 3) float;
+#X text 85 643 4) float;
+#X text 197 623 - z position;
+#X text 197 643 - width;
+#X text 197 663 - height;
+#X text 197 683 - length;
+#X text 85 663 5) float;
+#X text 85 683 6) float;
+#X text 197 494 - x out;
+#X text 197 517 - y out;
+#X obj 88 543 cnv 15 3 17 empty empty 2 5 9 0 16 -216373 -141475 0
+;
+#X text 106 542 signal;
+#X text 197 542 - z out;
+#X obj 87 408 cnv 15 3 17 empty empty 1-3 5 9 0 16 -216373 -141475
 0;
-#X obj 3 698 cnv 15 552 24 empty empty empty 20 12 0 14 -233017 -33289
+#X text 125 407 signal;
+#X obj 1 303 cnv 1 552 1 empty empty inlets 8 12 0 13 -216373 -1 0
+;
+#X obj 1 476 cnv 1 552 1 empty empty outlets 8 12 0 13 -216373 -1 0
+;
+#X obj 2 571 cnv 1 552 1 empty empty arguments 8 12 0 13 -216373 -1
 0;
+#X obj 2 706 cnv 15 552 24 empty empty empty 20 12 0 14 -233017 -33289
+0;
+#X obj 87 428 cnv 15 3 17 empty empty 4-6 5 9 0 16 -216373 -141475
+0;
+#X text 125 427 signal;
+#X obj 87 448 cnv 15 3 17 empty empty 7 5 9 0 16 -216373 -141475 0
+;
+#X text 105 447 signal;
+#X text 160 447 - amount of interpolation between the points (0-1)
+;
+#X text 180 407 - xPos \, yPos \, zPos;
+#X text 180 427 - xLen \, yLen \, zLen;
 #N canvas 89 224 235 200 related_objects 0;
 #X obj 1 1 cnv 15 230 23 empty empty empty 3 12 0 20 -204786 -1 0;
 #X obj 17 134 osci/icosahedron~;
@@ -75,22 +85,17 @@
 #X obj 17 74 osci/dodecahedron~;
 #X obj 17 104 osci/octahedron~;
 #X text 0 4 [tetrahedron~] related objects;
-#X restore 17 701 pd related_objects;
-#X text 193 332 - controls the position of the dot on the tetrahedron
-\, ramping from 0 to 1 results in the complete shape. Normally a phasor
-would be used but any signal source could be used., f 42;
-#X obj 36 125 osci/tetrahedron~ 0 0 0 5 5 5;
-#X text 367 180 (abbreviation);
-#X obj 281 180 osci/tetra~;
-#X obj 36 91 phasor~ 50;
-#X connect 23 0 24 0;
-#X connect 23 1 24 1;
-#X connect 23 2 24 2;
-#X connect 24 0 30 0;
-#X connect 24 1 30 1;
-#X connect 25 0 26 0;
-#X connect 26 0 49 1;
-#X connect 49 0 23 0;
-#X connect 49 1 23 1;
-#X connect 49 2 23 2;
-#X connect 52 0 49 0;
+#X restore 17 708 pd related_objects;
+#X text 192 330 - controls the position of the dot on the tetrahedron
+\, ramping from 0 to 1 results in a complete tetrahedron. Normally
+a phasor would be used but any signal source could be used., f 42
+;
+#X connect 0 0 1 0;
+#X connect 0 1 1 1;
+#X connect 0 2 1 2;
+#X connect 1 0 2 0;
+#X connect 1 1 2 1;
+#X connect 15 0 0 0;
+#X connect 15 1 0 1;
+#X connect 15 2 0 2;
+#X connect 17 0 15 0;

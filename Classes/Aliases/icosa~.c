@@ -3,7 +3,7 @@
 
 #define NUM_LINES 36
 
-static t_class *icosahedron_tilde_class;
+static t_class *icosa_tilde_class;
 
 t_vec3 points[] = {{0,0,-1},
                  {0.7236,-0.52572,-0.447215},
@@ -19,7 +19,7 @@ t_vec3 points[] = {{0,0,-1},
                  {0,0,1}
                 };
 
-typedef struct _icosahedron_tilde
+typedef struct _icosa_tilde
 {
     t_object  x_obj;
     t_sample f; // dummy arg
@@ -28,11 +28,11 @@ typedef struct _icosahedron_tilde
     t_vec3 v1, v2; // v1 and v2 are temp vecs
     t_inlet *xPos_in, *yPos_in, *zPos_in, *xLen_in, *yLen_in, *zLen_in,*interp_amt_in;
     t_outlet *x_out, *y_out, *z_out;
-} t_icosahedron_tilde;
+} t_icosa_tilde;
 
-t_int *icosahedron_tilde_perform(t_int *w)
+t_int *icosa_tilde_perform(t_int *w)
 {
-    t_icosahedron_tilde *x = (t_icosahedron_tilde *)(w[1]); // access data space
+    t_icosa_tilde *x = (t_icosa_tilde *)(w[1]); // access data space
     t_sample *phase_in       = (t_sample *)(w[2]);
     t_sample *xPos_in        = (t_sample *)(w[3]);
     t_sample *yPos_in        = (t_sample *)(w[4]);
@@ -71,9 +71,9 @@ t_int *icosahedron_tilde_perform(t_int *w)
   return (w + 14); // num ptrs + 1
 }
 
-void icosahedron_tilde_dsp(t_icosahedron_tilde *x, t_signal **sp)
+void icosa_tilde_dsp(t_icosa_tilde *x, t_signal **sp)
 {
-    dsp_add(icosahedron_tilde_perform, 13, x,
+    dsp_add(icosa_tilde_perform, 13, x,
             sp[0]->s_vec, // phase_in
             sp[1]->s_vec, // xPos_in
             sp[2]->s_vec, // yPos_in
@@ -89,9 +89,9 @@ void icosahedron_tilde_dsp(t_icosahedron_tilde *x, t_signal **sp)
 }
 
                      // name used for creation, number of args, pointer to arg list
-void *icosahedron_tilde_new(t_symbol *s, int argc, t_atom *argv) // this is because of A_GIMME
+void *icosa_tilde_new(t_symbol *s, int argc, t_atom *argv) // this is because of A_GIMME
 {
-    t_icosahedron_tilde *x = (t_icosahedron_tilde *)pd_new(icosahedron_tilde_class);
+    t_icosa_tilde *x = (t_icosa_tilde *)pd_new(icosa_tilde_class);
 
     // lines are the connection order of points
     x->lines[0] = 11;
@@ -161,7 +161,7 @@ void *icosahedron_tilde_new(t_symbol *s, int argc, t_atom *argv) // this is beca
     return (void *)x;
 }
 
-void icosahedron_tilde_free(t_icosahedron_tilde *x)
+void icosa_tilde_free(t_icosa_tilde *x)
 {
     inlet_free(x->xPos_in);
     inlet_free(x->yPos_in);
@@ -176,18 +176,18 @@ void icosahedron_tilde_free(t_icosahedron_tilde *x)
     outlet_free(x->z_out);
 }
 
-void icosahedron_tilde_setup(void)
+void icosa_tilde_setup(void)
 {
-    icosahedron_tilde_class = class_new(gensym("icosahedron~"),
-                                  (t_newmethod)icosahedron_tilde_new,
-                                  (t_method)icosahedron_tilde_free,
-                                  sizeof(t_icosahedron_tilde),
+    icosa_tilde_class = class_new(gensym("icosa~"),
+                                  (t_newmethod)icosa_tilde_new,
+                                  (t_method)icosa_tilde_free,
+                                  sizeof(t_icosa_tilde),
                                   CLASS_DEFAULT,
                                   A_GIMME, // xPos, yPos, zPos, xScale, yScale, zScale
                                   0);
     
-    class_sethelpsymbol(icosahedron_tilde_class, gensym("icosahedron~"));
+    class_sethelpsymbol(icosa_tilde_class, gensym("icosa~"));
     
-    class_addmethod(icosahedron_tilde_class, (t_method)icosahedron_tilde_dsp, gensym("dsp"), A_CANT, 0);
-    CLASS_MAINSIGNALIN(icosahedron_tilde_class, t_icosahedron_tilde, f); // dummy arg for singal into first inlet
+    class_addmethod(icosa_tilde_class, (t_method)icosa_tilde_dsp, gensym("dsp"), A_CANT, 0);
+    CLASS_MAINSIGNALIN(icosa_tilde_class, t_icosa_tilde, f); // dummy arg for singal into first inlet
 }

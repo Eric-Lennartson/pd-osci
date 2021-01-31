@@ -86,7 +86,7 @@ README.md
 #########################################################################
 
 # Directory where Pd API m_pd.h should be found, and other Pd header files.
-PDINCLUDE_DIR=Headers/
+PDINCLUDEDIR= Headers/
 
 # include Makefile.pdlibbuilder from submodule directory 'pd-lib-builder'
 PDLIBBUILDER_DIR=pd-lib-builder/

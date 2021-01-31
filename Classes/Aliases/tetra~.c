@@ -3,7 +3,7 @@
 
 #define NUM_LINES 8
 
-static t_class *tetrahedron_tilde_class;
+static t_class *tetra_tilde_class;
 
 t_vec3 points[] = {{0,1,-0.75},
                  {0.866025,-0.5,-0.75},
@@ -11,7 +11,7 @@ t_vec3 points[] = {{0,1,-0.75},
                  {0,0,0.75},
                 };
 
-typedef struct _tetrahedron_tilde
+typedef struct _tetra_tilde
 {
     t_object  x_obj;
     t_sample f; // dummy arg
@@ -20,11 +20,11 @@ typedef struct _tetrahedron_tilde
     t_vec3 v1, v2; // v1 and v2 are temp vecs
     t_inlet *xPos_in, *yPos_in, *zPos_in, *xLen_in, *yLen_in, *zLen_in,*interp_amt_in;
     t_outlet *x_out, *y_out, *z_out;
-} t_tetrahedron_tilde;
+} t_tetra_tilde;
 
-t_int *tetrahedron_tilde_perform(t_int *w)
+t_int *tetra_tilde_perform(t_int *w)
 {
-    t_tetrahedron_tilde *x = (t_tetrahedron_tilde *)(w[1]); // access data space
+    t_tetra_tilde *x = (t_tetra_tilde *)(w[1]); // access data space
     t_sample *phase_in       = (t_sample *)(w[2]);
     t_sample *xPos_in        = (t_sample *)(w[3]);
     t_sample *yPos_in        = (t_sample *)(w[4]);
@@ -63,9 +63,9 @@ t_int *tetrahedron_tilde_perform(t_int *w)
   return (w + 14); // num ptrs + 1
 }
 
-void tetrahedron_tilde_dsp(t_tetrahedron_tilde *x, t_signal **sp)
+void tetra_tilde_dsp(t_tetra_tilde *x, t_signal **sp)
 {
-    dsp_add(tetrahedron_tilde_perform, 13, x,
+    dsp_add(tetra_tilde_perform, 13, x,
             sp[0]->s_vec, // phase_in
             sp[1]->s_vec, // xPos_in
             sp[2]->s_vec, // yPos_in
@@ -81,9 +81,9 @@ void tetrahedron_tilde_dsp(t_tetrahedron_tilde *x, t_signal **sp)
 }
 
                      // name used for creation, number of args, pointer to arg list
-void *tetrahedron_tilde_new(t_symbol *s, int argc, t_atom *argv) // this is because of A_GIMME
+void *tetra_tilde_new(t_symbol *s, int argc, t_atom *argv) // this is because of A_GIMME
 {
-    t_tetrahedron_tilde *x = (t_tetrahedron_tilde *)pd_new(tetrahedron_tilde_class);
+    t_tetra_tilde *x = (t_tetra_tilde *)pd_new(tetra_tilde_class);
 
     x->lines[0] = 3;
     x->lines[1] = 1;
@@ -124,7 +124,7 @@ void *tetrahedron_tilde_new(t_symbol *s, int argc, t_atom *argv) // this is beca
     return (void *)x;
 }
 
-void tetrahedron_tilde_free(t_tetrahedron_tilde *x)
+void tetra_tilde_free(t_tetra_tilde *x)
 {
     inlet_free(x->xPos_in);
     inlet_free(x->yPos_in);
@@ -139,18 +139,18 @@ void tetrahedron_tilde_free(t_tetrahedron_tilde *x)
     outlet_free(x->z_out);
 }
 
-void tetrahedron_tilde_setup(void)
+void tetra_tilde_setup(void)
 {
-    tetrahedron_tilde_class = class_new(gensym("tetrahedron~"),
-                                  (t_newmethod)tetrahedron_tilde_new,
-                                  (t_method)tetrahedron_tilde_free,
-                                  sizeof(t_tetrahedron_tilde),
+    tetra_tilde_class = class_new(gensym("tetra~"),
+                                  (t_newmethod)tetra_tilde_new,
+                                  (t_method)tetra_tilde_free,
+                                  sizeof(t_tetra_tilde),
                                   CLASS_DEFAULT,
                                   A_GIMME, // xPos, yPos, zPos, xLen, yLen, zLen
                                   0);
     
-    class_sethelpsymbol(tetrahedron_tilde_class, gensym("tetrahedron~"));
+    class_sethelpsymbol(tetra_tilde_class, gensym("tetra~"));
     
-    class_addmethod(tetrahedron_tilde_class, (t_method)tetrahedron_tilde_dsp, gensym("dsp"), A_CANT, 0);
-    CLASS_MAINSIGNALIN(tetrahedron_tilde_class, t_tetrahedron_tilde, f); // dummy arg for singal into first inlet
+    class_addmethod(tetra_tilde_class, (t_method)tetra_tilde_dsp, gensym("dsp"), A_CANT, 0);
+    CLASS_MAINSIGNALIN(tetra_tilde_class, t_tetra_tilde, f); // dummy arg for singal into first inlet
 }
