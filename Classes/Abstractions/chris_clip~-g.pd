@@ -73,7 +73,7 @@ Make\\\ Up -45 8 0 10 -204786 -1 -228856 1 256;
 #X obj 149 397 s \$0-set-max-sig-sel;
 #X obj 128 422 s \$0-set-max;
 #X obj 106 447 s \$0-set-min-sig-sel;
-#X obj 85 472 s \$0-setmin;
+#X obj 85 472 s \$0-set-min;
 #X obj 63 497 s \$0-set-mod;
 #X obj 42 522 s \$0-set-mirror;
 #X obj 42 287 list store;
