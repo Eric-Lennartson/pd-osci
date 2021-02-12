@@ -1,6 +1,5 @@
 #include "m_pd.h"
 #include "math.h"
-#include "stdbool.h"
 
 // might want to refactor FLT_EPISLON later
 #define FLT_EPSILON 1.19209290E-07F
@@ -11,17 +10,17 @@ typedef struct _chris_clip_tilde
 {
     t_object x_obj;
     t_sample f; // dummy variable for 1st inlet
-    bool mod;
-    bool mirror;
+    int mod;
+    int mirror;
     t_inlet *min_in, *max_in; // signal in and out default provided
 } t_chris_clip_tilde;
 
 static void onModMsg(t_chris_clip_tilde *x, t_floatarg f) {
-    x->mod = (f > 0) ? true : false;
+    x->mod = (f > 0) ? 1 : 0;
 }
 
 static void onMirrorMsg(t_chris_clip_tilde *x, t_floatarg f) {
-    x->mirror = (f > 0) ? true : false;
+    x->mirror = (f > 0) ? 1 : 0;
 }
 
 static t_float chris_clip(t_chris_clip_tilde *x, t_floatarg value, t_float min, t_float max)
@@ -84,22 +83,20 @@ static void chris_clip_tilde_dsp(t_chris_clip_tilde *x, t_signal **sp)
 }
 
 // ctor
-static void *chris_clip_new(t_floatarg min, t_floatarg max)
+static void *chris_clip_new(t_symbol *s, int argc, t_atom *argv)
 {
     t_chris_clip_tilde *x = (t_chris_clip_tilde *)pd_new(chris_clip_tilde_class);
     
-    x->mod    = false;
-    x->mirror = false;
-    
-    // I should probably add in default args...
-    // this must be why A_GIMME is used for everything in else
-    // it's really easy to see when no arguments were provided
+    float min = argc>0 ? atom_getfloat(argv)   : -1.f;
+    float max = argc>1 ? atom_getfloat(argv+1) :  1.f;
+    x->mirror = argc>2 ? atom_getfloat(argv+2) :  0;
+    x->mod    = argc>3 ? atom_getfloat(argv+3) :  0;
     
     // allocate memory for inlets
     x->min_in  = inlet_new((t_object *)x, (t_pd *)x, &s_signal, &s_signal);
     x->max_in  = inlet_new((t_object *)x, (t_pd *)x, &s_signal, &s_signal);
 
-    // init inlets with creation args
+    // init inlets values
     pd_float((t_pd*)x->min_in, min);
     pd_float((t_pd*)x->max_in, max);
     
@@ -121,8 +118,7 @@ void chris_clip_tilde_setup(void)
                             (t_method)chris_clip_free, //dtor
                             sizeof(t_chris_clip_tilde), // data space
                             CLASS_DEFAULT, // gui apperance
-                            A_DEFFLOAT, // min
-                            A_DEFFLOAT, // max
+                            A_GIMME, // min, max, mirror, mod
                             0); // no more args
     
     class_sethelpsymbol(chris_clip_tilde_class, gensym("chris_clip~")); // links to the help patch
