@@ -1,7 +1,0 @@
----
-exclude: ['README.markdown']
-permalink: ':title'
-highlighter: pygments
-safe: false
-title: 'OSCI - Pure Data Library for Oscilloscope Music & Art'
----
