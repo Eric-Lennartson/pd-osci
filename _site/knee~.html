@@ -1,0 +1,75 @@
+<h3 id="segment-phase-into-two-parts">Segment phase into two parts</h3>
+
+<p><strong>[knee~]</strong>segments a phase into two parts. The resulting effect is that you can control the brightness of the image. The first argument is the split point of the incoming phase (0-1) and the second is the length of the first phase segment (0-1). This results in an image where one part is brighter than the other. For another way to control brightness check out <strong>[bright~]</strong>. <strong>[knee~]</strong>is a phase manipulator and needs to come before any actual images.</p>
+
+<h3 id="inlets">Inlets</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Inlet</th>
+      <th style="text-align: left">Data Type</th>
+      <th style="text-align: left">Use</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">1</td>
+      <td style="text-align: left">signal</td>
+      <td style="text-align: left">phase</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">2</td>
+      <td style="text-align: left">float/signal</td>
+      <td style="text-align: left">phase split point (0-1)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">3</td>
+      <td style="text-align: left">float/signal</td>
+      <td style="text-align: left">segment length (0-1)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="outlets">Outlets</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Outlet</th>
+      <th style="text-align: left">Data Type</th>
+      <th style="text-align: left">Return</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">1</td>
+      <td style="text-align: left">signal</td>
+      <td style="text-align: left">adjusted phase</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="arguments">Arguments</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Arg</th>
+      <th style="text-align: left">Data Type</th>
+      <th style="text-align: left">Use</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">1</td>
+      <td style="text-align: left">float</td>
+      <td style="text-align: left">phase split point (0-1)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">2</td>
+      <td style="text-align: left">float</td>
+      <td style="text-align: left">segment length (0-1)</td>
+    </tr>
+  </tbody>
+</table>

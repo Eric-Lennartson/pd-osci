@@ -1,0 +1,102 @@
+<h3 id="multi-purpose-clipping">Multi-Purpose Clipping</h3>
+
+<p><strong>[chris_clip~]</strong> is a object based off of OsciStudio’s modifier of the same name. In addition to normal clipping, it has a modulo option where the signal is wrapped from the minimum to the maximum. Mirror mode will mirror the clipped signal. When in mirror mode, only the maximum value will be considered for clipping. Mirror doesn’t take values &lt;= 0, and will instead stop clipping altogether. Both mod and mirror modes can be active at the same time. A gui version can be created by appending ‘-g’. <strong>[chris_clip~-g]</strong></p>
+
+<h3 id="inlets">Inlets</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Inlet</th>
+      <th style="text-align: left">Data Type</th>
+      <th style="text-align: left">Use</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">1</td>
+      <td style="text-align: left">signal</td>
+      <td style="text-align: left">signal to clip</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">2</td>
+      <td style="text-align: left">float/signal</td>
+      <td style="text-align: left">minimum value</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">3</td>
+      <td style="text-align: left">float/signal</td>
+      <td style="text-align: left">maximum value</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="outlets">Outlets</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Outlet</th>
+      <th style="text-align: left">Data Type</th>
+      <th style="text-align: left">Return</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">1</td>
+      <td style="text-align: left">signal</td>
+      <td style="text-align: left">clipped value</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="messages">Messages</h3>
+
+<p>Optional messages to send to the first inlet. Messages take the format &lt;message&gt; &lt;float&gt;. For example the “mod” message allows the user to toggle modulo clipping on or off. Using the correct format it might look something like this, [mod 1(.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Message</th>
+      <th style="text-align: left">Use</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">mod</td>
+      <td style="text-align: left">toggle modulo clipping.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">mirror</td>
+      <td style="text-align: left">toggle mirror clipping.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="arguments">Arguments</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Arg</th>
+      <th style="text-align: left">Data Type</th>
+      <th style="text-align: left">Use</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">1</td>
+      <td style="text-align: left">float</td>
+      <td style="text-align: left">minimum value</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">2</td>
+      <td style="text-align: left">float</td>
+      <td style="text-align: left">maximum value</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="alias">Alias</h3>
+
+<p>none</p>

@@ -1,0 +1,61 @@
+<h3 id="one-to-many-3d-vector-send">One to many 3D vector send</h3>
+
+<p><strong>[snd~]</strong> is a wrapper for pd’s built in <strong>[send~]</strong>. Internally, it creates three unique sends based on the symbol argument provided on creation. For example, foo-x foo-y foo-z. While not completely necessary, to avoid warnings <strong>[snd~]</strong> should be made before <strong>[rcv~]</strong>.</p>
+
+<p>A <strong>[send~]</strong> object copies its input to a local buffer which all <strong>[receive~]</strong> objects of the same name read from. They may be in different windows or even different patches. Any number of receives may be associated with one <strong>[send~]</strong> but it is an error to have two sends of the same name.</p>
+
+<h3 id="inlets">Inlets</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Outlet</th>
+      <th style="text-align: left">Data Type</th>
+      <th style="text-align: left">Return</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">1</td>
+      <td style="text-align: left">signal</td>
+      <td style="text-align: left">x</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">2</td>
+      <td style="text-align: left">signal</td>
+      <td style="text-align: left">y</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">3</td>
+      <td style="text-align: left">signal</td>
+      <td style="text-align: left">z</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="outlets">Outlets</h3>
+
+<p>none</p>
+
+<h3 id="arguments">Arguments</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Arg</th>
+      <th style="text-align: left">Data Type</th>
+      <th style="text-align: left">Use</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">1</td>
+      <td style="text-align: left">symbol</td>
+      <td style="text-align: left">name to send to</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="alias">Alias</h3>
+
+<p>none</p>

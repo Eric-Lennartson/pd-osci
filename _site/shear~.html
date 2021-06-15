@@ -1,0 +1,116 @@
+<h3 id="shear-a-3d-vector">Shear a 3D vector</h3>
+
+<h3 id="inlets">Inlets</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Inlet</th>
+      <th style="text-align: left">Data Type</th>
+      <th style="text-align: left">Use</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">1</td>
+      <td style="text-align: left">float/signal</td>
+      <td style="text-align: left">x</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">2</td>
+      <td style="text-align: left">float/signal</td>
+      <td style="text-align: left">y</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">3</td>
+      <td style="text-align: left">float/signal</td>
+      <td style="text-align: left">z</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">4</td>
+      <td style="text-align: left">float/signal</td>
+      <td style="text-align: left">shear angle (degrees)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="outlets">Outlets</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Outlet</th>
+      <th style="text-align: left">Data Type</th>
+      <th style="text-align: left">Return</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">1</td>
+      <td style="text-align: left">signal</td>
+      <td style="text-align: left">x</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">2</td>
+      <td style="text-align: left">signal</td>
+      <td style="text-align: left">y</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">3</td>
+      <td style="text-align: left">signal</td>
+      <td style="text-align: left">z</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="messages">Messages</h3>
+
+<p>Optional messages to send to the first inlet. Messages take the format &lt;message&gt; &lt;message to send&gt;. Degrees and radians messages are just sent by themselves. If an axis is sent that isn’t x, y, or z then it defaults to x.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Message</th>
+      <th style="text-align: left">Use</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">axis</td>
+      <td style="text-align: left">set axis to shear</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">degrees</td>
+      <td style="text-align: left">sets angles in degrees</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">radians</td>
+      <td style="text-align: left">sets angles in radians</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="arguments">Arguments</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Arg</th>
+      <th style="text-align: left">Data Type</th>
+      <th style="text-align: left">Use</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">1</td>
+      <td style="text-align: left">float</td>
+      <td style="text-align: left">shear angle (degrees)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">2</td>
+      <td style="text-align: left">symbol</td>
+      <td style="text-align: left">shear axis</td>
+    </tr>
+  </tbody>
+</table>
+
