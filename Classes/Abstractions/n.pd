@@ -1,6 +1,0 @@
-#N canvas 349 166 450 300 12;
-#X obj 158 68 inlet;
-#X obj 158 172 outlet;
-#X text 172 110 node for control rate;
-#X text 172 130 use pack for for larger things;
-#X connect 0 0 1 0;
