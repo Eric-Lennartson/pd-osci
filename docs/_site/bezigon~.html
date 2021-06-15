@@ -1,0 +1,79 @@
+<h3 id="n-sided-polygon-with-cubic-interpolation">N-sided polygon with cubic interpolation</h3>
+
+<p>[bezigon~] creates a polygon with cubic interpolation. In addition to phase, the first inlet also accepts list messages of the form (index, x, y). These set a point to be added to the bezigon. If a point already exists at the current index, it is written over by the new point.</p>
+
+<h3 id="inlets">Inlets</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Inlet</th>
+      <th style="text-align: left">Data Type</th>
+      <th style="text-align: left">Use</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">1</td>
+      <td style="text-align: left">signal/list</td>
+      <td style="text-align: left">phase, list (index, x, y)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">2</td>
+      <td style="text-align: left">float</td>
+      <td style="text-align: left">toggle to close or not close shape (0 or 1)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="outlets">Outlets</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Outlet</th>
+      <th style="text-align: left">Data Type</th>
+      <th style="text-align: left"> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">1</td>
+      <td style="text-align: left">signal</td>
+      <td style="text-align: left">x</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">2</td>
+      <td style="text-align: left">signal</td>
+      <td style="text-align: left">y</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="arguments">Arguments</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Arg</th>
+      <th style="text-align: left">Data Type</th>
+      <th style="text-align: left">Use</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">1</td>
+      <td style="text-align: left">float</td>
+      <td style="text-align: left">number of points (minimum 3)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">2</td>
+      <td style="text-align: left">float</td>
+      <td style="text-align: left">toggle to close or not close shape (0 or 1)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="alias">Alias</h3>
+
+<p>none</p>

@@ -1,0 +1,79 @@
+<h3 id="gamma-correction">Gamma correction</h3>
+
+<p><strong>[gamma~]</strong> helps to increase the useable range of the brightness control on oscilloscopes. The first inlet is the brightness level from 0-1. The second inlet sets the brightness minimum. Most scopes don’t have a full range from 0-1 so you’ll set this value to the scopes actual minimum. The third inlet sets the gamma value, allowing to make the most of the limited range.</p>
+
+<h3 id="inlets">Inlets</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Inlet</th>
+      <th style="text-align: left">Data Type</th>
+      <th style="text-align: left">Use</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">1</td>
+      <td style="text-align: left">signal</td>
+      <td style="text-align: left">brightness (0-1)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">2</td>
+      <td style="text-align: left">float/signal</td>
+      <td style="text-align: left">scope minimum (0-1)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">3</td>
+      <td style="text-align: left">float/signal</td>
+      <td style="text-align: left">gamma value (&gt; 0)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="outlets">Outlets</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Outlet</th>
+      <th style="text-align: left">Data Type</th>
+      <th style="text-align: left">Return</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">1</td>
+      <td style="text-align: left">signal</td>
+      <td style="text-align: left">x translated</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="arguments">Arguments</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Arg</th>
+      <th style="text-align: left">Data Type</th>
+      <th style="text-align: left">Use</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">1</td>
+      <td style="text-align: left">float</td>
+      <td style="text-align: left">brightness minimum</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">2</td>
+      <td style="text-align: left">float</td>
+      <td style="text-align: left">gamma value (&gt; 0)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="alias">Alias</h3>
+
+<p>none</p>

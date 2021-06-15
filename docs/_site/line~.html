@@ -1,0 +1,65 @@
+<h3 id="draw-a-line">Draw a line</h3>
+
+<p><strong>[line~]</strong> takes 2 points and draws a line between them. There’s a naming conflict with pd vanilla’s <strong>[line~]</strong> which is used as a linear ramp. To get around this, this object should always be created with the “osci/” prefix.</p>
+
+<h3 id="inlets">Inlets</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Inlet</th>
+      <th style="text-align: left">Data Type</th>
+      <th style="text-align: left">Use</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">1</td>
+      <td style="text-align: left">signal</td>
+      <td style="text-align: left">phase</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">2-4</td>
+      <td style="text-align: left">float/signal</td>
+      <td style="text-align: left">x1, y1, z1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">5-7</td>
+      <td style="text-align: left">float/signal</td>
+      <td style="text-align: left">x2, y2, z2</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="outlets">Outlets</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Outlet</th>
+      <th style="text-align: left">Data Type</th>
+      <th style="text-align: left">Return</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">1</td>
+      <td style="text-align: left">signal</td>
+      <td style="text-align: left">x</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">2</td>
+      <td style="text-align: left">signal</td>
+      <td style="text-align: left">y</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">3</td>
+      <td style="text-align: left">signal</td>
+      <td style="text-align: left">z</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="arguments">Arguments</h3>
+
+<p>none</p>

@@ -1,0 +1,59 @@
+<h3 id="many-to-one-3d-vector-recieve">Many to one 3D vector recieve</h3>
+
+<p><strong>[catcher~]</strong> is a wrapper for pd’s built in <strong>[catch~]</strong>. Internally, it creates three unique catchs based on the symbol argument provided on creation. For example, foo-x foo-y foo-z. Any number of <strong>[thrower~]</strong> objects can add into one <strong>[catcher~]</strong> object. But each <strong>[catcher~]</strong> must have a unique name.</p>
+
+<h3 id="inlets">Inlets</h3>
+
+<p>none</p>
+
+<h3 id="outlets">Outlets</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Outlet</th>
+      <th style="text-align: left">Data Type</th>
+      <th style="text-align: left">Return</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">1</td>
+      <td style="text-align: left">signal</td>
+      <td style="text-align: left">x</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">2</td>
+      <td style="text-align: left">signal</td>
+      <td style="text-align: left">y</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">3</td>
+      <td style="text-align: left">signal</td>
+      <td style="text-align: left">z</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="arguments">Arguments</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Arg</th>
+      <th style="text-align: left">Data Type</th>
+      <th style="text-align: left">Use</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">1</td>
+      <td style="text-align: left">symbol</td>
+      <td style="text-align: left">name to catch</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="alias">Alias</h3>
+
+<p>none</p>
