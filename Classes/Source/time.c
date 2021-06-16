@@ -105,7 +105,7 @@ void time_setup(void)
                             A_DEFFLOAT, // gmt or not
                             0); // no more args
     
-    class_sethelpsymbol(time_class, gensym("date")); // date and time will have the same help patch
+    class_sethelpsymbol(time_class, gensym("time"));
 
     class_addbang(time_class, time_bang);
 }
