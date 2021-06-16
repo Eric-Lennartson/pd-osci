@@ -12,6 +12,7 @@ static t_class *m_wrap_class;
 t_float m_wrap(t_float value,  t_float min, t_float max, t_float multiple)
 {
     // bounds checks, probably a better way to do this
+    // todo call clamp insteads
     min = (min <= 0) ? 0.1 : min;
     max = (max < min) ? min : max;
     multiple = (multiple <= 1) ? 1.1 : multiple;
@@ -32,13 +33,12 @@ t_float m_wrap(t_float value,  t_float min, t_float max, t_float multiple)
 
 static void m_wrap_float(t_m_wrap *x, t_floatarg f)
 {
-    if(f < 0)
-        pd_error(x, "[m_wrap] warning: doesn't take negative values.");
-    else if(f == 0)
-        pd_error(x, "[m_wrap] warning: can't be zero.");
-    
-    t_float result = m_wrap(f, x->min, x->max, x->multiple);
-    outlet_float(x->x_obj.ob_outlet, result);
+    if(f <= 0)
+        pd_error(x, "[m_wrap] warning: input must be > 0.");
+    else {
+        t_float result = m_wrap(f, x->min, x->max, x->multiple);
+        outlet_float(x->x_obj.ob_outlet, result);
+    }
 }
 
 static void *m_wrap_new(t_floatarg min, t_floatarg max, t_floatarg multiple)
