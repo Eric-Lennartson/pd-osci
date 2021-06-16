@@ -21,7 +21,7 @@ Offset a 3D vector
 
 ### Outlets
 
-| Outlet | Data Type |              |
+| Outlet | Data Type | Return       |
 |:-------|:----------|:-------------|
 | 1      | signal    | x translated |
 | 2      | signal    | y translated |
@@ -35,6 +35,3 @@ Offset a 3D vector
 | 2   | float     | y offset |
 | 3   | float     | z offset |
 
-### Alias 
-
-trans~

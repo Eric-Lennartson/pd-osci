@@ -27,8 +27,3 @@ none
 | Arg | Data Type | Use              |
 |:----|:----------|:-----------------|
 | 1   | symbol    | name to throw to |
-
-
-### Alias 
-
-none

@@ -20,10 +20,10 @@ layout: null
 
 ### Outlets
 
-| Outlet | Data Type |   |
-|:-------|:----------|:--|
-| 1      | signal    | x |
-| 2      | signal    | y |
+| Outlet | Data Type | Return  |
+|:-------|:----------|:--------|
+| 1      | signal    | x       |
+| 2      | signal    | y       |
 
 ### Arguments
 
@@ -31,7 +31,3 @@ layout: null
 |:----|:----------|:--------------------------------------------|
 | 1   | float     | number of points (minimum 3)                |
 | 2   | float     | toggle to close or not close shape (0 or 1) |
-
-### Alias 
-
-none

@@ -28,7 +28,3 @@ layout: null
 | Arg | Data Type | Use                  |
 |:----|:----------|:---------------------|
 | 1   | float     | value to compare to  |
-
-### Alias 
-
-none

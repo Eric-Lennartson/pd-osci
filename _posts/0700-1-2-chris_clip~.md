@@ -39,7 +39,3 @@ Optional messages to send to the first inlet. Messages take the format \<message
 |:----|:----------|:--------------|
 | 1   | float     | minimum value |
 | 2   | float     | maximum value |
-
-### Alias 
-
-none
