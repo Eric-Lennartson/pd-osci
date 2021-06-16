@@ -20,6 +20,10 @@ A collection of useful externals for making oscilloscope music and art
 
 ​	This library's repository resides at <https://github.com/Eric-Lennartson/pd-osci/>.
 
+  The documentation is hosted on this repo's Github pages [here](https://eric-lennartson.github.io/pd-osci/).
+
+  Alternatively, each object has it's own documentation available via pd's help patches.
+
 --------------------------------------------------------------------------
 
 ### Downloading osci:
