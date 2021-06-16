@@ -1,0 +1,57 @@
+#N canvas 614 67 428 622 12;
+#X declare -lib osci;
+#X obj 278 10 declare -lib osci;
+#X text 1 335 ============================================================inlets
+;
+#X text 1 395 ============================================================outlets
+;
+#X text 1 515 ============================================================arguments
+;
+#X text 23 370 1 bang - get time;
+#X text 23 430 1 float - hours;
+#X text 23 450 2 float - minutes;
+#X text 23 471 3 float - seconds;
+#X text 23 490 4 float - milliseconds;
+#X obj 32 224 osci/time;
+#X obj 32 128 loadbang;
+#X obj 32 152 tgl 24 0 empty empty empty 30 11 0 12 -91412 -174938
+-203556 0 1;
+#X floatatom 32 313 5 0 0 0 - - -;
+#X text 21 549 1 float - local (0) \, gmt (1);
+#X floatatom 52 292 5 0 0 0 - - -;
+#X floatatom 72 270 5 0 0 0 - - -;
+#X floatatom 92 248 5 0 0 0 - - -;
+#X text 0 585 ========================================================================================================================
+;
+#X floatatom 162 313 5 0 0 0 - - -;
+#X floatatom 186 292 5 0 0 0 - - -;
+#X floatatom 211 270 5 0 0 0 - - -;
+#X floatatom 236 248 5 0 0 0 - - -;
+#X obj 162 224 osci/time 1;
+#X obj 32 186 metro 1;
+#X obj 188 129 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
+-174938 -203556;
+#X text 215 132 open online documentation;
+#N canvas 0 23 450 300 docs 0;
+#X obj 71 76 inlet;
+#X obj 71 116 else/openfile https://eric-lennartson.github.io/pd-osci/#/time
+;
+#X connect 0 0 1 0;
+#X restore 188 163 pd docs;
+#X text 17 37 [time] returns the time of the system whenever a bang
+is recieved. It has one optional float argument to use GMT time instead
+of the local time. If no argument is specified it defaults to local
+time., f 54;
+#X connect 9 0 12 0;
+#X connect 9 1 14 0;
+#X connect 9 2 15 0;
+#X connect 9 3 16 0;
+#X connect 10 0 11 0;
+#X connect 11 0 23 0;
+#X connect 22 0 18 0;
+#X connect 22 1 19 0;
+#X connect 22 2 20 0;
+#X connect 22 3 21 0;
+#X connect 23 0 9 0;
+#X connect 23 0 22 0;
+#X connect 24 0 26 0;

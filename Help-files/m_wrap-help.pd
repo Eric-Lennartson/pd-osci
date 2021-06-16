@@ -1,0 +1,43 @@
+#N canvas 325 23 435 652 12;
+#X declare -lib osci;
+#X obj 278 10 declare -lib osci;
+#X text 1 335 ============================================================inlets
+;
+#X text 1 455 ============================================================outlets
+;
+#X text 1 515 ============================================================arguments
+;
+#X text 0 615 ========================================================================================================================
+;
+#X obj 188 129 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
+-174938 -203556;
+#X text 215 132 open online documentation;
+#N canvas 0 23 450 300 docs 0;
+#X obj 3 36 inlet;
+#X obj 3 76 else/openfile https://eric-lennartson.github.io/pd-osci/#/m_wrap
+;
+#X connect 0 0 1 0;
+#X restore 188 163 pd docs;
+#X floatatom 16 144 5 0 0 1 input - -;
+#X floatatom 16 287 5 0 0 1 result - -;
+#X obj 16 253 osci/m_wrap 50 100 2;
+#X floatatom 61 173 5 0 0 1 minimum - -;
+#X floatatom 107 203 5 0 0 1 maximum - -;
+#X floatatom 153 226 5 0 0 1 multiple - -;
+#X text 23 370 1 float - number to wrap;
+#X text 23 410 3 float - maximum;
+#X text 23 390 2 float - minimum (n > 0);
+#X text 23 430 4 float - multiple (n > 1);
+#X text 17 37 [m_wrap] wraps the input to a multiple of the given range.
+The input must be greater than 0 If the minimum is not < 0 \, it defaults
+to 0.1. If the multiple is not < 1 \, it defaults to 1.1, f 54;
+#X text 23 490 1 float - wrapped input;
+#X text 21 549 1 float - minimum;
+#X text 21 569 2 float - maximum;
+#X text 21 589 3 float - multiple;
+#X connect 5 0 7 0;
+#X connect 8 0 10 0;
+#X connect 10 0 9 0;
+#X connect 11 0 10 1;
+#X connect 12 0 10 2;
+#X connect 13 0 10 3;

@@ -1,0 +1,62 @@
+#N canvas 491 23 433 650 12;
+#X declare -lib osci;
+#X obj 278 10 declare -lib osci;
+#X text 1 335 ============================================================inlets
+;
+#X text 1 395 ============================================================outlets
+;
+#X text 1 545 ============================================================arguments
+;
+#X obj 32 128 loadbang;
+#X text 0 615 ========================================================================================================================
+;
+#X floatatom 162 313 5 0 0 0 - - -;
+#X floatatom 176 292 5 0 0 0 - - -;
+#X floatatom 191 270 5 0 0 0 - - -;
+#X floatatom 206 248 5 0 0 0 - - -;
+#X obj 188 119 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
+-174938 -203556;
+#X text 215 122 open online documentation;
+#N canvas 0 23 450 300 docs 0;
+#X obj 2 76 inlet;
+#X obj 2 116 else/openfile https://eric-lennartson.github.io/pd-osci/#/date
+;
+#X connect 0 0 1 0;
+#X restore 188 153 pd docs;
+#X obj 162 184 osci/date 1;
+#X text 17 38 [date] returns the date of the system whenever a bang
+is recieved. It has one optional float argument to use the GMT date
+instead of the local date. If no argument is specified it defaults
+to local date., f 54;
+#X text 23 370 1 bang - get date;
+#X text 21 579 1 float - local (0) \, gmt (1);
+#X text 23 523 6 float - daylight savings (0-1);
+#X text 23 504 5 float - day of year;
+#X text 23 485 4 float - day of week;
+#X text 23 466 3 float - day of month;
+#X text 23 447 2 float - month;
+#X text 23 430 1 float - year;
+#X floatatom 221 227 5 0 0 0 - - -;
+#X floatatom 236 206 5 0 0 0 - - -;
+#X floatatom 32 313 5 0 0 0 - - -;
+#X floatatom 44 292 5 0 0 0 - - -;
+#X floatatom 56 270 5 0 0 0 - - -;
+#X floatatom 68 248 5 0 0 0 - - -;
+#X floatatom 80 227 5 0 0 0 - - -;
+#X floatatom 92 206 5 0 0 0 - - -;
+#X obj 32 184 osci/date;
+#X connect 4 0 13 0;
+#X connect 4 0 31 0;
+#X connect 10 0 12 0;
+#X connect 13 0 6 0;
+#X connect 13 1 7 0;
+#X connect 13 2 8 0;
+#X connect 13 3 9 0;
+#X connect 13 4 23 0;
+#X connect 13 5 24 0;
+#X connect 31 0 25 0;
+#X connect 31 1 26 0;
+#X connect 31 2 27 0;
+#X connect 31 3 28 0;
+#X connect 31 4 29 0;
+#X connect 31 5 30 0;
