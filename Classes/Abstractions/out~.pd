@@ -10,7 +10,7 @@
 #X obj 665 106 cnv 15 135 97 empty body empty 20 12 0 14 -99865 -66577
 0;
 #X msg 590 174 \; pd dsp \$1;
-#X obj 28 309 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 28 309 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 13 16 inlet~ x;
 #X obj 126 16 inlet~ y;
@@ -54,7 +54,6 @@
 #X obj 411 496 outlet~ left;
 #X obj 518 496 outlet~ right;
 #X obj 427 144 osci/ramp~ 30;
-#X obj 427 124 / 100;
 #X obj 427 103 r \$0-speakers;
 #X obj 412 207 *~;
 #X obj 518 210 *~;
@@ -63,7 +62,7 @@
 #X obj 412 363 *~;
 #X obj 518 363 *~;
 #X obj 427 254 r \$0-mute;
-#X obj 427 305 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 427 305 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 427 325 osci/ramp~ 30;
 #X obj 438 280 loadbang;
@@ -87,6 +86,7 @@
 #X obj 761 201 cnv 1 7 1 empty empty empty 20 12 0 14 -198865 -66577
 0;
 #X obj 717 286 else/initmess \; \$0-set-bright 100 \;;
+#X obj 427 124 dbtorms;
 #X connect 1 0 12 0;
 #X connect 1 0 41 0;
 #X connect 2 0 13 0;
@@ -97,25 +97,25 @@
 #X connect 6 0 36 0;
 #X connect 9 0 21 0;
 #X connect 10 0 4 0;
-#X connect 10 0 51 0;
+#X connect 10 0 50 0;
 #X connect 11 0 5 0;
-#X connect 11 0 50 0;
+#X connect 11 0 49 0;
 #X connect 14 0 15 0;
 #X connect 15 0 19 0;
 #X connect 16 0 17 0;
 #X connect 17 0 42 0;
 #X connect 18 0 8 0;
 #X connect 19 0 34 0;
-#X connect 19 0 59 0;
-#X connect 19 1 60 0;
+#X connect 19 0 58 0;
+#X connect 19 1 59 0;
 #X connect 20 0 5 1;
 #X connect 20 0 4 1;
 #X connect 21 0 2 1;
 #X connect 21 0 1 1;
 #X connect 22 0 5 0;
-#X connect 22 0 50 0;
+#X connect 22 0 49 0;
 #X connect 23 0 4 0;
-#X connect 23 0 51 0;
+#X connect 23 0 50 0;
 #X connect 24 0 26 0;
 #X connect 26 0 40 0;
 #X connect 27 0 26 0;
@@ -129,24 +129,24 @@
 #X connect 40 0 41 2;
 #X connect 40 0 25 0;
 #X connect 42 0 18 0;
+#X connect 45 0 47 1;
 #X connect 45 0 48 1;
-#X connect 45 0 49 1;
-#X connect 46 0 45 0;
-#X connect 47 0 46 0;
+#X connect 46 0 69 0;
+#X connect 47 0 51 0;
 #X connect 48 0 52 0;
-#X connect 49 0 53 0;
-#X connect 50 0 49 0;
-#X connect 51 0 48 0;
-#X connect 52 0 41 3;
-#X connect 52 0 43 0;
-#X connect 53 0 41 4;
-#X connect 53 0 44 0;
+#X connect 49 0 48 0;
+#X connect 50 0 47 0;
+#X connect 51 0 41 3;
+#X connect 51 0 43 0;
+#X connect 52 0 41 4;
+#X connect 52 0 44 0;
+#X connect 53 0 54 0;
 #X connect 54 0 55 0;
-#X connect 55 0 56 0;
-#X connect 56 0 53 1;
-#X connect 56 0 52 1;
-#X connect 57 0 55 0;
-#X connect 59 0 58 0;
-#X connect 60 0 28 0;
-#X connect 60 0 58 0;
+#X connect 55 0 52 1;
+#X connect 55 0 51 1;
+#X connect 56 0 54 0;
+#X connect 58 0 57 0;
+#X connect 59 0 28 0;
+#X connect 59 0 57 0;
+#X connect 69 0 45 0;
 #X coords -1 -1 1 1 135 112 2 665 90;
