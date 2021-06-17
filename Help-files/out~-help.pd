@@ -1,70 +1,42 @@
-#N canvas -1139 37 593 664 12;
-#X obj 1 404 cnv 1 552 1 empty empty inlets 8 12 0 13 -216373 -1 0
-;
-#X obj 88 412 cnv 15 3 17 empty empty 0 5 9 0 16 -216373 -141475 0
-;
-#X obj 1 497 cnv 1 551 1 empty empty outlets 8 12 0 13 -216373 -1 0
-;
-#X obj 88 506 cnv 15 3 17 empty empty 0 5 9 0 16 -216373 -141475 0
-;
-#X text 106 410 signal;
-#X obj 88 440 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
-;
-#X text 106 438 signal;
-#X text 106 505 signal;
-#X obj 88 534 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
-;
-#X text 106 533 signal;
-#X obj 1 594 cnv 1 551 1 empty empty arguments 8 12 0 13 -216373 -1
-0;
+#N canvas 283 23 433 651 12;
+#X declare -lib osci;
 #X obj 7 197 osci/out~;
-#X text 106 598 (none);
-#X obj 1 1 cnv 15 305 46 empty empty empty 20 12 0 14 -66577 -66577
-0;
-#X obj 4 3 cnv 15 301 42 empty empty out~ 20 20 2 37 -204786 -1 0;
-#X obj 307 1 cnv 15 256 46 empty empty empty 20 12 0 14 -66577 -66577
-0;
-#X obj 310 4 cnv 15 250 40 empty empty empty 12 13 0 18 -128992 -233080
-0;
-#X obj 317 11 cnv 10 10 10 empty empty OSCI 0 15 2 30 -128992 -204786
-0;
-#X obj 413 25 cnv 10 10 10 empty empty Oscilloscope 0 6 2 13 -128992
--204786 0;
-#X obj 10 34 cnv 5 10 10 empty \$0-description Stereo\ Output\ +\ Brightness\ Control
-30 30 2 17 -204786 -1 0;
-#X obj 480 25 cnv 10 10 10 empty empty Music 0 6 2 13 -128992 -204786
-0;
-#X obj 513 25 cnv 10 10 10 empty empty & 0 6 2 13 -128992 -204786 0
+#X obj 7 143 phasor~ 50;
+#X obj 7 167 osci/circle~ 0 0 1;
+#X obj 303 9 declare -lib osci;
+#X text 2 315 ============================================================inlets
 ;
-#X obj 454 11 cnv 10 10 10 empty empty Library 0 6 2 13 -128992 -204786
-0;
-#X obj 526 25 cnv 10 10 10 empty empty Art 0 6 2 13 -128992 -204786
-0;
-#X obj 497 11 cnv 10 10 10 empty empty for 0 6 2 13 -128992 -204786
-0;
-#X obj 2 627 cnv 15 552 24 empty empty empty 20 12 0 14 -233017 -33289
-0;
-#X obj 88 562 cnv 15 3 17 empty empty 2 5 9 0 16 -216373 -141475 0
+#X text 2 415 ============================================================outlets
 ;
-#X text 106 561 signal;
-#X text 197 505 - Left channel (x);
-#X text 197 533 - Right channel (y);
-#X text 198 410 - Left channel (x);
-#X text 197 438 - Right channel (y);
-#X obj 88 469 cnv 15 3 17 empty empty 2 5 9 0 16 -216373 -141475 0
+#X text 2 555 ============================================================arguments
 ;
-#X text 106 467 signal;
-#X text 197 467 - Brightness;
-#X text 197 561 - Brightness (z mod input on scope);
-#X obj 7 123 phasor~ 50;
-#X obj 7 147 osci/circle~ 0 0 1;
-#X text 145 182 [out~] is a convenient stereo output abstraction with
-an optional third signal for brightness control. [out~] also has optional
-catches named m-out-x \, m-out-y \, and m-out-bright which can be useful
-for keeping your patches clean.;
-#X text 145 268 TODO:// add in spot killer when that gets written.
-Figure out how spot killer settings I want spot killer settings to
-be adjusted., f 50;
-#X connect 36 0 37 0;
-#X connect 37 0 11 0;
-#X connect 37 1 11 1;
+#X text 1 613 ========================================================================================================================
+;
+#X text 24 350 1 signel - left channel (x);
+#X text 24 370 2 signal - right channel (y);
+#X text 24 390 3 signal - brightness;
+#X text 24 450 1 signal - x (to scope);
+#X text 24 470 2 signal - y (to scope);
+#X text 24 490 3 signal - brightness (to scope);
+#X text 24 510 4 signal - left channel (to speakers);
+#X text 24 530 5 signal - right channel (to speakers);
+#X text 22 589 none;
+#X obj 198 159 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
+-174938 -203556;
+#X text 225 162 open online documentation;
+#N canvas 0 23 449 130 docs 0;
+#X obj 3 36 inlet;
+#X obj 3 76 else/openfile https://eric-lennartson.github.io/pd-osci/#/out~
+;
+#X connect 0 0 1 0;
+#X restore 198 193 pd docs;
+#X text 2 34 [out~] is used to send audio to both speakers and oscilloscope.
+It takes 3 inputs \, (x \, y \, and bright). It has 5 outlets \, (x
+\, y \, bright \, speaker left \, and speaker right). It also has internal
+[catch~]objects named m-out-x \, m-out-y \, and m-out-bright which
+can be useful for removing patch cables and keeping your patches clean.
+The scope level is linear \, while the speaker level is in db.;
+#X connect 1 0 2 0;
+#X connect 2 0 0 0;
+#X connect 2 1 0 1;
+#X connect 17 0 19 0;
