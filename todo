@@ -1,3 +1,8 @@
 ==== Roadmap ===================================================================
 - Adjust the built in pd help files, have them also link to the gh-pages
 ==== Bugs ======================================================================
+
+==== Things to Improve =========================================================
+- Can I have writesf~ write to a specific directory? 
+- redo the gui for record~
+- add in a spot killer abstraction

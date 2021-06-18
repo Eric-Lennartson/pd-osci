@@ -1,4 +1,4 @@
-#N canvas 283 23 433 651 12;
+#N canvas 723 81 433 651 12;
 #X declare -lib osci;
 #X obj 7 197 osci/out~;
 #X obj 7 143 phasor~ 50;
@@ -12,7 +12,6 @@
 ;
 #X text 1 613 ========================================================================================================================
 ;
-#X text 24 350 1 signel - left channel (x);
 #X text 24 370 2 signal - right channel (y);
 #X text 24 390 3 signal - brightness;
 #X text 24 450 1 signal - x (to scope);
@@ -36,7 +35,8 @@ It takes 3 inputs \, (x \, y \, and bright). It has 5 outlets \, (x
 [catch~]objects named m-out-x \, m-out-y \, and m-out-bright which
 can be useful for removing patch cables and keeping your patches clean.
 The scope level is linear \, while the speaker level is in db.;
+#X text 24 350 1 signal - left channel (x);
 #X connect 1 0 2 0;
 #X connect 2 0 0 0;
 #X connect 2 1 0 1;
-#X connect 17 0 19 0;
+#X connect 16 0 18 0;
