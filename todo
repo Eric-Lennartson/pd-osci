@@ -7,3 +7,6 @@
 - redo the gui for record~
 - add in a spot killer abstraction
 - rethink gui version of chris_clip~, is there a better way
+
+==== Misc ======================================================================
+- in all_objects, make square~ osci/square~
