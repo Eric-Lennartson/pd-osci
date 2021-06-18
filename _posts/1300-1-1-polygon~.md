@@ -32,7 +32,7 @@ layout: null
 | 1   | float     | x position  |
 | 2   | float     | y position  |
 | 3   | float     | sides (3-N) |
-| 3   | float     | size        |
+| 4   | float     | size        |
 
 ### Alias 
 
