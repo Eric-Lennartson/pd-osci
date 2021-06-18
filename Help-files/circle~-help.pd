@@ -1,91 +1,42 @@
-#N canvas 45 33 589 628 12;
-#X floatatom 44 104 5 0 0 0 - - -;
-#X floatatom 73 125 5 0 0 0 - - -;
-#X floatatom 103 146 5 0 0 0 - - -;
-#X text 86 103 2nd inlet controls x position;
-#X text 110 126 3rd inlet controls y position;
-#X text 142 148 4th inlet controls the radius/size;
-#X obj 1 274 cnv 1 552 1 empty empty inlets 8 12 0 13 -216373 -1 0
+#N canvas 45 33 432 560 12;
+#X declare -lib osci;
+#X floatatom 44 44 5 0 0 1 xPosition - -;
+#X floatatom 73 65 5 0 0 1 yPosition - -;
+#X floatatom 103 86 5 0 0 1 size - -;
+#X obj 15 21 phasor~ 100;
+#X obj 15 109 circle~ 0 0 1;
+#X obj 15 133 osci/out~;
+#X text 2 225 ============================================================inlets
 ;
-#X obj 88 282 cnv 15 3 60 empty empty 0 5 9 0 16 -216373 -141475 0
+#X text 2 345 ============================================================outlets
 ;
-#X obj 1 447 cnv 1 552 1 empty empty outlets 8 12 0 13 -216373 -1 0
+#X text 2 425 ============================================================arguments
 ;
-#X obj 88 456 cnv 15 3 17 empty empty 0 5 9 0 16 -216373 -141475 0
+#X text 1 523 ========================================================================================================================
 ;
-#X text 106 280 signal;
-#X obj 88 360 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
+#X text 24 260 1 signal - phase;
+#X text 24 280 2 float/signal - x position;
+#X text 24 300 3 float/signal - y position;
+#X text 24 380 1 signal - x;
+#X text 24 400 2 signal - y;
+#X text 24 460 1 float - x position;
+#X text 24 480 2 float - y position;
+#X text 24 500 3 float - radius/size;
+#X obj 194 115 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
+-174938 -203556;
+#X text 221 118 open online documentation;
+#N canvas 0 23 449 130 docs 0;
+#X obj 3 36 inlet;
+#X obj 3 76 else/openfile https://eric-lennartson.github.io/pd-osci/#/circle~
 ;
-#X text 106 358 signal;
-#X obj 88 390 cnv 15 3 17 empty empty 2 5 9 0 16 -216373 -141475 0
-;
-#X text 106 388 signal;
-#X obj 88 417 cnv 15 3 17 empty empty 3 5 9 0 16 -216373 -141475 0
-;
-#X text 106 415 signal;
-#X text 106 454 signal;
-#X obj 88 486 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
-;
-#X text 106 484 signal;
-#X obj 2 514 cnv 1 552 1 empty empty arguments 8 12 0 13 -216373 -1
-0;
-#X text 178 280 - controls the position of the dot on the circle \,
-ramping from 0 to 1 results in a complete rotation around the circle.
-Normally a phasor would be used to draw the circle \, but any signal
-source could be used., f 51;
-#X text 177 524 - x position;
-#X text 177 544 - y position;
-#X text 177 564 - r radius/size;
-#X text 85 524 1) float;
-#X text 85 544 2) float;
-#X text 85 564 3) float;
-#X obj 1 1 cnv 15 305 46 empty empty empty 20 12 0 14 -66577 -66577
-0;
-#X obj 4 3 cnv 15 301 42 empty empty circle~ 20 20 2 37 -204786 -1
-0;
-#X obj 307 1 cnv 15 256 46 empty empty empty 20 12 0 14 -66577 -66577
-0;
-#X obj 310 4 cnv 15 250 40 empty empty empty 12 13 0 18 -128992 -233080
-0;
-#X obj 317 11 cnv 10 10 10 empty empty OSCI 0 15 2 30 -128992 -204786
-0;
-#X obj 413 25 cnv 10 10 10 empty empty Oscilloscope 0 6 2 13 -128992
--204786 0;
-#X obj 10 34 cnv 5 10 10 empty \$0-description Draw\\\ a\\\ circle
-30 30 2 17 -204786 -1 0;
-#X obj 480 25 cnv 10 10 10 empty empty Music 0 6 2 13 -128992 -204786
-0;
-#X obj 513 25 cnv 10 10 10 empty empty & 0 6 2 13 -128992 -204786 0
-;
-#X obj 454 11 cnv 10 10 10 empty empty Library 0 6 2 13 -128992 -204786
-0;
-#X obj 526 25 cnv 10 10 10 empty empty Art 0 6 2 13 -128992 -204786
-0;
-#X obj 497 11 cnv 10 10 10 empty empty for 0 6 2 13 -128992 -204786
-0;
-#X obj 2 587 cnv 15 552 24 empty empty empty 20 12 0 14 -233017 -33289
-0;
-#X obj 15 81 phasor~ 100;
-#X obj 15 169 circle~ 0 0 1;
-#X text 177 453 - x;
-#X text 177 483 - y;
-#X text 177 358 - x position;
-#X text 177 388 - y position;
-#X text 177 415 - radius/size;
-#X obj 15 193 osci/out~;
-#X text 100 80 1st inlet is the driver \, that draws the circle;
-#N canvas 271 151 208 199 related_objects 0;
-#X obj 1 1 cnv 15 200 23 empty empty empty 3 12 0 20 -204786 -1 0;
-#X text 4 4 [circle~] related objects;
-#X obj 17 44 osci/ellipse~;
-#X obj 17 74 osci/square~;
-#X obj 17 104 osci/triangle~;
-#X obj 17 134 osci/rectangle~;
-#X obj 17 164 osci/polygon~;
-#X restore 16 590 pd related_objects;
-#X connect 0 0 42 1;
-#X connect 1 0 42 2;
-#X connect 2 0 42 3;
-#X connect 41 0 42 0;
-#X connect 42 0 48 0;
-#X connect 42 1 48 1;
+#X connect 0 0 1 0;
+#X restore 194 149 pd docs;
+#X obj 299 25 declare -lib osci;
+#X text 24 319 4 float/signal - radius/size;
+#X connect 0 0 4 1;
+#X connect 1 0 4 2;
+#X connect 2 0 4 3;
+#X connect 3 0 4 0;
+#X connect 4 0 5 0;
+#X connect 4 1 5 1;
+#X connect 18 0 20 0;

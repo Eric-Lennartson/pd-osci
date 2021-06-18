@@ -1,4 +1,4 @@
-#N canvas 276 45 434 703 12;
+#N canvas 276 45 434 652 12;
 #X declare -lib osci;
 #X obj 5 229 osci/line~, f 18;
 #X obj 5 253 osci/out~;
@@ -16,19 +16,11 @@ with the "osci/" prefix.;
 ;
 #X text 1 456 ============================================================outlets
 ;
-#X text 1 596 ============================================================arguments
+#X text 1 551 ============================================================arguments
 ;
-#X text 0 654 ========================================================================================================================
+#X text 0 609 ========================================================================================================================
 ;
-#X text 23 411 2 signal - right channel (y);
-#X text 23 431 3 signal - brightness;
-#X text 23 491 1 signal - x (to scope);
-#X text 23 511 2 signal - y (to scope);
-#X text 23 531 3 signal - brightness (to scope);
-#X text 23 551 4 signal - left channel (to speakers);
-#X text 23 571 5 signal - right channel (to speakers);
-#X text 21 630 none;
-#X text 23 391 1 signal - left channel (x);
+#X text 21 585 none;
 #X obj 198 159 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
 -174938 -203556;
 #X text 225 162 open online documentation;
@@ -38,6 +30,12 @@ with the "osci/" prefix.;
 ;
 #X connect 0 0 1 0;
 #X restore 198 193 pd docs;
+#X text 23 411 2-4 float/signal - x1 \, y1 \, z1;
+#X text 23 391 1 signal - phase;
+#X text 23 431 5-7 float/signal - x2 \, y2 \, z2;
+#X text 23 490 1 signal - x;
+#X text 23 511 2 signal - y;
+#X text 23 531 3 signal - z;
 #X connect 0 0 1 0;
 #X connect 0 1 1 1;
 #X connect 2 0 0 0;
@@ -45,4 +43,4 @@ with the "osci/" prefix.;
 #X connect 4 0 0 2;
 #X connect 5 0 0 4;
 #X connect 6 0 0 5;
-#X connect 22 0 24 0;
+#X connect 14 0 16 0;
