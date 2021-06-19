@@ -1,129 +1,76 @@
-#N canvas 661 23 575 748 12;
-#X floatatom 59 148 5 0 0 0 - - -;
-#X obj 59 171 sig~;
-#X floatatom 103 148 5 0 0 0 - - -;
-#X obj 103 171 sig~;
-#X floatatom 147 148 5 0 0 0 - - -;
-#X obj 147 171 sig~;
-#X obj 88 322 cnv 15 3 60 empty empty 0 5 9 0 16 -216373 -141475 0
+#N canvas 769 23 433 734 12;
+#X declare -lib osci;
+#X floatatom 49 58 5 0 0 2 n1 - -;
+#X obj 49 81 sig~;
+#X floatatom 93 58 5 0 0 2 n2 - -;
+#X obj 93 81 sig~;
+#X floatatom 137 58 5 0 0 2 n3 - -;
+#X obj 137 81 sig~;
+#X obj 6 129 osci/out~;
+#X obj 6 9 phasor~ 50;
+#X floatatom 181 58 5 0 0 2 m - -;
+#X obj 181 81 sig~;
+#X floatatom 225 58 5 0 0 2 a - -;
+#X obj 225 81 sig~;
+#X floatatom 269 60 5 0 0 2 b - -;
+#X obj 269 83 sig~;
+#X obj 186 244 osci/super~;
+#X obj 6 105 osci/supershape~ 0.36 0.84 2.19 12 5 2;
+#X obj 187 151 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
+-174938 -203556;
+#X text 215 153 open online documentation;
+#X obj 193 179 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
+-174938 -203556;
+#N canvas 0 23 450 300 links 0;
+#X obj 37 37 inlet;
+#X obj 353 33 inlet;
+#X obj 37 61 else/openfile https://eric-lennartson.github.io/pd-osci/#/supershape~
 ;
-#X obj 88 566 cnv 15 3 17 empty empty 0 5 9 0 16 -216373 -141475 0
+#X obj 32 121 else/openfile http://paulbourke.net/geometry/supershape/
 ;
-#X text 106 320 signal;
-#X obj 88 400 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
+#X connect 0 0 2 0;
+#X connect 1 0 3 0;
+#X restore 187 220 pd links;
+#X text 141 245 alias;
+#X text 221 182 more about supershapes;
+#X text 0 275 ============================================================inlets
 ;
-#X text 106 399 signal;
-#X obj 88 425 cnv 15 3 17 empty empty 2 5 9 0 16 -216373 -141475 0
+#X text 1 454 ============================================================outlets
 ;
-#X text 106 424 signal;
-#X obj 88 450 cnv 15 3 17 empty empty 3 5 9 0 16 -216373 -141475 0
+#X text 0 529 ============================================================arguments
 ;
-#X text 106 449 signal;
-#X text 106 564 signal;
-#X obj 88 596 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
+#X text -1 693 ========================================================================================================================
 ;
-#X text 106 594 signal;
-#X text 197 563 - sends out x signal;
-#X text 197 593 - sends out y signal;
-#X text 85 644 1) float;
-#X text 85 664 2) float;
-#X text 85 684 3) float;
-#X obj 88 475 cnv 15 3 17 empty empty 4 5 9 0 16 -216373 -141475 0
-;
-#X text 106 474 signal;
-#X text 265 644 4) float;
-#X obj 16 229 osci/out~;
-#X obj 16 99 phasor~ 50;
-#X text 101 97 1st inlet is a driver \, that draws the supershape;
-#X text 63 127 n1;
-#X text 107 127 n2;
-#X text 150 127 n3;
-#X text 194 127 m;
-#X text 238 127 a;
-#X text 281 129 b;
-#X floatatom 191 148 5 0 0 0 - - -;
-#X obj 191 171 sig~;
-#X floatatom 235 148 5 0 0 0 - - -;
-#X obj 235 171 sig~;
-#X floatatom 279 150 5 0 0 0 - - -;
-#X obj 279 173 sig~;
-#X obj 88 500 cnv 15 3 17 empty empty 3 5 9 0 16 -216373 -141475 0
-;
-#X text 106 499 signal;
-#X obj 88 525 cnv 15 3 17 empty empty 4 5 9 0 16 -216373 -141475 0
-;
-#X text 106 524 signal;
-#X text 197 399 - n1;
-#X text 197 424 - n2;
-#X text 197 449 - n3;
-#X text 197 474 - m \, controls rotational symmetry;
-#X text 197 644 - n1;
-#X text 197 664 - n2;
-#X text 197 684 - n3;
-#X text 377 644 - m;
-#X text 377 664 - a;
-#X text 377 684 - b;
-#X text 265 664 5) float;
-#X text 265 684 6) float;
-#X obj 1 1 cnv 15 305 46 empty empty empty 20 12 0 14 -66577 -66577
-0;
-#X obj 4 3 cnv 15 301 42 empty empty supershape~ 20 20 2 37 -204786
--1 0;
-#X obj 307 1 cnv 15 256 46 empty empty empty 20 12 0 14 -66577 -66577
-0;
-#X obj 310 4 cnv 15 250 40 empty empty empty 12 13 0 18 -128992 -233080
-0;
-#X obj 317 11 cnv 10 10 10 empty empty OSCI 0 15 2 30 -128992 -204786
-0;
-#X obj 10 34 cnv 5 10 10 empty \$0-description Draw\\\ a\\\ super\\\ shape
-30 30 2 17 -204786 -1 0;
-#X obj 413 25 cnv 10 10 10 empty empty Oscilloscope 0 6 2 13 -128992
--204786 0;
-#X obj 480 25 cnv 10 10 10 empty empty Music 0 6 2 13 -128992 -204786
-0;
-#X obj 513 25 cnv 10 10 10 empty empty & 0 6 2 13 -128992 -204786 0
-;
-#X obj 454 11 cnv 10 10 10 empty empty Library 0 6 2 13 -128992 -204786
-0;
-#X obj 526 25 cnv 10 10 10 empty empty Art 0 6 2 13 -128992 -204786
-0;
-#X obj 497 11 cnv 10 10 10 empty empty for 0 6 2 13 -128992 -204786
-0;
-#X obj 1 314 cnv 1 552 1 empty empty inlets 8 12 0 13 -216373 -1 0
-;
-#X obj 1 557 cnv 1 552 1 empty empty outlets 8 12 0 13 -216373 -1 0
-;
-#X obj 2 634 cnv 1 552 1 empty empty arguments 8 12 0 13 -216373 -1
-0;
-#X obj 2 707 cnv 15 552 24 empty empty empty 20 12 0 14 -233017 -33289
-0;
-#N canvas 317 299 224 129 related_objects 0;
-#X obj 1 1 cnv 15 220 23 empty empty empty 3 12 0 20 -204786 -1 0;
-#X text 4 4 [supershape~] related objects;
-#X obj 17 50 selipse~;
-#X restore 15 710 pd related_objects;
-#X text 198 320 - controls the position of the dot on the supershape
-\, ramping from 0 to 1 results in drawing the whole shape. Normally
-a phasor is used \, but any signal source works., f 47;
-#X text 198 499 - a \, height;
-#X text 197 524 - b \, width;
-#X obj 196 271 else/openfile http://paulbourke.net/geometry/supershape/
--h More about supershapes;
-#X text 284 237 (abbreviation);
-#X obj 197 238 osci/super~;
-#X obj 16 195 osci/supershape~ 0.36 0.84 2.19 12 5 2;
+#X text 22 490 1 signal - x;
+#X text 22 507 2 signal - y;
+#X obj 256 7 declare -lib osci;
+#X text 22 310 1 signal - phase;
+#X text 22 330 2 float/signal - n1;
+#X text 22 350 3 float/signal - n2;
+#X text 22 370 4 float/signal - n3;
+#X text 22 390 5 float/signal - m \, controls rotational symmetry;
+#X text 22 411 6 float/signal - a \, controls height;
+#X text 22 430 7 float/signal - b \, controls width;
+#X text 22 570 1 float - n1;
+#X text 22 590 2 float - n2;
+#X text 22 610 3 float - n3;
+#X text 22 630 4 float - m \, controls rotational symmetry;
+#X text 22 651 5 float - a \, controls height;
+#X text 22 670 6 float - b \, controls width;
 #X connect 0 0 1 0;
-#X connect 1 0 80 1;
+#X connect 1 0 15 1;
 #X connect 2 0 3 0;
-#X connect 3 0 80 2;
+#X connect 3 0 15 2;
 #X connect 4 0 5 0;
-#X connect 5 0 80 3;
-#X connect 27 0 80 0;
-#X connect 35 0 36 0;
-#X connect 36 0 80 4;
-#X connect 37 0 38 0;
-#X connect 38 0 80 5;
-#X connect 39 0 40 0;
-#X connect 40 0 80 6;
-#X connect 80 0 26 0;
-#X connect 80 1 26 1;
+#X connect 5 0 15 3;
+#X connect 7 0 15 0;
+#X connect 8 0 9 0;
+#X connect 9 0 15 4;
+#X connect 10 0 11 0;
+#X connect 11 0 15 5;
+#X connect 12 0 13 0;
+#X connect 13 0 15 6;
+#X connect 15 0 6 0;
+#X connect 15 1 6 1;
+#X connect 16 0 19 0;
+#X connect 18 0 19 1;

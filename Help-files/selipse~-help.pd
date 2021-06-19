@@ -1,95 +1,58 @@
-#N canvas -877 43 584 723 12;
-#X floatatom 54 108 5 0 0 0 - - -;
-#X floatatom 83 154 5 0 0 0 - - -;
-#X floatatom 113 199 5 0 0 0 - - -;
-#X obj 88 382 cnv 15 3 20 empty empty 0 5 9 0 16 -216373 -141475 0
+#N canvas 411 23 434 701 12;
+#X declare -lib osci;
+#X floatatom 44 58 5 0 0 1 width - -;
+#X floatatom 73 104 5 0 0 1 height - -;
+#X floatatom 103 149 5 0 0 1 n_(squash/expand_corners) - -;
+#X obj 15 195 osci/selipse~;
+#X obj 15 229 osci/out~;
+#X obj 44 81 sig~ 1;
+#X obj 73 127 sig~ 1;
+#X obj 15 30 phasor~ 200;
+#X obj 103 172 sig~ 0.5;
+#X obj 296 5 declare -lib osci;
+#X obj 201 49 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412 -174938
+-203556;
+#X text 229 51 open online documentation;
+#X obj 207 77 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412 -174938
+-203556;
+#X text 235 80 more about super ellipses;
+#N canvas 0 23 450 300 links 1;
+#X obj 37 37 inlet;
+#X obj 353 33 inlet;
+#X obj 32 121 else/openfile https://en.wikipedia.org/wiki/Superellipse
+, f 42;
+#X obj 37 61 else/openfile https://eric-lennartson.github.io/pd-osci/#/selipse~
 ;
-#X obj 88 546 cnv 15 3 17 empty empty 0 5 9 0 16 -216373 -141475 0
+#X connect 0 0 3 0;
+#X connect 1 0 2 0;
+#X restore 201 118 pd links;
+#X text 0 325 ============================================================inlets
 ;
-#X text 106 380 signal;
-#X obj 88 420 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
+#X text 1 484 ============================================================outlets
 ;
-#X text 106 418 signal;
-#X obj 88 450 cnv 15 3 17 empty empty 2 5 9 0 16 -216373 -141475 0
+#X text 0 559 ============================================================arguments
 ;
-#X text 106 448 signal;
-#X obj 88 477 cnv 15 3 17 empty empty 3 5 9 0 16 -216373 -141475 0
+#X text -1 663 ========================================================================================================================
 ;
-#X text 106 475 signal;
-#X text 106 544 signal;
-#X obj 88 576 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
-;
-#X text 106 574 signal;
-#X text 177 418 - sets the x position of the circle;
-#X text 177 448 - sets the y position of the circle;
-#X text 85 614 1) float;
-#X text 85 634 2) float;
-#X text 85 654 3) float;
-#X obj 88 507 cnv 15 3 17 empty empty 4 5 9 0 16 -216373 -141475 0
-;
-#X text 106 505 signal;
-#X text 177 475 - sets the width of the ellipse;
-#X text 177 505 - sets the height of the ellipse;
-#X text 177 614 - a (width);
-#X text 177 634 - b (height);
-#X text 177 654 - n;
-#X obj 25 245 osci/selipse~;
-#X obj 25 279 osci/out~;
-#X obj 54 131 sig~ 1;
-#X obj 83 177 sig~ 1;
-#X obj 25 80 phasor~ 200;
-#X obj 113 222 sig~ 0.5;
-#X text 96 107 2nd inlet controls width;
-#X text 120 155 3rd inlet controls height;
-#X text 152 201 4th inlet controls n (squashes or expands corners)
-;
-#X text 178 380 - controls the position of the dot on the super ellipse
-\, ramping from 0 to 1 results in a complete shape., f 49;
-#X obj 1 1 cnv 15 305 46 empty empty empty 20 12 0 14 -66577 -66577
-0;
-#X obj 4 3 cnv 15 301 42 empty empty selpise~ 20 20 2 37 -204786 -1
-0;
-#X obj 307 1 cnv 15 256 46 empty empty empty 20 12 0 14 -66577 -66577
-0;
-#X obj 310 4 cnv 15 250 40 empty empty empty 12 13 0 18 -128992 -233080
-0;
-#X obj 317 11 cnv 10 10 10 empty empty OSCI 0 15 2 30 -128992 -204786
-0;
-#X obj 10 34 cnv 5 10 10 empty \$0-description Draw\\\ a\\\ super\\\ ellipse
-30 30 2 17 -204786 -1 0;
-#X obj 1 364 cnv 1 552 1 empty empty inlets 8 12 0 13 -216373 -1 0
-;
-#X obj 1 537 cnv 1 552 1 empty empty outlets 8 12 0 13 -216373 -1 0
-;
-#X obj 2 604 cnv 1 552 1 empty empty arguments 8 12 0 13 -216373 -1
-0;
-#X obj 2 677 cnv 15 552 24 empty empty empty 20 12 0 14 -233017 -33289
-0;
-#X text 177 543 - x;
-#X text 177 573 - y;
-#X obj 413 25 cnv 10 10 10 empty empty Oscilloscope 0 6 2 13 -128992
--204786 0;
-#X obj 480 25 cnv 10 10 10 empty empty Music 0 6 2 13 -128992 -204786
-0;
-#X obj 513 25 cnv 10 10 10 empty empty & 0 6 2 13 -128992 -204786 0
-;
-#X obj 454 11 cnv 10 10 10 empty empty Library 0 6 2 13 -128992 -204786
-0;
-#X obj 526 25 cnv 10 10 10 empty empty Art 0 6 2 13 -128992 -204786
-0;
-#X obj 497 11 cnv 10 10 10 empty empty for 0 6 2 13 -128992 -204786
-0;
-#N canvas 317 299 205 129 related_objects 0;
-#X obj 1 1 cnv 15 200 23 empty empty empty 3 12 0 20 -204786 -1 0;
-#X text 4 4 [selipse~] related objects;
-#X obj 17 50 supershape~;
-#X restore 15 680 pd related_objects;
-#X connect 0 0 29 0;
-#X connect 1 0 30 0;
-#X connect 2 0 32 0;
-#X connect 27 0 28 0;
-#X connect 27 1 28 1;
-#X connect 29 0 27 1;
-#X connect 30 0 27 2;
-#X connect 31 0 27 0;
-#X connect 32 0 27 3;
+#X text 22 520 1 signal - x;
+#X text 22 537 2 signal - y;
+#X text 22 380 2 float/signal - x position;
+#X text 22 360 1 signal - phase;
+#X text 22 400 3 float/signal - y position;
+#X text 22 420 4 float/signal - width;
+#X text 22 440 5 float/signal - height;
+#X text 22 460 6 float/signal - n (squash or expand corners);
+#X text 22 596 1 float - width;
+#X text 22 616 2 float - height;
+#X text 22 636 3 float - n (squash or expand corners);
+#X connect 0 0 5 0;
+#X connect 1 0 6 0;
+#X connect 2 0 8 0;
+#X connect 3 0 4 0;
+#X connect 3 1 4 1;
+#X connect 5 0 3 1;
+#X connect 6 0 3 2;
+#X connect 7 0 3 0;
+#X connect 8 0 3 3;
+#X connect 10 0 14 0;
+#X connect 12 0 14 1;

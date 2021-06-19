@@ -1,55 +1,33 @@
-#N canvas 565 112 571 516 12;
-#X obj 68 282 cnv 15 3 50 empty empty 0 5 9 0 16 -216373 -141475 0
+#N canvas 565 112 433 431 12;
+#X declare -lib osci;
+#X obj 15 60 phasor~ 50;
+#X obj 15 116 osci/out~;
+#X text 15 32 [heart~] helps show the world how much you love them.
 ;
-#X obj 68 376 cnv 15 3 17 empty empty 0 5 9 0 16 -216373 -141475 0
+#X obj 296 5 declare -lib osci;
+#X text 0 205 ============================================================inlets
 ;
-#X text 86 280 signal;
-#X text 86 374 signal;
-#X obj 68 409 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
+#X text 1 264 ============================================================outlets
 ;
-#X text 86 407 signal;
-#X obj 35 90 phasor~ 50;
-#X obj 35 124 heart~;
-#X obj 35 156 osci/out~;
-#X text 168 280 - controls the position of the dot on the heart \,
-ramping from 0 to 1 results in the complete shape. Normally a phasor
-is used \, but any signal source could be used., f 53;
-#X text 154 127 [heart~] helps show the world how much you love them.
+#X text 0 339 ============================================================arguments
 ;
-#X obj 1 1 cnv 15 305 46 empty empty empty 20 12 0 14 -66577 -66577
-0;
-#X obj 4 3 cnv 15 301 42 empty empty heart~ 20 20 2 37 -204786 -1 0
+#X text -1 393 ========================================================================================================================
 ;
-#X obj 307 1 cnv 15 256 46 empty empty empty 20 12 0 14 -66577 -66577
-0;
-#X obj 310 4 cnv 15 250 40 empty empty empty 12 13 0 18 -128992 -233080
-0;
-#X obj 317 11 cnv 10 10 10 empty empty OSCI 0 15 2 30 -128992 -204786
-0;
-#X obj 10 34 cnv 5 10 10 empty \$0-description Share\\\ the\\\ love
-30 30 2 17 -204786 -1 0;
-#X obj 1 264 cnv 1 552 1 empty empty inlets 8 12 0 13 -216373 -1 0
+#X obj 15 86 osci/heart~;
+#X text 22 240 1 signal - phase;
+#X text 22 300 1 signal - x;
+#X text 22 317 2 signal - y;
+#X text 20 373 none;
+#X obj 201 89 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412 -174938
+-203556;
+#N canvas 0 23 450 300 docs 0;
+#X obj 37 37 inlet;
+#X obj 37 61 else/openfile https://eric-lennartson.github.io/pd-osci/#/heart~
 ;
-#X obj 1 347 cnv 1 552 1 empty empty outlets 8 12 0 13 -216373 -1 0
-;
-#X obj 2 444 cnv 1 552 1 empty empty arguments 8 12 0 13 -216373 -1
-0;
-#X obj 2 477 cnv 15 552 24 empty empty empty 20 12 0 14 -233017 -33289
-0;
-#X text 167 373 - x;
-#X text 167 406 - y;
-#X obj 413 25 cnv 10 10 10 empty empty Oscilloscope 0 6 2 13 -128992
--204786 0;
-#X obj 480 25 cnv 10 10 10 empty empty Music 0 6 2 13 -128992 -204786
-0;
-#X obj 513 25 cnv 10 10 10 empty empty & 0 6 2 13 -128992 -204786 0
-;
-#X obj 454 11 cnv 10 10 10 empty empty Library 0 6 2 13 -128992 -204786
-0;
-#X obj 526 25 cnv 10 10 10 empty empty Art 0 6 2 13 -128992 -204786
-0;
-#X obj 497 11 cnv 10 10 10 empty empty for 0 6 2 13 -128992 -204786
-0;
-#X connect 6 0 7 0;
-#X connect 7 0 8 0;
-#X connect 7 1 8 1;
+#X connect 0 0 1 0;
+#X restore 201 118 pd docs;
+#X text 229 91 open online documentation;
+#X connect 0 0 8 0;
+#X connect 8 0 1 0;
+#X connect 8 1 1 1;
+#X connect 13 0 14 0;
