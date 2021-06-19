@@ -39,3 +39,7 @@ layout: null
 | 4   | float     | m, controls rotational symmetry |
 | 5   | float     | a, controls height              |
 | 6   | float     | b, controls width               |
+
+### Alias
+
+super~
