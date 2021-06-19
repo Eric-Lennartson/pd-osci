@@ -1,115 +1,75 @@
-#N canvas 220 24 569 754 12;
-#X obj 1 354 cnv 1 550 1 empty empty inlets 8 12 0 13 -216373 -1 0
+#N canvas 413 23 472 726 12;
+#X declare -lib osci;
+#X obj 5 211 osci/rotate~ 0 45 0, f 29;
+#X floatatom 125 116 5 0 0 1 x_angle - -;
+#X obj 125 139 sig~;
+#X floatatom 165 139 5 0 0 1 y_angle - -;
+#X obj 165 162 sig~;
+#X floatatom 205 162 5 0 0 1 z_angle - -;
+#X obj 205 185 sig~;
+#X obj 5 103 phasor~ 50;
+#X obj 5 127 osci/cuboid~;
+#X obj 5 235 osci/out~;
+#X text 4 25 [rotate~] performs an euler rotation using degrees. The
+first 3 inlets are the vector to be rotated \, and the next 3 are the
+angles of rotation in degrees. Be careful of gimbal lock \, if two
+axes line up then the third will have no effect.;
+#X obj 139 266 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
+-174938 -203556;
+#X text 167 268 open online documentation;
+#X obj 165 293 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
+-174938 -203556;
+#N canvas 0 23 450 300 links 0;
+#X obj 37 37 inlet;
+#X obj 203 33 inlet;
+#X obj 262 33 inlet;
+#X obj 32 121 else/openfile https://en.wikipedia.org/wiki/Gimbal_lock
 ;
-#X obj 88 362 cnv 15 3 17 empty empty 0 5 9 0 16 -216373 -141475 0
+#X obj 32 171 else/openfile https://en.wikipedia.org/wiki/Euler_angles
 ;
-#X obj 1 537 cnv 1 550 1 empty empty outlets 8 12 0 13 -216373 -1 0
+#X obj 37 61 else/openfile https://eric-lennartson.github.io/pd-osci/#/rotate~
 ;
-#X obj 88 546 cnv 15 3 17 empty empty 0 5 9 0 16 -216373 -141475 0
+#X connect 0 0 5 0;
+#X connect 1 0 3 0;
+#X connect 2 0 4 0;
+#X restore 139 355 pd links;
+#X text 193 296 more about gimbal lock;
+#X obj 192 320 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
+-174938 -203556;
+#X text 220 323 more about euler angles;
+#X text 3 381 ============================================================inlets
 ;
-#X text 106 361 signal;
-#X obj 88 390 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
+#X text 3 535 ============================================================outlets
 ;
-#X text 106 389 signal;
-#X obj 88 418 cnv 15 3 17 empty empty 2 5 9 0 16 -216373 -141475 0
+#X text 3 634 ============================================================arguments
 ;
-#X text 106 417 signal;
-#X obj 88 446 cnv 15 3 17 empty empty 3 5 9 0 16 -216373 -141475 0
+#X text 3 738 ========================================================================================================================
 ;
-#X text 106 445 signal;
-#X text 106 545 signal;
-#X obj 88 566 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
-;
-#X text 106 565 signal;
-#X obj 1 614 cnv 1 550 1 empty empty arguments 8 12 0 13 -216373 -1
-0;
-#X text 85 624 1) float;
-#X text 85 644 2) float;
-#X text 85 664 3) float;
-#X obj 5 199 osci/rotate~ 0 45 0, f 29;
-#X floatatom 125 94 5 0 0 0 - - -;
-#X obj 125 117 sig~;
-#X text 168 94 x rotation;
-#X floatatom 165 117 5 0 0 0 - - -;
-#X obj 165 140 sig~;
-#X floatatom 205 140 5 0 0 0 - - -;
-#X obj 205 163 sig~;
-#X text 246 139 z rotation;
-#X text 203 117 y rotation;
-#X obj 88 474 cnv 15 3 17 empty empty 4 5 9 0 16 -216373 -141475 0
-;
-#X text 106 473 signal;
-#X obj 88 502 cnv 15 3 17 empty empty 5 5 9 0 16 -216373 -141475 0
-;
-#X text 106 501 signal;
-#X obj 88 586 cnv 15 3 17 empty empty 2 5 9 0 16 -216373 -141475 0
-;
-#X text 107 585 signal;
-#X obj 6 81 phasor~ 50;
-#X obj 6 105 osci/cuboid~;
-#X obj 1 1 cnv 15 305 46 empty empty empty 20 12 0 14 -66577 -66577
-0;
-#X obj 4 3 cnv 15 301 42 empty empty rotate~ 20 20 2 37 -204786 -1
-0;
-#X obj 307 1 cnv 15 256 46 empty empty empty 20 12 0 14 -66577 -66577
-0;
-#X obj 310 4 cnv 15 250 40 empty empty empty 12 13 0 18 -128992 -233080
-0;
-#X obj 317 11 cnv 10 10 10 empty empty OSCI 0 15 2 30 -128992 -204786
-0;
-#X obj 413 25 cnv 10 10 10 empty empty Oscilloscope 0 6 2 13 -128992
--204786 0;
-#X obj 480 25 cnv 10 10 10 empty empty Music 0 6 2 13 -128992 -204786
-0;
-#X obj 513 25 cnv 10 10 10 empty empty & 0 6 2 13 -128992 -204786 0
-;
-#X obj 454 11 cnv 10 10 10 empty empty Library 0 6 2 13 -128992 -204786
-0;
-#X obj 526 25 cnv 10 10 10 empty empty Art 0 6 2 13 -128992 -204786
-0;
-#X obj 497 11 cnv 10 10 10 empty empty for 0 6 2 13 -128992 -204786
-0;
-#X obj 10 34 cnv 5 10 10 empty \$0-description Euler\\\ rotation\\\ in\\\ degrees
-30 30 2 17 -204786 -1 0;
-#X text 197 543 - x;
-#X text 197 563 - y;
-#X text 197 585 - z;
-#X obj 5 233 osci/out~;
-#X text 198 361 - x;
-#X text 198 389 - y;
-#X text 198 417 - z;
-#X text 198 445 - x rotation (degrees);
-#X text 198 473 - y rotation (degrees);
-#X text 198 501 - z rotation (degrees);
-#X text 145 227 [rotate~] performs an euler rotation using degrees.
-The first 3 inlets are the vector to be rotated \, and the next 3 are
-the angles of rotation in degrees. Be careful of gimbal lock \, if
-two axes line up then the third will have no effect.;
-#X text 197 625 - x rotation (degrees);
-#X text 197 645 - y rotation (degrees);
-#X text 197 665 - z rotation (degrees);
-#X obj 146 321 else/openfile https://en.wikipedia.org/wiki/Euler_angles
--h More about Euler angles;
-#X obj 146 303 else/openfile https://en.wikipedia.org/wiki/Gimbal_lock
--h More about Gimbal lock;
-#X obj 3 688 cnv 15 552 24 empty empty empty 20 12 0 14 -233017 -33289
-0;
-#N canvas 312 214 235 200 related_objects 0;
-#X obj 1 1 cnv 15 230 23 empty empty empty 3 12 0 20 -204786 -1 0;
-#X text 10 4 Other Transformations;
-#X obj 17 44 osci/scale~;
-#X obj 17 74 osci/shear~;
-#X obj 17 104 osci/translate~;
-#X restore 17 691 pd related_objects;
-#X connect 18 0 51 0;
-#X connect 18 1 51 1;
-#X connect 19 0 20 0;
-#X connect 20 0 18 3;
-#X connect 22 0 23 0;
-#X connect 23 0 18 4;
-#X connect 24 0 25 0;
-#X connect 25 0 18 5;
-#X connect 34 0 35 0;
-#X connect 35 0 18 0;
-#X connect 35 1 18 1;
-#X connect 35 2 18 2;
+#X text 20 415 1 float/signal - x;
+#X text 20 435 2 float/signal - y;
+#X text 20 455 3 float/signal - z;
+#X text 20 475 4 float/signal - x angle (degrees);
+#X text 20 495 5 float/signal - y angle (degrees);
+#X text 20 515 6 float/signal - z angle (degrees);
+#X text 20 573 1 signal - x;
+#X text 20 593 2 signal - y;
+#X text 20 613 3 signal - z;
+#X text 20 671 1 float - x angle (degrees);
+#X text 20 691 2 float - y angle (degrees);
+#X text 20 711 3 float - z angle (degrees);
+#X obj 297 3 declare -lib osci;
+#X connect 0 0 9 0;
+#X connect 0 1 9 1;
+#X connect 1 0 2 0;
+#X connect 2 0 0 3;
+#X connect 3 0 4 0;
+#X connect 4 0 0 4;
+#X connect 5 0 6 0;
+#X connect 6 0 0 5;
+#X connect 7 0 8 0;
+#X connect 8 0 0 0;
+#X connect 8 1 0 1;
+#X connect 8 2 0 2;
+#X connect 11 0 14 0;
+#X connect 13 0 14 1;
+#X connect 16 0 14 2;
