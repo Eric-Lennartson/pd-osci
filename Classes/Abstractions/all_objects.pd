@@ -1,4 +1,4 @@
-#N canvas 480 23 536 728 10;
+#N canvas 32 23 536 728 10;
 #X declare -lib osci;
 #X text 27 52 =============================================================================
 , f 77;
@@ -78,7 +78,6 @@
 #X obj 73 2537 xy_splitter~;
 #X obj 73 2099 thrower~ baz, f 14;
 #X obj 73 2129 catcher~ baz, f 14;
-#X obj 73 289 triangle~;
 #X obj 73 2269 n~;
 #X obj 73 2297 n;
 #X obj 73 2796 osci/out~, f 14;
@@ -95,7 +94,6 @@
 #X obj 73 774 osci/rotate~, f 14;
 #X obj 73 803 osci/scale~, f 14;
 #X text 180 2574 <== may remove this in the future;
-#X obj 73 259 square~;
 #X obj 73 2609 record~;
 #X obj 73 2357 date, f 11;
 #X obj 73 2387 time, f 14;
@@ -117,4 +115,6 @@
 #X text 153 2356 Needs help patch;
 #X text 166 2388 Needs help patch;
 #X text 116 2327 Needs help patch;
-#X connect 71 0 72 0;
+#X obj 73 259 osci/square~;
+#X obj 73 289 osci/triangle~;
+#X connect 70 0 71 0;
