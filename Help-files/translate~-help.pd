@@ -30,9 +30,6 @@
 #X obj 6 146 osci/translate~, f 28;
 #X obj 298 220 osci/trans~;
 #X text 252 219 alias;
-#X text 20 345 3 signal - z;
-#X text 20 325 2 signal - y;
-#X text 20 305 1 signal - x;
 #X text 20 365 4 float/signal - x offset;
 #X text 20 385 5 float/signal - y offset;
 #X text 20 405 6 float/signal - z offset;
@@ -42,6 +39,9 @@
 #X text 20 561 1 float - x offset;
 #X text 20 581 2 float - y offset;
 #X text 20 601 3 float - z offset;
+#X text 20 345 3 signal - z;
+#X text 20 325 2 signal - y;
+#X text 20 305 1 signal - x;
 #X connect 0 0 7 0;
 #X connect 1 0 2 0;
 #X connect 2 0 17 3;
