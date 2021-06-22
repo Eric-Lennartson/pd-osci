@@ -1,4 +1,4 @@
-#N canvas 152 23 435 640 12;
+#N canvas 797 84 432 640 12;
 #X declare -lib osci;
 #X floatatom 51 34 5 0 0 1 xPosition - -;
 #X floatatom 87 57 5 0 0 1 yPosition - -;
@@ -6,8 +6,8 @@
 #X obj 15 11 phasor~ 100;
 #X obj 15 153 osci/out~;
 #X floatatom 159 106 5 0 0 1 size - -;
-#X obj 253 29 declare -lib osci;
-#X text 2 265 ============================================================inlets
+#X obj 303 9 declare -lib osci;
+#X text 3 265 ============================================================inlets
 ;
 #X text 2 405 ============================================================outlets
 ;

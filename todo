@@ -19,6 +19,10 @@
     - when dash length is 1, it shouldn't wrap around
 - add an auto make-up gain to chris_clip~-g?
 
+==== Gui Stuff =================================================================
+- could I do something where the gui is a completely separate abstraction that 
+can control how other objects work? (something like aphastel)
+
 ==== Documentation =============================================================
 - what are the defaults for cuboid? (and it's relatives)
 ==== Misc ======================================================================

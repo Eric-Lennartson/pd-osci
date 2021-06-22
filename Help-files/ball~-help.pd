@@ -1,96 +1,52 @@
-#N canvas -604 54 570 709 12;
-#X obj 89 382 cnv 15 3 17 empty empty 0 5 9 0 16 -216373 -141475 0
+#N canvas 701 27 434 572 12;
+#X declare -lib osci;
+#X obj 6 11 phasor~ 50;
+#X floatatom 147 41 5 0 0 1 mix_strength - -;
+#X floatatom 171 90 5 0 0 1 radius - -;
+#X obj 6 144 ball~, f 14;
+#X obj 171 113 sig~ 1;
+#X obj 147 64 sig~ 0.6;
+#X obj 6 166 osci/rotate~ 23 60 10;
+#X obj 6 190 osci/project~;
+#X obj 6 219 osci/out~;
+#X obj 6 35 osci/square~ 0 0 1;
+#X obj 301 14 declare -lib osci;
+#X text 3 301 ============================================================inlets
 ;
-#X text 107 381 signal;
-#X obj 89 410 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
+#X text 3 395 ============================================================outlets
 ;
-#X text 107 409 signal;
-#X obj 89 438 cnv 15 3 17 empty empty 2 5 9 0 16 -216373 -141475 0
+#X text 3 454 ============================================================arguments
 ;
-#X text 107 437 signal;
-#X obj 6 81 phasor~ 50;
-#X floatatom 147 111 5 0 0 0 - - -;
-#X floatatom 171 160 5 0 0 0 - - -;
-#X obj 6 214 ball~, f 14;
-#X text 186 111 mix strength of ball;
-#X text 211 159 radius of ball;
-#X obj 171 183 sig~ 1;
-#X obj 147 134 sig~ 0.6;
-#X obj 6 236 osci/rotate~ 23 60 10;
-#X obj 6 260 osci/project~;
-#X text 193 381 - x;
-#X text 193 409 - y;
-#X text 193 437 - z;
-#X obj 89 466 cnv 15 3 17 empty empty 3 5 9 0 16 -216373 -141475 0
+#X text 3 531 ========================================================================================================================
 ;
-#X text 107 465 signal;
-#X obj 89 494 cnv 15 3 17 empty empty 4 5 9 0 16 -216373 -141475 0
+#X obj 204 234 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
+-174938 -203556;
+#X text 232 236 open online documentation;
+#N canvas 0 23 372 90 docs 0;
+#X obj 7 17 inlet;
+#X obj 7 41 else/openfile https://eric-lennartson.github.io/pd-osci/#/ball~
 ;
-#X text 107 493 signal;
-#X text 193 465 - strength;
-#X text 193 493 - radius;
-#X obj 89 538 cnv 15 3 17 empty empty 0 5 9 0 16 -216373 -141475 0
-;
-#X text 106 537 signal;
-#X obj 89 566 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
-;
-#X text 106 565 signal;
-#X obj 89 594 cnv 15 3 17 empty empty 2 5 9 0 16 -216373 -141475 0
-;
-#X text 106 593 signal;
-#X text 192 537 - x;
-#X text 192 565 - y;
-#X text 192 593 - z;
-#X text 90 634 1) float;
-#X text 183 633 - strength;
-#X text 90 654 2) float;
-#X text 183 653 - radius;
-#X obj 6 289 osci/out~;
-#X obj 1 1 cnv 15 305 46 empty empty empty 20 12 0 14 -66577 -66577
-0;
-#X obj 4 3 cnv 15 301 42 empty empty ball~ 20 20 2 37 -204786 -1 0
-;
-#X obj 307 1 cnv 15 256 46 empty empty empty 20 12 0 14 -66577 -66577
-0;
-#X obj 310 4 cnv 15 250 40 empty empty empty 12 13 0 18 -128992 -233080
-0;
-#X obj 317 11 cnv 10 10 10 empty empty OSCI 0 15 2 30 -128992 -204786
-0;
-#X obj 413 25 cnv 10 10 10 empty empty Oscilloscope 0 6 2 13 -128992
--204786 0;
-#X obj 480 25 cnv 10 10 10 empty empty Music 0 6 2 13 -128992 -204786
-0;
-#X obj 513 25 cnv 10 10 10 empty empty & 0 6 2 13 -128992 -204786 0
-;
-#X obj 454 11 cnv 10 10 10 empty empty Library 0 6 2 13 -128992 -204786
-0;
-#X obj 526 25 cnv 10 10 10 empty empty Art 0 6 2 13 -128992 -204786
-0;
-#X obj 497 11 cnv 10 10 10 empty empty for 0 6 2 13 -128992 -204786
-0;
-#X obj 10 34 cnv 5 10 10 empty \$0-description Interpolate\\\ b/w\\\ a\\\ ball\\\ and\\\ a\\\ 3D\\\ signal\\\ vector
-30 30 2 17 -204786 -1 0;
-#X obj 2 374 cnv 1 550 1 empty empty inlets 8 12 0 13 -228856 -1 0
-;
-#X obj 2 523 cnv 1 550 1 empty empty outlets 8 12 0 13 -228856 -1 0
-;
-#X obj 2 626 cnv 1 550 1 empty empty arguments 8 12 0 13 -228856 -1
-0;
-#X obj 2 678 cnv 15 552 21 empty empty empty 20 12 0 14 -233017 -33289
-0;
-#X obj 6 105 osci/square~ 0 0 1;
-#X connect 6 0 55 0;
-#X connect 7 0 13 0;
-#X connect 8 0 12 0;
-#X connect 9 0 14 0;
-#X connect 9 1 14 1;
-#X connect 9 2 14 2;
-#X connect 12 0 9 4;
-#X connect 13 0 9 3;
-#X connect 14 0 15 0;
-#X connect 14 1 15 1;
-#X connect 14 2 15 2;
-#X connect 15 0 38 0;
-#X connect 15 1 38 1;
-#X connect 55 0 9 0;
-#X connect 55 1 9 1;
+#X connect 0 0 1 0;
+#X restore 204 273 pd docs;
+#X text 20 335 1-3 signal - x \, y \, z;
+#X text 20 355 4 float/signal - strength;
+#X text 20 375 5 float/signal - radius;
+#X text 20 433 1-3 signal - x \, y \, z;
+#X text 20 491 1 float - strength;
+#X text 20 512 2 float - radius;
+#X connect 0 0 9 0;
+#X connect 1 0 5 0;
+#X connect 2 0 4 0;
+#X connect 3 0 6 0;
+#X connect 3 1 6 1;
+#X connect 3 2 6 2;
+#X connect 4 0 3 4;
+#X connect 5 0 3 3;
+#X connect 6 0 7 0;
+#X connect 6 1 7 1;
+#X connect 6 2 7 2;
+#X connect 7 0 8 0;
+#X connect 7 1 8 1;
+#X connect 9 0 3 0;
+#X connect 9 1 3 1;
+#X connect 15 0 17 0;
