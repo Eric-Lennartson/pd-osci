@@ -25,7 +25,7 @@ typedef struct _grid_tilde
 t_int *grid_tilde_perform(t_int *w)
 {
     t_grid_tilde *x  = (t_grid_tilde *)(w[1]);
-    t_sample* driver    =  (t_sample *)(w[2]);
+    t_sample* phase    =  (t_sample *)(w[2]);
     t_sample* nx_in     =  (t_sample *)(w[3]);
     t_sample* ny_in     =  (t_sample *)(w[4]);
     t_sample* nz_in     =  (t_sample *)(w[5]);
@@ -40,11 +40,11 @@ t_int *grid_tilde_perform(t_int *w)
     while (nblock--)
     {
         //init everything
-        t_float t = *driver++;
-        t_float spread = *spread_in++;
-        int nx = max(*nx_in++, 1);
-        int ny = max(*ny_in++, 1);
-        int nz = max(*nz_in++, 1);
+        t_float t = phase[nblock];
+        t_float spread = spread_in[nblock];
+        int nx = max(nx_in[nblock], 1);
+        int ny = max(ny_in[nblock], 1);
+        int nz = max(nz_in[nblock], 1);
 
         int n_total = nx * ny * nz;
 
@@ -72,11 +72,11 @@ t_int *grid_tilde_perform(t_int *w)
         x->v = v3_multf(x->v, scale);
         x->v = v3_add(x->v, (t_vec3){off_x * spread, off_y * spread, off_z * spread} );
 
-        *t2_out++ = t2;
-        *scale_out++ = scale;
-        *x_out++ = x->v.x;
-        *y_out++ = x->v.y;
-        *z_out++ = x->v.z;
+        t2_out[nblock] = t2;
+        scale_out[nblock] = scale;
+        x_out[nblock] = x->v.x;
+        y_out[nblock] = x->v.y;
+        z_out[nblock] = x->v.z;
     }
 
    return (w + 13);
@@ -85,7 +85,7 @@ t_int *grid_tilde_perform(t_int *w)
 void grid_tilde_dsp(t_grid_tilde *x, t_signal **sp)
 {
     dsp_add(grid_tilde_perform, 12, x,
-            sp[0]->s_vec, // driver
+            sp[0]->s_vec, // phase
             sp[1]->s_vec, // nx in
             sp[2]->s_vec, // ny in
             sp[3]->s_vec, // nz in
@@ -116,8 +116,13 @@ void *grid_tilde_new(t_floatarg nx, t_floatarg ny, t_floatarg nz, t_floatarg spr
 {
     t_grid_tilde *x = (t_grid_tilde *)pd_new(grid_tilde_class);
 
-    x->v   = NEW_VEC3;
+    x->v = vec3(1,1,1);
     
+    // make it an int, and make sure it's greater than 1
+    nx = (int)max(nx, 1);
+    ny = (int)max(ny, 1);
+    nz = (int)max(nz, 1);
+
     x->nx_in     = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
     x->ny_in     = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
     x->nz_in     = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
