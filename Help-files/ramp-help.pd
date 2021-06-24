@@ -1,71 +1,40 @@
-#N canvas -1315 125 579 478 12;
-#X obj 88 302 cnv 15 3 17 empty empty 0 5 9 0 16 -216373 -141475 0
+#N canvas 740 106 434 549 12;
+#X declare -lib osci;
+#X obj 10 187 osci/out~;
+#X floatatom 10 112 5 0 0 0 - - -;
+#X obj 10 135 osci/ramp 1000;
+#X floatatom 105 113 5 0 0 0 - - -;
+#X obj 10 159 osc~;
+#X obj 175 213 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
+-174938 -203556;
+#X text 203 215 open online documentation;
+#N canvas 0 23 372 90 docs 0;
+#X obj 7 17 inlet;
+#X obj 7 41 else/openfile https://eric-lennartson.github.io/pd-osci/#/ramp
 ;
-#X obj 88 366 cnv 15 3 17 empty empty 0 5 9 0 16 -216373 -141475 0
-;
-#X obj 88 330 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
-;
-#X obj 28 199 osci/out~;
-#X obj 2 294 cnv 1 550 1 empty empty inlets 8 12 0 13 -228856 -1 0
-;
-#X obj 2 357 cnv 1 550 1 empty empty outlets 8 12 0 13 -228856 -1 0
-;
-#X obj 2 396 cnv 1 550 1 empty empty arguments 8 12 0 13 -228856 -1
-0;
-#X obj 2 440 cnv 15 552 21 empty empty empty 20 12 0 14 -233017 -33289
-0;
-#X obj 1 1 cnv 15 305 46 empty empty empty 20 12 0 14 -66577 -66577
-0;
-#X obj 4 3 cnv 15 301 42 empty empty ramp 20 20 2 37 -204786 -1 0;
-#X obj 307 1 cnv 15 256 46 empty empty empty 20 12 0 14 -66577 -66577
-0;
-#X obj 310 4 cnv 15 250 40 empty empty empty 12 13 0 18 -128992 -233080
-0;
-#X obj 317 11 cnv 10 10 10 empty empty OSCI 0 15 2 30 -128992 -204786
-0;
-#X obj 413 25 cnv 10 10 10 empty empty Oscilloscope 0 6 2 13 -128992
--204786 0;
-#X obj 480 25 cnv 10 10 10 empty empty Music 0 6 2 13 -128992 -204786
-0;
-#X obj 513 25 cnv 10 10 10 empty empty & 0 6 2 13 -128992 -204786 0
-;
-#X obj 454 11 cnv 10 10 10 empty empty Library 0 6 2 13 -128992 -204786
-0;
-#X obj 526 25 cnv 10 10 10 empty empty Art 0 6 2 13 -128992 -204786
-0;
-#X obj 497 11 cnv 10 10 10 empty empty for 0 6 2 13 -128992 -204786
-0;
-#X obj 10 34 cnv 5 10 10 empty \$0-description Ramp\\\ generator 30
-30 2 17 -204786 -1 0;
-#X floatatom 28 112 5 0 0 0 - - -;
-#X obj 28 135 osci/ramp 1000;
-#X floatatom 123 113 5 0 0 0 - - -;
-#X obj 28 159 osc~;
-#N canvas -488 349 156 167 related_objects 0;
-#X obj 1 2 cnv 15 150 15 empty empty empty 20 12 0 14 -204786 -66577
-0;
-#X text 18 1 Other ramps;
-#X obj 4 57 line;
-#X obj 4 117 vline~;
-#X obj 4 87 line~;
-#X text 4 29 Vanilla;
-#X text 75 29 Osci;
-#X obj 75 61 ramp~;
-#X restore 5 441 pd related_objects;
-#X text 134 192 [ramp] generates linear ramps b/w values at the control
+#X connect 0 0 1 0;
+#X restore 175 252 pd docs;
+#X text 5 26 [ramp] generates linear ramps b/w values at the control
 rate. The left inlet sets the target value \, and the right inlet sets
 the ramp time in milliseconds. There's an optional argument to set
-the ramp time as well.;
-#X text 113 300 float;
-#X text 168 300 - value to ramp to;
-#X text 167 329 - ramp time in milliseconds;
-#X text 85 414 1) float;
-#X text 167 413 - ramp time in milliseconds;
-#X text 167 362 - ramped value;
-#X text 106 364 float;
-#X text 106 329 float;
-#X connect 20 0 21 0;
-#X connect 21 0 23 0;
-#X connect 22 0 21 1;
-#X connect 23 0 3 0;
-#X connect 23 0 3 1;
+the ramp time as well. It is essentially a wrapper for vanilla's [line].
+, f 60;
+#X text 2 311 ============================================================inlets
+;
+#X text 2 385 ============================================================outlets
+;
+#X text 2 444 ============================================================arguments
+;
+#X text 2 511 ========================================================================================================================
+;
+#X text 19 345 1 float - value to ramp to;
+#X text 19 365 4 float - ramp time in milliseconds;
+#X text 19 423 1 float ramped value;
+#X obj 298 5 declare -lib osci;
+#X text 19 481 1 float - ramp time in milliseconds;
+#X connect 1 0 2 0;
+#X connect 2 0 4 0;
+#X connect 3 0 2 1;
+#X connect 4 0 0 0;
+#X connect 4 0 0 1;
+#X connect 5 0 7 0;
