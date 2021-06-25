@@ -1,7 +1,7 @@
 ==== Roadmap ===================================================================
 - Adjust the built in pd help files, have them also link to the gh-pages
+- figure out how to add in remapping tree... 
 ==== Bugs ======================================================================
-- grid~ crashes pd. problem with pointers?
 ==== Things to Improve =========================================================
 - All objects need to have option for args and defaults if not provided.
     - These should be listed in the documentation as well.

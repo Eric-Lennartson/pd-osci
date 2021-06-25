@@ -1,84 +1,40 @@
-#N canvas -1018 73 581 597 12;
-#X obj 88 272 cnv 15 3 17 empty empty 0 5 9 0 16 -216373 -141475 0
+#N canvas 720 32 430 568 12;
+#X declare -lib osci;
+#X floatatom 26 80 5 0 0 0 - - -;
+#X text 147 102 maps (-1 -> 1) onto (0 -> 1);
+#X obj 16 105 osci/map -1 1 0 1;
+#X floatatom 16 129 5 0 0 0 - - -;
+#X obj 19 49 hsl 140 22 -1 1 0 0 empty empty empty -4 -10 0 12 -91412
+-174938 -203556 13900 1;
+#X obj 186 143 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
+-174938 -203556;
+#X text 214 145 open online documentation;
+#N canvas 0 23 372 90 docs 0;
+#X obj 7 17 inlet;
+#X obj 7 41 else/openfile https://eric-lennartson.github.io/pd-osci/#/map
 ;
-#X obj 88 426 cnv 15 3 17 empty empty 0 5 9 0 16 -216373 -141475 0
+#X connect 0 0 1 0;
+#X restore 186 182 pd docs;
+#X obj 301 14 declare -lib osci;
+#X text 0 211 ============================================================inlets
 ;
-#X obj 88 300 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
+#X text 0 345 ============================================================outlets
 ;
-#X obj 88 330 cnv 15 3 17 empty empty 2 5 9 0 16 -216373 -141475 0
+#X text 0 404 ============================================================arguments
 ;
-#X obj 88 357 cnv 15 3 17 empty empty 3 5 9 0 16 -216373 -141475 0
+#X text 0 531 ========================================================================================================================
 ;
-#X obj 88 387 cnv 15 3 17 empty empty 4 5 9 0 16 -216373 -141475 0
-;
-#X obj 40 159 hsl 128 15 -1 1 0 0 empty empty empty -2 -8 0 10 -262144
--1 -1 0 1;
-#X floatatom 47 179 5 0 0 0 - - -;
-#X text 168 201 maps (-1 -> 1) onto (0 -> 1);
-#X text 168 270 - value to be mapped;
-#X text 167 298 - min1;
-#X text 167 328 - max1;
-#X text 167 355 - min2;
-#X text 167 385 - max2;
-#X text 166 425 - mapped value;
-#X text 85 474 1) float;
-#X text 85 494 2) float;
-#X text 85 514 3) float;
-#X text 85 534 4) float;
-#X text 166 474 - min1;
-#X text 166 494 - max1;
-#X text 166 514 - min2;
-#X text 166 534 - max2;
-#X text 34 102 [map] takes a range of values and maps them onto another
-range of values. It takes 4 arguments min1 \, max1 \, min2 \, max2.
-;
-#X obj 37 204 osci/map -1 1 0 1;
-#X floatatom 37 228 5 0 0 0 - - -;
-#X text 106 270 float;
-#X text 106 298 float;
-#X text 106 328 float;
-#X text 106 355 float;
-#X text 106 385 float;
-#X text 106 425 float;
-#X obj 1 1 cnv 15 305 46 empty empty empty 20 12 0 14 -66577 -66577
-0;
-#X obj 4 3 cnv 15 301 42 empty empty map 20 20 2 37 -204786 -1 0;
-#X obj 307 1 cnv 15 256 46 empty empty empty 20 12 0 14 -66577 -66577
-0;
-#X obj 310 4 cnv 15 250 40 empty empty empty 12 13 0 18 -128992 -233080
-0;
-#X obj 317 11 cnv 10 10 10 empty empty OSCI 0 15 2 30 -128992 -204786
-0;
-#X obj 413 25 cnv 10 10 10 empty empty Oscilloscope 0 6 2 13 -128992
--204786 0;
-#X obj 480 25 cnv 10 10 10 empty empty Music 0 6 2 13 -128992 -204786
-0;
-#X obj 513 25 cnv 10 10 10 empty empty & 0 6 2 13 -128992 -204786 0
-;
-#X obj 454 11 cnv 10 10 10 empty empty Library 0 6 2 13 -128992 -204786
-0;
-#X obj 526 25 cnv 10 10 10 empty empty Art 0 6 2 13 -128992 -204786
-0;
-#X obj 497 11 cnv 10 10 10 empty empty for 0 6 2 13 -128992 -204786
-0;
-#X obj 10 34 cnv 5 10 10 empty \$0-description Linear\\\ mapping\\\ from\\\ one\\\ range\\\ to\\\ another
-30 30 2 17 -204786 -1 0;
-#X obj 2 264 cnv 1 550 1 empty empty inlets 8 12 0 13 -228856 -1 0
-;
-#X obj 2 417 cnv 1 550 1 empty empty outlets 8 12 0 13 -228856 -1 0
-;
-#X obj 2 456 cnv 1 550 1 empty empty arguments 8 12 0 13 -228856 -1
-0;
-#X obj 2 560 cnv 15 552 21 empty empty empty 20 12 0 14 -233017 -33289
-0;
-#N canvas 255 207 228 167 related_objects 0;
-#X obj 1 1 cnv 15 220 18 empty empty empty 20 12 0 14 -204786 -66577
-0;
-#X obj 5 41 map~, f 13;
-#X obj 6 71 skew, f 13;
-#X obj 6 101 skew~, f 13;
-#X text 5 1 Other value mapping objects;
-#X restore 5 561 pd related_objects;
-#X connect 6 0 7 0;
-#X connect 6 0 24 0;
-#X connect 24 0 25 0;
+#X text 17 245 1 float - value to map;
+#X text 17 265 2 float - input minimum;
+#X text 17 285 3 float - input maximum;
+#X text 17 325 5 float - output maximum;
+#X text 17 305 4 float - output minimum;
+#X text 17 383 1 float - mapped value;
+#X text 17 445 1 float - input minimum;
+#X text 17 465 2 float - input maximum;
+#X text 17 485 3 float - output minimum;
+#X text 17 505 4 float - output maximum;
+#X connect 2 0 3 0;
+#X connect 4 0 2 0;
+#X connect 4 0 0 0;
+#X connect 5 0 7 0;
