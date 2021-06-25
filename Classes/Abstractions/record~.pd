@@ -1,48 +1,14 @@
-#N canvas 90 112 1128 538 10;
-#X obj 55 71 cnv 15 124 12 empty \$0-header osci/record~ 5 6 0 10 -37450
--228856 0;
-#X obj 55 84 cnv 15 124 39 empty \$0-primary-bg empty 20 12 0 14 -99865
--66577 0;
-#X obj 55 124 cnv 15 124 17 empty \$0-header Settings 5 10 0 9 -33289
--228856 0;
-#X obj 55 142 cnv 15 124 83 empty \$0-primary-bg empty 20 12 0 14 -99865
--66577 0;
-#X obj 73 85 bng 15 250 50 0 empty empty empty 17 7 0 10 -191407 -251611
+#N canvas 200 27 1128 538 10;
+#X obj 55 71 cnv 15 124 154 empty body empty 20 12 0 14 -99865 -66577
+0;
+#X obj 74 89 bng 15 250 50 0 empty empty empty 17 7 0 10 -191407 -251611
 -1;
-#X obj 56 144 vradio 13 1 0 6 \$0-sample-rate \$0-set-sample-rate empty
-0 -8 0 12 -191407 -1 -1 0;
-#X obj 112 181 vradio 13 1 0 3 empty \$0-set-bit-depth empty 0 -8 0
-12 -191407 -1 -1 1;
-#X obj 112 239 + 2;
-#X obj 112 260 s \$0-bit-depth;
-#X obj 112 144 vradio 13 1 0 2 \$0-format \$0-set-format empty 0 -8
-0 12 -191407 -1 -1 0;
-#X obj 56 85 tgl 15 0 \$0-record none empty 17 7 0 10 -251611 -1 -1
+#X obj 117 239 + 2;
+#X obj 117 260 s \$0-bit-depth;
+#X obj 57 89 tgl 15 0 \$0-record none empty 17 7 0 10 -251611 -1 -1
 0 1;
-#X obj 73 20 r \$0-record;
-#X obj 73 42 metro 1000;
-#X obj 69 158 else/note 425 10 courier empty 0 0 0 0 0 255 255 255
-0 0 48;
-#X obj 69 171 else/note 425 10 courier empty 0 0 0 0 0 255 255 255
-0 0 88.2;
-#X obj 69 184 else/note 425 10 courier empty 0 0 0 0 0 255 255 255
-0 0 96;
-#X obj 69 197 else/note 425 10 courier empty 0 0 0 0 0 255 255 255
-0 0 176.4;
-#X obj 69 210 else/note 425 10 courier empty 0 0 0 0 0 255 255 255
-0 0 192;
-#X obj 69 144 else/note 425 10 courier empty 0 0 0 0 0 255 255 255
-0 0 44.1;
-#X obj 125 145 else/note 425 10 courier empty 0 0 0 0 0 255 255 255
-0 0 .wav;
-#X obj 125 158 else/note 425 10 courier empty 0 0 0 0 0 255 255 255
-0 0 .aiff;
-#X obj 125 182 else/note 425 10 courier empty 0 0 0 0 0 255 255 255
-0 0 16;
-#X obj 125 195 else/note 425 10 courier empty 0 0 0 0 0 255 255 255
-0 0 24;
-#X obj 125 208 else/note 425 10 courier empty 0 0 0 0 0 255 255 255
-0 0 32;
+#X obj 74 20 r \$0-record;
+#X obj 74 42 metro 1000;
 #N canvas 76 23 995 712 recording_guts 0;
 #X obj 713 215 sel 0;
 #X msg 713 238 symbol wav;
@@ -192,28 +158,18 @@
 #X obj 298 316 s \$0-set-format;
 #X obj 275 230 unpack f f f s f;
 #X obj 368 252 s \$0-mute;
-#X obj 57 104 cnv 14 115 14 empty empty empty 20 12 0 14 -191407 -66577
+#X obj 57 110 cnv 14 116 15 empty empty empty 20 12 0 14 -91411 -66577
 0;
-#X symbolatom 57 103 19 0 0 0 - #0-set-file-name #0-file-name;
+#X symbolatom 57 110 19 0 0 0 - #0-set-file-name #0-file-name;
 #X obj 210 34 r \$0-record;
 #X msg 210 76 label \$1;
-#X obj 90 86 cnv 13 50 13 empty \$0-stopwatch-display 00:00:00 2 7
-0 10 -191407 -1 0;
+#X obj 91 89 cnv 15 59 15 empty \$0-stopwatch-display 00:00:01 2 9
+0 12 -87315 -203491 0;
 #X obj 210 97 s \$0-stopwatch-display;
 #X text 269 184 init for recording stuff;
-#X obj 55 71 cnv 1 7 1 empty empty empty 20 12 0 14 -262144 -66577
-0;
-#X obj 172 71 cnv 1 7 1 empty empty empty 20 12 0 14 -262144 -66577
-0;
-#X obj 176 100 cnv 1 2 2 empty empty empty 20 12 0 14 -99865 -66577
-0;
-#X obj 177 101 cnv 1 2 2 empty empty empty 20 12 0 14 -99865 -66577
-0;
 #X obj 275 140 else/initmess \; \$0-stopwatch-display label 00:00:00
 ;
 #X obj 275 205 else/initmess 0 0 1 untitled 1;
-#X obj 55 224 cnv 1 7 1 empty empty empty 20 12 0 14 -262144 -66577
-0;
 #N canvas 0 23 442 553 stopwatch 0;
 #X obj 16 448 else/any2symbol;
 #X obj 16 425 else/format %02d:%02d:%02d;
@@ -295,26 +251,58 @@ them at 0, f 23;
 #X obj 13 383 outlet~;
 #X obj 62 383 outlet~;
 #X obj 112 383 outlet;
-#X obj 172 224 cnv 1 7 1 empty empty empty 20 12 0 14 -262144 -66577
+#X obj 55 71 cnv 15 124 15 empty h1 osci/record~ 3 8 0 11 -16645 -257781
 0;
-#X obj 111 224 cnv 1 7 1 empty empty empty 20 12 0 14 -262144 -66577
+#X obj 55 71 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
 0;
-#X connect 6 0 7 0;
-#X connect 7 0 8 0;
-#X connect 11 0 12 0;
-#X connect 12 0 4 0;
-#X connect 24 0 48 0;
-#X connect 24 1 49 0;
-#X connect 24 2 50 0;
-#X connect 29 0 25 0;
-#X connect 29 1 28 0;
-#X connect 29 2 27 0;
-#X connect 29 3 26 0;
-#X connect 29 4 30 0;
-#X connect 33 0 45 0;
-#X connect 34 0 36 0;
-#X connect 43 0 29 0;
-#X connect 45 0 34 0;
-#X connect 46 0 24 0;
-#X connect 47 0 24 1;
+#X obj 172 71 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+0;
+#X obj 172 223 cnv 2 7 2 empty empty empty 20 12 0 14 -170401 -66577
+0;
+#X obj 55 223 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+0;
+#X obj 55 131 cnv 15 124 15 empty h1 Settings 3 8 0 11 -16645 -257781
+0;
+#X obj 57 149 vradio 12 1 0 6 \$0-sample-rate \$0-set-sample-rate empty
+0 -8 0 12 -91412 -174938 -203556 5;
+#X obj 79 155 cnv 2 2 2 empty cnv 44.1 0 0 0 10 -91412 -203556 0;
+#X obj 79 168 cnv 2 2 2 empty cnv2 48.0 0 0 0 10 -91412 -203556 0;
+#X obj 79 180 cnv 2 2 2 empty cnv3 88.2 0 0 0 10 -91412 -203556 0;
+#X obj 79 192 cnv 2 2 2 empty sr4 96.0 0 0 0 10 -91412 -203556 0;
+#X obj 73 204 cnv 2 2 2 empty sr5 176.4 0 0 0 10 -91412 -203556 0;
+#X obj 73 217 cnv 2 2 2 empty sr6 192.0 0 0 0 10 -91412 -203556 0;
+#X obj 117 149 vradio 12 1 0 2 \$0-format \$0-set-format empty 0 -8
+0 12 -91412 -174938 -203556 0;
+#X obj 132 153 cnv 2 2 2 empty file1 .wav 0 0 0 10 -91412 -203556 0
+;
+#X obj 132 167 cnv 2 2 2 empty file2 .aiff 0 0 0 10 -91412 -203556
+0;
+#X obj 117 185 vradio 12 1 0 3 empty none empty 0 -8 0 12 -91412 -174938
+-203556 0;
+#X obj 133 191 cnv 2 2 2 empty bdepth1 16 0 0 0 10 -91412 -203556 0
+;
+#X obj 133 204 cnv 2 2 2 empty bdepth2 24 0 0 0 10 -91412 -203556 0
+;
+#X obj 133 216 cnv 2 2 2 empty bdepth3 32 0 0 0 10 -91412 -203556 0
+;
+#X obj 111 223 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+0;
+#X connect 2 0 3 0;
+#X connect 5 0 6 0;
+#X connect 6 0 1 0;
+#X connect 7 0 26 0;
+#X connect 7 1 27 0;
+#X connect 7 2 28 0;
+#X connect 12 0 8 0;
+#X connect 12 1 11 0;
+#X connect 12 2 10 0;
+#X connect 12 3 9 0;
+#X connect 12 4 13 0;
+#X connect 16 0 23 0;
+#X connect 17 0 19 0;
+#X connect 22 0 12 0;
+#X connect 23 0 17 0;
+#X connect 24 0 7 0;
+#X connect 25 0 7 1;
+#X connect 45 0 2 0;
 #X coords 0 -1 1 1 126 156 1 54 70;
