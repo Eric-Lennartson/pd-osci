@@ -1,55 +1,44 @@
-#N canvas 119 23 567 426 12;
-#X obj 1 1 cnv 15 305 46 empty empty empty 20 12 0 14 -66577 -66577
-0;
-#X obj 4 3 cnv 15 301 42 empty empty rcv~ 20 20 2 37 -204786 -1 0;
-#X obj 307 1 cnv 15 256 46 empty empty empty 20 12 0 14 -66577 -66577
-0;
-#X obj 310 4 cnv 15 250 40 empty empty empty 12 13 0 18 -128992 -233080
-0;
-#X obj 317 11 cnv 10 10 10 empty empty OSCI 0 15 2 30 -128992 -204786
-0;
-#X obj 413 25 cnv 10 10 10 empty empty Oscilloscope 0 6 2 13 -128992
--204786 0;
-#X obj 480 25 cnv 10 10 10 empty empty Music 0 6 2 13 -128992 -204786
-0;
-#X obj 513 25 cnv 10 10 10 empty empty & 0 6 2 13 -128992 -204786 0
+#N canvas 311 143 435 606 12;
+#X declare -lib osci;
+#X obj 3 258 phasor~ 50;
+#X obj 3 282 osci/circle~ 0 0 2;
+#X obj 175 287 osci/out~;
+#X obj 3 306 osci/snd~ foo;
+#X obj 175 258 osci/rcv~ foo;
+#X text 7 32 [rcv~] is a wrapper for pd’s built in [receive~]. Internally
+\, it creates three unique receives based on the symbol argument provided
+on creation. For example \, foo-x foo-y foo-z. While not completely
+necessary \, to avoid warnings the matching [snd~] should be made to
+first.;
+#X text 6 117 A [send~] object copies its input to a local buffer which
+all [receive~] objects of the same name read from. They may be in different
+windows or even different patches. Any number of receives may be associated
+with one [send~] but it is an error to have two sends of the same name.
 ;
-#X obj 454 11 cnv 10 10 10 empty empty Library 0 6 2 13 -128992 -204786
-0;
-#X obj 526 25 cnv 10 10 10 empty empty Art 0 6 2 13 -128992 -204786
-0;
-#X obj 497 11 cnv 10 10 10 empty empty for 0 6 2 13 -128992 -204786
-0;
-#X obj 2 387 cnv 15 552 21 empty empty empty 20 12 0 14 -233017 -33289
-0;
-#X obj 3 98 phasor~ 50;
-#X obj 3 122 osci/circle~ 0 0 2;
-#X obj 175 147 osci/out~;
-#X obj 10 34 cnv 5 10 10 empty \$0-description One\\\ to\\\ many\\\ 3D\\\ vector\\\ receive
-30 30 2 17 -204786 -1 0;
-#X text 93 355 1) symbol;
-#X text 162 355 - name;
-#X obj 92 282 cnv 17 3 17 empty empty 0 5 9 0 16 -228856 -162280 0
+#X obj 15 196 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412 -174938
+-203556;
+#N canvas 0 23 503 114 docs 0;
+#X obj 37 37 inlet;
+#X obj 37 61 else/openfile https://eric-lennartson.github.io/pd-osci/#/rcv~
 ;
-#X obj 92 302 cnv 17 3 17 empty empty 1 5 9 0 16 -228856 -162280 0
+#X connect 0 0 1 0;
+#X restore 15 225 pd docs;
+#X text 44 198 online documentation;
+#X text 5 404 ============================================================inlets
 ;
-#X obj 92 322 cnv 17 3 17 empty empty 2 5 9 0 16 -228856 -162280 0
+#X text 5 454 ============================================================outlets
 ;
-#X text 134 301 signal - y;
-#X text 133 321 signal - z;
-#X text 133 281 signal - x;
-#X obj 3 166 osci/snd~ foo;
-#X obj 175 98 osci/rcv~ foo;
-#X text 289 133 [rcv~] will throw warnings if there's no matching send.
-To avoid this \, always create the send before the receive, f 32;
-#X obj 2 244 cnv 1 550 1 empty empty inlets 8 12 0 13 -228856 -1 0
+#X text 5 544 ============================================================arguments
 ;
-#X obj 2 270 cnv 1 550 1 empty empty outlets 8 12 0 13 -228856 -1 0
-;
-#X obj 2 346 cnv 1 550 1 empty empty arguments 8 12 0 13 -228856 -1
-0;
-#X connect 12 0 13 0;
-#X connect 13 0 24 0;
-#X connect 13 1 24 1;
-#X connect 25 0 14 0;
-#X connect 25 1 14 1;
+#X text 15 485 1 signal - x;
+#X text 15 505 2 signal - y;
+#X text 15 525 3 signal - z;
+#X text 15 436 none;
+#X text 15 576 1 symbol - name to receive;
+#X obj 287 8 declare -lib osci;
+#X connect 0 0 1 0;
+#X connect 1 0 3 0;
+#X connect 1 1 3 1;
+#X connect 4 0 2 0;
+#X connect 4 1 2 1;
+#X connect 7 0 8 0;
