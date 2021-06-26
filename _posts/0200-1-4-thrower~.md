@@ -8,7 +8,7 @@ layout: null
 
 ### Many to one 3D vector send
 
-**[thrower~]** is a wrapper for pd's built in **[throw~]**. Internally, it creates three unique catchs based on the symbol argument provided on creation. For example, foo-x foo-y foo-z. Any number of **[thrower~]** objects can add into one **[catcher~]** object. But each **[catcher~]** must have a unique name.
+**[thrower~]** is a wrapper for pd's built in **[throw~]**. Internally, it creates three unique throws based on the symbol argument provided on creation. For example, foo-x foo-y foo-z. Any number of **[thrower~]** objects can add into one **[catcher~]** object. But each **[catcher~]** must have a unique name.
 
 ### Inlets
 
