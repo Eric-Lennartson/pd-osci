@@ -1,49 +1,32 @@
-#N canvas 221 168 569 385 12;
-#X obj 1 1 cnv 15 305 46 empty empty empty 20 12 0 14 -66577 -66577
-0;
-#X obj 4 3 cnv 15 301 42 empty empty (n)ode 20 20 2 37 -204786 -1 0
+#N canvas 690 168 437 373 12;
+#X declare -lib osci;
+#X floatatom 23 119 5 0 0 0 - - -;
+#X floatatom 343 190 5 0 0 0 - - -;
+#X obj 23 147 osci/n;
+#X obj 343 166 osci/n;
+#X obj 296 6 declare -lib osci;
+#X text 10 35 [n] is short for node. It adds a “node” to the cable
+and helps to clean up the connections of a patch. Input passes through
+unchanged. No one likes spaghetti code.;
+#X text 6 209 ============================================================inlets
 ;
-#X obj 307 1 cnv 15 256 46 empty empty empty 20 12 0 14 -66577 -66577
-0;
-#X obj 310 4 cnv 15 250 40 empty empty empty 12 13 0 18 -128992 -233080
-0;
-#X obj 317 11 cnv 10 10 10 empty empty OSCI 0 15 2 30 -128992 -204786
-0;
-#X obj 413 25 cnv 10 10 10 empty empty Oscilloscope 0 6 2 13 -128992
--204786 0;
-#X obj 480 25 cnv 10 10 10 empty empty Music 0 6 2 13 -128992 -204786
-0;
-#X obj 513 25 cnv 10 10 10 empty empty & 0 6 2 13 -128992 -204786 0
+#X text 28 242 1 (all data types) - input;
+#X text 28 293 1 (all data types) - input;
+#X text 6 259 ============================================================outlets
 ;
-#X obj 454 11 cnv 10 10 10 empty empty Library 0 6 2 13 -128992 -204786
-0;
-#X obj 526 25 cnv 10 10 10 empty empty Art 0 6 2 13 -128992 -204786
-0;
-#X obj 497 11 cnv 10 10 10 empty empty for 0 6 2 13 -128992 -204786
-0;
-#X obj 2 244 cnv 1 550 1 empty empty inlets 8 12 0 13 -228856 -1 0
+#X text 6 309 ============================================================arguments
 ;
-#X obj 2 280 cnv 1 550 1 empty empty outlets 8 12 0 13 -228856 -1 0
+#X text 28 343 none;
+#X obj 135 95 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412 -174938
+-203556;
+#N canvas 0 23 585 110 docs 0;
+#X obj 37 37 inlet;
+#X obj 37 61 else/openfile https://eric-lennartson.github.io/pd-osci/#/n
 ;
-#X obj 2 316 cnv 1 550 1 empty empty arguments 8 12 0 13 -228856 -1
-0;
-#X obj 122 252 cnv 17 3 17 empty empty 0 5 9 0 16 -228856 -162280 0
-;
-#X obj 2 347 cnv 15 552 21 empty empty empty 20 12 0 14 -233017 -33289
-0;
-#X obj 10 34 cnv 5 10 10 empty \$0-description Cord\\\ Management 30
-30 2 17 -204786 -1 0;
-#X obj 122 292 cnv 17 3 17 empty empty 0 5 9 0 16 -228856 -162280 0
-;
-#X text 246 100 [n] is short for node. It is useful for cleaning up
-connections so that they're easier to read. No one likes spaghetti
-code., f 42;
-#X floatatom 23 113 5 0 0 0 - - -;
-#X obj 23 141 n;
-#X obj 124 160 n;
-#X floatatom 124 184 5 0 0 0 - - -;
-#X text 163 251 float;
-#X text 163 291 float;
-#X connect 19 0 20 0;
-#X connect 20 0 21 0;
-#X connect 21 0 22 0;
+#X connect 0 0 1 0;
+#X restore 135 122 pd docs;
+#X text 165 97 open online documentation;
+#X connect 0 0 2 0;
+#X connect 2 0 3 0;
+#X connect 3 0 1 0;
+#X connect 12 0 13 0;
