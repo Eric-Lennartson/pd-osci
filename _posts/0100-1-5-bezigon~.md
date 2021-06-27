@@ -12,11 +12,10 @@ layout: null
 
 ### Inlets
 
-| Inlet | Data Type    | Use                                        |
-|:------|:-------------|:-------------------------------------------|
-| 1     | signal/list  | phase, list (index, x, y)                  |
-| 2     | float        | toggle to close or not close shape (0 or 1)|
-
+| Inlet | Data Type | Use                                        |
+|:------|:----------|:-------------------------------------------|
+| 1     | signal    | phase                                      |
+| 2     | float     | toggle to close or not close shape (0 or 1)|
 
 ### Outlets
 
@@ -24,6 +23,14 @@ layout: null
 |:-------|:----------|:--------|
 | 1      | signal    | x       |
 | 2      | signal    | y       |
+
+### Messages
+
+Optional messages to send to the first inlet. 
+
+| Message | Use                                                        |
+|:--------|:-----------------------------------------------------------|
+| list    | sets a point on the bezigon. Takes the form (index, x, y). |
 
 ### Arguments
 
