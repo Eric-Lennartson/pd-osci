@@ -1,102 +1,64 @@
-#N canvas -1052 59 703 889 12;
-#X obj 89 372 cnv 15 3 190 empty empty 0 5 9 0 16 -216373 -141475 0
-;
-#X obj 89 676 cnv 15 3 17 empty empty 0 5 9 0 16 -216373 -141475 0
-;
-#X text 107 371 signal;
-#X obj 89 580 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
-;
-#X text 107 579 signal;
-#X obj 89 608 cnv 15 3 17 empty empty 2 5 9 0 16 -216373 -141475 0
-;
-#X text 107 607 signal;
-#X text 107 675 signal;
-#X obj 16 274 osci/out~;
-#X obj 16 243 osci/text~ hello_world;
-#X obj 89 636 cnv 15 3 17 empty empty 3 5 9 0 16 -216373 -141475 0
-;
-#X text 107 635 signal;
-#X obj 89 706 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
-;
-#X text 107 705 signal;
-#X text 85 759 1) symbol;
-#X text 188 759 - text to display;
-#X text 85 779 2) float;
-#X text 85 799 3) float;
-#X text 85 819 4) float;
-#X text 188 799 - letter spacing;
-#X text 188 819 - ratio;
-#X text 188 779 - line spacing;
-#X text 107 401 set <symbol>;
-#X text 233 401 - sets the text to be displayed. Spaces are represented
-with the '_' character and newlines are represented by the '.' character.
-;
-#X text 107 459 halign <symbol>;
-#X text 233 459 - sets the horizontal alignment. Choices are default
-\, left \, right \, and center.;
-#X text 107 501 valign <symbol>;
-#X text 233 501 - sets the vertical alignment. Choices are none \,
-top \, bottom \, and middle.;
-#X text 107 541 font <symbol>;
-#X text 233 541 - sets the font. Isn't currently implemented.;
-#X text 183 579 - line spacing;
-#X text 183 607 - letter spacing ( >= 0 );
-#X text 183 635 - ratio (height x width) ( >= 0 );
-#X msg 45 115 set hello.world;
-#X msg 55 138 set dog_cat.cat.eleph__ant;
-#X obj 16 91 phasor~ 30;
-#X text 213 195 [text~] takes a symbol message and turns it into a
-2D signal vector. Spaces are represented with the '_' character and
-newlines are represented by the '.' character. It can display a maximum
-of 100 characters at a time. It is limited to the characters A-Z and
-0-9. It isn't case sensitive and displays everything in all caps. There
+#N canvas 544 23 440 755 12;
+#X declare -lib osci;
+#X obj 16 304 osci/out~;
+#X obj 16 273 osci/text~ hello_world;
+#X msg 45 155 set hello.world;
+#X msg 55 178 set dog_cat.cat.eleph__ant;
+#X obj 16 131 phasor~ 30;
+#X text 3 23 [text~] takes a symbol message and turns it into a 2D
+signal vector. Spaces are represented with the '_' character and newlines
+are represented by the '.' character. It can display a maximum of 100
+characters at a time. It is limited to the characters A-Z and 0-9.
+It isn't case sensitive and displays everything in all caps. There
 is also options for vertical and horizontal alignment of the text.
-, f 47;
-#X msg 84 173 halign left;
-#X msg 96 194 valign middle;
-#X text 233 371 - phase;
-#X obj 1 1 cnv 15 305 46 empty empty empty 20 12 0 14 -66577 -66577
-0;
-#X obj 4 3 cnv 15 301 42 empty empty text~ 20 20 2 37 -204786 -1 0
 ;
-#X obj 307 1 cnv 15 256 46 empty empty empty 20 12 0 14 -66577 -66577
-0;
-#X obj 310 4 cnv 15 250 40 empty empty empty 12 13 0 18 -128992 -233080
-0;
-#X obj 317 11 cnv 10 10 10 empty empty OSCI 0 15 2 30 -128992 -204786
-0;
-#X obj 413 25 cnv 10 10 10 empty empty Oscilloscope 0 6 2 13 -128992
--204786 0;
-#X obj 480 25 cnv 10 10 10 empty empty Music 0 6 2 13 -128992 -204786
-0;
-#X obj 513 25 cnv 10 10 10 empty empty & 0 6 2 13 -128992 -204786 0
+#X msg 84 213 halign left;
+#X msg 96 234 valign middle;
+#X obj 179 336 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
+-174938 -203556;
+#X text 206 339 open online documentation;
+#N canvas 0 23 528 104 docs 1;
+#X obj 11 16 inlet;
+#X obj 11 56 else/openfile https://eric-lennartson.github.io/pd-osci/#/text~
 ;
-#X obj 454 11 cnv 10 10 10 empty empty Library 0 6 2 13 -128992 -204786
-0;
-#X obj 526 25 cnv 10 10 10 empty empty Art 0 6 2 13 -128992 -204786
-0;
-#X obj 497 11 cnv 10 10 10 empty empty for 0 6 2 13 -128992 -204786
-0;
-#X obj 10 34 cnv 5 10 10 empty \$0-description Text\\\ to\\\ sound
-30 30 2 17 -204786 -1 0;
-#X obj 2 364 cnv 1 550 1 empty empty inlets 8 12 0 13 -228856 -1 0
+#X connect 0 0 1 0;
+#X restore 179 370 pd docs;
+#X text 1 425 ============================================================inlets
 ;
-#X obj 2 663 cnv 1 550 1 empty empty outlets 8 12 0 13 -228856 -1 0
+#X text 1 540 ============================================================outlets
 ;
-#X obj 2 746 cnv 1 550 1 empty empty arguments 8 12 0 13 -228856 -1
-0;
-#X obj 2 847 cnv 15 660 21 empty empty empty 20 12 0 14 -233017 -33289
-0;
-#X text 188 675 - x;
-#X text 188 705 - y;
-#X obj 563 1 cnv 15 130 46 empty empty empty 20 12 0 14 -66577 -66577
-0;
-#X obj 563 4 cnv 15 127 40 empty empty empty 20 12 0 14 -128992 -66577
-0;
-#X connect 9 0 8 0;
-#X connect 9 1 8 1;
-#X connect 33 0 9 0;
-#X connect 34 0 9 0;
-#X connect 35 0 9 0;
-#X connect 37 0 9 0;
-#X connect 38 0 9 0;
+#X text 1 835 ============================================================arguments
+;
+#X text 0 945 ========================================================================================================================
+;
+#X text 1 615 ============================================================messages
+;
+#X obj 304 1 declare -lib osci;
+#X text 11 460 1 signal - phase;
+#X text 11 576 1 signal - x;
+#X text 11 596 2 signal - y;
+#X text 11 652 Optional messages to send to the first inlet. Messages
+take the format <message> <symbol>., f 58;
+#X text 21 687 set - sets the text to be displayed. Spaces are represented
+with underscores (_) and newlines are represented by periods (.),
+f 57;
+#X text 21 737 halign - sets the horizontal alignment. Options are
+default \, left \, right \, center., f 57;
+#X text 21 773 valign - sets the vertical alignment. Options are none
+\, top \, bottom \, middle., f 57;
+#X text 21 811 font - sets the font. (not implemented yet);
+#X text 11 869 1 symbol - text to display;
+#X text 11 480 2 signal/float - line height (> 1.5);
+#X text 11 500 3 signal/float - letter spacing (>= 0);
+#X text 11 520 4 signal/float - ratio (height:width) (>= 0);
+#X text 11 909 3 float - letter spacing (>= 0);
+#X text 11 929 4 float - ratio (height:width) (>= 0);
+#X text 11 889 2 float - line height (> 1.5);
+#X connect 1 0 0 0;
+#X connect 1 1 0 1;
+#X connect 2 0 1 0;
+#X connect 3 0 1 0;
+#X connect 4 0 1 0;
+#X connect 6 0 1 0;
+#X connect 7 0 1 0;
+#X connect 8 0 10 0;
