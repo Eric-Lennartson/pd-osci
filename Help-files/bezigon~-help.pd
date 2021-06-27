@@ -1,70 +1,51 @@
-#N canvas 202 47 582 563 12;
-#X obj 89 322 cnv 15 3 17 empty empty 0 5 9 0 16 -228856 -191407 0
-;
-#X obj 89 396 cnv 15 3 17 empty empty 0 5 9 0 16 -228856 -191407 0
-;
-#X obj 89 350 cnv 15 3 17 empty empty 1 5 9 0 16 -228856 -191407 0
-;
-#X text 107 395 signal;
-#X obj 7 101 phasor~ 50;
-#X obj 89 424 cnv 15 3 17 empty empty 1 5 9 0 16 -228856 -191407 0
-;
-#X text 107 423 signal;
-#X text 89 462 1) float;
-#X text 89 482 2) float;
-#X text 107 349 toggle;
-#X text 213 349 - close shape;
-#X text 202 462 number of points;
-#X text 202 482 toggle for close shape;
-#X obj 7 205 osci/bezigon~ 3 1;
-#X text 107 321 signal/list;
-#X text 213 321 - driver \, list (index \, x \, y);
-#X msg 98 115 0 -0.5 -0.5;
-#X obj 98 88 loadbang;
-#X msg 108 137 1 0.5 -0.5;
-#X msg 118 159 2 0.1 0.4;
-#X obj 123 181 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#N canvas 604 71 433 644 12;
+#X declare -lib osci;
+#X obj 7 41 phasor~ 50;
+#X obj 7 148 osci/bezigon~ 3 1;
+#X msg 98 55 0 -0.5 -0.5;
+#X obj 98 28 loadbang;
+#X msg 108 77 1 0.5 -0.5;
+#X msg 118 99 2 0.1 0.4;
+#X obj 123 124 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
-#X obj 1 1 cnv 15 305 46 empty empty empty 20 12 0 14 -66577 -66577
-0;
-#X obj 4 3 cnv 15 301 42 empty empty bezigon~ 20 20 2 37 -204786 -1
-0;
-#X obj 307 1 cnv 15 256 46 empty empty empty 20 12 0 14 -66577 -66577
-0;
-#X obj 310 4 cnv 15 250 40 empty empty empty 12 13 0 18 -128992 -233080
-0;
-#X obj 317 11 cnv 10 10 10 empty empty OSCI 0 15 2 30 -128992 -204786
-0;
-#X obj 413 25 cnv 10 10 10 empty empty Oscilloscope 0 6 2 13 -128992
--204786 0;
-#X obj 480 25 cnv 10 10 10 empty empty Music 0 6 2 13 -128992 -204786
-0;
-#X obj 513 25 cnv 10 10 10 empty empty & 0 6 2 13 -128992 -204786 0
+#X obj 7 172 osci/out~;
+#X obj 304 11 declare -lib osci;
+#X obj 201 194 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
+-174938 -203556;
+#X text 228 197 open online documentation;
+#N canvas 0 23 402 93 docs 0;
+#X obj 11 16 inlet;
+#X obj 11 46 else/openfile https://eric-lennartson.github.io/pd-osci/#/bezigon~
 ;
-#X obj 454 11 cnv 10 10 10 empty empty Library 0 6 2 13 -128992 -204786
-0;
-#X obj 526 25 cnv 10 10 10 empty empty Art 0 6 2 13 -128992 -204786
-0;
-#X obj 497 11 cnv 10 10 10 empty empty for 0 6 2 13 -128992 -204786
-0;
-#X obj 10 34 cnv 5 10 10 empty \$0-description N-sided\\\ polygon\\\ w/\\\ cubic\\\ interpolation
-30 30 2 17 -204786 -1 0;
-#X obj 2 314 cnv 1 550 1 empty empty inlets 8 12 0 13 -228856 -1 0
+#X connect 0 0 1 0;
+#X restore 201 228 pd docs;
+#X text 1 294 ============================================================inlets
 ;
-#X obj 2 387 cnv 1 550 1 empty empty outlets 8 12 0 13 -228856 -1 0
+#X text 13 327 1 signal - phase;
+#X text 1 374 ============================================================outlets
 ;
-#X obj 2 456 cnv 1 550 1 empty empty arguments 8 12 0 13 -228856 -1
-0;
-#X obj 2 517 cnv 15 552 21 empty empty empty 20 12 0 14 -233017 -33289
-0;
-#X text 193 397 - x;
-#X text 193 425 - y;
-#X obj 7 229 osci/out~;
-#X connect 4 0 13 0;
-#X connect 13 0 39 0;
-#X connect 13 1 39 1;
-#X connect 16 0 13 0;
-#X connect 17 0 16 0;
-#X connect 18 0 13 0;
-#X connect 19 0 13 0;
-#X connect 20 0 13 1;
+#X text 13 407 1 signal - x;
+#X text 13 427 2 signal - y;
+#X text 1 534 ============================================================arguments
+;
+#X text 1 604 ========================================================================================================================
+;
+#X text 13 347 2 float - toggle to close or not close shape (0 or 1)
+;
+#X text 1 444 ============================================================messsages
+;
+#X text 13 477 Optional messages to send to the first inlet.;
+#X text 33 497 list - list of 3 numbers to set a point on the bezigon
+(index \, x \, y);
+#X text 13 567 1 foat - number of points (minimum of 3);
+#X text 13 587 2 float - toggle to close or not close shape (0 or 1)
+;
+#X connect 0 0 1 0;
+#X connect 1 0 7 0;
+#X connect 1 1 7 1;
+#X connect 2 0 1 0;
+#X connect 3 0 2 0;
+#X connect 4 0 1 0;
+#X connect 5 0 1 0;
+#X connect 6 0 1 1;
+#X connect 9 0 11 0;

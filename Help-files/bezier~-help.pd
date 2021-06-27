@@ -1,87 +1,42 @@
-#N canvas -739 62 574 674 12;
-#X obj 89 232 cnv 15 3 17 empty empty 0 5 9 0 16 -216373 -141475 0
+#N canvas 585 61 430 641 12;
+#X declare -lib osci;
+#X obj 17 40 phasor~ 50;
+#X obj 17 64 osci/bezier~ -1 -1 -0.2 3 1 1;
+#X obj 17 88 osci/out~;
+#X obj 302 8 declare -lib osci;
+#X obj 191 114 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
+-174938 -203556;
+#X text 218 117 open online documentation;
+#N canvas 0 23 528 104 docs 0;
+#X obj 11 16 inlet;
+#X obj 11 56 else/openfile https://eric-lennartson.github.io/pd-osci/#/bezier~
 ;
-#X obj 89 446 cnv 15 3 17 empty empty 0 5 9 0 16 -216373 -141475 0
+#X connect 0 0 1 0;
+#X restore 191 148 pd docs;
+#X text 1 214 ============================================================inlets
 ;
-#X text 107 231 signal;
-#X obj 89 260 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
+#X text 13 247 1 signal - phase;
+#X text 13 267 2 signal/float - x1;
+#X text 13 287 3 signal/float - y1;
+#X text 13 307 4 signal/float - x2;
+#X text 13 327 5 signal/float - y2;
+#X text 13 347 6 signal/float - x3;
+#X text 13 367 7 signal/float - y3;
+#X text 1 384 ============================================================outlets
 ;
-#X text 107 259 signal;
-#X obj 89 288 cnv 15 3 17 empty empty 2 5 9 0 16 -216373 -141475 0
+#X text 13 417 1 signal - x;
+#X text 13 437 2 signal - y;
+#X text 1 454 ============================================================arguments
 ;
-#X text 107 287 signal;
-#X text 107 445 signal;
-#X obj 17 91 phasor~ 50;
-#X obj 17 115 osci/bezier~ -1 -1 -0.2 3 1 1;
-#X obj 89 316 cnv 15 3 17 empty empty 3 5 9 0 16 -216373 -141475 0
+#X text 1 604 ========================================================================================================================
 ;
-#X text 107 315 signal;
-#X obj 89 344 cnv 15 3 17 empty empty 4 5 9 0 16 -216373 -141475 0
-;
-#X text 107 343 signal;
-#X obj 89 372 cnv 15 3 17 empty empty 5 5 9 0 16 -216373 -141475 0
-;
-#X text 107 371 signal;
-#X obj 89 400 cnv 15 3 17 empty empty 6 5 9 0 16 -216373 -141475 0
-;
-#X text 107 399 signal;
-#X obj 89 474 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
-;
-#X text 107 473 signal;
-#X text 89 512 1) float;
-#X text 202 512 x1;
-#X text 193 231 - driver;
-#X text 193 259 - x1;
-#X text 193 287 - y1;
-#X text 193 315 - x2;
-#X text 193 343 - y2;
-#X text 193 371 - x3;
-#X text 193 399 - y3;
-#X text 202 532 y1;
-#X text 202 552 x2;
-#X text 202 592 x3;
-#X text 202 572 y2;
-#X text 202 612 y3;
-#X text 89 532 2) float;
-#X text 89 552 3) float;
-#X text 89 572 4) float;
-#X text 89 592 5) float;
-#X text 89 612 6) float;
-#X obj 17 139 osci/out~;
-#X obj 1 1 cnv 15 305 46 empty empty empty 20 12 0 14 -66577 -66577
-0;
-#X obj 4 3 cnv 15 301 42 empty empty bezier~ 20 20 2 37 -204786 -1
-0;
-#X obj 307 1 cnv 15 256 46 empty empty empty 20 12 0 14 -66577 -66577
-0;
-#X obj 310 4 cnv 15 250 40 empty empty empty 12 13 0 18 -128992 -233080
-0;
-#X obj 317 11 cnv 10 10 10 empty empty OSCI 0 15 2 30 -128992 -204786
-0;
-#X obj 413 25 cnv 10 10 10 empty empty Oscilloscope 0 6 2 13 -128992
--204786 0;
-#X obj 480 25 cnv 10 10 10 empty empty Music 0 6 2 13 -128992 -204786
-0;
-#X obj 513 25 cnv 10 10 10 empty empty & 0 6 2 13 -128992 -204786 0
-;
-#X obj 454 11 cnv 10 10 10 empty empty Library 0 6 2 13 -128992 -204786
-0;
-#X obj 526 25 cnv 10 10 10 empty empty Art 0 6 2 13 -128992 -204786
-0;
-#X obj 497 11 cnv 10 10 10 empty empty for 0 6 2 13 -128992 -204786
-0;
-#X obj 10 34 cnv 5 10 10 empty \$0-description Bezier\\\ curve\\\ w/\\\ one\\\ control\\\ point
-30 30 2 17 -204786 -1 0;
-#X text 193 447 - x;
-#X text 193 475 - y;
-#X obj 2 224 cnv 1 550 1 empty empty inlets 8 12 0 13 -228856 -1 0
-;
-#X obj 2 430 cnv 1 550 1 empty empty outlets 8 12 0 13 -228856 -1 0
-;
-#X obj 2 506 cnv 1 550 1 empty empty arguments 8 12 0 13 -228856 -1
-0;
-#X obj 2 637 cnv 15 552 21 empty empty empty 20 12 0 14 -233017 -33289
-0;
-#X connect 8 0 9 0;
-#X connect 9 0 39 0;
-#X connect 9 1 39 1;
+#X text 13 487 1 float - x1;
+#X text 13 507 2 float - y1;
+#X text 13 527 3 float - x2;
+#X text 13 547 4 float - y2;
+#X text 13 567 5 float - x3;
+#X text 13 587 6 float - y3;
+#X connect 0 0 1 0;
+#X connect 1 0 2 0;
+#X connect 1 1 2 1;
+#X connect 4 0 6 0;
