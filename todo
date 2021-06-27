@@ -1,5 +1,8 @@
 ==== Roadmap ===================================================================
-- Adjust the built in pd help files, have them also link to the gh-pages
+- Finish up the shroom~ documentation
+- Decide, what is happening with xy_splitter?
+- Decide, should record~ have signal inlets? or should it just handle the writesf 
+    messages?
 - figure out how to add in remapping tree... 
 ==== Bugs ======================================================================
 ==== Things to Improve =========================================================
