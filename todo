@@ -1,5 +1,6 @@
 ==== Roadmap ===================================================================
 - Finish up the shroom~ documentation
+- go through and make sure osci/out isn't covering up anything in the docs.
 - Decide, what is happening with xy_splitter?
 - Decide, should record~ have signal inlets? or should it just handle the writesf 
     messages?
@@ -9,7 +10,6 @@
 - All objects need to have option for args and defaults if not provided.
     - These should be listed in the documentation as well.
 - Can I have writesf~ write to a specific directory? 
-- redo the gui for record~
 - add in a spot killer abstraction
 - rethink gui version of chris_clip~, is there a better way
 - add axis, and degree/radian messages to rotate~
@@ -24,7 +24,7 @@
 
 ==== Gui Stuff =================================================================
 - could I do something where the gui is a completely separate abstraction that 
-can control how other objects work? (something like aphastel)
+can control how other objects work? (something like acriel)
 
 ==== Documentation =============================================================
 - what are the defaults for cuboid? (and it's relatives)
