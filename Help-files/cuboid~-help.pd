@@ -1,36 +1,35 @@
-#N canvas 330 23 432 700 12;
+#N canvas 330 23 432 727 12;
 #X declare -lib osci;
-#X obj 12 52 cuboid~, f 18;
-#X obj 12 86 osci/rotate~ 45 23 0;
-#X obj 12 110 osci/project~;
+#X obj 12 76 osci/rotate~ 45 23 0;
+#X obj 12 100 osci/project~;
 #X obj 12 18 phasor~ 50;
-#X obj 12 134 osci/out~;
+#X obj 12 127 osci/out~;
 #X obj 292 9 declare -lib osci;
-#X text 0 225 ============================================================inlets
+#X text 0 245 ============================================================inlets
 ;
-#X text 0 415 ============================================================outlets
+#X text 0 435 ============================================================outlets
 ;
-#X text 0 515 ============================================================arguments
+#X text 0 535 ============================================================arguments
 ;
-#X text -1 665 ========================================================================================================================
+#X text -1 685 ========================================================================================================================
 ;
-#X text 22 260 1 signal - phase;
-#X text 22 277 2 signal/float - x Position;
-#X text 22 296 3 signal/float - y Position;
-#X text 22 315 4 signal/float - z Position;
-#X text 22 334 5 signal/float - width;
-#X text 22 353 6 signal/float - height;
-#X text 22 374 7 signal/float - depth;
-#X text 22 393 8 signal/float - interpolation amount (0-1);
-#X text 22 450 1 signal - x;
-#X text 22 467 2 signal - y;
-#X text 22 486 3 signal - z;
-#X text 22 551 1 float - x Position;
-#X text 22 627 5 float - height;
-#X text 22 648 6 float - depth;
-#X text 22 608 4 float - width;
-#X text 22 589 3 float - z Position;
-#X text 22 570 2 float - y Position;
+#X text 22 280 1 signal - phase;
+#X text 22 297 2 signal/float - x Position;
+#X text 22 316 3 signal/float - y Position;
+#X text 22 335 4 signal/float - z Position;
+#X text 22 354 5 signal/float - width;
+#X text 22 373 6 signal/float - height;
+#X text 22 394 7 signal/float - depth;
+#X text 22 413 8 signal/float - interpolation amount (0-1);
+#X text 22 470 1 signal - x;
+#X text 22 487 2 signal - y;
+#X text 22 506 3 signal - z;
+#X text 22 571 1 float - x Position;
+#X text 22 647 5 float - height;
+#X text 22 668 6 float - depth;
+#X text 22 628 4 float - width;
+#X text 22 609 3 float - z Position;
+#X text 22 590 2 float - y Position;
 #X obj 187 119 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
 -174938 -203556;
 #X text 214 122 open online documentation;
@@ -40,13 +39,14 @@
 ;
 #X connect 0 0 1 0;
 #X restore 187 153 pd docs;
+#X obj 12 42 osci/cuboid~, f 18;
 #X connect 0 0 1 0;
 #X connect 0 1 1 1;
 #X connect 0 2 1 2;
-#X connect 1 0 2 0;
-#X connect 1 1 2 1;
-#X connect 1 2 2 2;
-#X connect 2 0 4 0;
-#X connect 2 1 4 1;
-#X connect 3 0 0 0;
-#X connect 27 0 29 0;
+#X connect 1 0 3 0;
+#X connect 1 1 3 1;
+#X connect 2 0 29 0;
+#X connect 26 0 28 0;
+#X connect 29 0 0 0;
+#X connect 29 1 0 1;
+#X connect 29 2 0 2;

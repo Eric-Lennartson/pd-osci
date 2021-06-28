@@ -106,7 +106,7 @@ end is necessary, f 59;
 #X obj 214 217 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
 -174938 -203556;
 #X text 242 219 open online documentation;
-#N canvas 0 23 372 90 docs 1;
+#N canvas 0 23 372 90 docs 0;
 #X obj 7 17 inlet;
 #X obj 7 41 else/openfile https://eric-lennartson.github.io/pd-osci/#/skew
 ;

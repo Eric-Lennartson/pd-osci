@@ -1,10 +1,10 @@
-#N canvas 411 23 434 701 12;
+#N canvas 411 23 434 733 12;
 #X declare -lib osci;
 #X floatatom 44 58 5 0 0 1 width - -;
 #X floatatom 73 104 5 0 0 1 height - -;
 #X floatatom 103 149 5 0 0 1 n_(squash/expand_corners) - -;
 #X obj 15 195 osci/selipse~;
-#X obj 15 229 osci/out~;
+#X obj 15 239 osci/out~;
 #X obj 44 81 sig~ 1;
 #X obj 73 127 sig~ 1;
 #X obj 15 30 phasor~ 200;
@@ -16,7 +16,7 @@
 #X obj 207 77 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412 -174938
 -203556;
 #X text 235 80 more about super ellipses;
-#N canvas 0 23 450 300 links 1;
+#N canvas 0 23 450 300 links 0;
 #X obj 37 37 inlet;
 #X obj 353 33 inlet;
 #X obj 32 121 else/openfile https://en.wikipedia.org/wiki/Superellipse
@@ -26,25 +26,25 @@
 #X connect 0 0 3 0;
 #X connect 1 0 2 0;
 #X restore 201 118 pd links;
-#X text 0 325 ============================================================inlets
+#X text 0 355 ============================================================inlets
 ;
-#X text 1 484 ============================================================outlets
+#X text 1 514 ============================================================outlets
 ;
-#X text 0 559 ============================================================arguments
+#X text 0 589 ============================================================arguments
 ;
-#X text -1 663 ========================================================================================================================
+#X text -1 693 ========================================================================================================================
 ;
-#X text 22 520 1 signal - x;
-#X text 22 537 2 signal - y;
-#X text 22 380 2 float/signal - x position;
-#X text 22 360 1 signal - phase;
-#X text 22 400 3 float/signal - y position;
-#X text 22 420 4 float/signal - width;
-#X text 22 440 5 float/signal - height;
-#X text 22 460 6 float/signal - n (squash or expand corners);
-#X text 22 596 1 float - width;
-#X text 22 616 2 float - height;
-#X text 22 636 3 float - n (squash or expand corners);
+#X text 22 550 1 signal - x;
+#X text 22 567 2 signal - y;
+#X text 22 410 2 float/signal - x position;
+#X text 22 390 1 signal - phase;
+#X text 22 430 3 float/signal - y position;
+#X text 22 450 4 float/signal - width;
+#X text 22 470 5 float/signal - height;
+#X text 22 490 6 float/signal - n (squash or expand corners);
+#X text 22 626 1 float - width;
+#X text 22 646 2 float - height;
+#X text 22 666 3 float - n (squash or expand corners);
 #X connect 0 0 5 0;
 #X connect 1 0 6 0;
 #X connect 2 0 8 0;

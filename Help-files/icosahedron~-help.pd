@@ -3,7 +3,7 @@
 #X obj 5 88 osci/rotate~ 45 23 0;
 #X obj 5 112 osci/project~;
 #X obj 5 30 phasor~ 50;
-#X obj 5 136 osci/out~;
+#X obj 5 146 osci/out~;
 #X text 278 121 alias;
 #X obj 179 59 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412 -174938
 -203556;
@@ -15,40 +15,40 @@
 #X connect 0 0 1 0;
 #X restore 179 93 pd docs;
 #X obj 214 21 declare -lib osci;
-#X text 2 245 ============================================================inlets
+#X text 2 265 ============================================================inlets
 ;
-#X text 2 435 ============================================================outlets
+#X text 2 455 ============================================================outlets
 ;
-#X text 2 535 ============================================================arguments
+#X text 2 555 ============================================================arguments
 ;
-#X text 1 685 ========================================================================================================================
+#X text 1 705 ========================================================================================================================
 ;
-#X text 24 280 1 signal - phase;
-#X text 24 297 2 signal/float - x Position;
-#X text 24 316 3 signal/float - y Position;
-#X text 24 335 4 signal/float - z Position;
-#X text 24 354 5 signal/float - width;
-#X text 24 373 6 signal/float - height;
-#X text 24 394 7 signal/float - depth;
-#X text 24 413 8 signal/float - interpolation amount (0-1);
-#X text 24 470 1 signal - x;
-#X text 24 487 2 signal - y;
-#X text 24 506 3 signal - z;
-#X text 24 571 1 float - x Position;
-#X text 24 647 5 float - height;
-#X text 24 668 6 float - depth;
-#X text 24 628 4 float - width;
-#X text 24 609 3 float - z Position;
-#X text 24 590 2 float - y Position;
-#X obj 5 54 icosahedron~;
+#X text 24 300 1 signal - phase;
+#X text 24 317 2 signal/float - x Position;
+#X text 24 336 3 signal/float - y Position;
+#X text 24 355 4 signal/float - z Position;
+#X text 24 374 5 signal/float - width;
+#X text 24 393 6 signal/float - height;
+#X text 24 414 7 signal/float - depth;
+#X text 24 433 8 signal/float - interpolation amount (0-1);
+#X text 24 490 1 signal - x;
+#X text 24 507 2 signal - y;
+#X text 24 526 3 signal - z;
+#X text 24 591 1 float - x Position;
+#X text 24 667 5 float - height;
+#X text 24 688 6 float - depth;
+#X text 24 648 4 float - width;
+#X text 24 629 3 float - z Position;
+#X text 24 610 2 float - y Position;
 #X obj 181 120 osci/icosa~;
+#X obj 5 54 osci/icosahedron~;
 #X connect 0 0 1 0;
 #X connect 0 1 1 1;
 #X connect 0 2 1 2;
 #X connect 1 0 3 0;
 #X connect 1 1 3 1;
-#X connect 2 0 30 0;
+#X connect 2 0 31 0;
 #X connect 5 0 7 0;
-#X connect 30 0 0 0;
-#X connect 30 1 0 1;
-#X connect 30 2 0 2;
+#X connect 31 0 0 0;
+#X connect 31 1 0 1;
+#X connect 31 2 0 2;

@@ -1,9 +1,8 @@
-#N canvas 495 49 437 702 12;
+#N canvas 465 25 437 730 12;
 #X declare -lib osci;
 #X obj 18 292 circle~ 0 0 0.5;
-#X obj 17 161 phasor~ 440;
-#X obj 18 329 osci/out~;
-#X obj 18 268 knee~ 0.3 0.7;
+#X obj 18 161 phasor~ 440;
+#X obj 18 339 osci/out~;
 #X text 3 34 [knee~] segments a phase into two parts. The resulting
 effect is that you can control the brightness of the image. The first
 argument is the split point of the incoming phase (0-1) and the second
@@ -11,15 +10,15 @@ is the length of the first phase segment (0-1). This results in an
 image where one part is brighter than the other. For another way to
 control brightness check out [bright~]. [knee~] is a phase manipulator
 and needs to come before any actual images., f 60;
-#X text 3 431 ============================================================inlets
+#X text 3 461 ============================================================inlets
 ;
-#X text 3 525 ============================================================outlets
+#X text 3 555 ============================================================outlets
 ;
-#X text 3 584 ============================================================arguments
+#X text 3 614 ============================================================arguments
 ;
-#X text 3 661 ========================================================================================================================
+#X text 3 691 ========================================================================================================================
 ;
-#X text 20 563 1 signal - adjusted phase;
+#X text 20 593 1 signal - adjusted phase;
 #X obj 184 294 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
 -174938 -203556;
 #X text 212 296 open online documentation;
@@ -29,20 +28,21 @@ and needs to come before any actual images., f 60;
 ;
 #X connect 0 0 1 0;
 #X restore 184 333 pd docs;
-#X text 20 465 1 signal - phase;
+#X text 20 495 1 signal - phase;
 #X obj 304 7 declare -lib osci;
-#X text 20 485 2 float/signal - phase split point (0-1);
-#X text 20 505 3 float/signal - segment length (0-1);
-#X text 20 642 2 float - segment length (0-1);
-#X text 20 621 1 float - phase split point (0-1);
-#X obj 65 201 hsl 140 22 0 1 0 0 empty empty split_point -4 -10 0 12
+#X text 20 515 2 float/signal - phase split point (0-1);
+#X text 20 535 3 float/signal - segment length (0-1);
+#X text 20 672 2 float - segment length (0-1);
+#X text 20 651 1 float - phase split point (0-1);
+#X obj 82 201 hsl 140 22 0 1 0 0 empty empty split_point -4 -10 0 12
 -91412 -174938 -203556 0 1;
-#X obj 109 243 hsl 140 22 0 1 0 0 empty empty segment_length -4 -10
+#X obj 144 243 hsl 140 22 0 1 0 0 empty empty segment_length -4 -10
 0 12 -91412 -174938 -203556 0 1;
+#X obj 18 268 osci/knee~ 0.3 0.7;
 #X connect 0 0 2 0;
 #X connect 0 1 2 1;
-#X connect 1 0 3 0;
-#X connect 3 0 0 0;
-#X connect 10 0 12 0;
-#X connect 19 0 3 1;
-#X connect 20 0 3 2;
+#X connect 1 0 20 0;
+#X connect 9 0 11 0;
+#X connect 18 0 20 1;
+#X connect 19 0 20 2;
+#X connect 20 0 0 0;

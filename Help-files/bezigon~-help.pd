@@ -2,12 +2,10 @@
 #X declare -lib osci;
 #X obj 7 41 phasor~ 50;
 #X obj 7 148 osci/bezigon~ 3 1;
-#X msg 98 55 0 -0.5 -0.5;
-#X obj 98 28 loadbang;
-#X msg 108 77 1 0.5 -0.5;
-#X msg 118 99 2 0.1 0.4;
-#X obj 123 124 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
-1;
+#X msg 98 45 0 -0.5 -0.5;
+#X obj 98 18 loadbang;
+#X msg 108 67 1 0.5 -0.5;
+#X msg 118 89 2 0.1 0.4;
 #X obj 7 172 osci/out~;
 #X obj 304 11 declare -lib osci;
 #X obj 201 194 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
@@ -40,12 +38,16 @@
 #X text 13 567 1 foat - number of points (minimum of 3);
 #X text 13 587 2 float - toggle to close or not close shape (0 or 1)
 ;
+#X obj 123 119 tgl 24 0 empty empty empty 30 11 0 12 -91412 -174938
+-203556 0 1;
 #X connect 0 0 1 0;
-#X connect 1 0 7 0;
-#X connect 1 1 7 1;
+#X connect 1 0 6 0;
+#X connect 1 1 6 1;
 #X connect 2 0 1 0;
 #X connect 3 0 2 0;
+#X connect 3 0 4 0;
+#X connect 3 0 5 0;
 #X connect 4 0 1 0;
 #X connect 5 0 1 0;
-#X connect 6 0 1 1;
-#X connect 9 0 11 0;
+#X connect 8 0 10 0;
+#X connect 24 0 1 1;

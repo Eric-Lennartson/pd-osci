@@ -24,10 +24,10 @@
 #X text 197 614 - x out;
 #X text 197 646 - y out;
 #X text 15 23 splits an 2D signal vector with square waves;
-#X obj 187 289 xy_splitter~;
+#X obj 187 269 xy_splitter~;
 #X obj 40 119 phasor~ 100;
 #X obj 40 143 osci/circle~ 0 0 1;
-#X obj 40 377 osci/out~;
+#X obj 40 307 osci/out~;
 #X text 192 442 - x frequency;
 #X text 192 461 - y frequency;
 #X text 105 482 float;

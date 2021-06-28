@@ -14,7 +14,6 @@
 #X text 126 482 [chris_clip~-g];
 #X obj 4 484 osci/chris_clip~-g;
 #A saved 0 0 -1 0 1 0 1 0;
-#X obj 302 10 declare -lib osci;
 #X text 3 611 ============================================================inlets
 ;
 #X text 3 706 ============================================================outlets
@@ -55,6 +54,7 @@ from it's last use., f 41;
 #X text 30 843 mirror - toggle mirror clipping;
 #X text 20 901 1 float - minimum value;
 #X text 20 921 2 float - maximum value;
+#X obj 302 10 declare -lib osci;
 #X connect 0 0 7 0;
 #X connect 1 0 8 0;
 #X connect 2 0 8 1;
@@ -66,4 +66,4 @@ from it's last use., f 41;
 #X connect 6 0 2 0;
 #X connect 7 0 1 0;
 #X connect 7 1 2 0;
-#X connect 19 0 21 0;
+#X connect 18 0 20 0;

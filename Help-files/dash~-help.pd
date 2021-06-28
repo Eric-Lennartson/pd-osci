@@ -1,44 +1,44 @@
-#N canvas 572 72 436 586 12;
+#N canvas 572 72 436 613 12;
 #X declare -lib osci;
 #X obj 16 51 phasor~ 50;
 #X obj 16 192 osci/square~ 0 0 0.5 0.5;
-#X floatatom 56 77 5 0 0 1 number_of_dashes - -;
-#X floatatom 97 122 5 0 0 1 dash_length - -;
-#X obj 16 169 dash~ 50 0.5;
-#X obj 16 216 osci/out~;
-#X obj 56 100 sig~ 50;
-#X obj 97 144 sig~ 0.5;
+#X floatatom 74 77 5 0 0 1 number_of_dashes - -;
+#X floatatom 132 122 5 0 0 1 dash_length - -;
+#X obj 16 226 osci/out~;
+#X obj 74 100 sig~ 50;
+#X obj 132 144 sig~ 0.5;
 #X text 14 26 Turn an image into a series of dashes;
 #X obj 306 6 declare -lib osci;
-#X text 3 321 ============================================================inlets
+#X text 3 341 ============================================================inlets
 ;
-#X text 3 415 ============================================================outlets
+#X text 3 435 ============================================================outlets
 ;
-#X text 3 474 ============================================================arguments
+#X text 3 494 ============================================================arguments
 ;
-#X text 3 551 ========================================================================================================================
+#X text 3 571 ========================================================================================================================
 ;
-#X text 20 453 1 signal - adjusted phase;
+#X text 20 473 1 signal - adjusted phase;
 #X obj 184 234 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
 -174938 -203556;
 #X text 212 236 open online documentation;
-#N canvas 0 23 372 90 docs 1;
+#N canvas 0 23 372 90 docs 0;
 #X obj 7 17 inlet;
 #X obj 7 41 else/openfile https://eric-lennartson.github.io/pd-osci/#/dash~
 ;
 #X connect 0 0 1 0;
 #X restore 184 273 pd docs;
-#X text 20 355 1 signal - phase;
-#X text 20 375 2 int/signal - number of dashes (1-N);
-#X text 20 395 3 float/signal - dash length (0-1);
-#X text 20 511 1 int - number of dashes (1-N);
-#X text 20 532 2 float - dash length (0-1);
-#X connect 0 0 4 0;
-#X connect 1 0 5 0;
-#X connect 1 1 5 1;
-#X connect 2 0 6 0;
-#X connect 3 0 7 0;
-#X connect 4 0 1 0;
-#X connect 6 0 4 1;
-#X connect 7 0 4 2;
-#X connect 15 0 17 0;
+#X text 20 375 1 signal - phase;
+#X text 20 395 2 int/signal - number of dashes (1-N);
+#X text 20 415 3 float/signal - dash length (0-1);
+#X text 20 531 1 int - number of dashes (1-N);
+#X text 20 552 2 float - dash length (0-1);
+#X obj 16 169 osci/dash~ 50 0.5;
+#X connect 0 0 22 0;
+#X connect 1 0 4 0;
+#X connect 1 1 4 1;
+#X connect 2 0 5 0;
+#X connect 3 0 6 0;
+#X connect 5 0 22 1;
+#X connect 6 0 22 2;
+#X connect 14 0 16 0;
+#X connect 22 0 1 0;

@@ -1,27 +1,27 @@
-#N canvas 45 33 432 560 12;
+#N canvas 45 33 432 593 12;
 #X declare -lib osci;
 #X floatatom 44 44 5 0 0 1 xPosition - -;
 #X floatatom 73 65 5 0 0 1 yPosition - -;
 #X floatatom 103 86 5 0 0 1 size - -;
 #X obj 15 21 phasor~ 100;
 #X obj 15 109 circle~ 0 0 1;
-#X obj 15 133 osci/out~;
-#X text 2 225 ============================================================inlets
+#X obj 15 136 osci/out~;
+#X text 2 255 ============================================================inlets
 ;
-#X text 2 345 ============================================================outlets
+#X text 2 375 ============================================================outlets
 ;
-#X text 2 425 ============================================================arguments
+#X text 2 455 ============================================================arguments
 ;
-#X text 1 523 ========================================================================================================================
+#X text 1 553 ========================================================================================================================
 ;
-#X text 24 260 1 signal - phase;
-#X text 24 280 2 float/signal - x position;
-#X text 24 300 3 float/signal - y position;
-#X text 24 380 1 signal - x;
-#X text 24 400 2 signal - y;
-#X text 24 460 1 float - x position;
-#X text 24 480 2 float - y position;
-#X text 24 500 3 float - radius/size;
+#X text 24 290 1 signal - phase;
+#X text 24 310 2 float/signal - x position;
+#X text 24 330 3 float/signal - y position;
+#X text 24 410 1 signal - x;
+#X text 24 430 2 signal - y;
+#X text 24 490 1 float - x position;
+#X text 24 510 2 float - y position;
+#X text 24 530 3 float - radius/size;
 #X obj 194 115 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
 -174938 -203556;
 #X text 221 118 open online documentation;
@@ -32,7 +32,7 @@
 #X connect 0 0 1 0;
 #X restore 194 149 pd docs;
 #X obj 299 25 declare -lib osci;
-#X text 24 319 4 float/signal - radius/size;
+#X text 24 349 4 float/signal - radius/size;
 #X connect 0 0 4 1;
 #X connect 1 0 4 2;
 #X connect 2 0 4 3;

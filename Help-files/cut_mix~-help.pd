@@ -10,17 +10,17 @@
 #X obj 162 288 osci/square~ 0 0 0.2;
 #X obj 6 313 osci/cut_idx~;
 #X obj 162 313 osci/cut_idx~;
-#X obj 6 342 osci/out~;
+#X obj 6 352 osci/out~;
 #X obj 306 -9 declare -lib osci;
-#X text 3 429 ============================================================inlets
+#X text 3 469 ============================================================inlets
 ;
-#X text 2 529 ============================================================outlets
+#X text 2 569 ============================================================outlets
 ;
-#X text 2 589 ============================================================arguments
+#X text 2 629 ============================================================arguments
 ;
-#X text 1 647 ========================================================================================================================
+#X text 1 687 ========================================================================================================================
 ;
-#X text 24 464 1 signal - phase;
+#X text 24 504 1 signal - phase;
 #X obj 183 357 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
 -174938 -203556;
 #X text 210 360 open online documentation;
@@ -36,10 +36,10 @@ must be the first modifier in the chain as it splits up the incoming
 phase into new phases in order to draw multiple objects onto the scope.
 Each output should also be sent to [cut_idx~] to specify which cut
 index to use.;
-#X text 24 484 2 float/signal - which cut (1-n);
-#X text 24 504 3 float/signal - fade ratio (0-1);
-#X text 24 564 1-N signal - adjusted phase;
-#X text 24 624 1 int - number of cuts;
+#X text 24 524 2 float/signal - which cut (1-n);
+#X text 24 544 3 float/signal - fade ratio (0-1);
+#X text 24 604 1-N signal - adjusted phase;
+#X text 24 664 1 int - number of cuts;
 #X connect 0 0 4 0;
 #X connect 1 0 5 0;
 #X connect 2 0 3 0;

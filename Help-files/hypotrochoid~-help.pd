@@ -1,4 +1,4 @@
-#N canvas 300 35 435 664 12;
+#N canvas 300 35 435 700 12;
 #X declare -lib osci;
 #X floatatom 60 148 5 0 0 1 R - -;
 #X floatatom 115 148 5 0 0 1 r - -;
@@ -29,25 +29,25 @@ and epitrochoid curves.;
 #X connect 0 0 3 0;
 #X connect 1 0 2 0;
 #X restore 194 286 pd links;
-#X text 0 325 ============================================================inlets
+#X text 0 355 ============================================================inlets
 ;
-#X text 1 444 ============================================================outlets
+#X text 1 474 ============================================================outlets
 ;
-#X text 0 519 ============================================================arguments
+#X text 0 549 ============================================================arguments
 ;
-#X text -1 627 ========================================================================================================================
+#X text -1 657 ========================================================================================================================
 ;
-#X text 22 480 1 signal - x;
-#X text 22 497 2 signal - y;
+#X text 22 510 1 signal - x;
+#X text 22 527 2 signal - y;
 #X obj 306 7 declare -lib osci;
-#X text 22 360 1 signal - phase;
-#X text 22 380 2 float/signal - radius (R) of exterior circle;
-#X text 22 400 3 float/signal - radius (r) of interior circle;
-#X text 22 420 4 float/signal - distance (d) from center of circle
+#X text 22 390 1 signal - phase;
+#X text 22 410 2 float/signal - radius (R) of exterior circle;
+#X text 22 430 3 float/signal - radius (r) of interior circle;
+#X text 22 450 4 float/signal - distance (d) from center of circle
 ;
-#X text 22 560 1 float - radius (R);
-#X text 22 580 2 float - radius (r);
-#X text 22 600 3 float - distance (d);
+#X text 22 590 1 float - radius (R);
+#X text 22 610 2 float - radius (r);
+#X text 22 630 3 float - distance (d);
 #X text 228 248 more about hypotrochoids;
 #X connect 0 0 7 0;
 #X connect 1 0 6 0;

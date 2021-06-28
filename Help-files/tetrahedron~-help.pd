@@ -1,47 +1,47 @@
-#N canvas 646 23 428 720 12;
+#N canvas 646 23 431 725 12;
 #X declare -lib osci;
-#X obj 5 89 osci/rotate~ 45 23 0;
-#X obj 5 112 osci/project~;
-#X obj 5 30 phasor~ 50;
-#X obj 5 136 osci/out~;
-#X text 278 121 alias;
-#X obj 179 59 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412 -174938
--203556;
-#X text 206 62 open online documentation;
+#X obj 5 80 osci/rotate~ 45 23 0;
+#X obj 5 103 osci/project~;
+#X obj 5 29 phasor~ 50;
+#X obj 5 127 osci/out~;
+#X text 298 200 alias;
+#X obj 199 138 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
+-174938 -203556;
+#X text 226 141 open online documentation;
 #N canvas 0 23 450 300 docs 0;
 #X obj 2 76 inlet;
 #X obj 2 116 else/openfile https://eric-lennartson.github.io/pd-osci/#/tetrahedron~
 ;
 #X connect 0 0 1 0;
-#X restore 179 93 pd docs;
-#X obj 214 21 declare -lib osci;
-#X text 2 245 ============================================================inlets
+#X restore 199 172 pd docs;
+#X obj 294 10 declare -lib osci;
+#X text 2 244 ============================================================inlets
 ;
-#X text 2 435 ============================================================outlets
+#X text 2 434 ============================================================outlets
 ;
-#X text 2 535 ============================================================arguments
+#X text 2 534 ============================================================arguments
 ;
-#X text 1 685 ========================================================================================================================
+#X text 1 684 ========================================================================================================================
 ;
-#X text 24 280 1 signal - phase;
-#X text 24 297 2 signal/float - x Position;
-#X text 24 316 3 signal/float - y Position;
-#X text 24 335 4 signal/float - z Position;
-#X text 24 354 5 signal/float - width;
-#X text 24 373 6 signal/float - height;
-#X text 24 394 7 signal/float - depth;
-#X text 24 413 8 signal/float - interpolation amount (0-1);
-#X text 24 470 1 signal - x;
-#X text 24 487 2 signal - y;
-#X text 24 506 3 signal - z;
-#X text 24 571 1 float - x Position;
-#X text 24 647 5 float - height;
-#X text 24 668 6 float - depth;
-#X text 24 628 4 float - width;
-#X text 24 609 3 float - z Position;
-#X text 24 590 2 float - y Position;
-#X obj 181 120 osci/tetra~;
-#X obj 5 54 tetrahedron~;
+#X text 24 279 1 signal - phase;
+#X text 24 296 2 signal/float - x Position;
+#X text 24 315 3 signal/float - y Position;
+#X text 24 334 4 signal/float - z Position;
+#X text 24 353 5 signal/float - width;
+#X text 24 372 6 signal/float - height;
+#X text 24 393 7 signal/float - depth;
+#X text 24 412 8 signal/float - interpolation amount (0-1);
+#X text 24 469 1 signal - x;
+#X text 24 486 2 signal - y;
+#X text 24 505 3 signal - z;
+#X text 24 570 1 float - x Position;
+#X text 24 646 5 float - height;
+#X text 24 667 6 float - depth;
+#X text 24 627 4 float - width;
+#X text 24 608 3 float - z Position;
+#X text 24 589 2 float - y Position;
+#X obj 201 199 osci/tetra~;
+#X obj 5 53 osci/tetrahedron~;
 #X connect 0 0 1 0;
 #X connect 0 1 1 1;
 #X connect 0 2 1 2;

@@ -1,4 +1,4 @@
-#N canvas 184 23 438 666 12;
+#N canvas 184 23 436 697 12;
 #X declare -lib osci;
 #X obj 7 14 phasor~ 440;
 #X floatatom 122 92 5 0 0 0 - - -;
@@ -8,40 +8,40 @@
 #X floatatom 200 92 5 0 0 0 - - -;
 #X obj 200 115 sig~;
 #X obj 7 43 osci/circle~ 0 0 0.5;
-#X obj 7 171 osci/out~;
+#X obj 7 181 osci/out~;
 #X obj 298 4 declare -lib osci;
-#X text 3 271 ============================================================inlets
+#X text 3 301 ============================================================inlets
 ;
-#X text 3 425 ============================================================outlets
+#X text 3 455 ============================================================outlets
 ;
-#X text 3 524 ============================================================arguments
+#X text 3 554 ============================================================arguments
 ;
-#X text 3 628 ========================================================================================================================
+#X text 3 658 ========================================================================================================================
 ;
-#X obj 160 181 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
+#X obj 160 201 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
 -174938 -203556;
-#X text 188 183 open online documentation;
+#X text 188 203 open online documentation;
 #N canvas 0 23 468 90 docs 0;
 #X obj 7 17 inlet;
 #X obj 7 41 else/openfile https://eric-lennartson.github.io/pd-osci/#/translate~
 ;
 #X connect 0 0 1 0;
-#X restore 160 220 pd docs;
+#X restore 160 240 pd docs;
 #X obj 6 146 osci/translate~, f 28;
-#X obj 298 220 osci/trans~;
-#X text 252 219 alias;
-#X text 20 365 4 float/signal - x offset;
-#X text 20 385 5 float/signal - y offset;
-#X text 20 405 6 float/signal - z offset;
-#X text 20 463 1 signal - x;
-#X text 20 483 2 signal - y;
-#X text 20 503 3 signal - z;
-#X text 20 561 1 float - x offset;
-#X text 20 581 2 float - y offset;
-#X text 20 601 3 float - z offset;
-#X text 20 345 3 signal - z;
-#X text 20 325 2 signal - y;
-#X text 20 305 1 signal - x;
+#X obj 298 240 osci/trans~;
+#X text 252 239 alias;
+#X text 20 395 4 float/signal - x offset;
+#X text 20 415 5 float/signal - y offset;
+#X text 20 435 6 float/signal - z offset;
+#X text 20 493 1 signal - x;
+#X text 20 513 2 signal - y;
+#X text 20 533 3 signal - z;
+#X text 20 591 1 float - x offset;
+#X text 20 611 2 float - y offset;
+#X text 20 631 3 float - z offset;
+#X text 20 375 3 signal - z;
+#X text 20 355 2 signal - y;
+#X text 20 335 1 signal - x;
 #X connect 0 0 7 0;
 #X connect 1 0 2 0;
 #X connect 2 0 17 3;

@@ -1,4 +1,4 @@
-#N canvas 769 62 435 628 12;
+#N canvas 769 62 434 671 12;
 #X declare -lib osci;
 #X text 4 33 [trace~] controls the range and length of the phase used
 to draw an image. Since it is a phase manipulation it must come before
@@ -12,29 +12,29 @@ any images to be drawn in the signal chain.;
 #X obj 6 269 osci/out~;
 #X obj 6 209 osci/trace~ 0.3 3;
 #X obj 306 6 declare -lib osci;
-#X text 3 361 ============================================================inlets
+#X text 3 401 ============================================================inlets
 ;
-#X text 3 455 ============================================================outlets
+#X text 3 495 ============================================================outlets
 ;
-#X text 3 514 ============================================================arguments
+#X text 3 554 ============================================================arguments
 ;
-#X text 3 591 ========================================================================================================================
+#X text 3 631 ========================================================================================================================
 ;
-#X text 20 415 2 float/signal - start (0-1);
-#X text 20 493 1 signal - adjusted phase;
-#X text 20 551 1 float - start (0-1);
-#X obj 204 274 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
+#X text 20 455 2 float/signal - start (0-1);
+#X text 20 533 1 signal - adjusted phase;
+#X text 20 591 1 float - start (0-1);
+#X obj 204 294 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
 -174938 -203556;
-#X text 232 276 open online documentation;
+#X text 232 296 open online documentation;
 #N canvas 0 23 372 90 docs 0;
 #X obj 7 17 inlet;
 #X obj 7 41 else/openfile https://eric-lennartson.github.io/pd-osci/#/trace~
 ;
 #X connect 0 0 1 0;
-#X restore 204 313 pd docs;
-#X text 20 395 1 signal - phase;
-#X text 20 435 3 float/signal - length (0-1);
-#X text 20 572 2 float - length (0-1);
+#X restore 204 333 pd docs;
+#X text 20 435 1 signal - phase;
+#X text 20 475 3 float/signal - length (0-1);
+#X text 20 612 2 float - length (0-1);
 #X connect 1 0 8 0;
 #X connect 2 0 7 0;
 #X connect 2 1 7 1;

@@ -17,7 +17,7 @@ is also options for vertical and horizontal alignment of the text.
 #X obj 179 336 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
 -174938 -203556;
 #X text 206 339 open online documentation;
-#N canvas 0 23 528 104 docs 1;
+#N canvas 0 23 528 104 docs 0;
 #X obj 11 16 inlet;
 #X obj 11 56 else/openfile https://eric-lennartson.github.io/pd-osci/#/text~
 ;

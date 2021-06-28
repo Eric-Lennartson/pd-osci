@@ -1,4 +1,4 @@
-#N canvas 626 166 435 590 12;
+#N canvas 441 38 435 610 12;
 #X declare -lib osci;
 #X obj 6 121 phasor~ 50;
 #X obj 6 195 osci/square~ 0 0 0.5;
@@ -12,15 +12,15 @@ multiple images at the same time. [cut_equal~] is special in that it
 must be the first modifier in the chain as it becomes the new intial
 driver in order to draw multiple objects onto the scope.;
 #X obj 305 13 declare -lib osci;
-#X text 3 369 ============================================================inlets
+#X text 3 389 ============================================================inlets
 ;
-#X text 2 429 ============================================================outlets
+#X text 2 449 ============================================================outlets
 ;
-#X text 2 489 ============================================================arguments
+#X text 2 509 ============================================================arguments
 ;
-#X text 1 547 ========================================================================================================================
+#X text 1 567 ========================================================================================================================
 ;
-#X text 24 404 1 signal - phase;
+#X text 24 424 1 signal - phase;
 #X obj 183 297 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
 -174938 -203556;
 #X text 210 300 open online documentation;
@@ -30,8 +30,8 @@ driver in order to draw multiple objects onto the scope.;
 ;
 #X connect 0 0 1 0;
 #X restore 183 331 pd docs;
-#X text 24 524 1 int - number of cuts;
-#X text 24 464 1-N signal - adjusted phase;
+#X text 24 544 1 int - number of cuts;
+#X text 24 484 1-N signal - adjusted phase;
 #X connect 0 0 3 0;
 #X connect 1 0 5 0;
 #X connect 1 1 5 1;

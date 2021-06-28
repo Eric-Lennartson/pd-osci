@@ -5,42 +5,42 @@
 #X msg 101 40 symbol z;
 #X obj 7 40 osci/cuboid~;
 #X obj 7 11 phasor~ 50;
-#X obj 7 141 osci/out~;
+#X obj 7 151 osci/out~;
 #X obj 109 87 sig~ 0.5;
-#X obj 159 127 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
+#X obj 199 177 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
 -174938 -203556;
-#X text 187 129 open online documentation;
+#X text 227 179 open online documentation;
 #N canvas 0 23 450 137 docs 0;
 #X obj 37 37 inlet;
 #X obj 37 61 else/openfile https://eric-lennartson.github.io/pd-osci/#/shear~
 ;
 #X connect 0 0 1 0;
-#X restore 159 166 pd docs;
-#X text 3 241 ============================================================inlets
+#X restore 199 216 pd docs;
+#X text 3 271 ============================================================inlets
 ;
-#X text 3 355 ============================================================outlets
+#X text 3 385 ============================================================outlets
 ;
-#X text 3 624 ============================================================arguments
+#X text 3 654 ============================================================arguments
 ;
-#X text 3 708 ========================================================================================================================
+#X text 3 738 ========================================================================================================================
 ;
-#X text 20 275 1 float/signal - x;
-#X text 20 295 2 float/signal - y;
-#X text 20 315 3 float/signal - z;
-#X text 20 393 1 signal - x;
-#X text 20 413 2 signal - y;
-#X text 20 433 3 signal - z;
-#X text 20 335 4 float/signal - shear angle (degrees);
-#X text 3 454 ============================================================messages
+#X text 20 305 1 float/signal - x;
+#X text 20 325 2 float/signal - y;
+#X text 20 345 3 float/signal - z;
+#X text 20 423 1 signal - x;
+#X text 20 443 2 signal - y;
+#X text 20 463 3 signal - z;
+#X text 20 365 4 float/signal - shear angle (degrees);
+#X text 3 484 ============================================================messages
 ;
-#X text 20 493 Optional messages to send to the first inlet. If a symbol
+#X text 20 523 Optional messages to send to the first inlet. If a symbol
 is sent that isn't x \, y \, z or an axis isn't specified then the
 axis defaults to x. The symbol must be lowercase., f 54;
-#X text 20 563 axis - set axis to shear (x \, y \, z);
-#X text 20 583 degrees - sets angles to degrees;
-#X text 20 603 radians - sets angles to radians;
-#X text 20 681 2 symbol - shear axis (x \, y \, z);
-#X text 20 661 1 float - shear angle (degrees);
+#X text 20 593 axis - set axis to shear (x \, y \, z);
+#X text 20 613 degrees - sets angles to degrees;
+#X text 20 633 radians - sets angles to radians;
+#X text 20 711 2 symbol - shear axis (x \, y \, z);
+#X text 20 691 1 float - shear angle (degrees);
 #X obj 303 6 declare -lib osci;
 #X connect 0 0 6 0;
 #X connect 1 0 5 0;

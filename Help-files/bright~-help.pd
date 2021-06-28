@@ -1,4 +1,4 @@
-#N canvas 808 45 433 683 12;
+#N canvas 808 45 433 700 12;
 #X declare -lib osci;
 #X obj 6 123 phasor~ 50;
 #X obj 6 275 osci/square~ 0 0 0.5 0.5;
@@ -15,13 +15,13 @@ decreased. [bright~] manipulates phase and needs to come before any
 images that are drawn. For a different type of brigthness control check
 out [knee~]., f 60;
 #X obj 299 4 declare -lib osci;
-#X text 3 411 ============================================================inlets
+#X text 3 431 ============================================================inlets
 ;
-#X text 3 505 ============================================================outlets
+#X text 3 525 ============================================================outlets
 ;
-#X text 3 564 ============================================================arguments
+#X text 3 584 ============================================================arguments
 ;
-#X text 3 641 ========================================================================================================================
+#X text 3 661 ========================================================================================================================
 ;
 #X obj 204 324 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
 -174938 -203556;
@@ -32,12 +32,12 @@ out [knee~]., f 60;
 ;
 #X connect 0 0 1 0;
 #X restore 204 363 pd docs;
-#X text 20 465 2 float/signal - start (0-1);
-#X text 20 485 3 float/signal - strength (1-N);
-#X text 20 543 1 signal - adjusted phase;
-#X text 20 601 1 float - start (0-1);
-#X text 20 622 2 float - strength (1-N);
-#X text 20 445 1 signal - phase;
+#X text 20 485 2 float/signal - start (0-1);
+#X text 20 505 3 float/signal - strength (1-N);
+#X text 20 563 1 signal - adjusted phase;
+#X text 20 621 1 float - start (0-1);
+#X text 20 642 2 float - strength (1-N);
+#X text 20 465 1 signal - phase;
 #X connect 0 0 7 0;
 #X connect 1 0 6 0;
 #X connect 1 1 6 1;

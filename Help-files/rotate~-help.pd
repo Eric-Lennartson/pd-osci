@@ -1,4 +1,4 @@
-#N canvas 413 23 472 726 12;
+#N canvas 413 23 445 755 12;
 #X declare -lib osci;
 #X obj 5 211 osci/rotate~ 0 45 0, f 29;
 #X floatatom 125 116 5 0 0 1 x_angle - -;
@@ -14,10 +14,10 @@
 first 3 inlets are the vector to be rotated \, and the next 3 are the
 angles of rotation in degrees. Be careful of gimbal lock \, if two
 axes line up then the third will have no effect.;
-#X obj 139 266 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
+#X obj 169 266 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
 -174938 -203556;
-#X text 167 268 open online documentation;
-#X obj 165 293 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
+#X text 197 268 open online documentation;
+#X obj 195 293 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
 -174938 -203556;
 #N canvas 0 23 450 300 links 0;
 #X obj 37 37 inlet;
@@ -32,11 +32,11 @@ axes line up then the third will have no effect.;
 #X connect 0 0 5 0;
 #X connect 1 0 3 0;
 #X connect 2 0 4 0;
-#X restore 139 355 pd links;
-#X text 193 296 more about gimbal lock;
-#X obj 192 320 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
+#X restore 169 355 pd links;
+#X text 223 296 more about gimbal lock;
+#X obj 222 320 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
 -174938 -203556;
-#X text 220 323 more about euler angles;
+#X text 250 323 more about euler angles;
 #X text 3 381 ============================================================inlets
 ;
 #X text 3 535 ============================================================outlets

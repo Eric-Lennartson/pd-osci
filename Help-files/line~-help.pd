@@ -1,7 +1,7 @@
-#N canvas 276 45 434 652 12;
+#N canvas 276 45 434 669 12;
 #X declare -lib osci;
 #X obj 5 229 osci/line~, f 18;
-#X obj 5 253 osci/out~;
+#X obj 5 261 osci/out~;
 #X obj 5 99 phasor~ 50;
 #X obj 25 122 sig~ -1;
 #X obj 46 144 sig~ -1;
@@ -12,15 +12,15 @@ There's a naming conflict with pd vanilla's [line~] which is used as
 a linear ramp. To get around this \, this object should always be created
 with the "osci/" prefix.;
 #X obj 302 10 declare -lib osci;
-#X text 1 356 ============================================================inlets
+#X text 1 376 ============================================================inlets
 ;
-#X text 1 456 ============================================================outlets
+#X text 1 476 ============================================================outlets
 ;
-#X text 1 551 ============================================================arguments
+#X text 1 571 ============================================================arguments
 ;
-#X text 0 609 ========================================================================================================================
+#X text 0 629 ========================================================================================================================
 ;
-#X text 21 585 none;
+#X text 21 605 none;
 #X obj 198 159 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
 -174938 -203556;
 #X text 225 162 open online documentation;
@@ -30,12 +30,12 @@ with the "osci/" prefix.;
 ;
 #X connect 0 0 1 0;
 #X restore 198 193 pd docs;
-#X text 23 411 2-4 float/signal - x1 \, y1 \, z1;
-#X text 23 391 1 signal - phase;
-#X text 23 431 5-7 float/signal - x2 \, y2 \, z2;
-#X text 23 490 1 signal - x;
-#X text 23 511 2 signal - y;
-#X text 23 531 3 signal - z;
+#X text 23 431 2-4 float/signal - x1 \, y1 \, z1;
+#X text 23 411 1 signal - phase;
+#X text 23 451 5-7 float/signal - x2 \, y2 \, z2;
+#X text 23 510 1 signal - x;
+#X text 23 531 2 signal - y;
+#X text 23 551 3 signal - z;
 #X connect 0 0 1 0;
 #X connect 0 1 1 1;
 #X connect 2 0 0 0;
