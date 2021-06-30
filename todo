@@ -1,6 +1,4 @@
 ==== Roadmap ===================================================================
-- Finish up the shroom~ documentation
-- go through and make sure osci/out isn't covering up anything in the docs.
 - Decide, what is happening with xy_splitter?
 - Decide, should record~ have signal inlets? or should it just handle the writesf 
     messages?

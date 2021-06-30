@@ -44,7 +44,7 @@
 #X connect 0 0 1 0;
 #X restore 205 268 pd docs;
 #X text 233 237 open online documentation;
-#X text 16 401 2 float - freq TODO DOCUMENT BETTER;
+#X text 16 401 2 float - frequency (of incoming phase);
 #X connect 1 0 2 0;
 #X connect 1 1 2 1;
 #X connect 1 2 2 2;
