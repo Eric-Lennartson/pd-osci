@@ -1,45 +1,37 @@
-#N canvas 573 138 380 609 10;
+#N canvas 334 -847 379 586 10;
 #X declare -lib osci;
-#X obj 16 172 osci/record~;
-#X obj 16 125 phasor~ 50;
-#X obj 16 146 osci/circle~ 0 0 1;
-#X obj 16 340 writesf~ 2;
-#X text 12 28 [record~] provides a useful interface for managing the
-settings of [writesf~]. When the red toggle is clicked \, a message
-is posted to the console \, and the recording starts. Make sure to
-always hook up to [writesf~] as no record~ only manages the settings
-\, and doesn't record. There's a bug I haven't figured out how to correct
-yet \, but before recording make sure to select your settings \, as
-[writesf~] will throw an error even though I've set it up to use these
-defaults.;
+#X obj 16 165 osci/record~;
+#X obj 16 115 phasor~ 50;
+#X obj 16 136 osci/circle~ 0 0 1;
 #X obj 261 9 declare -lib osci;
-#X text 4 360 ============================================================inlets
+#X text 4 370 ============================================================inlets
 ;
-#X text 4 430 ============================================================outlets
+#X text 4 440 ============================================================outlets
 ;
-#X text 4 530 ============================================================arguments
+#X text 4 500 ============================================================arguments
 ;
-#X text 15 557 none;
-#X text 4 579 ========================================================================================================================
+#X text 15 527 none;
+#X text 4 549 ========================================================================================================================
 ;
-#X obj 172 215 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
+#X obj 196 218 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
 -174938 -203556;
 #N canvas 489 76 542 107 docs 0;
 #X obj 37 37 inlet;
 #X obj 37 61 else/openfile https://eric-lennartson.github.io/pd-osci/#/record~
 ;
 #X connect 0 0 1 0;
-#X restore 172 249 pd docs;
-#X text 200 218 open online documentation;
-#X text 16 411 2 signal - right channel;
-#X text 15 391 1 signal - left channel;
-#X text 15 467 1 signal - left channel;
-#X text 16 487 2 signal - right channel;
-#X text 15 507 3 message - messages for [writesf~];
-#X connect 0 0 3 0;
-#X connect 0 1 3 1;
-#X connect 0 2 3 0;
+#X restore 196 252 pd docs;
+#X text 195 198 open online documentation;
+#X text 16 421 2 signal - right channel;
+#X text 15 401 1 signal - left channel;
+#X text 15 477 none;
+#X text 12 28 [record~] provides a useful interface for managing the
+settings of [writesf~] and recording. When the red toggle is clicked
+\, a notification is posted to the console \, and the recording starts.
+There's a bug I haven't figured out how to correct yet \, but before
+recording make sure to select your settings \, as [writesf~] will throw
+an error even though I've set it up to have defaults.;
 #X connect 1 0 2 0;
 #X connect 2 0 0 0;
 #X connect 2 1 0 1;
-#X connect 11 0 12 0;
+#X connect 9 0 10 0;
