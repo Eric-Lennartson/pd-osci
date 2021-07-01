@@ -1,13 +1,10 @@
 ==== Roadmap ===================================================================
 - Decide, what is happening with xy_splitter?
-- Decide, should record~ have signal inlets? or should it just handle the writesf 
-    messages?
 - figure out how to add in remapping tree... 
 ==== Bugs ======================================================================
 ==== Things to Improve =========================================================
 - All objects need to have option for args and defaults if not provided.
     - These should be listed in the documentation as well.
-- Can I have writesf~ write to a specific directory? 
 - add in a spot killer abstraction
 - rethink gui version of chris_clip~, is there a better way
 - add axis, and degree/radian messages to rotate~
