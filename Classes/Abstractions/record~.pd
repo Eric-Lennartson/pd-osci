@@ -1,25 +1,22 @@
-#N canvas 152 27 1128 538 10;
-#X obj 55 71 cnv 15 124 154 empty body empty 20 12 0 14 -99865 -66577
+#N canvas 427 -656 728 538 10;
+#X obj 55 71 cnv 15 168 195 empty body empty 20 12 0 14 -99865 -66577
 0;
-#X obj 117 239 + 2;
-#X obj 117 260 s \$0-bit-depth;
+#X obj 117 339 + 2;
+#X obj 117 360 s \$0-bit-depth;
 #X obj 57 89 tgl 16 0 \$0-record none empty 17 7 0 10 -251611 -1 -1
 0 1;
-#X obj 399 27 r \$0-record;
+#X obj 320 24 r \$0-record;
 #X obj 399 49 metro 1000;
 #N canvas 76 23 995 712 recording_guts 0;
-#X obj 713 215 sel 0;
-#X msg 713 238 symbol wav;
-#X msg 740 270 symbol aiff;
+#X obj 723 214 sel 0;
+#X msg 723 237 symbol wav;
+#X msg 750 269 symbol aiff;
 #X obj 209 351 pack f f s;
 #X obj 209 255 f;
 #X obj 237 290 r \$0-sample-rate;
 #X obj 224 229 r \$0-bit-depth;
-#X obj 713 191 r \$0-format;
-#X obj 386 161 r \$0-file-name;
-#X obj 449 219 date, f 13;
-#X obj 572 219 time, f 5;
-#X text 499 307 name-month-day-year-hour-minute-second.<format>;
+#X obj 723 190 r \$0-format;
+#X obj 436 182 r \$0-file-name;
 #N canvas 0 23 450 300 sel_sample_rate 0;
 #X obj 84 39 sel 0 1 2 3 4 5;
 #X msg 169 63 192000;
@@ -45,8 +42,7 @@
 #X connect 7 0 0 0;
 #X restore 237 315 pd sel_sample_rate;
 #X obj 209 88 r \$0-record;
-#X text 503 162 date and time are from zexy;
-#X obj 386 307 else/any2symbol;
+#X obj 396 308 else/any2symbol;
 #X msg 228 422 open -bytes \$1 -rate \$2 \$3;
 #X obj 209 373 t b l b;
 #X msg 248 474 stop;
@@ -58,7 +54,6 @@
 #X obj 236 143 s \$0-stop;
 #X obj 256 447 r \$0-stop;
 #X msg 377 473 symbol recording\ stopped;
-#X obj 386 286 else/format %s-%s-%.2d-%d-%.2d-%.2d-%.2d.%s, f 55;
 #X msg 209 394 start;
 #N canvas 172 39 325 336 month->symbol 0;
 #X obj 46 33 sel 1 2 3 4 5 6 7 8 9 10 11 12;
@@ -101,69 +96,77 @@
 #X connect 11 0 14 0;
 #X connect 12 0 14 0;
 #X connect 13 0 0 0;
-#X restore 464 245 pd month->symbol;
+#X restore 477 256 pd month->symbol;
 #X msg 371 454 recording...;
 #X obj 26 43 inlet~ x;
 #X obj 96 43 inlet~ y;
 #X obj 209 504 outlet writesf~ messages;
 #X obj 96 504 outlet~ y;
 #X obj 26 504 outlet~ x;
+#X text 538 157 date and time are clones from zexy;
+#X obj 600 221 osci/time;
+#X obj 462 215 osci/date, f 13;
+#X obj 396 159 r \$0-directory-name;
+#X text 496 309 directory/name-month-day-year-hour-minute-second.<format>
+;
+#X obj 396 287 else/format %s/%s-%s-%.2d-%d-%.2d-%.2d-%.2d.%s, f 55
+;
 #X connect 0 0 1 0;
 #X connect 0 1 2 0;
-#X connect 1 0 27 7;
-#X connect 2 0 27 7;
-#X connect 3 0 17 0;
+#X connect 1 0 36 8;
+#X connect 2 0 36 8;
+#X connect 3 0 13 0;
 #X connect 4 0 3 0;
-#X connect 5 0 12 0;
+#X connect 5 0 9 0;
 #X connect 6 0 4 1;
 #X connect 7 0 0 0;
-#X connect 8 0 27 0;
-#X connect 9 0 27 3;
-#X connect 9 1 29 0;
-#X connect 9 2 27 2;
-#X connect 10 0 27 4;
-#X connect 10 1 27 5;
-#X connect 10 2 27 6;
-#X connect 12 0 3 1;
-#X connect 13 0 19 0;
-#X connect 15 0 3 2;
-#X connect 16 0 30 0;
-#X connect 16 0 33 0;
-#X connect 17 0 28 0;
-#X connect 17 1 16 0;
-#X connect 17 2 18 0;
-#X connect 18 0 33 0;
-#X connect 19 0 21 0;
-#X connect 19 1 24 0;
-#X connect 21 0 4 0;
-#X connect 21 1 27 0;
-#X connect 21 2 9 0;
-#X connect 21 2 10 0;
-#X connect 23 0 22 0;
-#X connect 25 0 18 0;
-#X connect 25 0 26 0;
-#X connect 26 0 23 0;
-#X connect 27 0 15 0;
-#X connect 28 0 33 0;
-#X connect 29 0 27 1;
-#X connect 30 0 23 0;
-#X connect 31 0 35 0;
-#X connect 32 0 34 0;
-#X restore 13 332 pd recording_guts;
+#X connect 8 0 36 1;
+#X connect 9 0 3 1;
+#X connect 10 0 15 0;
+#X connect 11 0 3 2;
+#X connect 12 0 25 0;
+#X connect 12 0 28 0;
+#X connect 13 0 23 0;
+#X connect 13 1 12 0;
+#X connect 13 2 14 0;
+#X connect 14 0 28 0;
+#X connect 15 0 17 0;
+#X connect 15 1 20 0;
+#X connect 17 0 4 0;
+#X connect 17 1 36 0;
+#X connect 17 2 32 0;
+#X connect 17 2 33 0;
+#X connect 19 0 18 0;
+#X connect 21 0 14 0;
+#X connect 21 0 22 0;
+#X connect 22 0 19 0;
+#X connect 23 0 28 0;
+#X connect 24 0 36 2;
+#X connect 25 0 19 0;
+#X connect 26 0 30 0;
+#X connect 27 0 29 0;
+#X connect 32 0 36 5;
+#X connect 32 1 36 6;
+#X connect 32 2 36 7;
+#X connect 33 0 36 4;
+#X connect 33 1 24 0;
+#X connect 33 2 36 3;
+#X connect 34 0 36 0;
+#X connect 36 0 11 0;
+#X restore 13 412 pd recording_guts;
 #X obj 275 337 s \$0-set-sample-rate;
 #X obj 344 273 s \$0-set-file-name;
 #X obj 321 294 s \$0-bit-depth;
 #X obj 298 316 s \$0-set-format;
 #X obj 275 230 unpack f f f s f;
 #X obj 368 252 s \$0-mute;
-#X obj 57 110 cnv 14 116 15 empty empty empty 20 12 0 14 -91411 -66577
-0;
-#X symbolatom 57 110 19 0 0 0 - #0-set-file-name #0-file-name;
-#X obj 210 34 r \$0-record;
-#X msg 210 76 label \$1;
-#X obj 98 89 cnv 15 59 15 empty \$0-stopwatch-display 00:00:05 2 9
+#X obj 57 122 cnv 15 164 15 empty \$0-file-name-cnv File\\\ name 1
+-8 0 11 -91411 -203556 0;
+#X symbolatom 57 122 27 0 0 2 - #0-set-file-name #0-file-name;
+#X msg 320 70 label \$1;
+#X obj 98 89 cnv 15 59 16 empty \$0-stopwatch-display 00:00:00 2 9
 0 12 -87315 -203491 0;
-#X obj 210 97 s \$0-stopwatch-display;
+#X obj 320 91 s \$0-stopwatch-display;
 #X text 269 184 init for recording stuff;
 #X obj 275 140 else/initmess \; \$0-stopwatch-display label 00:00:00
 ;
@@ -243,67 +246,89 @@ them at 0, f 23;
 #X connect 13 1 17 0;
 #X connect 15 0 13 0;
 #X connect 17 0 10 0;
-#X restore 210 55 pd stopwatch;
-#X obj 13 306 inlet~;
-#X obj 112 306 inlet~;
-#X obj 13 383 outlet~;
-#X obj 62 383 outlet~;
-#X obj 112 383 outlet;
-#X obj 55 71 cnv 15 124 15 empty h1 osci/record~ 3 8 0 11 -16645 -257781
+#X restore 320 49 pd stopwatch;
+#X obj 13 386 inlet~;
+#X obj 112 386 inlet~;
+#X obj 13 463 outlet~;
+#X obj 62 463 outlet~;
+#X obj 112 463 outlet;
+#X obj 55 71 cnv 15 168 15 empty h1 osci/record~ 3 8 0 11 -16645 -257781
 0;
 #X obj 55 71 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
 0;
-#X obj 172 71 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+#X obj 216 71 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
 0;
-#X obj 172 223 cnv 2 7 2 empty empty empty 20 12 0 14 -170401 -66577
+#X obj 216 264 cnv 2 7 2 empty empty empty 20 12 0 14 -170401 -66577
 0;
-#X obj 55 223 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+#X obj 55 264 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
 0;
-#X obj 55 131 cnv 15 124 15 empty h1 Settings 3 8 0 11 -16645 -257781
+#X obj 55 172 cnv 15 168 15 empty h1 Settings 3 8 0 11 -16645 -257781
 0;
-#X obj 57 149 vradio 12 1 0 6 \$0-sample-rate \$0-set-sample-rate empty
+#X obj 57 190 vradio 12 1 0 6 \$0-sample-rate \$0-set-sample-rate empty
 0 -8 0 12 -91412 -174938 -203556 0;
-#X obj 79 155 cnv 2 2 2 empty cnv 44.1 0 0 0 10 -91412 -203556 0;
-#X obj 79 168 cnv 2 2 2 empty cnv2 48 0 0 0 10 -91412 -203556 0;
-#X obj 79 180 cnv 2 2 2 empty cnv3 88.2 0 0 0 10 -91412 -203556 0;
-#X obj 79 192 cnv 2 2 2 empty sr4 96 0 0 0 10 -91412 -203556 0;
-#X obj 73 204 cnv 2 2 2 empty sr5 176.4 0 0 0 10 -91412 -203556 0;
-#X obj 73 217 cnv 2 2 2 empty sr6 192 0 0 0 10 -91412 -203556 0;
-#X obj 117 149 vradio 12 1 0 2 \$0-format \$0-set-format empty 0 -8
+#X obj 79 196 cnv 2 2 2 empty cnv 44.1 0 0 0 10 -91412 -203556 0;
+#X obj 79 209 cnv 2 2 2 empty cnv2 48 0 0 0 10 -91412 -203556 0;
+#X obj 79 221 cnv 2 2 2 empty cnv3 88.2 0 0 0 10 -91412 -203556 0;
+#X obj 79 233 cnv 2 2 2 empty sr4 96 0 0 0 10 -99865 -203556 0;
+#X obj 73 245 cnv 2 2 2 empty sr5 176 0 0 0 10 -99865 -203556 0;
+#X obj 73 258 cnv 2 2 2 empty sr6 192 0 0 0 10 -95768 -203556 0;
+#X obj 117 190 vradio 12 1 0 2 \$0-format \$0-set-format empty 0 -8
 0 12 -91412 -174938 -203556 0;
-#X obj 132 153 cnv 2 2 2 empty file1 .wav 0 0 0 10 -91412 -203556 0
+#X obj 132 194 cnv 2 2 2 empty file1 .wav 0 0 0 10 -99865 -203556 0
 ;
-#X obj 132 167 cnv 2 2 2 empty file2 .aiff 0 0 0 10 -91412 -203556
+#X obj 132 208 cnv 2 2 2 empty file2 .aiff 0 0 0 10 -99865 -203556
 0;
-#X obj 117 185 vradio 12 1 0 3 empty none empty 0 -8 0 12 -91412 -174938
+#X obj 117 226 vradio 12 1 0 3 empty none empty 0 -8 0 12 -91412 -174938
 -203556 0;
-#X obj 133 191 cnv 2 2 2 empty bdepth1 16 0 0 0 10 -91412 -203556 0
+#X obj 133 232 cnv 2 2 2 empty bdepth1 16 0 0 0 10 -99865 -203556 0
 ;
-#X obj 133 204 cnv 2 2 2 empty bdepth2 24 0 0 0 10 -91412 -203556 0
+#X obj 133 245 cnv 2 2 2 empty bdepth2 24 0 0 0 10 -99865 -203556 0
 ;
-#X obj 133 216 cnv 2 2 2 empty bdepth3 32 0 0 0 10 -91412 -203556 0
+#X obj 133 257 cnv 2 2 2 empty bdepth3 32 0 0 0 10 -99865 -203556 0
 ;
-#X obj 111 223 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
-0;
 #X obj 78 89 bng 16 250 50 0 \$0-none \$0-bng-monitor empty 30 11 0
 12 -91412 -247450 -203556;
 #X obj 399 70 s \$0-bng-monitor;
+#X obj 74 154 cnv 14 146 15 empty empty empty 20 12 0 14 -91411 -66577
+0;
+#X symbolatom 74 154 24 0 0 0 - #0-set-directory-name #0-directory-name
+;
+#X obj 57 154 bng 15 250 50 0 \$0-directory \$0-no-rcv Directory 1
+-8 0 11 -91412 -174938 -203556;
+#X obj 483 209 r \$0-directory;
+#X obj 483 251 pdcontrol;
+#X obj 483 272 openpanel 1;
+#X msg 483 315 Directory\\\ changed\\\ to:\\\ \$1;
+#X obj 492 295 s \$0-set-directory-name;
+#X msg 483 230 dir 1;
+#X obj 593 198 s \$0-file-name-cnv;
+#X msg 593 174 label File\ name;
+#X obj 135 264 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+0;
+#X obj 483 340 print -n;
 #X connect 1 0 2 0;
 #X connect 4 0 5 0;
-#X connect 5 0 50 0;
-#X connect 6 0 25 0;
-#X connect 6 1 26 0;
-#X connect 6 2 27 0;
+#X connect 4 0 21 0;
+#X connect 5 0 48 0;
+#X connect 6 0 24 0;
+#X connect 6 1 25 0;
+#X connect 6 2 26 0;
 #X connect 11 0 7 0;
 #X connect 11 1 10 0;
 #X connect 11 2 9 0;
 #X connect 11 3 8 0;
 #X connect 11 4 12 0;
-#X connect 15 0 22 0;
-#X connect 16 0 18 0;
-#X connect 21 0 11 0;
-#X connect 22 0 16 0;
-#X connect 23 0 6 0;
-#X connect 24 0 6 1;
-#X connect 44 0 1 0;
-#X coords 0 -1 1 1 126 156 1 54 70;
+#X connect 15 0 17 0;
+#X connect 20 0 11 0;
+#X connect 21 0 15 0;
+#X connect 22 0 6 0;
+#X connect 23 0 6 1;
+#X connect 43 0 1 0;
+#X connect 52 0 57 0;
+#X connect 53 0 54 0;
+#X connect 54 0 55 0;
+#X connect 54 0 56 0;
+#X connect 55 0 61 0;
+#X connect 57 0 53 0;
+#X connect 59 0 58 0;
+#X coords 0 -1 1 1 170 197 1 54 70;
