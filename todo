@@ -1,5 +1,6 @@
 ==== Roadmap ===================================================================
-- Decide, what is happening with xy_splitter?
+- get splitter~ docs going
+- add a feature to node that has an argument for number iolets
 - figure out how to add in remapping tree... 
 ==== Bugs ======================================================================
 ==== Things to Improve =========================================================
@@ -23,5 +24,4 @@ can control how other objects work? (something like acriel)
 
 ==== Documentation =============================================================
 - what are the defaults for cuboid? (and it's relatives)
-- make sure that all the abstractions are documented
 ==== Misc ======================================================================
