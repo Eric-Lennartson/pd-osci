@@ -29,7 +29,7 @@
 #X text 28 413 1 int - number of iolets (default to 1);
 #X text 6 439 ========================================================================================================================
 ;
-#X text 10 35 [n] is short for node. It adds a “node” to the cable
+#X text 10 34 [n~] is short for node. It adds a “node” to the cable
 and helps to clean up the connections of a patch. An optional argument
 can be provided to set the number of iolets. If no argument is provided
 it defaults to 1 Input passes through unchanged. No one likes spaghetti
