@@ -1,77 +1,72 @@
-#N canvas 367 23 627 709 12;
-#X obj 1 1 cnv 15 615 60 empty empty xy_splitter~ 3 12 0 20 -191797
--1 0;
-#X obj 1 435 cnv 15 615 3 empty empty inlets 8 12 0 13 -216373 -1 0
+#N canvas 88 40 440 709 12;
+#X declare -lib osci;
+#X obj 10 84 phasor~ 100;
+#X obj 10 367 osci/out~;
+#X floatatom 292 105 5 0 0 0 - - -;
+#X obj 292 185 *~ -1;
+#X obj 117 214 osci/splitter~;
+#X obj 298 3 declare -lib osci;
+#X obj 172 406 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
+-174938 -203556;
+#X text 199 409 open online documentation;
+#N canvas 0 23 528 104 docs 0;
+#X obj 11 16 inlet;
+#X obj 11 56 else/openfile https://eric-lennartson.github.io/pd-osci/#/splitter~
 ;
-#X obj 88 443 cnv 15 3 17 empty empty 0 5 9 0 16 -216373 -141475 0
+#X connect 0 0 1 0;
+#X restore 172 440 pd docs;
+#X text 10 523 1 signal - x frequency;
+#X text 10 543 2 signal - y frequency;
+#X text 10 563 3 signal - z frequency;
+#X text 10 583 4-6 signal - x pulse width \, x minimum \, x maximum
 ;
-#X obj 1 608 cnv 15 615 3 empty empty outlets 8 12 0 13 -216373 -1
-0;
-#X obj 88 617 cnv 15 3 17 empty empty 0 5 9 0 16 -216373 -141475 0
+#X text 10 603 7-9 signal - y pulse width \, y minimum \, y maximum
 ;
-#X text 106 442 signal;
-#X obj 88 463 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
+#X text 10 623 10-12 signal - z pulse width \, z minimum \, z maximum
 ;
-#X text 106 461 signal;
-#X obj 88 483 cnv 15 3 17 empty empty 2 5 9 0 16 -216373 -141475 0
+#X text 10 676 1 signal - x;
+#X text 10 696 2 signal - y;
+#X text 10 716 3 signal - z;
+#X text 1 490 ============================================================inlets
 ;
-#X text 106 615 signal;
-#X obj 88 647 cnv 15 3 17 empty empty 1 5 9 0 16 -216373 -141475 0
+#X text 1 645 ============================================================outlets
 ;
-#X text 106 646 signal;
-#X obj 1 675 cnv 15 615 3 empty empty arguments 8 12 0 13 -216373 -1
-0;
-#X text 197 614 - x out;
-#X text 197 646 - y out;
-#X text 15 23 splits an 2D signal vector with square waves;
-#X obj 187 269 xy_splitter~;
-#X obj 40 119 phasor~ 100;
-#X obj 40 143 osci/circle~ 0 0 1;
-#X obj 40 307 osci/out~;
-#X text 192 442 - x frequency;
-#X text 192 461 - y frequency;
-#X text 105 482 float;
-#X text 193 482 - x pulse width;
-#X obj 88 503 cnv 15 3 17 empty empty 3 5 9 0 16 -216373 -141475 0
+#X text 1 734 ============================================================arguments
 ;
-#X obj 88 523 cnv 15 3 17 empty empty 4 5 9 0 16 -216373 -141475 0
+#X text 0 790 ========================================================================================================================
 ;
-#X text 193 502 - x min;
-#X text 193 522 - x max;
-#X obj 88 543 cnv 15 3 17 empty empty 5 5 9 0 16 -216373 -141475 0
-;
-#X text 105 542 float;
-#X obj 88 563 cnv 15 3 17 empty empty 6 5 9 0 16 -216373 -141475 0
-;
-#X obj 88 583 cnv 15 3 17 empty empty 7 5 9 0 16 -216373 -141475 0
-;
-#X text 105 502 signal;
-#X text 105 522 signal;
-#X text 105 562 signal;
-#X text 105 582 signal;
-#X text 193 542 - y pulse width;
-#X text 193 562 - y min;
-#X text 193 582 - y max;
-#X obj 187 165 sig~ 25.1;
-#X obj 197 195 sig~ 20;
-#X text 182 97 [xy_splitter~] splits and image by summing it with a
-square wave. The frequencies can either be linked or seperate. The
-Reset button returns the square waves to their intial state.;
-#X floatatom 271 192 5 0 0 0 - - -;
-#X obj 271 238 *~ -1;
-#X obj 271 215 sig~ 2;
-#X text 318 191 <= a set up like this controls;
-#X text 338 209 the spread of the splits;
-#X connect 16 0 19 0;
-#X connect 16 1 19 1;
-#X connect 17 0 18 0;
-#X connect 18 0 19 0;
-#X connect 18 1 19 1;
-#X connect 39 0 16 0;
-#X connect 40 0 16 1;
-#X connect 42 0 44 0;
-#X connect 43 0 16 3;
-#X connect 43 0 16 6;
-#X connect 44 0 43 0;
-#X connect 44 0 16 4;
-#X connect 44 0 16 7;
+#X text 10 766 none;
+#X obj 10 108 osci/dodeca~;
+#X obj 10 342 osci/rotate~ 20 40 10;
+#X obj 149 168 sig~ 0.5;
+#X obj 117 90 sig~ 201;
+#X obj 127 114 sig~ 302;
+#X obj 138 137 sig~ 176;
+#X obj 292 128 sig~ 1;
+#X text 9 31 [splitter~] splits an image by summing it with a square
+wave. The frequencies for each vector can be linked to one specific
+frequency \, or be set individually.;
+#X connect 0 0 23 0;
+#X connect 2 0 29 0;
+#X connect 3 0 4 10;
+#X connect 3 0 4 7;
+#X connect 3 0 4 4;
+#X connect 4 0 24 0;
+#X connect 4 1 24 1;
+#X connect 4 2 24 2;
+#X connect 6 0 8 0;
+#X connect 23 0 24 0;
+#X connect 23 1 24 1;
+#X connect 23 2 24 2;
+#X connect 24 0 1 0;
+#X connect 24 1 1 1;
+#X connect 25 0 4 3;
+#X connect 25 0 4 6;
+#X connect 25 0 4 9;
+#X connect 26 0 4 0;
+#X connect 27 0 4 1;
+#X connect 28 0 4 2;
+#X connect 29 0 3 0;
+#X connect 29 0 4 5;
+#X connect 29 0 4 8;
+#X connect 29 0 4 11;
