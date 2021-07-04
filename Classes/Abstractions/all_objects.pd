@@ -73,12 +73,12 @@
 , f 77;
 #X obj 73 1369 chris_clip~, f 14;
 #X obj 73 2527 shroom~, f 20;
-#X obj 73 2557 xy_splitter~;
+#X obj 73 2557 splitter~;
 #X obj 73 2119 thrower~ baz, f 14;
 #X obj 73 2149 catcher~ baz, f 14;
 #X obj 73 2289 n~;
 #X obj 73 2317 n;
-#X obj 73 2806 osci/out~, f 14;
+#X obj 73 2902 osci/out~, f 14;
 #X text 54 1715 Value mapping:;
 #X obj 413 10 tgl 15 1 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
@@ -92,7 +92,7 @@
 #X obj 73 774 osci/rotate~, f 14;
 #X obj 73 803 osci/scale~, f 14;
 #X text 180 2594 <== may remove this in the future;
-#X obj 73 2629 record~;
+#X obj 73 2685 record~;
 #X obj 73 2377 date, f 11;
 #X obj 73 2407 time, f 14;
 #X obj 305 31 declare -lib osci;
@@ -112,6 +112,6 @@
 #X obj 73 2347 m_wrap;
 #X obj 73 259 osci/square~;
 #X obj 73 289 osci/triangle~;
-#X text 28 2932 ==========================================================================================================================================================
+#X text 28 3028 ==========================================================================================================================================================
 , f 77;
 #X connect 69 0 70 0;
