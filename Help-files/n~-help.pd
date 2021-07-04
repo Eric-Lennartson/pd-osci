@@ -1,39 +1,43 @@
-#N canvas 226 189 439 397 12;
+#N canvas 645 175 439 485 12;
 #X declare -lib osci;
-#X obj 104 193 snapshot~;
-#X floatatom 104 217 5 0 0 0 - - -;
-#X obj 163 170 metro 100;
-#X obj 33 117 sig~ 1;
-#X obj 33 141 osci/n~;
-#X obj 104 160 osci/n~;
-#X obj 163 142 tgl 24 0 empty empty empty 30 11 0 12 -91412 -174938
+#X obj 94 223 snapshot~;
+#X floatatom 94 247 5 0 0 0 - - -;
+#X obj 153 190 metro 100;
+#X obj 23 117 sig~ 1;
+#X obj 23 141 osci/n~;
+#X obj 94 180 osci/n~;
+#X obj 153 162 tgl 24 0 empty empty empty 30 11 0 12 -91412 -174938
 -203556 0 1;
-#X text 10 35 [n] is short for node. It adds a “node” to the cable
-and helps to clean up the connections of a patch. Input passes through
-unchanged. No one likes spaghetti code.;
 #X obj 297 8 declare -lib osci;
-#X obj 213 107 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
+#X obj 213 127 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
 -174938 -203556;
 #N canvas 0 23 585 110 docs 0;
 #X obj 37 37 inlet;
 #X obj 37 61 else/openfile https://eric-lennartson.github.io/pd-osci/#/n~
 ;
 #X connect 0 0 1 0;
-#X restore 213 134 pd docs;
-#X text 243 109 open online documentation;
-#X text 6 239 ============================================================inlets
+#X restore 213 164 pd docs;
+#X text 243 129 open online documentation;
+#X text 6 279 ============================================================inlets
 ;
-#X text 6 289 ============================================================outlets
+#X text 6 329 ============================================================outlets
 ;
-#X text 6 339 ============================================================arguments
+#X text 6 379 ============================================================arguments
 ;
-#X text 28 373 none;
-#X text 28 272 1 signal - input;
-#X text 28 323 1 signal - input;
+#X text 28 312 1 signal - input;
+#X text 28 363 1 signal - input;
+#X text 28 413 1 int - number of iolets (default to 1);
+#X text 6 439 ========================================================================================================================
+;
+#X text 10 35 [n] is short for node. It adds a “node” to the cable
+and helps to clean up the connections of a patch. An optional argument
+can be provided to set the number of iolets. If no argument is provided
+it defaults to 1 Input passes through unchanged. No one likes spaghetti
+code.;
 #X connect 0 0 1 0;
 #X connect 2 0 0 0;
 #X connect 3 0 4 0;
 #X connect 4 0 5 0;
 #X connect 5 0 0 0;
 #X connect 6 0 2 0;
-#X connect 9 0 10 0;
+#X connect 8 0 9 0;

@@ -1,32 +1,36 @@
-#N canvas 690 168 437 373 12;
+#N canvas 134 141 437 439 12;
 #X declare -lib osci;
-#X floatatom 23 119 5 0 0 0 - - -;
-#X floatatom 343 190 5 0 0 0 - - -;
-#X obj 23 147 osci/n;
-#X obj 343 166 osci/n;
+#X floatatom 23 139 5 0 0 0 - - -;
+#X floatatom 113 210 5 0 0 0 - - -;
+#X obj 23 167 osci/n;
+#X obj 113 186 osci/n;
 #X obj 296 6 declare -lib osci;
-#X text 10 35 [n] is short for node. It adds a “node” to the cable
-and helps to clean up the connections of a patch. Input passes through
-unchanged. No one likes spaghetti code.;
-#X text 6 209 ============================================================inlets
+#X text 6 239 ============================================================inlets
 ;
-#X text 28 242 1 (all data types) - input;
-#X text 28 293 1 (all data types) - input;
-#X text 6 259 ============================================================outlets
+#X text 28 272 1 (all data types) - input;
+#X text 28 323 1 (all data types) - input;
+#X text 6 289 ============================================================outlets
 ;
-#X text 6 309 ============================================================arguments
+#X text 6 339 ============================================================arguments
 ;
-#X text 28 343 none;
-#X obj 135 95 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412 -174938
--203556;
+#X obj 135 115 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
+-174938 -203556;
 #N canvas 0 23 585 110 docs 0;
 #X obj 37 37 inlet;
 #X obj 37 61 else/openfile https://eric-lennartson.github.io/pd-osci/#/n
 ;
 #X connect 0 0 1 0;
-#X restore 135 122 pd docs;
-#X text 165 97 open online documentation;
+#X restore 135 152 pd docs;
+#X text 165 117 open online documentation;
+#X text 10 35 [n] is short for node. It adds a “node” to the cable
+and helps to clean up the connections of a patch. An optional argument
+can be provided to set the number of iolets. If no argument is provided
+it defaults to 1 Input passes through unchanged. No one likes spaghetti
+code.;
+#X text 6 399 ========================================================================================================================
+;
+#X text 28 373 1 int - number of iolets (default to 1);
 #X connect 0 0 2 0;
 #X connect 2 0 3 0;
 #X connect 3 0 1 0;
-#X connect 12 0 13 0;
+#X connect 10 0 11 0;
