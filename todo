@@ -6,12 +6,14 @@
 - chris_clip~-g crash when mod was on, moving the min option
     - fix in pd patch? or the source?
 ==== Things to Improve =========================================================
+- add axis, and degree/radian messages to rotate~
+- could I add more types of rotation objects?
+    - If I'm making more rotation objects how should they be named?
+    - would it be better to have a message that sets the mode of one rotation object?
 - All objects need to have option for args and defaults if not provided.
     - These should be listed in the documentation as well.
 - add in a spot killer abstraction
 - rethink gui version of chris_clip~, is there a better way
-- add axis, and degree/radian messages to rotate~
-- could I add more types of rotation objects?
 - create a shear abstraction that manipulates all the axes at once
     - can I set it up to specify order? (is it useful?)
     - add degree and radian messages
