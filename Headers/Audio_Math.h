@@ -18,6 +18,7 @@ const double HALF_PI;
 #endif
 
 #define DEG_TO_RAD (PI / 180.0)
+#define RAD_TO_DEG (180.0 / PI)
 #define FLT_EPSILON 1.19209290E-07F
 
 #define min(a, b) a < b ? a : b
@@ -30,9 +31,5 @@ t_float map_to_unit(t_float value, t_float inputMin, t_float inputMax, bool clam
 t_float lerp(const t_float t, const t_float a, const t_float b);
 t_vec3 blend(float t, t_vec3 a, t_vec3 b);
 t_float mod1(const t_float value);
-
-// doesn't avoid gimbal lock problems
-// this should probably be in vec3.h
-void rotate(t_vec3* v, t_vec3* rot);
 
 #endif /* Audio_Math_h */

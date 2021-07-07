@@ -54,3 +54,23 @@ void v3_shear(t_vec3 *v, t_float angle, const char* axis)
         }
     }
 }
+
+// doesn't avoid gimbal lock problems
+// this should probably be in vec3.h
+void v3_rotate(t_vec3* v, t_float ax, t_float ay, t_float az)
+{
+    t_sample a = cosf(ax);
+    t_sample b = sinf(ax);
+    t_sample c = cosf(ay);
+    t_sample d = sinf(ay);
+    t_sample e = cosf(az);
+    t_sample f = sinf(az);
+
+    t_sample nx = c * e * v->x - c * f * v->y + d * v->z;
+    t_sample ny = (a * f + b * d * e) * v->x + (a * e - b * d * f) * v->y - b * c * v->z;
+    t_sample nz = (b * f - a * d * e) * v->x + (a * d * f + b * e) * v->y + a * c * v->z;
+
+    v->x = nx;
+    v->y = ny;
+    v->z = nz;
+}

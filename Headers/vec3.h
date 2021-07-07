@@ -9,7 +9,7 @@
 
 typedef struct { t_float x, y, z; } t_vec3;
 
-// Is this macro a good idea?
+// TODO rm this macro 
 #define NEW_VEC3 (t_vec3){0, 0, 0}
 t_vec3 vec3(t_float x, t_float y, t_float z);
 
@@ -32,5 +32,7 @@ bool v3_unequal (t_vec3 a, t_vec3 b);
 // basic transformations
 // char* because of t_symbol
 void v3_shear(t_vec3 *v, t_float angle, const char* axis);
+// doesn't avoid gimbal lock problems
+void v3_rotate(t_vec3* v, t_float ax, t_float ay, t_float az);
 
 #endif /* vec3_h */
