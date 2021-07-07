@@ -24,10 +24,11 @@ static t_int *dash_perform(t_int *w)
     {
         t_sample t = *driver++;
         int pnts = *num_pnts_in++;
-        t_sample dash_length = mod1(*dash_length_in++); // bounds protection
-        
+        t_sample dash_length = fabsf(*dash_length_in++);
+
+        // bounds checks
+        dash_length = (dash_length <= 1) ? dash_length : mod1(dash_length);
         pnts = pnts < 1 ? 1 : pnts; // prevent negative pnts
-        
         
         t_float tn = t * pnts;
         int idx = tn;
