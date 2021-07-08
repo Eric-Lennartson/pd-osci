@@ -140,6 +140,8 @@ void rotate_euler_tilde_setup(void)
                    A_DEFFLOAT, //zRot
                    0);         // no args
 
+  class_sethelpsymbol(rotate_euler_tilde_class, gensym("rotate~")); // links to the help patch
+
   class_addmethod(rotate_euler_tilde_class, (t_method)angle_mode, gensym("mode"), A_DEFSYMBOL, 0);
   class_addmethod(rotate_euler_tilde_class, (t_method)rotate_euler_tilde_dsp, gensym("dsp"), A_CANT, 0);
   CLASS_MAINSIGNALIN(rotate_euler_tilde_class, t_rotate_euler_tilde, f); // dummy arg for singal into first inlet

@@ -6,11 +6,6 @@
 - chris_clip~-g crash when mod was on, moving the min option
     - fix in pd patch? or the source?
 ==== Things to Improve =========================================================
-- add axis, and degree/radian messages to rotate~
-- could I add more types of rotation objects?
-    - If I'm making more rotation objects how should they be named?
-    - rotation objects are named like this rotate_euler, rotate_axis, rotate_pivot
-    - aliases are rotate1, rotate2, rotate3
 - All objects need to have option for args and defaults if not provided.
     - These should be listed in the documentation as well.
 - add in a spot killer abstraction
@@ -28,6 +23,9 @@ COMPLETE THE ABOVE AND PUT OUT A NEW VERSION
 - create lookup tables for cos and sin
 - fix links to helpfiles in aliases
 - using bool seems to cause problems
+- would having flags for args be helpful for some objects?
+    - it seems silly to have to specify all args if you only want
+      to put in some of them. (thinking about rotate_pivot~)
 
 ==== Gui Stuff =================================================================
 - could I do something where the gui is a completely separate abstraction that 
