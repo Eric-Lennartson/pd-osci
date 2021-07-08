@@ -133,13 +133,6 @@ void rotate_euler_tilde_setup(void)
                                        A_DEFFLOAT, //zRot
                                        0);
 
-  class_addcreator((t_newmethod)rotate_euler_tilde_new,
-                   gensym("rotate1~"),
-                   A_DEFFLOAT, //xRot
-                   A_DEFFLOAT, //yRot
-                   A_DEFFLOAT, //zRot
-                   0);         // no args
-
   class_sethelpsymbol(rotate_euler_tilde_class, gensym("rotate~")); // links to the help patch
 
   class_addmethod(rotate_euler_tilde_class, (t_method)angle_mode, gensym("mode"), A_DEFSYMBOL, 0);

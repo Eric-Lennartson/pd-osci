@@ -125,7 +125,7 @@ void *rotate1_tilde_new(t_floatarg ax, t_floatarg ay, t_floatarg az)
 
 void rotate1_tilde_setup(void)
 {
-  rotate1_tilde_class = class_new(gensym("rotate_euler~"),
+  rotate1_tilde_class = class_new(gensym("rotate1~"),
                                        (t_newmethod)rotate1_tilde_new,
                                        (t_method)rotate1_tilde_free,
                                        sizeof(t_rotate1_tilde),
@@ -134,13 +134,6 @@ void rotate1_tilde_setup(void)
                                        A_DEFFLOAT, //yRot
                                        A_DEFFLOAT, //zRot
                                        0);
-
-  class_addcreator((t_newmethod)rotate1_tilde_new,
-                   gensym("rotate1~"),
-                   A_DEFFLOAT, //xRot
-                   A_DEFFLOAT, //yRot
-                   A_DEFFLOAT, //zRot
-                   0);         // no args
 
   class_sethelpsymbol(rotate1_tilde_class, gensym("rotate~")); // links to the help patch
 

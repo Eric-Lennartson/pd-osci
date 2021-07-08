@@ -155,7 +155,7 @@ void *rotate3_tilde_new(t_symbol *s, int argc, t_atom *argv)
 
 void rotate3_tilde_setup(void)
 {
-  rotate3_tilde_class = class_new(gensym("rotate_pivot~"),
+  rotate3_tilde_class = class_new(gensym("rotate3~"),
                                        (t_newmethod)rotate3_tilde_new,
                                        (t_method)rotate3_tilde_free,
                                        sizeof(t_rotate3_tilde),

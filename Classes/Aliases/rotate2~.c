@@ -126,7 +126,7 @@ void *rotate2_tilde_new(t_floatarg angle, t_floatarg ax, t_floatarg ay, t_floata
 
 void rotate2_tilde_setup(void)
 {
-  rotate2_tilde_class = class_new(gensym("rotate_axis~"),
+  rotate2_tilde_class = class_new(gensym("rotate2~"),
                                       (t_newmethod)rotate2_tilde_new,
                                       (t_method)rotate2_tilde_free,
                                       sizeof(t_rotate2_tilde),
