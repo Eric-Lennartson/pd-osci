@@ -32,7 +32,12 @@ bool v3_unequal (t_vec3 a, t_vec3 b);
 // basic transformations
 // char* because of t_symbol
 void v3_shear(t_vec3 *v, t_float angle, const char* axis);
-// doesn't avoid gimbal lock problems
+
+/* euler rotation, doesn't avoid gimbal lock problems */
 void v3_rotate(t_vec3* v, t_float ax, t_float ay, t_float az);
+/* rotate around the specified axis */
+void v3_rotate_axis(t_vec3* v, t_float angle, const t_vec3* axis);
+/* rotate around the specified axis and a pivot point other than the origin */
+void v3_rotate_pivot(t_vec3* v, t_float angle, const t_vec3* pivot, const t_vec3* axis);
 
 #endif /* vec3_h */
