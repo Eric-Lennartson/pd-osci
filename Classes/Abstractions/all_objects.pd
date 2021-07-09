@@ -1,30 +1,30 @@
-#N canvas 32 23 536 728 10;
+#N canvas 425 23 536 728 10;
 #X declare -lib osci;
 #X text 27 52 =============================================================================
 , f 77;
-#X obj 73 1309 ball~, f 10;
-#X obj 73 2467 bezier~, f 12;
-#X obj 73 2497 bezigon~;
-#X obj 73 959 bright~;
+#X obj 73 1359 ball~, f 10;
+#X obj 73 2517 bezier~, f 12;
+#X obj 73 2547 bezigon~;
+#X obj 73 1009 bright~;
 #X obj 74 399 cuboid~, f 19;
-#X obj 73 1189 cut_equal~;
-#X obj 73 1129 cut_mix~;
-#X obj 73 989 dash~;
+#X obj 73 1239 cut_equal~;
+#X obj 73 1179 cut_mix~;
+#X obj 73 1039 dash~;
 #X obj 74 429 dodecahedron~, f 19;
-#X obj 73 1339 grid~, f 14;
+#X obj 73 1389 grid~, f 14;
 #X obj 74 459 icosahedron~, f 19;
-#X obj 73 1019 knee~, f 7;
-#X obj 73 1569 lerp~, f 14;
-#X obj 73 1749 map, f 14;
-#X obj 73 1779 map~, f 14;
+#X obj 73 1069 knee~, f 7;
+#X obj 73 1619 lerp~, f 14;
+#X obj 73 1799 map, f 14;
+#X obj 73 1829 map~, f 14;
 #X obj 74 489 octahedron~, f 19;
-#X obj 73 1659 project~, f 14;
-#X obj 73 1599 osci/ramp, f 14;
-#X obj 73 1629 osci/ramp~, f 14;
-#X obj 73 834 shear~, f 14;
+#X obj 73 1709 project~, f 14;
+#X obj 73 1649 osci/ramp, f 14;
+#X obj 73 1679 osci/ramp~, f 14;
+#X obj 73 894 shear~, f 14;
 #X obj 74 519 tetrahedron~, f 19;
-#X obj 73 1049 trace~, f 7;
-#X obj 73 864 translate~, f 14;
+#X obj 73 1099 trace~, f 7;
+#X obj 73 924 translate~, f 14;
 #X text 54 75 2D Primitives:;
 #X obj 73 109 point~;
 #X obj 73 169 circle~;
@@ -36,23 +36,23 @@
 #X text 27 722 =============================================================================
 , f 77;
 #X text 54 745 Transformations:;
-#X text 27 902 =============================================================================
+#X text 27 952 =============================================================================
 , f 77;
-#X text 54 925 Phase Manipulation:;
-#X text 27 1072 =============================================================================
+#X text 54 975 Phase Manipulation:;
+#X text 27 1122 =============================================================================
 , f 77;
-#X text 54 1095 Phase Cutting:;
-#X obj 73 1219 cut_weights~;
-#X obj 73 1159 cut_idx~;
-#X text 27 1252 =============================================================================
+#X text 54 1145 Phase Cutting:;
+#X obj 73 1269 cut_weights~;
+#X obj 73 1209 cut_idx~;
+#X text 27 1302 =============================================================================
 , f 77;
-#X text 54 1275 Effects:;
-#X text 27 1512 =============================================================================
+#X text 54 1325 Effects:;
+#X text 27 1562 =============================================================================
 , f 77;
-#X text 54 1535 Glue:;
-#X text 27 2242 =============================================================================
+#X text 54 1585 Glue:;
+#X text 27 2292 =============================================================================
 , f 77;
-#X text 54 2265 Misc:;
+#X text 54 2315 Misc:;
 #X text 51 30 ALL OBJECTS IN THE OSCI LIBRARY:;
 #X obj 73 139 osci/line~, f 15;
 #X text 27 552 =============================================================================
@@ -61,57 +61,59 @@
 #X obj 78 604 heart~;
 #X obj 78 634 selipse~;
 #X obj 78 664 supershape~;
-#X obj 73 2437 text~, f 12;
+#X obj 73 2487 text~, f 12;
 #X obj 73 229 rectangle~, f 14;
 #X obj 78 694 hypotrochoid~;
-#X text 27 2062 =============================================================================
+#X text 27 2112 =============================================================================
 , f 77;
-#X text 54 2085 Signal send and receive:;
-#X obj 73 1809 skew, f 15;
-#X obj 73 1839 skew~, f 15;
-#X text 27 1692 =============================================================================
+#X text 54 2135 Signal send and receive:;
+#X obj 73 1859 skew, f 15;
+#X obj 73 1889 skew~, f 15;
+#X text 27 1742 =============================================================================
 , f 77;
-#X obj 73 1369 chris_clip~, f 14;
-#X obj 73 2527 shroom~, f 20;
-#X obj 73 2557 splitter~;
-#X obj 73 2119 thrower~ baz, f 14;
-#X obj 73 2149 catcher~ baz, f 14;
-#X obj 73 2289 n~;
-#X obj 73 2317 n;
-#X obj 73 2902 osci/out~, f 14;
-#X text 54 1715 Value mapping:;
+#X obj 73 1419 chris_clip~, f 14;
+#X obj 73 2577 shroom~, f 20;
+#X obj 73 2607 splitter~;
+#X obj 73 2169 thrower~ baz, f 14;
+#X obj 73 2199 catcher~ baz, f 14;
+#X obj 73 2339 n~;
+#X obj 73 2367 n;
+#X obj 73 2952 osci/out~, f 14;
+#X text 54 1765 Value mapping:;
 #X obj 413 10 tgl 15 1 empty empty empty 17 7 0 10 -262144 -1 -1 0
 1;
 #X obj 413 31 switch~;
-#X obj 73 2179 snd~ bar, f 14;
-#X obj 73 2209 rcv~ bar, f 14;
-#X text 27 1862 =============================================================================
+#X obj 73 2229 snd~ bar, f 14;
+#X obj 73 2259 rcv~ bar, f 14;
+#X text 27 1912 =============================================================================
 , f 77;
-#X text 54 1885 Brightness Control:;
-#X obj 73 1917 osci/gamma~;
-#X obj 73 774 osci/rotate~, f 14;
-#X obj 73 803 osci/scale~, f 14;
-#X text 180 2594 <== may remove this in the future;
-#X obj 73 2685 record~;
-#X obj 73 2377 date, f 11;
-#X obj 73 2407 time, f 14;
+#X text 54 1935 Brightness Control:;
+#X obj 73 1967 osci/gamma~;
+#X obj 73 863 osci/scale~, f 14;
+#X text 180 2644 <== may remove this in the future;
+#X obj 73 2735 record~;
+#X obj 73 2427 date, f 11;
+#X obj 73 2457 time, f 14;
 #X obj 305 31 declare -lib osci;
-#X text 27 1947 =============================================================================
+#X text 27 1997 =============================================================================
 , f 77;
-#X text 54 1970 Binary Operators:;
-#X obj 73 2002 ==~;
-#X obj 113 2002 !=~;
-#X obj 153 2002 <~;
-#X obj 193 2002 >~;
-#X obj 73 2032 <=~;
-#X obj 113 2032 >=~;
-#X obj 153 2032 %~;
-#X obj 73 1397 chris_clip~-g;
+#X text 54 2020 Binary Operators:;
+#X obj 73 2052 ==~;
+#X obj 113 2052 !=~;
+#X obj 153 2052 <~;
+#X obj 193 2052 >~;
+#X obj 73 2082 <=~;
+#X obj 113 2082 >=~;
+#X obj 153 2082 %~;
+#X obj 73 1447 chris_clip~-g;
 #A saved 0 0 -1 0 1 0 1 0;
-#X text 194 1396 [chris_clip~-g];
-#X obj 73 2347 m_wrap;
+#X text 194 1446 [chris_clip~-g];
+#X obj 73 2397 m_wrap;
 #X obj 73 259 osci/square~;
 #X obj 73 289 osci/triangle~;
-#X text 28 3028 ==========================================================================================================================================================
+#X text 28 3078 ==========================================================================================================================================================
 , f 77;
+#X obj 73 774 rotate_euler~, f 14;
+#X obj 73 804 rotate_axis~, f 14;
+#X obj 73 834 rotate_pivot~, f 14;
 #X connect 69 0 70 0;

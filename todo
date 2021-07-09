@@ -6,13 +6,13 @@
 - chris_clip~-g crash when mod was on, moving the min option
     - fix in pd patch? or the source?
 ==== Things to Improve =========================================================
+- create a shear abstraction that manipulates all the axes at once
+    - can I set it up to specify order? (is it useful?)
+    - add degree and radian messages
 - All objects need to have option for args and defaults if not provided.
     - These should be listed in the documentation as well.
 - add in a spot killer abstraction
 - rethink gui version of chris_clip~, is there a better way
-- create a shear abstraction that manipulates all the axes at once
-    - can I set it up to specify order? (is it useful?)
-    - add degree and radian messages
 - create an abstraction for dash~ that allows for dashing 3D objects
     - each vector can have separate dashes OR be linked together.
 - add an auto make-up gain to chris_clip~-g?
