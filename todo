@@ -8,7 +8,6 @@
 ==== Things to Improve =========================================================
 - create a shear abstraction that manipulates all the axes at once
     - can I set it up to specify order? (is it useful?)
-    - add degree and radian messages
 - All objects need to have option for args and defaults if not provided.
     - These should be listed in the documentation as well.
 - add in a spot killer abstraction

@@ -17,7 +17,6 @@ t_float v3_len(t_vec3 v) { return sqrtf(v.x * v.x + v.y * v.y + v.z * v.z); }
 bool v3_equal(t_vec3 a, t_vec3 b) { return (a.x == b.x) && (a.y == b.y) && (a.z == b.z); }
 bool v3_unequal(t_vec3 a, t_vec3 b) { return (a.x != b.x) || (a.y != b.y) || (a.z != b.z); }
 
-// normalize
 t_vec3 v3_norm(t_vec3 v)
 {
     float len = v3_len(v);
@@ -27,8 +26,6 @@ t_vec3 v3_norm(t_vec3 v)
         return (t_vec3){0, 0, 0};
 }
 
-// basic transformations
-// char* because of t_symbol
 void v3_shear(t_vec3 *v, t_float angle, const char *axis)
 {
     if (axis && v) // check for nullptr
