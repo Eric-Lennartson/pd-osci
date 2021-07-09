@@ -1,25 +1,12 @@
-#N canvas 413 23 445 755 12;
+#N canvas 316 167 435 373 12;
 #X declare -lib osci;
-#X obj 5 211 osci/rotate~ 0 45 0, f 29;
-#X floatatom 125 116 5 0 0 1 x_angle - -;
-#X obj 125 139 sig~;
-#X floatatom 165 139 5 0 0 1 y_angle - -;
-#X obj 165 162 sig~;
-#X floatatom 205 162 5 0 0 1 z_angle - -;
-#X obj 205 185 sig~;
-#X obj 5 103 phasor~ 50;
-#X obj 5 127 osci/cuboid~;
-#X obj 5 235 osci/out~;
-#X text 4 25 [rotate~] performs an euler rotation using degrees. The
-first 3 inlets are the vector to be rotated \, and the next 3 are the
-angles of rotation in degrees. Be careful of gimbal lock \, if two
-axes line up then the third will have no effect.;
-#X obj 169 266 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
+#X obj 5 237 osci/out~;
+#X obj 179 208 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
 -174938 -203556;
-#X text 197 268 open online documentation;
-#X obj 195 293 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
+#X text 207 210 open online documentation;
+#X obj 205 235 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
 -174938 -203556;
-#N canvas 0 23 450 300 links 0;
+#N canvas 0 23 457 203 links 1;
 #X obj 37 37 inlet;
 #X obj 203 33 inlet;
 #X obj 262 33 inlet;
@@ -27,49 +14,298 @@ axes line up then the third will have no effect.;
 ;
 #X obj 32 171 else/openfile https://en.wikipedia.org/wiki/Euler_angles
 ;
-#X obj 37 61 else/openfile https://eric-lennartson.github.io/pd-osci/#/rotate~
+#X obj 37 61 else/openfile https://eric-lennartson.github.io/pd-osci/#/rotate_euler~
 ;
 #X connect 0 0 5 0;
 #X connect 1 0 3 0;
 #X connect 2 0 4 0;
-#X restore 169 355 pd links;
-#X text 223 296 more about gimbal lock;
-#X obj 222 320 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
+#X restore 179 297 pd links;
+#X text 233 238 more about gimbal lock;
+#X obj 232 262 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
 -174938 -203556;
-#X text 250 323 more about euler angles;
-#X text 3 381 ============================================================inlets
+#X text 260 265 more about euler angles;
+#X obj 297 5 declare -lib osci;
+#X text 4 27 osci's rotation objects performs an euler rotation using
+degrees. A mode message can be used to set the angle mode to either
+degrees or radians. Be careful of gimbal lock \, if two axes line up
+then the third will have no effect. To learn more open it's related
+subpatch.;
+#N canvas 538 24 441 754 rotate_euler~ 0;
+#X floatatom 125 186 5 0 0 1 x_angle - -;
+#X obj 125 209 sig~;
+#X floatatom 165 209 5 0 0 1 y_angle - -;
+#X obj 165 232 sig~;
+#X floatatom 205 232 5 0 0 1 z_angle - -;
+#X obj 205 255 sig~;
+#X obj 5 103 phasor~ 50;
+#X obj 5 127 osci/cuboid~;
+#X obj 320 218 loadbang;
+#X msg 320 242 0;
+#X obj 320 266 tgl 24 0 empty empty empty 30 11 0 12 -91412 -174938
+-203556 0 1;
+#X obj 320 300 switch~;
+#X obj 5 281 osci/rotate_euler~, f 29;
+#X text 5 18 [rotate_euler~] is osci's default rotation object. It
+takes a 3D vector and performs an euler rotation on it. It also has
+optional messages to set the angle mode to degrees or radians.;
+#X obj 169 336 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
+-174938 -203556;
+#X text 197 338 open online documentation;
+#N canvas 0 23 421 90 links 0;
+#X obj 7 17 inlet;
+#X obj 7 41 else/openfile https://eric-lennartson.github.io/pd-osci/#/rotate_euler~
 ;
-#X text 3 535 ============================================================outlets
+#X connect 0 0 1 0;
+#X restore 169 365 pd links;
+#X text 3 391 ============================================================inlets
 ;
-#X text 3 634 ============================================================arguments
+#X text 3 545 ============================================================outlets
 ;
-#X text 3 738 ========================================================================================================================
+#X text 3 734 ============================================================arguments
 ;
-#X text 20 415 1 float/signal - x;
-#X text 20 435 2 float/signal - y;
-#X text 20 455 3 float/signal - z;
-#X text 20 475 4 float/signal - x angle (degrees);
-#X text 20 495 5 float/signal - y angle (degrees);
-#X text 20 515 6 float/signal - z angle (degrees);
-#X text 20 573 1 signal - x;
-#X text 20 593 2 signal - y;
-#X text 20 613 3 signal - z;
-#X text 20 671 1 float - x angle (degrees);
-#X text 20 691 2 float - y angle (degrees);
-#X text 20 711 3 float - z angle (degrees);
-#X obj 297 3 declare -lib osci;
-#X connect 0 0 9 0;
-#X connect 0 1 9 1;
-#X connect 1 0 2 0;
-#X connect 2 0 0 3;
-#X connect 3 0 4 0;
-#X connect 4 0 0 4;
-#X connect 5 0 6 0;
-#X connect 6 0 0 5;
-#X connect 7 0 8 0;
-#X connect 8 0 0 0;
-#X connect 8 1 0 1;
-#X connect 8 2 0 2;
-#X connect 11 0 14 0;
-#X connect 13 0 14 1;
-#X connect 16 0 14 2;
+#X text 3 828 ========================================================================================================================
+;
+#X text 20 583 1 signal - x;
+#X text 20 603 2 signal - y;
+#X text 20 623 3 signal - z;
+#X obj 5 305 osci/thrower~ help-out;
+#X text 10 357 alias;
+#X obj 56 356 osci/rotate1~;
+#X text 1 645 ============================================================messages
+;
+#X text 11 682 Optional message to send to the first inlet.;
+#X text 21 707 mode - sets the angle mode. (degrees or radians);
+#X text 20 425 1 signal/float - x;
+#X text 20 445 2 signal/float - y;
+#X text 20 465 3 signal/float - z;
+#X msg 108 118 mode degrees;
+#X msg 118 148 mode radians;
+#X text 20 485 4 signal/float - x angle;
+#X text 20 505 5 signal/float - y angle;
+#X text 20 525 6 signal/float - z angle;
+#X text 20 771 1 float - x angle;
+#X text 20 791 2 float - y angle;
+#X text 20 811 3 float - z angle;
+#X obj 354 243 inlet;
+#X connect 0 0 1 0;
+#X connect 1 0 12 3;
+#X connect 2 0 3 0;
+#X connect 3 0 12 4;
+#X connect 4 0 5 0;
+#X connect 5 0 12 5;
+#X connect 6 0 7 0;
+#X connect 7 0 12 0;
+#X connect 7 1 12 1;
+#X connect 7 2 12 2;
+#X connect 8 0 9 0;
+#X connect 9 0 10 0;
+#X connect 10 0 11 0;
+#X connect 12 0 24 0;
+#X connect 12 1 24 1;
+#X connect 12 2 24 2;
+#X connect 14 0 16 0;
+#X connect 33 0 12 0;
+#X connect 34 0 12 0;
+#X connect 41 0 10 0;
+#X restore 7 156 pd rotate_euler~;
+#N canvas 494 23 442 755 rotate_axis~ 0;
+#X floatatom 182 186 5 0 0 1 x_axis - -;
+#X obj 181 209 sig~;
+#X floatatom 222 209 5 0 0 1 y_axis - -;
+#X obj 222 232 sig~;
+#X floatatom 264 232 5 0 0 1 z_axis - -;
+#X obj 264 255 sig~;
+#X obj 15 83 phasor~ 50;
+#X obj 15 107 osci/cuboid~;
+#X obj 317 109 loadbang;
+#X msg 317 133 0;
+#X obj 317 157 tgl 24 0 empty empty empty 30 11 0 12 -91412 -174938
+-203556 0 1;
+#X obj 317 191 switch~;
+#X obj 179 336 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
+-174938 -203556;
+#X text 207 338 open online documentation;
+#N canvas 0 23 476 128 links 0;
+#X obj 37 37 inlet;
+#X obj 37 61 else/openfile https://eric-lennartson.github.io/pd-osci/#/rotate_axis~
+;
+#X connect 0 0 1 0;
+#X restore 179 375 pd links;
+#X text 3 401 ============================================================inlets
+;
+#X text 3 575 ============================================================outlets
+;
+#X text 3 764 ============================================================arguments
+;
+#X text 3 878 ========================================================================================================================
+;
+#X text 20 613 1 signal - x;
+#X text 20 633 2 signal - y;
+#X text 20 653 3 signal - z;
+#X obj 15 305 osci/thrower~ help-out;
+#X text 20 357 alias;
+#X text 1 675 ============================================================messages
+;
+#X text 11 712 Optional message to send to the first inlet.;
+#X text 21 737 mode - sets the angle mode. (degrees or radians);
+#X text 20 435 1 signal/float - x;
+#X text 20 455 2 signal/float - y;
+#X text 20 475 3 signal/float - z;
+#X msg 118 98 mode degrees;
+#X msg 128 128 mode radians;
+#X obj 66 356 osci/rotate2~;
+#X obj 15 281 osci/rotate_axis~, f 36;
+#X text 5 18 [rotate_axis~] rotates an 3D vector around the specified
+axis. It also has optional messages to set the angle mode to degrees
+or radians.;
+#X floatatom 139 164 5 0 0 1 angle - -;
+#X obj 139 187 sig~;
+#X text 20 495 4 signal/float - angle;
+#X text 20 515 5 signal/float - x axis component;
+#X text 20 801 1 float - angle;
+#X text 20 821 2 float - x axis component;
+#X text 20 841 3 float - y axis component;
+#X text 20 861 4 float - z axis component;
+#X obj 351 133 inlet;
+#X text 20 535 6 signal/float - y axis component;
+#X text 20 555 7 signal/float - z axis component;
+#X connect 0 0 1 0;
+#X connect 1 0 33 4;
+#X connect 2 0 3 0;
+#X connect 3 0 33 5;
+#X connect 4 0 5 0;
+#X connect 5 0 33 6;
+#X connect 6 0 7 0;
+#X connect 7 0 33 0;
+#X connect 7 1 33 1;
+#X connect 7 2 33 2;
+#X connect 8 0 9 0;
+#X connect 9 0 10 0;
+#X connect 10 0 11 0;
+#X connect 12 0 14 0;
+#X connect 30 0 33 0;
+#X connect 31 0 33 0;
+#X connect 33 0 22 0;
+#X connect 33 1 22 1;
+#X connect 33 2 22 2;
+#X connect 35 0 36 0;
+#X connect 36 0 33 3;
+#X connect 43 0 10 0;
+#X restore 127 156 pd rotate_axis~;
+#N canvas 552 23 442 755 rotate_pivot~ 0;
+#X floatatom 170 171 5 0 0 1 pivot_x - -;
+#X obj 169 194 sig~;
+#X floatatom 210 194 5 0 0 1 pivot_y - -;
+#X obj 210 217 sig~;
+#X floatatom 247 220 5 0 0 1 pivot_z - -;
+#X obj 247 243 sig~;
+#X obj 4 83 phasor~ 50;
+#X obj 4 107 osci/cuboid~;
+#X obj 283 79 loadbang;
+#X msg 283 103 0;
+#X obj 283 127 tgl 24 0 empty empty empty 30 11 0 12 -91412 -174938
+-203556 0 1;
+#X obj 283 159 switch~;
+#X obj 168 416 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
+-174938 -203556;
+#X text 196 418 open online documentation;
+#N canvas 0 23 476 128 links 0;
+#X obj 37 37 inlet;
+#X obj 37 61 else/openfile https://eric-lennartson.github.io/pd-osci/#/rotate_pivot~
+;
+#X connect 0 0 1 0;
+#X restore 168 445 pd links;
+#X text 3 471 ============================================================inlets
+;
+#X text 3 705 ============================================================outlets
+;
+#X text 3 894 ============================================================arguments
+;
+#X text 3 1068 ========================================================================================================================
+;
+#X text 20 743 1 signal - x;
+#X text 20 763 2 signal - y;
+#X text 20 783 3 signal - z;
+#X obj 4 385 osci/thrower~ help-out, f 56;
+#X text 9 427 alias;
+#X text 1 805 ============================================================messages
+;
+#X text 11 842 Optional message to send to the first inlet.;
+#X text 21 867 mode - sets the angle mode. (degrees or radians);
+#X text 20 505 1 signal/float - x;
+#X text 20 525 2 signal/float - y;
+#X text 20 545 3 signal/float - z;
+#X msg 97 98 mode degrees;
+#X msg 102 119 mode radians;
+#X floatatom 133 144 5 0 0 1 angle - -;
+#X obj 133 167 sig~;
+#X text 20 565 4 signal/float - angle;
+#X text 20 931 1 float - angle;
+#X obj 317 103 inlet;
+#X text 5 18 [rotate_pivot~] rotates an 3D vector around a pivot point
+and a specified axis. It also has optional messages to set the angle
+mode to degrees or radians.;
+#X obj 4 361 osci/rotate_pivot~, f 56;
+#X floatatom 286 255 5 0 0 2 axis_x - -;
+#X obj 285 278 sig~;
+#X floatatom 326 280 5 0 0 2 axis_y - -;
+#X obj 326 303 sig~;
+#X floatatom 367 310 5 0 0 2 axis_z - -;
+#X obj 367 333 sig~;
+#X obj 55 426 osci/rotate3~;
+#X text 20 585 5 signal/float - pivot x;
+#X text 20 605 6 signal/float - pivot y;
+#X text 20 625 7 signal/float - pivot z;
+#X text 20 645 8 signal/float - axis x;
+#X text 20 665 9 signal/float - axis y;
+#X text 20 685 10 signal/float - axis z;
+#X text 20 951 2 float - pivot x;
+#X text 20 971 3 float - pivot y;
+#X text 20 991 4 float - pivot z;
+#X text 20 1011 5 float - axis x;
+#X text 20 1031 6 float - axis y;
+#X text 20 1051 7 float - axis z;
+#X connect 0 0 1 0;
+#X connect 1 0 38 4;
+#X connect 2 0 3 0;
+#X connect 3 0 38 5;
+#X connect 4 0 5 0;
+#X connect 5 0 38 6;
+#X connect 6 0 7 0;
+#X connect 7 0 38 0;
+#X connect 7 1 38 1;
+#X connect 7 2 38 2;
+#X connect 8 0 9 0;
+#X connect 9 0 10 0;
+#X connect 10 0 11 0;
+#X connect 12 0 14 0;
+#X connect 30 0 38 0;
+#X connect 31 0 38 0;
+#X connect 32 0 33 0;
+#X connect 33 0 38 3;
+#X connect 36 0 10 0;
+#X connect 38 0 22 0;
+#X connect 38 1 22 1;
+#X connect 38 2 22 2;
+#X connect 39 0 40 0;
+#X connect 40 0 38 7;
+#X connect 41 0 42 0;
+#X connect 42 0 38 8;
+#X connect 43 0 44 0;
+#X connect 44 0 38 9;
+#X restore 240 156 pd rotate_pivot~;
+#X obj 5 208 osci/catcher~ help-out;
+#X obj 7 114 tgl 24 0 empty empty empty 30 11 0 12 -91412 -174938 -203556
+0 1;
+#X obj 127 114 tgl 24 0 empty empty empty 30 11 0 12 -91412 -174938
+-203556 0 1;
+#X obj 240 114 tgl 24 0 empty empty empty 30 11 0 12 -91412 -174938
+-203556 0 1;
+#X connect 1 0 4 0;
+#X connect 3 0 4 1;
+#X connect 6 0 4 2;
+#X connect 13 0 0 0;
+#X connect 13 1 0 1;
+#X connect 14 0 10 0;
+#X connect 15 0 11 0;
+#X connect 16 0 12 0;
