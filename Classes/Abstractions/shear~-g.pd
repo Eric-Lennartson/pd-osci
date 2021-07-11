@@ -1,0 +1,149 @@
+#N canvas 152 86 736 692 12;
+#X obj 5 246 osci/shear~ 0 x;
+#X obj 5 381 osci/shear~ 0 y;
+#X obj 5 515 osci/shear~ 0 z;
+#X obj 5 593 outlet~ x;
+#X obj 107 542 outlet~ z;
+#X obj 56 567 outlet~ y;
+#X obj 5 13 inlet~ x;
+#X obj 39 43 inlet~ y;
+#X obj 73 73 inlet~ z;
+#X obj 83 128 r \$0-mode;
+#X obj 83 152 sel 0 1;
+#X msg 106 176 mode radians;
+#X msg 83 199 mode degrees;
+#X obj 307 13 inlet~ xAngle;
+#X obj 336 43 inlet~ yAngle;
+#X obj 366 73 inlet~ zAngle;
+#X obj 234 197 sig~;
+#X obj 205 225 else/xselect~ 2;
+#X obj 205 129 r \$0-x-sig-sel;
+#X obj 205 153 + 1;
+#N canvas 168 381 510 300 gui 0;
+#X obj 7 10 r \$0-mode;
+#X obj 7 34 sel 0 1;
+#X msg 7 88 label Degrees;
+#X msg 27 58 label Radians;
+#X obj 7 112 s \$0-set-mode;
+#X obj 153 32 sel 0 1;
+#X obj 153 8 r \$0-x-sig-sel;
+#X msg 173 56 label Inlet;
+#X obj 154 110 s \$0-set-x-sig-sel;
+#X msg 153 86 label Number\ Box;
+#X obj 313 32 sel 0 1;
+#X msg 333 56 label Inlet;
+#X msg 313 86 label Number\ Box;
+#X obj 143 182 sel 0 1;
+#X msg 163 206 label Inlet;
+#X msg 143 236 label Number\ Box;
+#X obj 313 8 r \$0-y-sig-sel;
+#X obj 314 110 s \$0-set-y-sig-sel;
+#X obj 143 158 r \$0-z-sig-sel;
+#X obj 144 260 s \$0-set-z-sig-sel;
+#X connect 0 0 1 0;
+#X connect 1 0 2 0;
+#X connect 1 1 3 0;
+#X connect 2 0 4 0;
+#X connect 3 0 4 0;
+#X connect 5 0 9 0;
+#X connect 5 1 7 0;
+#X connect 6 0 5 0;
+#X connect 7 0 8 0;
+#X connect 9 0 8 0;
+#X connect 10 0 12 0;
+#X connect 10 1 11 0;
+#X connect 11 0 17 0;
+#X connect 12 0 17 0;
+#X connect 13 0 15 0;
+#X connect 13 1 14 0;
+#X connect 14 0 19 0;
+#X connect 15 0 19 0;
+#X connect 16 0 10 0;
+#X connect 18 0 13 0;
+#X restore 514 79 pd gui;
+#X obj 275 330 sig~;
+#X obj 234 360 else/xselect~ 2;
+#X obj 234 298 + 1;
+#X obj 305 465 sig~;
+#X obj 264 496 else/xselect~ 2;
+#X obj 264 434 + 1;
+#X obj 234 274 r \$0-y-sig-sel;
+#X obj 264 410 r \$0-z-sig-sel;
+#X obj 305 440 r \$0-z-ang;
+#X obj 275 305 r \$0-y-ang;
+#X obj 234 168 r \$0-x-ang;
+#X obj 432 131 cnv 15 191 15 empty h1 osci/shear-g~ 3 8 0 11 -16645
+-257781 0;
+#X obj 432 147 cnv 15 191 91 empty body empty 20 12 0 14 -99865 -66577
+0;
+#X obj 530 152 tgl 18 0 \$0-mode \$0-set-mode Degrees 20 10 0 11 -91412
+-174938 -203556 0 1;
+#X obj 530 173 tgl 18 0 \$0-x-sig-sel \$0-set-x-sig-sel Number\ Box
+20 10 0 11 -91412 -174938 -203556 0 1;
+#X floatatom 437 173 5 0 0 1 x_angle #0-set-x-ang #0-x-ang;
+#X obj 530 194 tgl 18 0 \$0-y-sig-sel \$0-set-y-sig-sel Number\ Box
+20 10 0 11 -91412 -174938 -203556 0 1;
+#X obj 530 215 tgl 18 0 \$0-z-sig-sel \$0-set-z-sig-sel Number\ Box
+20 10 0 11 -91412 -174938 -203556 0 1;
+#X floatatom 437 194 5 0 0 1 y_angle #0-set-y-ang #0-y-ang;
+#X floatatom 437 215 5 0 0 1 z_angle #0-set-z-ang #0-z-ang;
+#X obj 432 131 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+0;
+#X obj 505 131 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+0;
+#X obj 468 131 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+0;
+#X obj 542 131 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+0;
+#X obj 616 131 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+0;
+#X obj 579 131 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+0;
+#X obj 432 236 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+0;
+#X obj 616 236 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+0;
+#X obj 524 236 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+0;
+#X obj 512 283 else/initmess \; \$0-set-x-sig-sel 0 \; \$0-set-y-sig-sel
+0 \; \$0-set-z-sig-sel 0 \;;
+#X connect 0 0 1 0;
+#X connect 0 1 1 1;
+#X connect 0 2 1 2;
+#X connect 1 0 2 0;
+#X connect 1 1 2 1;
+#X connect 1 2 2 2;
+#X connect 2 0 3 0;
+#X connect 2 1 5 0;
+#X connect 2 2 4 0;
+#X connect 6 0 0 0;
+#X connect 7 0 0 1;
+#X connect 8 0 0 2;
+#X connect 9 0 10 0;
+#X connect 10 0 12 0;
+#X connect 10 1 11 0;
+#X connect 11 0 0 0;
+#X connect 11 0 1 0;
+#X connect 11 0 2 0;
+#X connect 12 0 0 0;
+#X connect 12 0 1 0;
+#X connect 12 0 2 0;
+#X connect 13 0 17 1;
+#X connect 14 0 22 1;
+#X connect 15 0 25 1;
+#X connect 16 0 17 0;
+#X connect 17 0 0 3;
+#X connect 18 0 19 0;
+#X connect 19 0 17 0;
+#X connect 21 0 22 0;
+#X connect 22 0 1 3;
+#X connect 23 0 22 0;
+#X connect 24 0 25 0;
+#X connect 25 0 2 3;
+#X connect 26 0 25 0;
+#X connect 27 0 23 0;
+#X connect 28 0 26 0;
+#X connect 29 0 24 0;
+#X connect 30 0 21 0;
+#X connect 31 0 16 0;
+#X coords 0 -1 1 1 193 109 2 431 130;
