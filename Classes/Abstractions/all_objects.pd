@@ -90,7 +90,6 @@
 #X text 54 1825 Brightness Control:;
 #X obj 73 1857 osci/gamma~;
 #X obj 73 863 osci/scale~, f 14;
-#X text 180 2534 <== may remove this in the future;
 #X obj 73 2625 record~;
 #X obj 73 2317 date, f 11;
 #X obj 73 2347 time, f 14;

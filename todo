@@ -6,7 +6,6 @@
 - chris_clip~-g crash when mod was on, moving the min option
     - fix in pd patch? or the source?
 ==== Things to Improve =========================================================
-- add osci/ creators to binops
 - All objects need to have option for args and defaults if not provided.
     - These should be listed in the documentation as well.
 - add in a spot killer abstraction
@@ -16,6 +15,7 @@
 - double check that new objs are documented
 COMPLETE THE ABOVE AND PUT OUT A NEW VERSION
 =================================================================================
+- is there a convienient way to get rid of unused parameter warnings?
 - vectorize perf functions if possible
 - create lookup tables for cos and sin
 - fix links to helpfiles in aliases
