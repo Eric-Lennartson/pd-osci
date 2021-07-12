@@ -80,6 +80,8 @@ void sig_equals_setup(void)
                                 A_DEFFLOAT,
                                 0); // no args
 
+    class_addcreator((t_newmethod)sig_equals_new, gensym("osci/==~"), A_DEFFLOAT, 0);
+
     class_sethelpsymbol(sig_equals_class, gensym("binops~"));
     
     class_addmethod(sig_equals_class, (t_method)sig_equals_dsp, gensym("dsp"), A_CANT, 0);
@@ -143,6 +145,8 @@ void sig_notequals_setup(void)
                                 CLASS_DEFAULT, // gui appearance
                                 A_DEFFLOAT,
                                 0); // no args
+
+    class_addcreator((t_newmethod)sig_notequals_new, gensym("osci/!=~"), A_DEFFLOAT, 0);
 
     class_sethelpsymbol(sig_notequals_class, gensym("binops~"));
     
@@ -208,6 +212,8 @@ void sig_less_setup(void)
                                 A_DEFFLOAT,
                                 0); // no args
 
+    class_addcreator((t_newmethod)sig_less_new, gensym("osci/<~"), A_DEFFLOAT, 0);
+
     class_sethelpsymbol(sig_less_class, gensym("binops~"));
     
     class_addmethod(sig_less_class, (t_method)sig_less_dsp, gensym("dsp"), A_CANT, 0);
@@ -271,6 +277,8 @@ void sig_greater_setup(void)
                                 CLASS_DEFAULT, // gui appearance
                                 A_DEFFLOAT,
                                 0); // no args
+
+    class_addcreator((t_newmethod)sig_greater_new, gensym("osci/>~"), A_DEFFLOAT, 0);
 
     class_sethelpsymbol(sig_greater_class, gensym("binops~"));
     
@@ -336,6 +344,8 @@ void sig_lessequals_setup(void)
                                 A_DEFFLOAT,
                                 0); // no args
 
+    class_addcreator((t_newmethod)sig_lessequals_new, gensym("osci/<=~"), A_DEFFLOAT, 0);
+
     class_sethelpsymbol(sig_lessequals_class, gensym("binops~"));
     
     class_addmethod(sig_lessequals_class, (t_method)sig_lessequals_dsp, gensym("dsp"), A_CANT, 0);
@@ -399,6 +409,8 @@ void sig_greaterequals_setup(void)
                                 CLASS_DEFAULT, // gui appearance
                                 A_DEFFLOAT,
                                 0); // no args
+
+    class_addcreator((t_newmethod)sig_greaterequals_new, gensym("osci/>=~"), A_DEFFLOAT, 0);
 
     class_sethelpsymbol(sig_greaterequals_class, gensym("binops~"));
     
@@ -464,6 +476,8 @@ void sig_or_setup(void)
                                 A_DEFFLOAT,
                                 0); // no args
 
+    class_addcreator((t_newmethod)sig_or_new, gensym("osci/||~"), A_DEFFLOAT, 0);
+
     class_sethelpsymbol(sig_or_class, gensym("binops~"));
     
     class_addmethod(sig_or_class, (t_method)sig_or_dsp, gensym("dsp"), A_CANT, 0);
@@ -528,13 +542,15 @@ void sig_and_setup(void)
                                 A_DEFFLOAT,
                                 0); // no args
 
+    class_addcreator((t_newmethod)sig_and_new, gensym("osci/&&~"), A_DEFFLOAT, 0);
+
     class_sethelpsymbol(sig_and_class, gensym("binops~"));
     
     class_addmethod(sig_and_class, (t_method)sig_and_dsp, gensym("dsp"), A_CANT, 0);
     CLASS_MAINSIGNALIN(sig_and_class, t_sig_and, f); // dummy arg for singal into first inlet
 }
 
-//==================== [&&~] ====================//
+//==================== [mod~] ====================//
 
 static t_class *sig_modulo_class;
 
@@ -593,10 +609,9 @@ void sig_modulo_setup(void)
                                 A_DEFFLOAT,
                                 0); // no args
 
-    class_addcreator((t_newmethod)sig_modulo_new,
-                      gensym("mod~"),
-                      A_DEFFLOAT,
-                      0); // no args
+    class_addcreator((t_newmethod)sig_modulo_new, gensym("mod~"), A_DEFFLOAT, 0);
+    class_addcreator((t_newmethod)sig_modulo_new, gensym("osci/%~"), A_DEFFLOAT, 0);
+    class_addcreator((t_newmethod)sig_modulo_new, gensym("osci/mod~"), A_DEFFLOAT, 0);
 
     class_sethelpsymbol(sig_modulo_class, gensym("binops~"));
     
