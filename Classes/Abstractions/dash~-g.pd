@@ -1,0 +1,306 @@
+#N canvas 103 43 889 622 12;
+#X obj 5 403 outlet~ x;
+#X obj 191 403 outlet~ z;
+#X obj 98 403 outlet~ y;
+#X obj 5 13 inlet~ x;
+#X obj 98 13 inlet~ y;
+#X obj 191 13 inlet~ z;
+#N canvas 134 155 767 346 gui 0;
+#X obj 3 32 sel 0 1;
+#X msg 23 56 label Inlet;
+#X msg 3 86 label Number\ Box;
+#X obj 3 8 r \$0-x-dash-sig-sel;
+#X obj 4 110 s \$0-set-x-dash-sig-sel;
+#X obj 183 32 sel 0 1;
+#X msg 203 56 label Inlet;
+#X msg 183 86 label Number\ Box;
+#X obj 183 8 r \$0-x-length-sig-sel;
+#X obj 184 110 s \$0-set-x-length-sig-sel;
+#X obj 393 32 sel 0 1;
+#X msg 413 56 label Inlet;
+#X msg 393 86 label Number\ Box;
+#X obj 573 32 sel 0 1;
+#X msg 593 56 label Inlet;
+#X msg 573 86 label Number\ Box;
+#X obj 3 192 sel 0 1;
+#X msg 23 216 label Inlet;
+#X msg 3 246 label Number\ Box;
+#X obj 183 192 sel 0 1;
+#X msg 203 216 label Inlet;
+#X msg 183 246 label Number\ Box;
+#X obj 393 8 r \$0-y-dash-sig-sel;
+#X obj 394 110 s \$0-set-y-dash-sig-sel;
+#X obj 573 8 r \$0-y-length-sig-sel;
+#X obj 574 110 s \$0-set-y-length-sig-sel;
+#X obj 3 168 r \$0-z-dash-sig-sel;
+#X obj 183 168 r \$0-z-length-sig-sel;
+#X obj 184 270 s \$0-set-z-length-sig-sel;
+#X obj 4 270 s \$0-set-z-dash-sig-sel;
+#X obj 393 163 else/initmess \; \$0-set-x-dash-sig-sel 0 \; \$0-set-x-length-sig-sel
+0 \; \$0-set-x-dashes 1 \; \$0-set-y-dash-sig-sel 0 \; \$0-set-y-length-sig-sel
+0 \; \$0-set-y-dashes 1 \; \$0-set-z-dash-sig-sel 0 \; \$0-set-z-length-sig-sel
+0 \; \$0-set-z-dashes 1 \; \$0-set-link 0 \;;
+#X connect 0 0 2 0;
+#X connect 0 1 1 0;
+#X connect 1 0 4 0;
+#X connect 2 0 4 0;
+#X connect 3 0 0 0;
+#X connect 5 0 7 0;
+#X connect 5 1 6 0;
+#X connect 6 0 9 0;
+#X connect 7 0 9 0;
+#X connect 8 0 5 0;
+#X connect 10 0 12 0;
+#X connect 10 1 11 0;
+#X connect 11 0 23 0;
+#X connect 12 0 23 0;
+#X connect 13 0 15 0;
+#X connect 13 1 14 0;
+#X connect 14 0 25 0;
+#X connect 15 0 25 0;
+#X connect 16 0 18 0;
+#X connect 16 1 17 0;
+#X connect 17 0 29 0;
+#X connect 18 0 29 0;
+#X connect 19 0 21 0;
+#X connect 19 1 20 0;
+#X connect 20 0 28 0;
+#X connect 21 0 28 0;
+#X connect 22 0 10 0;
+#X connect 24 0 13 0;
+#X connect 26 0 16 0;
+#X connect 27 0 19 0;
+#X restore 636 370 pd gui;
+#X obj 5 286 osci/dash~;
+#X obj 98 286 osci/dash~;
+#X obj 191 286 osci/dash~;
+#X obj 307 13 inlet~ xDashes;
+#X obj 349 38 inlet~ xLength;
+#X obj 392 63 inlet~ yDashes;
+#X obj 435 88 inlet~ yLength;
+#X obj 478 113 inlet~ zDashes;
+#X obj 521 138 inlet~ zLength;
+#N canvas 30 134 749 475 sig-sel 0;
+#N canvas 0 23 509 300 x 0;
+#X obj 55 112 sig~;
+#X obj 26 140 else/xselect~ 2;
+#X obj 26 68 + 1;
+#X obj 26 44 r \$0-x-dash-sig-sel;
+#X obj 174 55 inlet~ xDashes;
+#X obj 246 169 sig~;
+#X obj 217 197 else/xselect~ 2;
+#X obj 217 125 + 1;
+#X obj 390 102 inlet~ xLength;
+#X obj 26 255 outlet~;
+#X obj 217 255 outlet~;
+#X obj 246 140 r \$0-x-length;
+#X obj 217 101 r \$0-x-length-sig-sel;
+#X obj 55 83 r \$0-x-dashes;
+#X connect 0 0 1 0;
+#X connect 1 0 9 0;
+#X connect 2 0 1 0;
+#X connect 3 0 2 0;
+#X connect 4 0 1 1;
+#X connect 5 0 6 0;
+#X connect 6 0 10 0;
+#X connect 7 0 6 0;
+#X connect 8 0 6 1;
+#X connect 11 0 5 0;
+#X connect 12 0 7 0;
+#X connect 13 0 0 0;
+#X restore 289 238 pd x;
+#N canvas 0 23 509 300 y 0;
+#X obj 55 112 sig~;
+#X obj 26 140 else/xselect~ 2;
+#X obj 26 68 + 1;
+#X obj 246 169 sig~;
+#X obj 217 197 else/xselect~ 2;
+#X obj 217 125 + 1;
+#X obj 26 255 outlet~;
+#X obj 217 255 outlet~;
+#X obj 26 44 r \$0-y-dash-sig-sel;
+#X obj 55 83 r \$0-y-dashes;
+#X obj 174 55 inlet~ yDashes;
+#X obj 217 101 r \$0-y-length-sig-sel;
+#X obj 246 140 r \$0-y-length;
+#X obj 390 102 inlet~ yLength;
+#X connect 0 0 1 0;
+#X connect 1 0 6 0;
+#X connect 2 0 1 0;
+#X connect 3 0 4 0;
+#X connect 4 0 7 0;
+#X connect 5 0 4 0;
+#X connect 8 0 2 0;
+#X connect 9 0 0 0;
+#X connect 10 0 1 1;
+#X connect 11 0 5 0;
+#X connect 12 0 3 0;
+#X connect 13 0 4 1;
+#X restore 444 238 pd y;
+#N canvas 0 23 509 300 z 0;
+#X obj 55 112 sig~;
+#X obj 26 140 else/xselect~ 2;
+#X obj 26 68 + 1;
+#X obj 246 169 sig~;
+#X obj 217 197 else/xselect~ 2;
+#X obj 217 125 + 1;
+#X obj 26 255 outlet~;
+#X obj 217 255 outlet~;
+#X obj 26 44 r \$0-z-dash-sig-sel;
+#X obj 55 83 r \$0-z-dashes;
+#X obj 174 55 inlet~ zDashes;
+#X obj 390 102 inlet~ zLength;
+#X obj 246 140 r \$0-z-length;
+#X obj 217 101 r \$0-z-length-sig-sel;
+#X connect 0 0 1 0;
+#X connect 1 0 6 0;
+#X connect 2 0 1 0;
+#X connect 3 0 4 0;
+#X connect 4 0 7 0;
+#X connect 5 0 4 0;
+#X connect 8 0 2 0;
+#X connect 9 0 0 0;
+#X connect 10 0 1 1;
+#X connect 11 0 4 1;
+#X connect 12 0 3 0;
+#X connect 13 0 5 0;
+#X restore 600 238 pd z;
+#X obj 16 21 r \$0-link;
+#X obj 289 421 outlet~ xDash;
+#X obj 302 390 outlet~ xLength;
+#X obj 418 421 outlet~ yDash;
+#X obj 436 390 outlet~ yLength;
+#X obj 289 34 inlet~ xDash;
+#X obj 314 64 inlet~ xLength;
+#X obj 444 34 inlet~ yDash;
+#X obj 469 64 inlet~ yLength;
+#X obj 548 421 outlet~ zDash;
+#X obj 613 390 outlet~ zLength;
+#X obj 16 45 sel 0 1;
+#X text 19 271 <inlet \, outlet \, on/off>;
+#X obj 600 33 inlet~ zDash;
+#X obj 625 64 inlet~ zLength;
+#X msg 16 159 0 0 1 \, 1 1 1 \, 2 2 1 \, 3 3 1 \, 4 4 1 \, 5 5 1,
+f 21;
+#X obj 289 277 else/mtx~ 6 6 0, f 56;
+#X msg 39 214 0 0 1 \, 0 2 1 \, 0 4 1 \, 1 1 1 \, 1 3 1 \, 1 5 1 \,
+, f 20;
+#X obj 39 75 t b b;
+#X msg 214 135 clear;
+#X obj 16 116 t b b;
+#X connect 0 0 19 0;
+#X connect 0 1 19 1;
+#X connect 1 0 19 2;
+#X connect 1 1 19 3;
+#X connect 2 0 19 4;
+#X connect 2 1 19 5;
+#X connect 3 0 14 0;
+#X connect 8 0 0 0;
+#X connect 9 0 0 1;
+#X connect 10 0 1 0;
+#X connect 11 0 1 1;
+#X connect 14 0 23 0;
+#X connect 14 1 21 0;
+#X connect 16 0 2 0;
+#X connect 17 0 2 1;
+#X connect 18 0 19 0;
+#X connect 19 0 4 0;
+#X connect 19 1 5 0;
+#X connect 19 2 6 0;
+#X connect 19 3 7 0;
+#X connect 19 4 12 0;
+#X connect 19 5 13 0;
+#X connect 20 0 19 0;
+#X connect 21 0 20 0;
+#X connect 21 1 22 0;
+#X connect 22 0 19 0;
+#X connect 23 0 18 0;
+#X connect 23 1 22 0;
+#X restore 307 170 pd sig-sel;
+#X f 31;
+#X obj 397 379 cnv 15 198 15 empty h1 osci/dash-g~ 3 8 0 11 -16645
+-257781 0;
+#X obj 397 395 cnv 15 198 170 empty body empty 20 12 0 14 -99865 -66577
+0;
+#X obj 399 468 cnv 15 194 43 empty body empty 20 12 0 14 -66577 -66577
+0;
+#X obj 399 517 cnv 15 194 43 empty body empty 20 12 0 14 -66577 -66577
+0;
+#X obj 399 419 cnv 15 194 43 empty body empty 20 12 0 14 -66577 -66577
+0;
+#X obj 501 421 tgl 18 0 \$0-x-dash-sig-sel \$0-set-x-dash-sig-sel Number\ Box
+20 10 0 11 -91412 -174938 -203556 0 1;
+#X floatatom 401 421 5 1 99999 1 n_dashes #0-set-x-dashes #0-x-dashes
+;
+#X obj 501 442 tgl 18 0 \$0-x-length-sig-sel \$0-set-x-length-sig-sel
+Number\ Box 20 10 0 11 -91412 -174938 -203556 0 1;
+#X floatatom 401 442 5 0 99999 1 length #0-set-x-length #0-x-length
+;
+#X floatatom 401 470 5 1 99999 1 n_dashes #0-set-y-dashes #0-y-dashes
+;
+#X floatatom 401 491 5 0 99999 1 length #0-set-y-length #0-y-length
+;
+#X floatatom 401 519 5 1 99999 1 n_dashes #0-set-z-dashes #0-z-dashes
+;
+#X floatatom 401 540 5 0 99999 1 length #0-set-z-length #0-z-length
+;
+#X obj 501 470 tgl 18 0 \$0-y-dash-sig-sel \$0-set-y-dash-sig-sel Number\ Box
+20 10 0 11 -91412 -174938 -203556 0 1;
+#X obj 501 491 tgl 18 0 \$0-y-length-sig-sel \$0-set-y-length-sig-sel
+Number\ Box 20 10 0 11 -91412 -174938 -203556 0 1;
+#X obj 501 519 tgl 18 0 \$0-z-dash-sig-sel \$0-set-z-dash-sig-sel Number\ Box
+20 10 0 11 -91412 -174938 -203556 0 1;
+#X obj 501 540 tgl 18 0 \$0-z-length-sig-sel \$0-set-z-length-sig-sel
+Number\ Box 20 10 0 11 -91412 -174938 -203556 0 1;
+#X obj 399 398 tgl 18 0 \$0-link \$0-set-link Link 20 10 0 11 -91412
+-174938 -203556 1 1;
+#X text 630 397 I could make a fancy updating gui;
+#X text 630 419 But for pd \, I don't really think it's worth it,
+f 33;
+#X text 630 455 Maybe \, if people consistently use it that way I will?
+, f 33;
+#X text 630 491 Hiding the gui could def \, be good to put back in
+, f 33;
+#X obj 397 378 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+0;
+#X obj 444 378 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+0;
+#X obj 420 378 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+0;
+#X obj 468 378 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+0;
+#X obj 516 378 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+0;
+#X obj 492 378 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+0;
+#X obj 564 378 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+0;
+#X obj 588 378 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+0;
+#X obj 540 378 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+0;
+#X obj 397 563 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+0;
+#X obj 588 563 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+0;
+#X obj 492 563 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+0;
+#X connect 3 0 7 0;
+#X connect 4 0 8 0;
+#X connect 5 0 9 0;
+#X connect 7 0 0 0;
+#X connect 8 0 2 0;
+#X connect 9 0 1 0;
+#X connect 10 0 16 0;
+#X connect 11 0 16 1;
+#X connect 12 0 16 2;
+#X connect 13 0 16 3;
+#X connect 14 0 16 4;
+#X connect 15 0 16 5;
+#X connect 16 0 7 1;
+#X connect 16 1 7 2;
+#X connect 16 2 8 1;
+#X connect 16 3 8 2;
+#X connect 16 4 9 1;
+#X connect 16 5 9 2;
+#X coords 0 -1 1 1 200 189 2 396 377;
