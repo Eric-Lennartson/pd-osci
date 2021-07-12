@@ -72,7 +72,7 @@
 #X obj 305 440 r \$0-z-ang;
 #X obj 275 305 r \$0-y-ang;
 #X obj 234 168 r \$0-x-ang;
-#X obj 432 131 cnv 15 191 15 empty h1 osci/shear-g~ 3 8 0 11 -16645
+#X obj 432 131 cnv 15 191 15 empty h1 osci/shear~-g 3 8 0 11 -16645
 -257781 0;
 #X obj 432 147 cnv 15 191 91 empty body empty 20 12 0 14 -99865 -66577
 0;

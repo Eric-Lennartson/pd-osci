@@ -45,6 +45,13 @@ x if an axis other than x \, y \, or z is specified., f 54;
 #X msg 168 57 mode degrees;
 #X msg 178 82 mode radians;
 #X obj 169 147 sig~ 30;
+#N canvas 0 23 514 171 gui_version 0;
+#X obj 14 37 osci/shear~-g;
+#X text 219 44 shear~-g is an optional gui for [shear~]. It provides
+an interface for shearing all 3 axes. The toggles on the right hand
+side set whether the number box or inlet is to be used for controlling
+the shearing angle., f 41;
+#X restore 216 293 pd gui_version;
 #X connect 0 0 31 0;
 #X connect 1 0 4 0;
 #X connect 1 1 4 1;
