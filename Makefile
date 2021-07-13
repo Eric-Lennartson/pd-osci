@@ -42,6 +42,7 @@ selipse~.class.sources      := Classes/Source/selipse~.c
 skew~.class.sources         := Classes/Source/skew~.c 
 supershape~.class.sources   := Classes/Source/supershape~.c
 super~.class.sources        := Classes/Aliases/super~.c
+sphere~.class.sources 		:= Classes/Source/sphere~.c $(A_Math) $(vec3)
 translate~.class.sources    := Classes/Source/translate~.c
 trans~.class.sources    	:= Classes/Aliases/trans~.c
 ball~.class.sources         := Classes/Source/ball~.c $(A_Math) $(vec3)
