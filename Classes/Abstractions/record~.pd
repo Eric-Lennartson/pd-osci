@@ -255,10 +255,6 @@ them at 0, f 23;
 0;
 #X obj 216 71 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
 0;
-#X obj 216 264 cnv 2 7 2 empty empty empty 20 12 0 14 -170401 -66577
-0;
-#X obj 55 264 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
-0;
 #X obj 55 172 cnv 15 168 15 empty h1 Settings 3 8 0 11 -16645 -257781
 0;
 #X obj 57 190 vradio 12 1 0 6 \$0-sample-rate \$0-set-sample-rate empty
@@ -300,17 +296,15 @@ them at 0, f 23;
 #X msg 483 230 dir 1;
 #X obj 593 198 s \$0-file-name-cnv;
 #X msg 593 174 label File\ name;
-#X obj 135 264 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
-0;
 #X obj 483 340 print -n;
 #X obj 13 462 writesf~ 2;
 #X connect 1 0 2 0;
 #X connect 4 0 5 0;
 #X connect 4 0 21 0;
-#X connect 5 0 45 0;
-#X connect 6 0 59 0;
-#X connect 6 1 59 1;
-#X connect 6 2 59 0;
+#X connect 5 0 43 0;
+#X connect 6 0 56 0;
+#X connect 6 1 56 1;
+#X connect 6 2 56 0;
 #X connect 11 0 7 0;
 #X connect 11 1 10 0;
 #X connect 11 2 9 0;
@@ -321,12 +315,12 @@ them at 0, f 23;
 #X connect 21 0 15 0;
 #X connect 22 0 6 0;
 #X connect 23 0 6 1;
-#X connect 40 0 1 0;
-#X connect 49 0 54 0;
-#X connect 50 0 51 0;
-#X connect 51 0 52 0;
-#X connect 51 0 53 0;
-#X connect 52 0 58 0;
-#X connect 54 0 50 0;
-#X connect 56 0 55 0;
+#X connect 38 0 1 0;
+#X connect 47 0 52 0;
+#X connect 48 0 49 0;
+#X connect 49 0 50 0;
+#X connect 49 0 51 0;
+#X connect 50 0 55 0;
+#X connect 52 0 48 0;
+#X connect 54 0 53 0;
 #X coords 0 -1 1 1 170 197 1 54 70;
