@@ -88,79 +88,19 @@ static void *bezier_tilde_new(t_symbol *s, int argc, t_atom *argv)
     x->x3  = inlet_new((t_object *)x, (t_pd *)x, &s_signal, &s_signal);
     x->y3  = inlet_new((t_object *)x, (t_pd *)x, &s_signal, &s_signal);
     
-    switch(argc)
-    {
-        case 6:
-        {
-            pd_float((t_pd *)x->x1, atom_getfloat(argv) );
-            pd_float((t_pd *)x->y1, atom_getfloat(argv+1) );
-            pd_float((t_pd *)x->x2, atom_getfloat(argv+2) );
-            pd_float((t_pd *)x->y2, atom_getfloat(argv+3) );
-            pd_float((t_pd *)x->x3, atom_getfloat(argv+4) );
-            pd_float((t_pd *)x->y3, atom_getfloat(argv+5) );
-            break;
-        }
-        case 5:
-        {
-            pd_float((t_pd *)x->x1, atom_getfloat(argv) );
-            pd_float((t_pd *)x->y1, atom_getfloat(argv+1) );
-            pd_float((t_pd *)x->x2, atom_getfloat(argv+2) );
-            pd_float((t_pd *)x->y2, atom_getfloat(argv+3) );
-            pd_float((t_pd *)x->x3, atom_getfloat(argv+4) );
-            pd_float((t_pd *)x->y3, 0 );
-            break;
-        }
-        case 4:
-        {
-            pd_float((t_pd *)x->x1, atom_getfloat(argv) );
-            pd_float((t_pd *)x->y1, atom_getfloat(argv+1) );
-            pd_float((t_pd *)x->x2, atom_getfloat(argv+2) );
-            pd_float((t_pd *)x->y2, atom_getfloat(argv+3) );
-            pd_float((t_pd *)x->x3, 0 );
-            pd_float((t_pd *)x->y3, 0 );
-            break;
-        }
-        case 3:
-        {
-            pd_float((t_pd *)x->x1, atom_getfloat(argv) );
-            pd_float((t_pd *)x->y1, atom_getfloat(argv+1) );
-            pd_float((t_pd *)x->x2, atom_getfloat(argv+2) );
-            pd_float((t_pd *)x->y2, 0 );
-            pd_float((t_pd *)x->x3, 0 );
-            pd_float((t_pd *)x->y3, 0 );
-            break;
-        }
-        case 2:
-        {
-            pd_float((t_pd *)x->x1, atom_getfloat(argv) );
-            pd_float((t_pd *)x->y1, atom_getfloat(argv+1) );
-            pd_float((t_pd *)x->x2, 0 );
-            pd_float((t_pd *)x->y2, 0 );
-            pd_float((t_pd *)x->x3, 0 );
-            pd_float((t_pd *)x->y3, 0 );
-            break;
-        }
-        case 1:
-        {
-            pd_float((t_pd *)x->x1, atom_getfloat(argv) );
-            pd_float((t_pd *)x->y1, 0 );
-            pd_float((t_pd *)x->x2, 0 );
-            pd_float((t_pd *)x->y2, 0 );
-            pd_float((t_pd *)x->x3, 0 );
-            pd_float((t_pd *)x->y3, 0 );
-            break;
-        }
-        default:
-        {
-            pd_float((t_pd *)x->x1, 0 );
-            pd_float((t_pd *)x->y1, 0 );
-            pd_float((t_pd *)x->x2, 0 );
-            pd_float((t_pd *)x->y2, 0 );
-            pd_float((t_pd *)x->x3, 0 );
-            pd_float((t_pd *)x->y3, 0 );
-            break;
-        }
-    }
+    t_float x1 = argc ? atom_getfloat(argv) : 0.f;
+    t_float y1 = argc > 1 ? atom_getfloat(argv+1) : 0.f;
+    t_float x2 = argc > 2 ? atom_getfloat(argv+2) : 0.f;
+    t_float y2 = argc > 3 ? atom_getfloat(argv+3) : 0.f;
+    t_float x3 = argc > 4 ? atom_getfloat(argv+4) : 0.f;
+    t_float y3 = argc > 5 ? atom_getfloat(argv+5) : 0.f;
+
+    pd_float((t_pd *)x->x1, x1);
+    pd_float((t_pd *)x->y1, y1);
+    pd_float((t_pd *)x->x2, x2);
+    pd_float((t_pd *)x->y2, y2);
+    pd_float((t_pd *)x->x3, x3);
+    pd_float((t_pd *)x->y3, y3);
 
     x->x_out = outlet_new((t_object *)x, &s_signal);
     x->y_out = outlet_new((t_object *)x, &s_signal);
