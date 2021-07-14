@@ -65,7 +65,7 @@ static void hypotrochoid_tilde_dsp(t_hypotrochoid_tilde *x, t_signal **sp)
 
 
 // ctor
-static void *hypotrochoid_tilde_new(t_floatarg R, t_floatarg r, t_floatarg d)
+static void *hypotrochoid_tilde_new(t_symbol *s, int argc, t_atom *argv)
 {
     t_hypotrochoid_tilde *x = (t_hypotrochoid_tilde *)pd_new(hypotrochoid_tilde_class);
    
@@ -73,6 +73,10 @@ static void *hypotrochoid_tilde_new(t_floatarg R, t_floatarg r, t_floatarg d)
     x->r_in  = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
     x->d_in  = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
     
+    t_float R = argc ? atom_getfloat(argv) : 2.f;
+    t_float r = argc > 1 ? atom_getfloat(argv+1) : 1.f;
+    t_float d = argc > 2 ? atom_getfloat(argv+2) : 0.f;
+
     pd_float((t_pd*)x->R_in, R);  // init the inlets with creation args
     pd_float((t_pd*)x->r_in, r);
     pd_float((t_pd*)x->d_in, d);
@@ -103,9 +107,7 @@ void hypotrochoid_tilde_setup(void)
                             (t_method)hypotrochoid_tilde_free, //dtor
                             sizeof(t_hypotrochoid_tilde), // data space
                             CLASS_DEFAULT, // gui apperance
-                            A_DEFFLOAT, // R
-                            A_DEFFLOAT, // r
-                            A_DEFFLOAT, // d
+                            A_GIMME, // R, r, d
                             0); // no more args
     
     class_sethelpsymbol(hypotrochoid_tilde_class, gensym("hypotrochoid~")); // links to the help patch
