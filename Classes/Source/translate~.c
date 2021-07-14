@@ -6,7 +6,6 @@ typedef struct _translate_tilde
 {
     t_object x_obj;
     t_sample f; // dummy variable for 1st inlet
-    t_float xOffset, yOffset, zOffset;
     t_inlet *yChan_in, *zChan_in, *xOffset_in, *yOffset_in, *zOffset_in; // xChan_in default provided
     t_outlet *yChan_out, *zChan_out; // xChan_out default provided
 } t_translate_tilde;
@@ -61,11 +60,6 @@ static void translate_tilde_dsp(t_translate_tilde *x, t_signal **sp)
 static void *translate_tilde_new(t_floatarg xOffset, t_floatarg yOffset, t_floatarg zOffset)
 {
     t_translate_tilde *x = (t_translate_tilde *)pd_new(translate_tilde_class);
-    
-    //Init inlets and variables
-    x->xOffset      = xOffset;
-    x->yOffset      = yOffset;
-    x->zOffset      = zOffset;
     
     x->yChan_in     = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
     x->zChan_in     = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);

@@ -7,7 +7,7 @@ typedef struct _scale_tilde
 {
     t_object  x_obj;
     t_sample f; // dummy arg
-    t_vec3 v, v2; // v2ation vector, in vector
+    t_vec3 v, v2; // in vector, mult vector
     t_inlet /* *x_in, */ *y_in, *z_in, *xScalar_in, *yScalar_in, *zScalar_in;
     t_outlet *x_out, *y_out, *z_out;
 } t_scale_tilde;
@@ -70,25 +70,19 @@ void scale_tilde_free(t_scale_tilde *x)
     outlet_free(x->z_out);
 }
 
-void *scale_tilde_new(t_floatarg ax, t_floatarg ay, t_floatarg az)
+void *scale_tilde_new(t_floatarg x_mult, t_floatarg y_mult, t_floatarg z_mult)
 {
     t_scale_tilde *x = (t_scale_tilde *)pd_new(scale_tilde_class);
-
-    x->v2.x = ax;
-    x->v2.y = ay;
-    x->v2.z = az;
-    x->v = NEW_VEC3;
     
-//    x->x_in = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
     x->y_in = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
     x->z_in = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
     x->xScalar_in = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
     x->yScalar_in = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
     x->zScalar_in = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
     
-    pd_float((t_pd*)x->xScalar_in, ax);
-    pd_float((t_pd*)x->yScalar_in, ay);
-    pd_float((t_pd*)x->zScalar_in, az);
+    pd_float((t_pd*)x->xScalar_in, x_mult);
+    pd_float((t_pd*)x->yScalar_in, y_mult);
+    pd_float((t_pd*)x->zScalar_in, z_mult);
     
     x->x_out = outlet_new(&x->x_obj, &s_signal);
     x->y_out = outlet_new(&x->x_obj, &s_signal);
@@ -104,9 +98,9 @@ void scale_tilde_setup(void)
                                   (t_method)scale_tilde_free,
                                   sizeof(t_scale_tilde),
                                   CLASS_DEFAULT,
-                                  A_DEFFLOAT, //xScalar
-                                  A_DEFFLOAT, //yScalar
-                                  A_DEFFLOAT, //zScalar
+                                  A_DEFFLOAT, //x_mult
+                                  A_DEFFLOAT, //y_mult
+                                  A_DEFFLOAT, //z_mult
                                   0);
     
     class_addmethod(scale_tilde_class, (t_method)scale_tilde_dsp, gensym("dsp"), A_CANT, 0);

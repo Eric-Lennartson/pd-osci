@@ -1,6 +1,7 @@
 ==== Roadmap ===================================================================
 - finish general improvements then start working on remapping tree.
 - figure out how to add in remapping tree...
+- could I add in a link to blender via OSC?
 ==== Bugs ======================================================================
 - something wrong for octa and octahedron in makefile
 - chris_clip~-g crash when mod was on, moving the min option
@@ -10,15 +11,12 @@
     - It is one object, with many settings.
     - I could potentially separate it out, so that settings aren't all in the object
       but have some in a pd abstraction, (perf wouldn't be hit to hard I think)
-- All objects need to have option for args and defaults if not provided.
-    - pickup at rectangle~.
-    - make sure to check the aliasses as well!
-    - These should be listed in the documentation as well.
 - add in a spot killer abstraction
 - rethink gui version of chris_clip~, is there a better way
 - add an auto make-up gain to chris_clip~-g?
 - update the readme to include the new objs
 - double check that new objs are documented
+- update the documentation
 COMPLETE THE ABOVE AND PUT OUT A NEW VERSION
 =================================================================================
 - is there a convienient way to get rid of unused parameter warnings?

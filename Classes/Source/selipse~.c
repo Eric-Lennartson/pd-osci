@@ -13,13 +13,13 @@ typedef struct _selipse_tilde
 {
     t_object x_obj;
     t_sample f; // dummy variable for 1st inlet
-    t_inlet *a_in, *b_in, *n_in; // driver default provided
+    t_inlet *a_in, *b_in, *n_in; // phase default provided
     t_outlet *yChan_out; // *xChan_out default provided
 } t_selipse_tilde;
 
 static t_int *selipse_tilde_perform(t_int *w)
 {
-    t_sample *driver_in =      (t_sample *)(w[1]);
+    t_sample *phase_in =      (t_sample *)(w[1]);
     t_sample *a_in      =      (t_sample *)(w[2]);
     t_sample *b_in      =      (t_sample *)(w[3]);
     t_sample *n_in      =      (t_sample *)(w[4]);
@@ -30,7 +30,7 @@ static t_int *selipse_tilde_perform(t_int *w)
     
     while (nblock--) // dsp here
     {
-        t_float angle = 2 * PI * driver_in[nblock];
+        t_float angle = 2 * PI * phase_in[nblock];
         t_float a  = a_in[nblock];
         t_float b  = b_in[nblock];
         t_float n  = n_in[nblock];
@@ -49,7 +49,7 @@ static t_int *selipse_tilde_perform(t_int *w)
 static void selipse_tilde_dsp(t_selipse_tilde *x, t_signal **sp)
 {
     dsp_add(selipse_tilde_perform, 7,
-            sp[0]->s_vec, // driver
+            sp[0]->s_vec, // phase
             sp[1]->s_vec, // a
             sp[2]->s_vec, // b
             sp[3]->s_vec, // n
@@ -61,13 +61,17 @@ static void selipse_tilde_dsp(t_selipse_tilde *x, t_signal **sp)
 
 
 // ctor                     // name used for creation, number of args, pointer to arg list
-static void *selipse_tilde_new(t_floatarg a, t_floatarg b, t_floatarg n) // this is because of A_GIMME
+static void *selipse_tilde_new(t_symbol *s, int argc, t_atom *argv) // this is because of A_GIMME
 {
     t_selipse_tilde *x = (t_selipse_tilde *)pd_new(selipse_tilde_class);
    
-    x->a_in  = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
-    x->b_in  = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
-    x->n_in  = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
+    t_float a = argc ? atom_getfloat(argv) : 1;
+    t_float b = argc>1 ? atom_getfloat(argv+1) : 1;
+    t_float n = argc>2 ? atom_getfloat(argv+2) : 3;
+
+    x->a_in = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
+    x->b_in = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
+    x->n_in = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
     
     pd_float((t_pd*)x->a_in, a);  // init the inlets with creation args
     pd_float((t_pd*)x->b_in, b);
@@ -99,9 +103,7 @@ void selipse_tilde_setup(void)
                             (t_method)selipse_tilde_free, //dtor
                             sizeof(t_selipse_tilde), // data space
                             CLASS_DEFAULT, // gui apperance
-                            A_DEFFLOAT, // a
-                            A_DEFFLOAT, // b
-                            A_DEFFLOAT, // n
+                            A_GIMME, // a, b, n
                             0); // no more args
     
     class_sethelpsymbol(selipse_tilde_class, gensym("selipse~")); // links to the help patch

@@ -11,13 +11,13 @@ typedef struct _triangle_tilde
     t_object x_obj;
     t_sample f; // dummy variable for 1st inlet
     t_float xPos, yPos, size;
-    t_inlet *xPos_in, *yPos_in, *size_in; // driver default provided
+    t_inlet *xPos_in, *yPos_in, *size_in; // phase default provided
     t_outlet *x_out, *y_out;
 } t_triangle_tilde;
 
 static t_int *triangle_tilde_perform(t_int *w)
 {
-    t_sample *driver_in = (t_sample *)(w[1]);
+    t_sample *phase_in = (t_sample *)(w[1]);
     t_sample *xPos_in   = (t_sample *)(w[2]);
     t_sample *yPos_in   = (t_sample *)(w[3]);
     t_sample *size_in   = (t_sample *)(w[4]);
@@ -27,7 +27,7 @@ static t_int *triangle_tilde_perform(t_int *w)
     
     while (nblock--) // dsp here
     {
-        t_sample t    = *driver_in++;
+        t_sample t    = *phase_in++;
         t_sample xPos = *xPos_in++;
         t_sample yPos = *yPos_in++;
         t_sample size = *size_in++;
@@ -52,7 +52,7 @@ static t_int *triangle_tilde_perform(t_int *w)
 static void triangle_tilde_dsp(t_triangle_tilde *x, t_signal **sp)
 {
     dsp_add(triangle_tilde_perform, 7,
-            sp[0]->s_vec, // driver
+            sp[0]->s_vec, // phase
             sp[1]->s_vec, // xPos
             sp[2]->s_vec, // yPos
             sp[3]->s_vec, // size
@@ -62,21 +62,21 @@ static void triangle_tilde_dsp(t_triangle_tilde *x, t_signal **sp)
             );
 }
 
-static void *triangle_tilde_new(t_floatarg xPos, t_floatarg yPos, t_floatarg size)
+static void *triangle_tilde_new(t_symbol *s, int argc, t_atom* argv)
 {
     t_triangle_tilde *x = (t_triangle_tilde *)pd_new(triangle_tilde_class);
     
     //Init inlets and variables
-    x->xPos = xPos;
-    x->yPos = yPos;
-    x->size = size;
+    t_float xpos = argc ? atom_getfloat(argv) : 0;
+    t_float ypos = argc>1 ? atom_getfloat(argv+1) : 0;
+    t_float size = argc>2 ? atom_getfloat(argv+2) : 1;
    
     x->xPos_in = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
     x->yPos_in = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
     x->size_in = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
     
-    pd_float((t_pd*)x->xPos_in, xPos); // send creation args to inlets, allows for floats to inlets
-    pd_float((t_pd*)x->yPos_in, yPos);
+    pd_float((t_pd*)x->xPos_in, xpos); // send creation args to inlets, allows for floats to inlets
+    pd_float((t_pd*)x->yPos_in, ypos);
     pd_float((t_pd*)x->size_in, size);
     
     x->x_out = outlet_new(&x->x_obj, &s_signal); // outlet we made
@@ -104,9 +104,7 @@ void triangle_tilde_setup(void)
                             (t_method)triangle_tilde_free, //dtor
                             sizeof(t_triangle_tilde), // data space
                             CLASS_DEFAULT, // gui apperance
-                            A_DEFFLOAT, // xPos
-                            A_DEFFLOAT, // yPos
-                            A_DEFFLOAT, // size
+                            A_GIMME, // xpos, ypos, size
                             0); // no more args
     
     class_sethelpsymbol(triangle_tilde_class, gensym("triangle~")); // links to the help patch

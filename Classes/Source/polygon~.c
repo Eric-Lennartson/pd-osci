@@ -9,13 +9,13 @@ typedef struct _polygon_tilde
 {
     t_object x_obj;
     t_sample f;                                      // dummy variable for 1st inlet
-    t_inlet *xPos_in, *yPos_in, *sides_in, *size_in; // driver default provided
+    t_inlet *xPos_in, *yPos_in, *sides_in, *size_in; // phase default provided
     t_outlet *yChan_out;                             // *xChan_out default provided
 } t_polygon_tilde;
 
 static t_int *polygon_tilde_perform(t_int *w)
 {
-    t_sample *driver_in = (t_sample *)(w[1]);
+    t_sample *phase_in = (t_sample *)(w[1]);
     t_sample *xPos_in = (t_sample *)(w[2]);
     t_sample *yPos_in = (t_sample *)(w[3]);
     t_sample *sides_in = (t_sample *)(w[4]);
@@ -28,7 +28,7 @@ static t_int *polygon_tilde_perform(t_int *w)
     {
         t_sample size = *size_in++; // gets it's own variable so that I don't have to remember when to increment
 
-        v = polygon(mod1(*driver_in++), *sides_in++);
+        v = polygon(mod1(*phase_in++), *sides_in++);
 
         *xChan_out++ = (v.x + *xPos_in++) * size;
         *yChan_out++ = (v.y + *yPos_in++) * size;
@@ -40,7 +40,7 @@ static t_int *polygon_tilde_perform(t_int *w)
 static void polygon_tilde_dsp(t_polygon_tilde *x, t_signal **sp)
 {
     dsp_add(polygon_tilde_perform, 8,
-            sp[0]->s_vec, // driver
+            sp[0]->s_vec, // phase
             sp[1]->s_vec, // xPos
             sp[2]->s_vec, // yPos
             sp[3]->s_vec, // sides

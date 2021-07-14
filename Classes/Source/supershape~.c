@@ -76,60 +76,14 @@ static void *supershape_tilde_new(t_symbol *s, int argc, t_atom *argv) // this i
 {
     t_supershape_tilde *x = (t_supershape_tilde *)pd_new(supershape_tilde_class);
    
-    t_float n1 = 1, n2 = 1, n3 = 1, m = 1, a = 1, b = 1;
+    t_float n1, n2, n3, m, a, b;
     
-    switch(argc) // unpack all the args
-    {
-        case 6:
-        {
-            n1 = atom_getfloat(argv);
-            n2 = atom_getfloat(argv+1);
-            n3 = atom_getfloat(argv+2);
-            m  = atom_getfloat(argv+3);
-            a  = atom_getfloat(argv+4);
-            b  = atom_getfloat(argv+5);
-            break;
-        }
-        case 5:
-        {
-            n1 = atom_getfloat(argv);
-            n2 = atom_getfloat(argv+1);
-            n3 = atom_getfloat(argv+2);
-            m  = atom_getfloat(argv+3);
-            a  = atom_getfloat(argv+4);
-            break;
-        }
-        case 4:
-        {
-            n1 = atom_getfloat(argv);
-            n2 = atom_getfloat(argv+1);
-            n3 = atom_getfloat(argv+2);
-            m  = atom_getfloat(argv+3);
-            break;
-        }
-        case 3:
-        {
-            n1 = atom_getfloat(argv);
-            n2 = atom_getfloat(argv+1);
-            n3 = atom_getfloat(argv+2);
-            break;
-        }
-        case 2:
-        {
-            n1 = atom_getfloat(argv);
-            n2 = atom_getfloat(argv+1);
-            break;
-        }
-        case 1:
-        {
-            n1 = atom_getfloat(argv);
-            break;
-        }
-        default:
-        {
-            break;
-        }
-    }
+    n1 = argc ? atom_getfloat(argv) : 1;
+    n2 = argc>1 ? atom_getfloat(argv+1) : 1;
+    n3 = argc>2 ? atom_getfloat(argv+2) : 1;
+    m  = argc>3 ? atom_getfloat(argv+3) : 1;
+    a  = argc>4 ? atom_getfloat(argv+4) : 1;
+    b  = argc>5 ? atom_getfloat(argv+5) : 1;
     
     x->n1_in  = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
     x->n2_in  = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
