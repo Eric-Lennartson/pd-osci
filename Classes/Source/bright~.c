@@ -7,7 +7,7 @@ typedef struct _bright
 {
     t_object x_obj;
     t_sample f; // dummy variable for 1st inlet
-    t_inlet *offset, *strength;
+    t_inlet *offset_in, *strength_in;
 } t_bright;
 
 static t_int *bright_perform(t_int *w)
@@ -47,21 +47,24 @@ static void bright_dsp(t_bright *x, t_signal **sp)
 // FREE
 static void *bright_free(t_bright *x)
 {
-    inlet_free(x->offset);
-    inlet_free(x->strength);
+    inlet_free(x->offset_in);
+    inlet_free(x->strength_in);
     
     return (void *)x;
 }
 
-static void *bright_new(t_floatarg offset, t_floatarg strength)
+static void *bright_new(t_symbol *s, int argc, t_atom *argv)
 {
     t_bright *x = (t_bright *)pd_new(bright_class);
     
-    x->offset   = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
-    x->strength = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
+    t_float offset = argc ? atom_getfloat(argv) : 0.f;
+    t_float strength = argc > 1 ? atom_getfloat(argv+1) : 1.f;
+
+    x->offset_in   = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
+    x->strength_in = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
     
-    pd_float((t_pd*)x->offset, offset);
-    pd_float((t_pd*)x->strength, strength);
+    pd_float((t_pd*)x->offset_in, offset);
+    pd_float((t_pd*)x->strength_in, strength);
 
     outlet_new(&x->x_obj, &s_signal); // default provided outlet
     
@@ -75,8 +78,7 @@ void bright_tilde_setup(void)
                             (t_method)bright_free, //dtor
                             sizeof(t_bright), // data space
                             CLASS_DEFAULT, // gui apperance
-                            A_DEFFLOAT, // offset
-                            A_DEFFLOAT, //strength
+                            A_GIMME, //offset, strength
                             0); // no more args
     
     class_sethelpsymbol(bright_class, gensym("bright~")); // links to the help patch
