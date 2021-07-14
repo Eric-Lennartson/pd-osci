@@ -22,7 +22,7 @@ static t_int *heart_tilde_perform(t_int *w)
     
     while (nblock--) // dsp here
     {
-        t_float angle = 2 * PI * driver_in[nblock];
+        t_float angle = TWO_PI * driver_in[nblock];
         
         // formula for heart
         t_float x = 16 * pow(sin(angle), 3.0);

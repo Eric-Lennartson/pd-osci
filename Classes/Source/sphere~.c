@@ -5,6 +5,30 @@ static t_class *sphere_tilde_class;
 
 // creating a lookup table would probably add some performance benefits
 
+/* What features do I want in sphere?
+*   - idea, if I separate it out, what do I call this obj instead?
+*   - something like calc_sphere_lat_lon?
+*   - params
+*       - n_points (0-N], default to 10
+*           - let n_points be a float, I can cast to int before if I want
+*           - n_points will be the same for lat, and lon
+*       - radius (any num), default to 1
+*       - second phase inlet, [0-1), default not there?
+*           - ver1 is added on to original phase
+*           - ver2 it is multiplied with n_points, but is it's own i.e. mod1(t * n_points) * n_points
+*       - latitude range [0-PI]       
+*           - generic access to min and max, default to above
+*       - longitude range [0-2PI]
+*           - generic access to min and max, default to above
+*       - angles used in cos and sin...       
+*           - not sure how to do this one
+*           - I want to mess with the angles, but have no restrictions on the basic math...
+*           - idea have a param where I choose whether its add, mult, or none.
+*               - maybe something like angle_mod_mode
+*           - what about only modifying very specific calls to the angle?
+*             rather than the angle generically?
+*/
+
 typedef struct _sphere_tilde
 {
     t_object x_obj;

@@ -6,9 +6,13 @@
 - chris_clip~-g crash when mod was on, moving the min option
     - fix in pd patch? or the source?
 ==== Things to Improve =========================================================
-- add in a sphere obj
-- rm outlets from record~
+- how to name different versions of sphere?
+    - It is one object, with many settings.
+    - I could potentially separate it out, so that settings aren't all in the object
+      but have some in a pd abstraction, (perf wouldn't be hit to hard I think)
 - All objects need to have option for args and defaults if not provided.
+    - pickup at rectangle~.
+    - make sure to check the aliasses as well!
     - These should be listed in the documentation as well.
 - add in a spot killer abstraction
 - rethink gui version of chris_clip~, is there a better way
@@ -18,6 +22,7 @@
 COMPLETE THE ABOVE AND PUT OUT A NEW VERSION
 =================================================================================
 - is there a convienient way to get rid of unused parameter warnings?
+- idea for objs like cuboid, setting certain related args with msgs like -size?
 - vectorize perf functions if possible
 - create lookup tables for cos and sin
 - fix links to helpfiles in aliases
