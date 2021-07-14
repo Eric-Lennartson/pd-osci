@@ -31,7 +31,7 @@ t_int *ball_tilde_perform(t_int *w)
         x->a = vec3(*x_in++, *y_in++, *z_in++);
 
         t_float len = v3_len(x->a);
-        x->b = (len > 0.f) ? v3_divf(x->a, len) : NEW_VEC3;
+        x->b = (len > 0.f) ? v3_divf(x->a, len) : vec3(0,0,0);
         x->out = blend(*amt_in++, x->a, x->b);
 
         *x_out++ = x->out.x * r;
@@ -68,13 +68,12 @@ void ball_tilde_free(t_ball_tilde *x)
     outlet_free(x->z_out);
 }
 
-void *ball_tilde_new(t_floatarg amt, t_floatarg r)
+void *ball_tilde_new(t_symbol *s, int argc, t_atom *argv)
 {
     t_ball_tilde *x = (t_ball_tilde *)pd_new(ball_tilde_class);
 
-    x->a   = NEW_VEC3;
-    x->b   = NEW_VEC3;
-    x->out = NEW_VEC3;
+    t_float amt = argc ? atom_getfloat(argv) : 0.f;
+    t_float radius = argc > 1 ? atom_getfloat(argv+1) : 1.f;
     
     x->y_in    = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
     x->z_in    = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
@@ -82,7 +81,7 @@ void *ball_tilde_new(t_floatarg amt, t_floatarg r)
     x->r_in    = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
     
     pd_float((t_pd*)x->amt_in, amt); // send creation args to inlets, converts float to signal at the inlets
-    pd_float((t_pd*)x->r_in, r);
+    pd_float((t_pd*)x->r_in, radius);
     
     x->x_out = outlet_new(&x->x_obj, &s_signal);
     x->y_out = outlet_new(&x->x_obj, &s_signal);
@@ -98,8 +97,7 @@ void ball_tilde_setup(void)
                                   (t_method)ball_tilde_free,
                                   sizeof(t_ball_tilde),
                                   CLASS_DEFAULT,
-                                  A_DEFFLOAT, //amt
-                                  A_DEFFLOAT, // radius
+                                  A_GIMME, //amt and radius
                                   0);
 
     class_sethelpsymbol(ball_tilde_class, gensym("ball~"));
