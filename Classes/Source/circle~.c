@@ -7,7 +7,6 @@ typedef struct _circle
 {
     t_object x_obj;
     t_sample f; // dummy variable for 1st inlet
-    t_float xPos, yPos, radius;
     t_inlet *xPos_in, *yPos_in, *radius_in;
     t_outlet *yChan_out;
     // in1 and out1 are automatically provided
@@ -64,21 +63,21 @@ static void *circle_free(t_circle *x)
     return (void *)x;
 }
 
-static void *circle_new(t_floatarg xPos, t_floatarg yPos, t_floatarg radius)
+static void *circle_new(t_symbol *s, int argc, t_atom *argv)
 {
     t_circle *x = (t_circle *)pd_new(circle_class);
     
     //Init inlets and variables
-    x->xPos     = xPos;
-    x->yPos     = yPos;
-    x->radius   = radius;
+    t_float xpos = argc ? atom_getfloat(argv) : 0.f;
+    t_float ypos = argc>1 ? atom_getfloat(argv+1) : 0.f;
+    t_float radius = argc>2 ? atom_getfloat(argv+2) : 1.f;
     
     x->xPos_in      = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
     x->yPos_in      = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
     x->radius_in    = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
     
-    pd_float((t_pd*)x->xPos_in, xPos); // send creation args to inlets
-    pd_float((t_pd*)x->yPos_in, yPos);
+    pd_float((t_pd*)x->xPos_in, xpos); // send creation args to inlets
+    pd_float((t_pd*)x->yPos_in, ypos);
     pd_float((t_pd*)x->radius_in, radius);
 
     
@@ -96,9 +95,7 @@ void circle_tilde_setup(void)
                             (t_method)circle_free, //dtor
                             sizeof(t_circle), // data space
                             CLASS_DEFAULT, // gui apperance
-                            A_DEFFLOAT, // xPos
-                            A_DEFFLOAT, // yPos
-                            A_DEFFLOAT, // radius
+                            A_GIMME, // xpos, ypos, radius
                             0); // no more args
     
     class_sethelpsymbol(circle_class, gensym("circle~")); // links to the help patch
