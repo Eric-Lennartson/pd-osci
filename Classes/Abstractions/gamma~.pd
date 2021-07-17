@@ -1,7 +1,4 @@
-#N canvas -680 201 615 487 12;
-#X obj 4 43 inlet~ brightness;
-#X obj 4 417 clip~ 0 1;
-#X obj 4 445 outlet~ brightness;
+#N canvas 647 23 420 634 12;
 #N canvas 0 23 491 320 notes 0;
 #X text 4 61 luminance is a value b/w 0 and 1;
 #X text 4 93 correction function: x^y (x is the input \, y is the "gamma")
@@ -11,17 +8,64 @@
 if controlling brightness from pd.;
 #X text 5 209 REMEMBER TO TURN BRIGHTNESS BACK DOWN ON THE SCOPE!!!
 ;
-#X restore 3 5 pd notes;
-#X obj 4 67 clip~ 0 1;
-#X obj 4 224 osci/map~ 0 1 0.8 1;
-#X obj 134 43 inlet~ b-min;
-#X obj 226 43 inlet~ gamma;
-#X obj 4 300 pow~;
-#X connect 0 0 4 0;
-#X connect 1 0 2 0;
+#X restore 3 38 pd notes;
+#X obj 4 282 clip~ 0 1;
+#X obj 10 521 + 1;
+#X obj 106 490 expr~ 1-$v1;
+#X obj 4 552 else/xselect~ 2;
+#X obj 4 576 clip~ 0 1;
+#X obj 4 600 outlet~ brightness;
+#X obj 10 495 r \$0-invert;
+#X obj 274 463 else/initmess \; \$0-set-min 0 \; \$0-set-max 1 \; \$0-set-gamma
+2.5 \; \$0-set-invert 0 \;;
+#X obj 276 347 cnv 15 83 15 empty h1 osci/gamma~ 3 8 0 11 -16645 -257781
+0;
+#X obj 276 363 cnv 15 83 88 empty body empty 20 12 0 14 -99865 -66577
+0;
+#X obj 276 347 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+0;
+#X obj 276 449 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+0;
+#X floatatom 281 428 5 0 99999 1 Gamma #0-set-gamma #0-gamma;
+#X obj 281 368 tgl 18 0 \$0-invert \$0-set-invert Invert 20 10 0 12
+-91412 -174938 -203556 0 1;
+#X floatatom 281 408 5 0 1 1 Max #0-set-max #0-max;
+#X floatatom 281 388 5 0 1 1 Min #0-set-min #0-min;
+#X obj 4 381 osci/map~ 0 1 0 0;
+#X obj 4 455 osci/skew~ 0 0 0.5 0;
+#X obj 91 325 r \$0-min;
+#X obj 120 347 r \$0-max;
+#X obj 141 423 r \$0-gamma;
+#X obj 4 76 inlet~ fwd;
+#X obj 71 110 route set-min set-max set-gamma set-invert;
+#X obj 71 223 s \$0-set-min;
+#X obj 143 199 s \$0-set-max;
+#X obj 216 177 s \$0-set-gamma;
+#X obj 289 154 s \$0-set-invert;
+#X obj 71 134 clip 0 1;
+#X obj 143 134 clip 0 1;
+#X obj 216 134 abs;
+#X connect 1 0 17 0;
+#X connect 2 0 4 0;
+#X connect 3 0 4 1;
 #X connect 4 0 5 0;
-#X connect 5 0 8 0;
-#X connect 6 0 5 3;
-#X connect 7 0 8 1;
-#X connect 8 0 1 0;
-#X coords 0 487 1 486 92 60 0;
+#X connect 5 0 6 0;
+#X connect 7 0 2 0;
+#X connect 17 0 18 0;
+#X connect 18 0 4 0;
+#X connect 18 0 3 0;
+#X connect 19 0 17 3;
+#X connect 19 0 18 1;
+#X connect 20 0 18 2;
+#X connect 20 0 17 4;
+#X connect 21 0 18 3;
+#X connect 22 0 1 0;
+#X connect 22 1 23 0;
+#X connect 23 0 28 0;
+#X connect 23 1 29 0;
+#X connect 23 2 30 0;
+#X connect 23 3 27 0;
+#X connect 28 0 24 0;
+#X connect 29 0 25 0;
+#X connect 30 0 26 0;
+#X coords 0 -1 1 1 85 106 2 275 346;

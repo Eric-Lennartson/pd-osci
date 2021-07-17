@@ -1,0 +1,65 @@
+#N canvas 124 23 559 499 12;
+#X obj 12 77 hip~ 3;
+#X obj 83 77 hip~ 3;
+#X obj 12 101 env~;
+#X obj 83 101 env~;
+#X obj 12 263 < 60;
+#X obj 12 388 sig~;
+#X obj 12 9 inlet~ x;
+#X obj 83 9 inlet~ y;
+#X obj 37 233 r \$0-cut-off;
+#X obj 306 170 cnv 15 160 28 empty body empty 20 12 0 14 -99865 -66577
+0;
+#X obj 306 154 cnv 15 160 15 empty h1 osci/spotkiller~ 3 8 0 11 -16645
+-257781 0;
+#X obj 306 196 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+0;
+#X obj 12 301 expr 1-$f1;
+#X obj 100 320 r \$0-invert;
+#X obj 12 355 else/selector;
+#X obj 12 202 * 0.333333;
+#X obj 153 77 hip~ 3;
+#X obj 153 101 env~;
+#X obj 153 9 inlet~ z;
+#X obj 225 11 inlet~ brightness;
+#X obj 12 425 *~;
+#X obj 12 466 outlet~;
+#X obj 225 375 osci/n~;
+#X obj 12 176 +;
+#X obj 83 145 +;
+#X obj 364 13 else/initmess \; \$0-set-cut-off 60 \; \$0-set-invert
+0 \;;
+#X floatatom 375 175 5 0 100 1 Cut_Off #0-set-cut-off #0-cut-off;
+#X obj 311 175 tgl 18 0 \$0-invert \$0-set-invert Invert 20 10 0 12
+-91412 -174938 -203556 0 1;
+#X obj 306 154 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+0;
+#X obj 356 154 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+0;
+#X obj 408 154 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+0;
+#X obj 459 154 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+0;
+#X connect 0 0 2 0;
+#X connect 1 0 3 0;
+#X connect 2 0 23 0;
+#X connect 3 0 24 0;
+#X connect 4 0 12 0;
+#X connect 4 0 14 1;
+#X connect 5 0 20 0;
+#X connect 6 0 0 0;
+#X connect 7 0 1 0;
+#X connect 8 0 4 1;
+#X connect 12 0 14 0;
+#X connect 13 0 14 2;
+#X connect 14 0 5 0;
+#X connect 15 0 4 0;
+#X connect 16 0 17 0;
+#X connect 17 0 24 1;
+#X connect 18 0 16 0;
+#X connect 19 0 22 0;
+#X connect 20 0 21 0;
+#X connect 22 0 20 1;
+#X connect 23 0 15 0;
+#X connect 24 0 23 1;
+#X coords 0 -1 1 1 162 46 2 305 153;

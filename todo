@@ -11,14 +11,17 @@
     - It is one object, with many settings.
     - I could potentially separate it out, so that settings aren't all in the object
       but have some in a pd abstraction, (perf wouldn't be hit to hard I think)
-- add in a spot killer abstraction
-- rethink gui version of chris_clip~, is there a better way
-- add an auto make-up gain to chris_clip~-g?
+- spotkiller / brightness stuff
+    - invert should be a global variable, (invert_bright?)
+    - add the invert toggle to out~
+    - I think you only need one invert at the end?
+- for real zoom~ is last obj and then it's cleanup and documentation time.
 - update the readme to include the new objs
 - double check that new objs are documented
 - update the documentation
 COMPLETE THE ABOVE AND PUT OUT A NEW VERSION
 =================================================================================
+- mess around with the scan processing from derek's library and get it working
 - is there a convienient way to get rid of unused parameter warnings?
 - idea for objs like cuboid, setting certain related args with msgs like -size?
 - vectorize perf functions if possible

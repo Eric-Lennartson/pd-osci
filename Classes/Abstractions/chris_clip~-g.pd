@@ -1,139 +1,123 @@
-#N canvas 51 139 845 444 12;
-#X obj 41 32 inlet~ value;
-#X obj 208 32 inlet~ min;
-#X obj 364 32 inlet~ max;
-#X obj 41 401 outlet~;
-#X obj 449 32 inlet~ make_up;
-#X obj 106 143 else/xselect~ 2;
-#X obj 106 67 r \$0-min;
-#X obj 106 91 sig~;
-#X obj 143 113 + 1;
-#X obj 143 89 r \$0-min-sig-sel;
-#X obj 262 150 else/xselect~ 2;
-#X obj 262 98 sig~;
-#X obj 299 120 + 1;
-#X obj 262 74 r \$0-max;
-#X obj 299 96 r \$0-max-sig-sel;
-#X obj 41 348 *~;
-#X obj 347 329 else/xselect~ 2;
-#X obj 347 277 sig~;
-#X obj 384 299 + 1;
-#X obj 347 253 r \$0-make-up;
-#X obj 113 211 r \$0-mirror;
-#X obj 46 211 r \$0-mod;
-#X msg 113 235 mirror \$1;
-#X msg 46 235 mod \$1;
-#X obj 384 275 r \$0-make-up-tgl;
-#N canvas 129 62 448 658 settings 0;
-#X obj 109 147 savestate;
-#X obj 179 220 pack f f f f f f f f;
-#X obj 169 179 f;
-#X obj 187 21 r \$0-mirror;
-#X obj 198 46 r \$0-mod;
-#X obj 218 71 r \$0-min;
-#X obj 237 96 r \$0-min-sig-sel;
-#X obj 257 121 r \$0-max;
-#X obj 276 146 r \$0-max-sig-sel;
-#X obj 296 171 r \$0-make-up;
-#X obj 316 196 r \$0-make-up-tgl;
-#X obj 42 382 unpack f f f f f f f f;
-#X obj 193 407 s \$0-set-make-up-tgl;
-#X obj 171 432 s \$0-set-make-up;
-#X obj 149 457 s \$0-set-max-sig-sel;
-#X obj 128 482 s \$0-set-max;
-#X obj 106 507 s \$0-set-min-sig-sel;
-#X obj 85 532 s \$0-set-min;
-#X obj 63 557 s \$0-set-mod;
-#X obj 42 582 s \$0-set-mirror;
-#X obj 42 221 loadbang;
-#X msg 42 343 list 0 0 -1 0 1 0 1 0;
-#X obj 42 284 spigot 1;
-#X obj 109 221 t b l;
-#X msg 95 252 0;
-#X text 201 343 //default params;
-#X connect 0 0 23 0;
-#X connect 0 1 2 0;
-#X connect 1 0 0 0;
-#X connect 2 0 1 0;
-#X connect 3 0 2 1;
-#X connect 4 0 1 1;
-#X connect 5 0 1 2;
-#X connect 6 0 1 3;
-#X connect 7 0 1 4;
-#X connect 8 0 1 5;
-#X connect 9 0 1 6;
-#X connect 10 0 1 7;
-#X connect 11 0 19 0;
-#X connect 11 1 18 0;
-#X connect 11 2 17 0;
-#X connect 11 3 16 0;
-#X connect 11 4 15 0;
-#X connect 11 5 14 0;
-#X connect 11 6 13 0;
-#X connect 11 7 12 0;
-#X connect 20 0 22 0;
-#X connect 21 0 11 0;
-#X connect 22 0 21 0;
-#X connect 23 0 24 0;
-#X connect 23 1 11 0;
-#X connect 24 0 22 1;
-#X restore 645 145 pd settings;
-#X text 99 363 // TODO: Possibly add an auto make-up option in the
-future;
-#X obj 645 9 else/initmess \; \$0-set-max 1 \; \$0-set-min -1 \; \$0-set-make-up
-1 \; \$0-set-max-sig-sel 0 \; \$0-set-min-sig-sel 0 \; \$0-set-make-up-tgl
-0 \; \$0-set-mirror 0 \; \$0-set-mod 0 \;;
-#X obj 41 297 osci/chris_clip~ -1 1;
-#X obj 589 188 cnv 15 120 91 empty body empty 20 12 0 14 -99865 -66577
+#N canvas 0 23 1036 435 12;
+#X obj 11 12 inlet~ value;
+#X obj 366 12 inlet~ min;
+#X obj 616 12 inlet~ max;
+#X obj 11 381 outlet~;
+#X obj 919 12 inlet~ make_up;
+#X obj 176 173 else/xselect~ 2;
+#X obj 176 67 r \$0-min;
+#X obj 176 91 sig~;
+#X obj 193 143 + 1;
+#X obj 193 119 r \$0-min-sig-sel;
+#X obj 488 185 else/xselect~ 2;
+#X obj 488 93 sig~;
+#X obj 495 155 + 1;
+#X obj 488 67 r \$0-max;
+#X obj 737 189 else/xselect~ 2;
+#X obj 737 97 sig~;
+#X obj 746 159 + 1;
+#X obj 737 67 r \$0-make-up;
+#X obj 83 111 r \$0-mirror;
+#X obj 16 111 r \$0-mod;
+#X msg 83 135 mirror \$1;
+#X msg 16 135 mod \$1;
+#X obj 11 277 osci/chris_clip~ -1 1;
+#X obj 560 319 cnv 15 169 91 empty body empty 20 12 0 14 -99865 -66577
 0;
-#X obj 638 192 tgl 18 0 \$0-mirror \$0-set-mirror Mirror -45 8 0 11
--91412 -174938 -203556 0 1;
-#X obj 685 192 tgl 18 0 \$0-mod \$0-set-mod Mod -23 9 0 11 -91412 -174938
--203556 0 1;
-#X obj 685 213 tgl 18 0 \$0-min-sig-sel \$0-set-min-sig-sel empty -45
-8 0 11 -91412 -174938 -203556 0 1;
-#X obj 685 234 tgl 18 0 \$0-max-sig-sel \$0-set-max-sig-sel empty -45
-8 0 11 -91412 -174938 -203556 0 1;
-#X obj 685 255 tgl 18 0 \$0-make-up-tgl \$0-set-make-up-tgl empty -45
-8 0 11 -91412 -174938 -203556 0 1;
-#X floatatom 638 213 4 0 0 0 Min #0-set-min #0-min;
-#X floatatom 638 234 4 0 0 0 Max #0-set-max #0-max;
-#X floatatom 638 255 4 0 0 0 MakeUp #0-set-make-up #0-make-up;
-#X obj 589 172 cnv 15 120 15 empty h1 osci/chris_clip~ 3 8 0 11 -16645
+#X obj 560 303 cnv 15 169 15 empty h1 osci/chris_clip~-g 3 8 0 11 -16645
 -257781 0;
-#X obj 589 277 cnv 1 7 1 empty empty empty 20 12 0 14 -198865 -66577
+#N canvas 333 40 313 179 gui 0;
+#N canvas 0 23 472 146 tgl_labels 0;
+#X obj 3 32 sel 0 1;
+#X obj 143 32 sel 0 1;
+#X obj 283 32 sel 0 1;
+#X msg 23 56 label inlet;
+#X msg 163 56 label inlet;
+#X msg 303 56 label inlet;
+#X msg 3 86 label num_box;
+#X msg 143 86 label num_box;
+#X msg 283 86 label num_box;
+#X obj 143 8 r \$0-max-input;
+#X obj 283 8 r \$0-make-up-input;
+#X obj 284 110 s \$0-set-make-up-input;
+#X obj 144 110 s \$0-set-max-input;
+#X obj 4 110 s \$0-set-min-input;
+#X obj 3 8 r \$0-min-input;
+#X connect 0 0 6 0;
+#X connect 0 1 3 0;
+#X connect 1 0 7 0;
+#X connect 1 1 4 0;
+#X connect 2 0 8 0;
+#X connect 2 1 5 0;
+#X connect 3 0 13 0;
+#X connect 4 0 12 0;
+#X connect 5 0 11 0;
+#X connect 6 0 13 0;
+#X connect 7 0 12 0;
+#X connect 8 0 11 0;
+#X connect 9 0 1 0;
+#X connect 10 0 2 0;
+#X connect 14 0 0 0;
+#X restore 196 23 pd tgl_labels;
+#X obj 15 11 else/initmess \; \$0-set-mirror 0 \; \$0-set-mod 0 \;
+\$0-set-min -1 \; \$0-set-max 1 \; \$0-set-make-up 1 \; \$0-set-max-input
+0 \; \$0-set-min-input 0 \; \$0-set-make-up-input 0 \;;
+#X restore 438 330 pd gui;
+#X floatatom 565 345 5 0 0 1 min #0-set-min #0-min;
+#X floatatom 565 366 5 0 1 1 max #0-set-max #0-max;
+#X obj 655 366 tgl 18 0 \$0-max-input \$0-set-max-input num_box 22
+9 0 11 -91412 -174938 -203556 0 1;
+#X obj 655 345 tgl 18 0 \$0-min-input \$0-set-min-input num_box 22
+9 0 11 -91412 -174938 -203556 0 1;
+#X obj 655 387 tgl 18 0 \$0-make-up-input \$0-set-make-up-input num_box
+22 9 0 11 -91412 -174938 -203556 0 1;
+#X floatatom 565 387 5 0 0 1 make_up #0-set-make-up #0-make-up;
+#X obj 746 135 r \$0-make-up-input;
+#X obj 565 324 tgl 18 0 \$0-mirror \$0-set-mirror mirror 22 9 0 11
+-91412 -174938 -203556 0 1;
+#X obj 655 324 tgl 18 0 \$0-mod \$0-set-mod mod 22 9 0 11 -91412 -174938
+-203556 0 1;
+#X obj 560 408 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
 0;
-#X obj 702 172 cnv 1 7 1 empty empty empty 20 12 0 14 -198865 -66577
+#X obj 495 131 r \$0-max-input;
+#X obj 11 341 *~;
+#X obj 919 127 osci/n~;
+#X obj 616 127 osci/n~;
+#X obj 366 127 osci/n~;
+#X obj 560 303 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
 0;
-#X obj 663 172 cnv 1 7 1 empty empty empty 20 12 0 14 -198865 -66577
+#X obj 668 303 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
 0;
-#X obj 625 172 cnv 1 7 1 empty empty empty 20 12 0 14 -198865 -66577
+#X obj 613 303 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
 0;
-#X obj 589 172 cnv 1 7 1 empty empty empty 20 12 0 14 -198865 -66577
+#X obj 722 303 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
 0;
-#X connect 0 0 28 0;
-#X connect 1 0 5 1;
-#X connect 2 0 10 1;
-#X connect 4 0 16 1;
-#X connect 5 0 28 1;
+#X connect 0 0 22 0;
+#X connect 1 0 40 0;
+#X connect 2 0 39 0;
+#X connect 4 0 38 0;
+#X connect 5 0 22 1;
 #X connect 6 0 7 0;
 #X connect 7 0 5 0;
 #X connect 8 0 5 0;
 #X connect 9 0 8 0;
-#X connect 10 0 28 2;
+#X connect 10 0 22 2;
 #X connect 11 0 10 0;
 #X connect 12 0 10 0;
 #X connect 13 0 11 0;
-#X connect 14 0 12 0;
-#X connect 15 0 3 0;
-#X connect 16 0 15 1;
-#X connect 17 0 16 0;
-#X connect 18 0 16 0;
-#X connect 19 0 17 0;
+#X connect 14 0 37 1;
+#X connect 15 0 14 0;
+#X connect 16 0 14 0;
+#X connect 17 0 15 0;
+#X connect 18 0 20 0;
+#X connect 19 0 21 0;
 #X connect 20 0 22 0;
-#X connect 21 0 23 0;
-#X connect 22 0 28 0;
-#X connect 23 0 28 0;
-#X connect 24 0 18 0;
-#X connect 28 0 15 0;
-#X coords 0 -1 1 1 120 107 2 589 172;
+#X connect 21 0 22 0;
+#X connect 22 0 37 0;
+#X connect 32 0 16 0;
+#X connect 36 0 12 0;
+#X connect 37 0 3 0;
+#X connect 38 0 14 1;
+#X connect 39 0 10 1;
+#X connect 40 0 5 1;
+#X coords 0 -1 1 1 171 109 2 559 302;
