@@ -42,9 +42,9 @@ t_int *grid_tilde_perform(t_int *w)
         //init everything
         t_float t = phase[nblock];
         t_float spread = spread_in[nblock];
-        int nx = max(nx_in[nblock], 1);
-        int ny = max(ny_in[nblock], 1);
-        int nz = max(nz_in[nblock], 1);
+        int nx = MAX(nx_in[nblock], 1);
+        int ny = MAX(ny_in[nblock], 1);
+        int nz = MAX(nz_in[nblock], 1);
 
         int n_total = nx * ny * nz;
 
@@ -65,8 +65,8 @@ t_int *grid_tilde_perform(t_int *w)
         t_float off_y = -1 + space_y * (1 + idx_y * 2);
         t_float off_z = -1 + space_z * (1 + idx_z * 2);
 
-        t_float scale = min(space_x,space_y);
-        scale = min(scale,space_z);
+        t_float scale = MIN(space_x,space_y);
+        scale = MIN(scale,space_z);
 
         //t_vec3 v = input(t2)*scale + t_vec3(off_x, off_y, off_z)*spread; <-- what oscistudio would be
         x->v = v3_multf(x->v, scale);
@@ -119,9 +119,9 @@ void *grid_tilde_new(t_floatarg nx, t_floatarg ny, t_floatarg nz, t_floatarg spr
     x->v = vec3(1,1,1);
     
     // make it an int, and make sure it's greater than 1
-    nx = (int)max(nx, 1);
-    ny = (int)max(ny, 1);
-    nz = (int)max(nz, 1);
+    nx = (int)MAX(nx, 1);
+    ny = (int)MAX(ny, 1);
+    nz = (int)MAX(nz, 1);
 
     x->nx_in     = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
     x->ny_in     = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);

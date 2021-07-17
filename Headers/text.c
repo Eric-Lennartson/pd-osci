@@ -199,7 +199,7 @@ t_vec3 letter_G(float t) { // G
     t = tri_skew(mod1(t+2.5/8), .5);
     
     if (t < 7./8) {
-        v.x = (clamp(cos((t + 1. / 8) * 2 * PI), -1, cos(PI / 4))/2+.5)/((1+cos(PI/4))/2);
+        v.x = (CLAMP(cos((t + 1. / 8) * 2 * PI), -1, cos(PI / 4))/2+.5)/((1+cos(PI/4))/2);
         v.y = sin((t+1./8)*2*PI)/2+.5;
     }
     else {
@@ -207,7 +207,7 @@ t_vec3 letter_G(float t) { // G
         v.y = .5;
     }
 
-    //v.x = clamp(v.x, 0, cos(PI * 3/16.));
+    //v.x = CLAMP(v.x, 0, cos(PI * 3/16.));
 
     return v;
 }
@@ -411,8 +411,8 @@ t_vec3 letter_Q(float t) { // Q
     t = tri_skew(t + .75, 1);
     t *= 1.17;
 
-    v.x = cos((clamp(t, 0, 1) - .125) * 2 * PI) / 2 + .5;
-    v.y = sin((clamp(t, 0, 1) - .125) * 2 * PI) / 2 + .5;
+    v.x = cos((CLAMP(t, 0, 1) - .125) * 2 * PI) / 2 + .5;
+    v.y = sin((CLAMP(t, 0, 1) - .125) * 2 * PI) / 2 + .5;
 
     if (t>1) {
         float t2 = (tri((t - 1) / .17 + .25) * 2 - 1)*(1-cos(PI/4))/2;
@@ -609,7 +609,7 @@ t_vec3 number_0(float t) { // 0
  
 t_vec3 number_1(float t) { // 1
     t_vec3 v = NEW_VEC3;
-    v.x = clamp((1 - tri(t)) * 3, 0, 1);
+    v.x = CLAMP((1 - tri(t)) * 3, 0, 1);
     v.y = tri(tri(t)*.75);
     
     return v;

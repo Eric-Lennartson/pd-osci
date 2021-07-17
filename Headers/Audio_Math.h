@@ -21,9 +21,9 @@ const double HALF_PI;
 #define RAD_TO_DEG (180.0 / PI)
 #define FLT_EPSILON 1.19209290E-07F
 
-#define min(a, b) a < b ? a : b
-#define max(a, b) a > b ? a : b
-#define clamp(val,min,max) ((val) < (min) ? (min) : ((val > max) ? (max) : (val)))
+#define MIN(a, b) a < b ? a : b
+#define MAX(a, b) a > b ? a : b
+#define CLAMP(val,min,max) ((val) < (min) ? (min) : ((val > max) ? (max) : (val)))
 
 int gcd(int a, int b);
 t_float map_lin( t_float value,  t_float inputMin,  t_float inputMax,  t_float outputMin,  t_float outputMax, bool clamp);

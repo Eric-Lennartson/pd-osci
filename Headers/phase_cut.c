@@ -49,7 +49,7 @@ PhaseCut cut_mix(float t, int n_cuts, float which, float fadeRatio)
  
       float mix = mod1(n_cuts*which);
  
-      fadeRatio = clamp(1-fadeRatio,0,1);
+      fadeRatio = CLAMP(1-fadeRatio,0,1);
       mix = map_lin(mix, fadeRatio/2, 1-fadeRatio/2, 0,1, true);
  
       if(t<mix) return (PhaseCut){nextIdx,map_lin(t,0,mix,0,1,false),1/(float)n_cuts,n_cuts};

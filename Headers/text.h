@@ -9,9 +9,6 @@
 
 #define FLT_EPSILON 1.19209290E-07F
 
-#define clamp(val,min,max) ((val) < (min) ? (min) : ((val > max) ? (max) : (val)))
-#define MAX(x,y) (((x) > (y)) ? (x) : (y))
-
 // assigning numbers isn't strictly necessary here
 typedef enum Align { Default = 0, Left = 1, Right = 2, Center = 3 } Align;
 typedef enum vAlign { None = 0, Top = 1, Bottom = 2, Middle = 3 } vAlign;

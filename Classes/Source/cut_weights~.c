@@ -54,7 +54,7 @@ static t_int *cut_weights_perform(t_int *w)
             while(in_idx--)
             {
                 t_float f = ivecp[in_idx][s_idx];
-                x->weights[in_idx] = max(f, 0.f); // prevent negative weights
+                x->weights[in_idx] = MAX(f, 0.f); // prevent negative weights
             }
             
             x->cut = cut_weights(x->n_cuts, in[s_idx], x->weights);

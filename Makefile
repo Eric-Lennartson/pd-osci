@@ -32,7 +32,8 @@ time.class.sources 	 := Classes/Source/time.c
 bezier~.class.sources       := Classes/Source/bezier~.c
 bezigon~.class.sources      := Classes/Source/bezigon~.c
 chris_clip~.class.sources   := Classes/Source/chris_clip~.c
-circle~.class.sources       := Classes/Source/circle~.c 
+circle~.class.sources       := Classes/Source/circle~.c
+clamp~.class.sources		:= Classes/Source/clamp~.c $(A_Math) 
 ellipse~.class.sources      := Classes/Source/ellipse~.c
 grid~.class.sources         := Classes/Source/grid~.c  $(A_Math) $(vec3)
 heart~.class.sources        := Classes/Source/heart~.c $(A_Math)
@@ -79,10 +80,11 @@ hypotrochoid~.class.sources := Classes/Source/hypotrochoid~.c $(A_Math)
 scale~.class.sources        := Classes/Source/scale~.c $(vec3)
 shear~.class.sources        := Classes/Source/shear~.c $(vec3)
 text~.class.sources         := Classes/Source/text~.c $(text)
+zoom~.class.sources			:= Classes/Source/zoom~.c $(A_Math) $(vec3)
 
 #########################################################################
 
-# extra files
+# helpfiles, abstractions, readme
 
 datafiles = \
 $(wildcard Classes/Abstractions/*.pd) \
