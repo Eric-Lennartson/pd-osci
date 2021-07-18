@@ -7,9 +7,8 @@
 - chris_clip~-g crash when mod was on, moving the min option
     - fix in pd patch? or the source?
 ==== Things to Improve =========================================================
-- update the readme to include the new objs
-- double check that new objs are documented
 - update the documentation
+- double check that new objs are documented
 COMPLETE THE ABOVE AND PUT OUT A NEW VERSION
 =================================================================================
 - create a dev branch to mess around in, you know, so it's organized

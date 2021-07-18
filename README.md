@@ -65,7 +65,7 @@ Pd Community/Dev-list, For answering my questions which may or may not have made
 
 --------------------------------------------------------------------------
 
-## Current Object list (61 objects):
+## Current Object list (70 objects):
 
 **2D Primitives: [08]**
 
@@ -78,13 +78,14 @@ Pd Community/Dev-list, For answering my questions which may or may not have made
 - [triangle~]
 - [polygon~]
 
-**3D Primitives: [05]**
+**3D Primitives: [06]**
 
 - [cuboid~]
 - [dodecahedron~]
 - [icosahedron~]
 - [octahedron~]
 - [tetrahedron~]
+- [sphere~]
 
 **Parameteric Equations: [04]**
 
@@ -114,18 +115,20 @@ Pd Community/Dev-list, For answering my questions which may or may not have made
 - [cut_equal~]
 - [cut_weights~]
 
-**Effects: [03]**
+**Effects: [04]**
 
 - [ball~]
 - [grid~]
 - [chris_clip~]
+- [zoom~]
 
-**Glue: [04]**
+**Glue: [05]**
 
 - [lerp~]
 - [ramp]
 - [ramp~]
 - [project~]
+- [clamp~]
 
 **Binary Operators: [09]**
 
@@ -146,9 +149,10 @@ Pd Community/Dev-list, For answering my questions which may or may not have made
 - [skew]
 - [skew~]
 
-**Brightness Control: [01]**
+**Brightness Control: [02]**
 
 - [gamma~]
+- [spotkiller~]
 
 **Signal send and receive: [04]**
 
@@ -157,15 +161,18 @@ Pd Community/Dev-list, For answering my questions which may or may not have made
 - [snd~]
 - [rcv~]
 
-**Misc: [08]**
+**Misc: [11]**
 
 - [n~]
 - [n]
+- [m_wrap]
+- [date]
+- [time]
 - [text~]
 - [bezier~]
 - [bezigon~]
 - [shroom~]
-- [xy_splitter~]
+- [splitter~]
 - [out~]
 
 --------------------------------------------------------------------------
