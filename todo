@@ -7,10 +7,6 @@
 - chris_clip~-g crash when mod was on, moving the min option
     - fix in pd patch? or the source?
 ==== Things to Improve =========================================================
-- how to name different versions of sphere?
-    - It is one object, with many settings.
-    - I could potentially separate it out, so that settings aren't all in the object
-      but have some in a pd abstraction, (perf wouldn't be hit to hard I think)
 - update the readme to include the new objs
 - double check that new objs are documented
 - update the documentation
