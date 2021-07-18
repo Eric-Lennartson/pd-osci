@@ -11,10 +11,6 @@
     - It is one object, with many settings.
     - I could potentially separate it out, so that settings aren't all in the object
       but have some in a pd abstraction, (perf wouldn't be hit to hard I think)
-- spotkiller / brightness stuff
-    - invert should be a global variable, (invert_bright?)
-    - add the invert toggle to out~
-    - I think you only need one invert at the end?
 - update the readme to include the new objs
 - double check that new objs are documented
 - update the documentation
@@ -26,6 +22,7 @@ COMPLETE THE ABOVE AND PUT OUT A NEW VERSION
 - idea for objs like cuboid, setting certain related args with msgs like -size?
 - vectorize perf functions if possible
 - create lookup tables for cos and sin
+    - take a look at how it's done in the pd source
 - fix links to helpfiles in aliases
 - using bool seems to cause problems
 - would having flags for args be helpful for some objects?

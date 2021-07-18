@@ -7,7 +7,7 @@
 #X obj 13 213 *~;
 #X obj 126 213 *~;
 #X obj 28 130 r \$0-volume;
-#X obj 665 106 cnv 15 135 97 empty body empty 20 12 0 14 -99865 -66577
+#X obj 665 106 cnv 15 135 114 empty body empty 20 12 0 14 -99865 -66577
 0;
 #X msg 578 164 \; pd dsp \$1;
 #X obj 28 309 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
@@ -29,25 +29,24 @@
 #X obj 20 78 catch~ m-out-x;
 #X obj 284 16 inlet~ bright;
 #X obj 284 496 outlet~ bright;
-#X obj 284 233 osci/n~;
+#X obj 284 103 osci/n~;
 #X obj 296 47 catch~ m-out-bright;
 #X obj 874 238 s \$0-set-volume;
 #X obj 39 284 loadbang;
 #X obj 882 71 loadbang;
-#X obj 670 128 nbx 3 20 0 100 0 0 \$0-volume \$0-set-volume Scope 45
-11 0 11 -91412 -174938 -203556 0 256;
-#X obj 670 152 nbx 3 20 0 100 0 0 \$0-speakers \$0-set-speakers Speakers
+#X obj 670 128 nbx 3 20 0 100 0 0 \$0-volume \$0-set-volume scope 45
+11 0 11 -91412 -174938 -203556 100 256;
+#X obj 670 150 nbx 3 20 0 100 0 0 \$0-speakers \$0-set-speakers speakers
 45 11 0 11 -91412 -174938 -203556 0 256;
-#X obj 670 176 nbx 3 20 0 100 0 0 \$0-bright \$0-set-bright Brightness
-45 11 0 11 -91412 -174938 -203556 100 256;
-#X msg 874 217 label Scope;
-#X obj 780 109 bng 15 250 50 0 \$0-mute \$0-set-mute Mute -30 8 0 11
+#X obj 670 195 nbx 3 20 0 100 0 0 \$0-bright \$0-set-bright brightness
+45 11 0 11 -91412 -174938 -203556 20 256;
+#X obj 780 109 bng 15 250 50 0 \$0-mute \$0-set-mute mute -30 8 0 11
 -91412 -174938 -203556;
 #X obj 28 151 / 100;
-#X obj 299 258 r \$0-bright;
-#X obj 299 279 / 100;
-#X obj 299 300 osci/ramp~ 30;
-#X obj 284 363 +~;
+#X obj 299 188 r \$0-bright;
+#X obj 299 209 / 100;
+#X obj 299 230 osci/ramp~ 30;
+#X obj 284 293 +~;
 #X obj 188 442 dac~ 1 2 3 4 5;
 #X obj 670 109 tgl 15 0 \$0-dsp \$0-set-dsp DSP 18 8 0 11 -91412 -174938
 -203556 0 1;
@@ -57,8 +56,8 @@
 #X obj 427 103 r \$0-speakers;
 #X obj 412 207 *~;
 #X obj 518 210 *~;
-#X obj 217 140 n~;
-#X obj 186 157 n~;
+#X obj 217 100 n~;
+#X obj 186 117 n~;
 #X obj 412 363 *~;
 #X obj 518 363 *~;
 #X obj 427 254 r \$0-mute;
@@ -67,88 +66,100 @@
 #X obj 427 325 osci/ramp~ 30;
 #X obj 438 280 loadbang;
 #X obj 975 238 s \$0-set-speakers;
-#X msg 874 158 label Speakers;
-#X msg 985 144 label Muted;
 #X obj 665 90 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
 0;
 #X obj 793 90 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
 0;
 #X obj 729 90 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
 0;
-#X obj 665 201 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+#X obj 665 218 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
 0;
-#X obj 793 201 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+#X obj 793 218 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
 0;
-#X obj 697 201 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+#X obj 697 218 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
 0;
-#X obj 729 201 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+#X obj 729 218 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
 0;
-#X obj 761 201 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+#X obj 761 218 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
 0;
 #X obj 717 286 else/initmess \; \$0-set-bright 100 \;;
 #X obj 427 124 dbtorms;
 #X obj 578 89 s \$0-set-dsp;
 #X obj 578 116 r \$0-dsp;
+#X obj 670 175 tgl 18 0 \$0-invert \$0-set-invert invert 22 9 0 12
+-91412 -174938 -203556 1 1;
+#X obj 203 283 r \$0-invert;
+#X obj 203 304 + 1;
+#X obj 285 354 else/xselect~ 2;
+#X obj 306 317 expr~ 1-$v1;
+#X msg 874 158 label speakers;
+#X msg 874 217 label scope;
+#X msg 985 144 label muted;
 #X connect 1 0 12 0;
-#X connect 1 0 41 0;
+#X connect 1 0 40 0;
 #X connect 2 0 13 0;
-#X connect 2 0 41 1;
+#X connect 2 0 40 1;
 #X connect 3 0 9 0;
 #X connect 4 0 1 0;
 #X connect 5 0 2 0;
-#X connect 6 0 36 0;
+#X connect 6 0 35 0;
 #X connect 9 0 21 0;
 #X connect 10 0 4 0;
-#X connect 10 0 50 0;
+#X connect 10 0 49 0;
 #X connect 11 0 5 0;
-#X connect 11 0 49 0;
+#X connect 11 0 48 0;
 #X connect 14 0 15 0;
 #X connect 15 0 19 0;
 #X connect 16 0 17 0;
-#X connect 17 0 70 0;
+#X connect 17 0 67 0;
 #X connect 18 0 8 0;
-#X connect 19 0 34 0;
-#X connect 19 0 58 0;
-#X connect 19 1 59 0;
+#X connect 19 0 75 0;
+#X connect 19 0 74 0;
+#X connect 19 1 76 0;
 #X connect 20 0 5 1;
 #X connect 20 0 4 1;
 #X connect 21 0 2 1;
 #X connect 21 0 1 1;
 #X connect 22 0 5 0;
-#X connect 22 0 49 0;
+#X connect 22 0 48 0;
 #X connect 23 0 4 0;
-#X connect 23 0 50 0;
+#X connect 23 0 49 0;
 #X connect 24 0 26 0;
-#X connect 26 0 40 0;
+#X connect 26 0 39 0;
 #X connect 27 0 26 0;
 #X connect 29 0 9 0;
 #X connect 30 0 15 0;
-#X connect 34 0 28 0;
-#X connect 36 0 20 0;
+#X connect 35 0 20 0;
+#X connect 36 0 37 0;
 #X connect 37 0 38 0;
-#X connect 38 0 39 0;
-#X connect 39 0 40 1;
-#X connect 40 0 41 2;
-#X connect 40 0 25 0;
-#X connect 45 0 47 1;
-#X connect 45 0 48 1;
-#X connect 46 0 69 0;
+#X connect 38 0 39 1;
+#X connect 39 0 73 0;
+#X connect 39 0 72 0;
+#X connect 44 0 46 1;
+#X connect 44 0 47 1;
+#X connect 45 0 66 0;
+#X connect 46 0 50 0;
 #X connect 47 0 51 0;
-#X connect 48 0 52 0;
-#X connect 49 0 48 0;
-#X connect 50 0 47 0;
-#X connect 51 0 41 3;
+#X connect 48 0 47 0;
+#X connect 49 0 46 0;
+#X connect 50 0 40 3;
+#X connect 50 0 42 0;
+#X connect 51 0 40 4;
 #X connect 51 0 43 0;
-#X connect 52 0 41 4;
-#X connect 52 0 44 0;
+#X connect 52 0 53 0;
 #X connect 53 0 54 0;
-#X connect 54 0 55 0;
-#X connect 55 0 52 1;
-#X connect 55 0 51 1;
-#X connect 56 0 54 0;
-#X connect 58 0 57 0;
-#X connect 59 0 28 0;
-#X connect 59 0 57 0;
-#X connect 69 0 45 0;
-#X connect 71 0 18 0;
-#X coords -1 -1 1 1 137 115 2 664 89;
+#X connect 54 0 51 1;
+#X connect 54 0 50 1;
+#X connect 55 0 53 0;
+#X connect 66 0 44 0;
+#X connect 68 0 18 0;
+#X connect 70 0 71 0;
+#X connect 71 0 72 0;
+#X connect 72 0 40 2;
+#X connect 72 0 25 0;
+#X connect 73 0 72 1;
+#X connect 74 0 56 0;
+#X connect 75 0 28 0;
+#X connect 76 0 28 0;
+#X connect 76 0 56 0;
+#X coords -1 -1 1 1 137 132 2 664 89;
