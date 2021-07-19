@@ -52,4 +52,4 @@ Optional messages to send to the first inlet. Messages take the format \<message
 
 ### Alias
 
-rotate2~
+rotate_a~
