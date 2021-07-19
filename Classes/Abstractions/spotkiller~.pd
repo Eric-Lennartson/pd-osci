@@ -1,56 +1,63 @@
-#N canvas 124 23 508 430 12;
+#N canvas 193 28 608 430 12;
 #X obj 12 77 hip~ 3;
-#X obj 83 77 hip~ 3;
+#X obj 193 77 hip~ 3;
 #X obj 12 101 env~;
-#X obj 83 101 env~;
+#X obj 193 101 env~;
 #X obj 12 318 sig~;
-#X obj 12 9 inlet~ x;
-#X obj 83 9 inlet~ y;
+#X obj 193 9 inlet~ y;
 #X obj 37 233 r \$0-cut-off;
-#X obj 306 170 cnv 15 119 28 empty body empty 20 12 0 14 -99865 -66577
+#X obj 366 170 cnv 15 119 28 empty body empty 20 12 0 14 -99865 -66577
 0;
-#X obj 306 154 cnv 15 119 15 empty h1 osci/spotkiller~ 3 8 0 11 -16645
+#X obj 366 154 cnv 15 119 15 empty h1 osci/spotkiller~ 3 8 0 11 -16645
 -257781 0;
-#X obj 306 196 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+#X obj 366 196 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
 0;
 #X obj 12 202 * 0.333333;
-#X obj 153 77 hip~ 3;
-#X obj 153 101 env~;
-#X obj 153 9 inlet~ z;
-#X obj 225 11 inlet~ brightness;
+#X obj 263 77 hip~ 3;
+#X obj 263 101 env~;
+#X obj 263 9 inlet~ z;
+#X obj 335 9 inlet~ brightness;
 #X obj 12 355 *~;
 #X obj 12 396 outlet~;
-#X obj 225 305 osci/n~;
+#X obj 335 305 osci/n~;
 #X obj 12 176 +;
-#X obj 83 145 +;
-#X obj 364 13 else/initmess \; \$0-set-cut-off 60 \; \$0-set-invert
-0 \;;
-#X floatatom 311 175 5 0 100 1 cut_off #0-set-cut-off #0-cut-off;
+#X obj 193 145 +;
+#X floatatom 371 175 5 0 100 1 cut_off #0-set-cut-off #0-cut-off;
 #X obj 12 263 > 60;
-#X obj 306 154 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+#X obj 366 154 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
 0;
-#X obj 342 154 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+#X obj 402 154 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
 0;
-#X obj 380 154 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+#X obj 440 154 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
 0;
-#X obj 418 154 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+#X obj 478 154 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
 0;
+#X obj 464 9 else/initmess \; \$0-set-cut-off 60 \;;
+#X obj 12 9 inlet~ fwd;
+#X obj 79 44 route 2D 3D;
+#X msg 79 68 0.5;
+#X msg 116 68 0.333333;
 #X connect 0 0 2 0;
 #X connect 1 0 3 0;
-#X connect 2 0 19 0;
-#X connect 3 0 20 0;
-#X connect 4 0 16 0;
-#X connect 5 0 0 0;
-#X connect 6 0 1 0;
-#X connect 7 0 23 1;
-#X connect 11 0 23 0;
-#X connect 12 0 13 0;
-#X connect 13 0 20 1;
-#X connect 14 0 12 0;
-#X connect 15 0 18 0;
-#X connect 16 0 17 0;
-#X connect 18 0 16 1;
-#X connect 19 0 11 0;
-#X connect 20 0 19 1;
-#X connect 23 0 4 0;
-#X coords 0 -1 1 1 121 46 2 305 153;
+#X connect 2 0 18 0;
+#X connect 3 0 19 0;
+#X connect 4 0 15 0;
+#X connect 5 0 1 0;
+#X connect 6 0 21 1;
+#X connect 10 0 21 0;
+#X connect 11 0 12 0;
+#X connect 12 0 19 1;
+#X connect 13 0 11 0;
+#X connect 14 0 17 0;
+#X connect 15 0 16 0;
+#X connect 17 0 15 1;
+#X connect 18 0 10 0;
+#X connect 19 0 18 1;
+#X connect 21 0 4 0;
+#X connect 27 0 0 0;
+#X connect 27 1 28 0;
+#X connect 28 0 29 0;
+#X connect 28 1 30 0;
+#X connect 29 0 10 1;
+#X connect 30 0 10 1;
+#X coords 0 -1 1 1 121 46 2 365 153;
