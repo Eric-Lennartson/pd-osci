@@ -638,10 +638,10 @@ void osci_about(t_osci* x)
     post("| OSCI - Pure Data externals for oscilloscope music & art  ");
     post("|---------------------------------------------------------|");
     post("| Author: Eric Lennartson                                  ");
-    post("| Version: 0.1.1 Released January 31st 2021                ");
+    post("| Version: 0.2.0 Released July 19th 2021                   ");
     post("| Repository: https://github.com/Eric-Lennartson/pd-osci   ");
     post("| License: GPL-3.0                                         ");
-    post("| Build Date: January 31st 2021                            ");
+    post("| Build Date: July 19th 2021                               ");
     //if(major >= min_major && minor >= min_minor && bugfix >= min_bugfix)
     //     post("- OSCI 1.0.-0 %s-%d needs at least Pd %d.%d-%d (you have %d.%d-%d, you're good!)",
     //          STATUS, status_number, min_major, min_minor, min_bugfix, major, minor, bugfix);
