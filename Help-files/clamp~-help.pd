@@ -1,1 +1,34 @@
-#N canvas 620 23 446 693 12;
+#N canvas 620 23 430 470 12;
+#X declare -lib osci;
+#X floatatom 37 67 5 0 0 0 - - -;
+#X obj 302 12 declare -lib osci;
+#X obj 37 124 osci/clamp~ -2 1;
+#X obj 37 158 else/display~;
+#X obj 37 90 sig~ 0.6;
+#X text 0 191 ============================================================inlets
+;
+#X text 17 225 1 signal - value to clamp;
+#X text 17 245 2 signal/float - minimum;
+#X text 17 265 3 signal/float - maximum;
+#X text 0 286 ============================================================outlets
+;
+#X text 17 323 1 signal - clamped value;
+#X text 0 344 ============================================================arguments
+;
+#X text 0 431 ========================================================================================================================
+;
+#X text 17 386 1 float - minimum (default -1);
+#X text 17 405 2 float - maximum (default 1);
+#X obj 189 96 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412 -174938
+-203556;
+#X text 216 99 open online documentation;
+#N canvas 0 23 379 104 docs 0;
+#X obj 11 16 inlet;
+#X obj 11 56 else/openfile https://eric-lennartson.github.io/pd-osci/#/clamp~
+;
+#X connect 0 0 1 0;
+#X restore 189 130 pd docs;
+#X connect 0 0 4 0;
+#X connect 2 0 3 0;
+#X connect 4 0 2 0;
+#X connect 15 0 17 0;

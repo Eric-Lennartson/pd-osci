@@ -1,4 +1,4 @@
-#N canvas 544 23 440 755 12;
+#N canvas 626 23 440 755 12;
 #X declare -lib osci;
 #X obj 16 304 osci/out~;
 #X obj 16 273 osci/text~ hello_world;
@@ -23,37 +23,37 @@ is also options for vertical and horizontal alignment of the text.
 ;
 #X connect 0 0 1 0;
 #X restore 179 370 pd docs;
-#X text 1 425 ============================================================inlets
+#X text 1 445 ============================================================inlets
 ;
-#X text 1 540 ============================================================outlets
+#X text 1 560 ============================================================outlets
 ;
-#X text 1 835 ============================================================arguments
+#X text 1 855 ============================================================arguments
 ;
-#X text 0 945 ========================================================================================================================
+#X text 0 965 ========================================================================================================================
 ;
-#X text 1 615 ============================================================messages
+#X text 1 635 ============================================================messages
 ;
 #X obj 304 1 declare -lib osci;
-#X text 11 460 1 signal - phase;
-#X text 11 576 1 signal - x;
-#X text 11 596 2 signal - y;
-#X text 11 652 Optional messages to send to the first inlet. Messages
+#X text 11 480 1 signal - phase;
+#X text 11 596 1 signal - x;
+#X text 11 616 2 signal - y;
+#X text 11 672 Optional messages to send to the first inlet. Messages
 take the format <message> <symbol>., f 58;
-#X text 21 687 set - sets the text to be displayed. Spaces are represented
+#X text 21 707 set - sets the text to be displayed. Spaces are represented
 with underscores (_) and newlines are represented by periods (.),
 f 57;
-#X text 21 737 halign - sets the horizontal alignment. Options are
+#X text 21 757 halign - sets the horizontal alignment. Options are
 default \, left \, right \, center., f 57;
-#X text 21 773 valign - sets the vertical alignment. Options are none
+#X text 21 793 valign - sets the vertical alignment. Options are none
 \, top \, bottom \, middle., f 57;
-#X text 21 811 font - sets the font. (not implemented yet);
-#X text 11 869 1 symbol - text to display;
-#X text 11 480 2 signal/float - line height (> 1.5);
-#X text 11 500 3 signal/float - letter spacing (>= 0);
-#X text 11 520 4 signal/float - ratio (height:width) (>= 0);
-#X text 11 909 3 float - letter spacing (>= 0);
-#X text 11 929 4 float - ratio (height:width) (>= 0);
-#X text 11 889 2 float - line height (> 1.5);
+#X text 21 831 font - sets the font. (not implemented yet);
+#X text 11 889 1 symbol - text to display;
+#X text 11 500 2 signal/float - line height (> 1.5);
+#X text 11 520 3 signal/float - letter spacing (>= 0);
+#X text 11 540 4 signal/float - ratio (height:width) (>= 0);
+#X text 11 929 3 float - letter spacing (>= 0);
+#X text 11 949 4 float - ratio (height:width) (>= 0);
+#X text 11 909 2 float - line height (> 1.5);
 #X connect 1 0 0 0;
 #X connect 1 1 0 1;
 #X connect 2 0 1 0;

@@ -1,28 +1,19 @@
-#N canvas 799 46 444 678 12;
+#N canvas 69 43 445 678 12;
 #X declare -lib osci;
 #X obj 3 168 phasor~ 50;
-#X obj 3 322 chris_clip~ -1 1;
-#X obj 126 322 chris_clip~ -1 1;
-#X obj 12 237 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
-1;
 #X msg 12 257 mirror \$1;
-#X obj 89 237 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
-1;
 #X msg 89 257 mod \$1;
-#X obj 3 192 osci/circle~ 0 0 2;
+#X obj 3 192 osci/circle~ 0 0 2, f 23;
 #X obj 3 356 osci/out~;
-#X text 126 482 [chris_clip~-g];
-#X obj 4 484 osci/chris_clip~-g;
-#A saved 0 0 -1 0 1 0 1 0;
-#X text 3 611 ============================================================inlets
+#X text 3 491 ============================================================inlets
 ;
-#X text 3 706 ============================================================outlets
+#X text 3 586 ============================================================outlets
 ;
-#X text 3 864 ============================================================arguments
+#X text 3 744 ============================================================arguments
 ;
-#X text 3 938 ========================================================================================================================
+#X text 3 818 ========================================================================================================================
 ;
-#X text 3 764 ============================================================messages
+#X text 3 644 ============================================================messages
 ;
 #X text 0 35 [chris_clip~] is a object based off of OsciStudio's modifier
 of the same name. In addition to normal clipping \, it has a modulo
@@ -32,10 +23,6 @@ value will be considered for clipping. Mirror doesn't take values <=
 0 \, and will instead stop clipping altogether. Both mod and mirror
 modes can be active at the same time. Additionally there is an optional
 gui version specified with the '-g' flag.;
-#X text 135 514 The toggles to the right of the number boxes specify
-if the inlet or numberbox is to be used for setting the values. The
-default is to use the numberboxs. It also automatically saves the values
-from it's last use., f 41;
 #X obj 187 224 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
 -174938 -203556;
 #X text 215 226 open online documentation;
@@ -45,25 +32,35 @@ from it's last use., f 41;
 ;
 #X connect 0 0 1 0;
 #X restore 187 263 pd docs;
-#X text 20 645 1 signal - signal to clip;
-#X text 20 665 2 float/signal - minimum value;
-#X text 20 685 3 float/signal - maximum value;
-#X text 20 743 1 signal - clipped value;
-#X text 20 803 Optional messages to send to the first inlet.;
-#X text 30 823 mod - toggle modulo clipping;
-#X text 30 843 mirror - toggle mirror clipping;
-#X text 20 901 1 float - minimum value;
-#X text 20 921 2 float - maximum value;
+#X text 20 525 1 signal - signal to clip;
+#X text 20 545 2 float/signal - minimum value;
+#X text 20 565 3 float/signal - maximum value;
+#X text 20 623 1 signal - clipped value;
+#X text 20 683 Optional messages to send to the first inlet.;
+#X text 30 703 mod - toggle modulo clipping;
+#X text 30 723 mirror - toggle mirror clipping;
+#X text 20 781 1 float - minimum value;
+#X text 20 801 2 float - maximum value;
 #X obj 302 10 declare -lib osci;
-#X connect 0 0 7 0;
-#X connect 1 0 8 0;
-#X connect 2 0 8 1;
-#X connect 3 0 4 0;
-#X connect 4 0 1 0;
-#X connect 4 0 2 0;
-#X connect 5 0 6 0;
-#X connect 6 0 1 0;
-#X connect 6 0 2 0;
-#X connect 7 0 1 0;
-#X connect 7 1 2 0;
-#X connect 18 0 20 0;
+#X obj 3 322 osci/chris_clip~ -1 1;
+#X obj 161 320 osci/chris_clip~ -1 1;
+#X obj 12 228 tgl 24 0 empty empty empty 30 11 0 12 -91412 -174938
+-203556 0 1;
+#X obj 89 228 tgl 24 0 empty empty empty 30 11 0 12 -91412 -174938
+-203556 0 1;
+#N canvas 0 23 401 370 gui_versions 0;
+#X obj 8 35 osci/chris_clip~-g;
+#X obj 188 35 osci/chris_clip~-all;
+#X restore 193 390 pd gui_versions;
+#X connect 0 0 3 0;
+#X connect 1 0 24 0;
+#X connect 1 0 25 0;
+#X connect 2 0 24 0;
+#X connect 2 0 25 0;
+#X connect 3 0 24 0;
+#X connect 3 1 25 0;
+#X connect 11 0 13 0;
+#X connect 24 0 4 0;
+#X connect 25 0 4 1;
+#X connect 26 0 1 0;
+#X connect 27 0 2 0;

@@ -1,1 +1,67 @@
-#N canvas 620 23 446 693 12;
+#N canvas 620 23 441 693 12;
+#X declare -lib osci;
+#X obj 300 9 declare -lib osci;
+#X obj 18 438 osci/out~;
+#X text 0 581 ============================================================inlets
+;
+#X text 0 716 ============================================================outlets
+;
+#X text 0 874 ============================================================arguments
+;
+#X text 0 961 ========================================================================================================================
+;
+#X text 17 753 1-3 signal - x \, y \, z;
+#X floatatom 18 101 5 0 0 0 - - -;
+#X obj 18 133 phasor~ 50;
+#X obj 179 476 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
+-174938 -203556;
+#X text 206 479 open online documentation;
+#N canvas 0 23 390 104 docs 0;
+#X obj 11 16 inlet;
+#X obj 11 56 else/openfile https://eric-lennartson.github.io/pd-osci/#/zoom~
+;
+#X connect 0 0 1 0;
+#X restore 179 510 pd docs;
+#X obj 18 166 osci/icosa~ 0 0 0 1 1 1, f 25;
+#X obj 208 180 tgl 24 0 empty empty empty 30 11 0 12 -91412 -174938
+-203556 0 1;
+#X msg 208 209 mirror \$1;
+#X obj 208 233 tgl 24 0 empty empty empty 30 11 0 12 -91412 -174938
+-203556 0 1;
+#X msg 208 262 mod \$1;
+#X obj 18 393 osci/zoom~;
+#X text 17 615 1 signal - x;
+#X text 17 635 2 signal - y;
+#X text 17 655 3 signal - z;
+#X text 17 675 4 signal/float - maximum (default 1);
+#X text 17 695 5 signal/float - zoom factor (default 1);
+#X floatatom 208 296 5 0 0 1 max - -;
+#X floatatom 208 343 5 0 0 1 zoom_factor - -;
+#X text 3 774 ============================================================messages
+;
+#X text 20 813 Optional messages to send to the first inlet.;
+#X text 30 833 mod - toggle modulo clipping;
+#X text 30 853 mirror - toggle mirror clipping;
+#X obj 208 366 sig~ 0.5;
+#X obj 208 319 sig~ 2;
+#X text 17 916 1 float - maximum (default 1);
+#X text 17 935 2 float - zoom factor (default 1);
+#X text 2 46 [zoom~] is essentially a wrapper for [chris_clip~]. The
+zoom effect is performed by clipping the signal \, and then multiplying
+it by the amount it was clipped by.;
+#X connect 7 0 8 0;
+#X connect 8 0 12 0;
+#X connect 9 0 11 0;
+#X connect 12 0 17 0;
+#X connect 12 1 17 1;
+#X connect 12 2 17 2;
+#X connect 13 0 14 0;
+#X connect 14 0 17 0;
+#X connect 15 0 16 0;
+#X connect 16 0 17 0;
+#X connect 17 0 1 0;
+#X connect 17 1 1 1;
+#X connect 23 0 30 0;
+#X connect 24 0 29 0;
+#X connect 29 0 17 4;
+#X connect 30 0 17 3;

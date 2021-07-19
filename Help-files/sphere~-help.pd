@@ -1,1 +1,106 @@
-#N canvas 620 23 446 693 12;
+#N canvas 144 23 438 755 12;
+#X declare -lib osci;
+#X obj 270 9 declare -lib osci;
+#X obj 18 358 osci/out~;
+#X text 0 491 ============================================================inlets
+;
+#X text 0 686 ============================================================outlets
+;
+#X text 0 914 ============================================================arguments
+;
+#X text 0 1081 ========================================================================================================================
+;
+#X text 17 723 1-3 signal - x \, y \, z;
+#X obj 18 275 osci/sphere~, f 25;
+#X text 17 525 1 signal - phase;
+#X text 17 545 2 signal - phase2 (optional);
+#X text 0 745 ============================================================messages
+;
+#X text 17 565 3 signal/float - longitude minimum (default 0);
+#X text 17 585 4 signal/float - longitude maximum (default pi);
+#X text 17 605 5 signal/float - latitude minimum (default 0);
+#X text 17 625 6 signal/float - latitude maximum (default two pi);
+#X text 17 645 7 signal/float - number of points (default 10);
+#X text 18 665 8 signal/float - radius (default 1);
+#X text 11 782 Optional messages to send to the first inlet., f 58
+;
+#X text 21 805 mode - sets the mode for the second phase inlet.;
+#X text 31 865 1 - second phase is added on to the first, f 54;
+#X text 31 885 2 - second phase is completely seperate from the first
+;
+#X text 31 825 0 - second phase inlet is ignored and first inlet is
+used., f 54;
+#X text 17 956 1 float - longitude minimum (default 0);
+#X text 17 975 2 float - longitude maximum (default pi);
+#X text 17 995 3 float - latitude minimum (default 0);
+#X text 17 1015 4 float - latitude maximum (default two pi);
+#X text 17 1035 5 float - number of points (default 10);
+#X text 18 1055 6 float - radius (default 1);
+#X floatatom 18 11 5 0 0 0 - - -;
+#X floatatom 42 71 5 0 0 0 - - -;
+#X obj 60 143 hradio 18 1 0 3 empty empty empty -1 -10 0 12 -91412
+-174938 -203556 0;
+#X msg 60 175 mode \$1;
+#X obj 18 312 osci/rotate_euler~ 30 20 40;
+#X obj 245 65 hsl 140 22 0 3.14159 0 0 \$0-lon-min empty lon_min -4
+-10 0 12 -91412 -174938 -203556 0 1;
+#X obj 245 105 hsl 140 22 0 3.14159 0 0 \$0-lon-max empty lon_max -4
+-10 0 12 -91412 -174938 -203556 0 1;
+#X obj 245 145 hsl 140 22 0 6.28292 0 0 \$0-lat-min empty lat_min -4
+-10 0 12 -91412 -174938 -203556 0 1;
+#X obj 245 185 hsl 140 22 0 6.28292 0 0 \$0-lat-max empty lat_max -4
+-10 0 12 -91412 -174938 -203556 0 1;
+#X obj 245 225 hsl 140 22 0 100 0 0 \$0-n-points empty n_points -4
+-10 0 12 -91412 -174938 -203556 0 1;
+#X obj 245 265 hsl 140 22 0 1 0 0 \$0-radius empty radius -4 -10 0
+12 -91412 -174938 -203556 0 1;
+#X obj 18 43 phasor~ 50;
+#X obj 42 103 phasor~ 50.4;
+#X obj 179 396 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
+-174938 -203556;
+#X text 206 399 open online documentation;
+#N canvas 0 23 528 104 docs 0;
+#X obj 11 16 inlet;
+#X obj 11 56 else/openfile https://eric-lennartson.github.io/pd-osci/#/sphere~
+;
+#X connect 0 0 1 0;
+#X restore 179 430 pd docs;
+#N canvas 0 23 599 135 param_rcvs 0;
+#X obj 7 7 r \$0-lon-min;
+#X obj 506 7 r \$0-radius;
+#X obj 401 7 r \$0-n-points;
+#X obj 302 7 r \$0-lat-max;
+#X obj 201 7 r \$0-lat-min;
+#X obj 103 7 r \$0-lon-max;
+#X obj 7 101 outlet;
+#X obj 103 101 outlet;
+#X obj 201 101 outlet;
+#X obj 302 101 outlet;
+#X obj 401 101 outlet;
+#X obj 506 101 outlet;
+#X connect 0 0 6 0;
+#X connect 1 0 11 0;
+#X connect 2 0 10 0;
+#X connect 3 0 9 0;
+#X connect 4 0 8 0;
+#X connect 5 0 7 0;
+#X restore 67 229 pd param_rcvs;
+#X f 18;
+#X connect 7 0 32 0;
+#X connect 7 1 32 1;
+#X connect 7 2 32 2;
+#X connect 28 0 39 0;
+#X connect 29 0 40 0;
+#X connect 30 0 31 0;
+#X connect 31 0 7 0;
+#X connect 32 0 1 0;
+#X connect 32 1 1 1;
+#X connect 39 0 7 0;
+#X connect 40 0 7 1;
+#X connect 41 0 43 0;
+#X connect 44 0 7 2;
+#X connect 44 1 7 3;
+#X connect 44 2 7 4;
+#X connect 44 3 7 5;
+#X connect 44 4 7 6;
+#X connect 44 5 7 7;
