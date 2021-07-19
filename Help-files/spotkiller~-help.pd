@@ -1,0 +1,53 @@
+#N canvas 168 53 442 602 12;
+#X declare -lib osci;
+#X obj 8 296 osci/out~;
+#X obj 291 10 declare -lib osci;
+#X obj 175 330 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
+-174938 -203556;
+#X text 5 429 ============================================================inlets
+;
+#X text 5 519 ============================================================outlets
+;
+#X text 5 689 ============================================================arguments
+;
+#X text 15 459 1 signal - x;
+#X text 15 479 2 signal - y;
+#X text 15 499 3 signal - z;
+#N canvas 375 195 414 80 docs 0;
+#X obj 7 7 inlet;
+#X obj 7 31 else/openfile https://eric-lennartson.github.io/pd-osci/#/spotkiller~
+;
+#X connect 0 0 1 0;
+#X restore 175 359 pd docs;
+#X text 204 332 online documentation;
+#X obj 138 237 osci/spotkiller~;
+#X text 15 721 none;
+#X text 15 551 1 signal - brightness;
+#X text 3 739 ========================================================================================================================
+;
+#X text 5 569 ============================================================messages
+;
+#X text 15 601 Optional messages for the first inlet.;
+#X text 25 621 2D - set the expected incoming signal vector to be two
+dimensional;
+#X obj 8 168 phasor~ 50;
+#X obj 8 202 osci/circle~;
+#X floatatom 89 168 5 0 0 1 size - -;
+#X text 4 32 [spotkiller~] is an optional brightness control object.
+It sets a cut off level \, in decibels \, where the brightness of an
+image will be set to 0 This can be useful for avoiding burn out in
+the center of your oscilloscope \, vectrex \, etc. It should come at
+the end of the brightness signal chain. Some scopes have brightness
+inverted \, in which case \, use the invert toggle on [out~]. In order
+to make use of this object \, your scope must have a brightness input
+\, otherwise there will not be anywhere to send the signal.;
+#X text 25 651 3D - set the expected incoming signal vector to be three
+dimensional;
+#X connect 2 0 9 0;
+#X connect 11 0 0 2;
+#X connect 18 0 19 0;
+#X connect 19 0 0 0;
+#X connect 19 0 11 0;
+#X connect 19 1 0 1;
+#X connect 19 1 11 1;
+#X connect 20 0 19 3;
