@@ -3,9 +3,10 @@
 - figure out how to add in remapping tree...
 - could I add in a link to blender via OSC?
 ==== Bugs ======================================================================
-- something wrong for octa and octahedron in makefile
-- chris_clip~-g crash when mod was on, moving the min option
-    - fix in pd patch? or the source?
+all
+    - some help patches still use old rotate objects
+linux
+    - icosahedron and octahedron look odd, why?
 ==== Things to Improve =========================================================
 - create a dev branch to mess around in, you know, so it's organized
 - mess around with the scan processing from derek's library and get it working

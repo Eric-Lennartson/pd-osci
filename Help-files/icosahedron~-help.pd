@@ -1,9 +1,8 @@
 #N canvas 316 23 430 720 12;
 #X declare -lib osci;
-#X obj 5 88 osci/rotate~ 45 23 0;
 #X obj 5 112 osci/project~;
 #X obj 5 30 phasor~ 50;
-#X obj 5 146 osci/out~;
+#X obj 5 136 osci/out~;
 #X text 278 121 alias;
 #X obj 179 59 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412 -174938
 -203556;
@@ -42,13 +41,14 @@
 #X text 24 610 2 float - y Position;
 #X obj 181 120 osci/icosa~;
 #X obj 5 54 osci/icosahedron~;
-#X connect 0 0 1 0;
-#X connect 0 1 1 1;
-#X connect 0 2 1 2;
-#X connect 1 0 3 0;
-#X connect 1 1 3 1;
-#X connect 2 0 31 0;
-#X connect 5 0 7 0;
+#X obj 5 88 osci/rotate_e~ 45 23 0;
+#X connect 0 0 2 0;
+#X connect 0 1 2 1;
+#X connect 1 0 30 0;
+#X connect 4 0 6 0;
+#X connect 30 0 31 0;
+#X connect 30 1 31 1;
+#X connect 30 2 31 2;
 #X connect 31 0 0 0;
 #X connect 31 1 0 1;
 #X connect 31 2 0 2;

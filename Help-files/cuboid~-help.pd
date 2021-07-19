@@ -1,6 +1,5 @@
 #N canvas 330 23 432 727 12;
 #X declare -lib osci;
-#X obj 12 76 osci/rotate~ 45 23 0;
 #X obj 12 100 osci/project~;
 #X obj 12 18 phasor~ 50;
 #X obj 12 127 osci/out~;
@@ -40,13 +39,14 @@
 #X connect 0 0 1 0;
 #X restore 187 153 pd docs;
 #X obj 12 42 osci/cuboid~, f 18;
-#X connect 0 0 1 0;
-#X connect 0 1 1 1;
-#X connect 0 2 1 2;
-#X connect 1 0 3 0;
-#X connect 1 1 3 1;
-#X connect 2 0 29 0;
-#X connect 26 0 28 0;
+#X obj 12 76 osci/rotate_e~ 45 23 0;
+#X connect 0 0 2 0;
+#X connect 0 1 2 1;
+#X connect 1 0 28 0;
+#X connect 25 0 27 0;
+#X connect 28 0 29 0;
+#X connect 28 1 29 1;
+#X connect 28 2 29 2;
 #X connect 29 0 0 0;
 #X connect 29 1 0 1;
 #X connect 29 2 0 2;
