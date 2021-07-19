@@ -101,7 +101,7 @@ void gon_tilde_setup(void)
                                     A_DEFFLOAT,                     // size
                                     0);                             // no more args
 
-    class_sethelpsymbol(gon_tilde_class, gensym("gon~")); // links to the help patch
+    class_sethelpsymbol(gon_tilde_class, gensym("polygon~")); // links to the help patch
 
     class_addmethod(gon_tilde_class, (t_method)gon_tilde_dsp, gensym("dsp"), A_CANT, 0); // add a dsp method to data space
     CLASS_MAINSIGNALIN(gon_tilde_class, t_gon_tilde, f);                                 // signal inlet as first inlet

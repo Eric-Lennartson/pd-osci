@@ -131,7 +131,7 @@ void super_tilde_setup(void)
                             A_GIMME,
                             0); // no more args
     
-    class_sethelpsymbol(super_tilde_class, gensym("super~")); // links to the help patch
+    class_sethelpsymbol(super_tilde_class, gensym("supershape~")); // links to the help patch
     
     class_addmethod(super_tilde_class, (t_method)super_tilde_dsp, gensym("dsp"), A_CANT, 0); // add a dsp method to data space
     CLASS_MAINSIGNALIN(super_tilde_class, t_super_tilde, f); // signal inlet as first inlet

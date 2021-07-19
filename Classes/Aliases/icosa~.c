@@ -186,7 +186,7 @@ void icosa_tilde_setup(void)
                                   A_GIMME, // xPos, yPos, zPos, xScale, yScale, zScale
                                   0);
     
-    class_sethelpsymbol(icosa_tilde_class, gensym("icosa~"));
+    class_sethelpsymbol(icosa_tilde_class, gensym("icosahedron~"));
     
     class_addmethod(icosa_tilde_class, (t_method)icosa_tilde_dsp, gensym("dsp"), A_CANT, 0);
     CLASS_MAINSIGNALIN(icosa_tilde_class, t_icosa_tilde, f); // dummy arg for singal into first inlet

@@ -114,7 +114,7 @@ void rect_tilde_setup(void)
                                  A_GIMME,                     // xpos, ypos, width, height
                                  0);                          // no more args
 
-    class_sethelpsymbol(rect_tilde_class, gensym("rect~")); // links to the help patch
+    class_sethelpsymbol(rect_tilde_class, gensym("rectangle~")); // links to the help patch
 
     class_addmethod(rect_tilde_class, (t_method)rect_tilde_dsp, gensym("dsp"), A_CANT, 0); // add a dsp method to data space
     CLASS_MAINSIGNALIN(rect_tilde_class, t_rect_tilde, f);                                 // signal inlet as first inlet

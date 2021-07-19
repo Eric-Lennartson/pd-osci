@@ -210,7 +210,7 @@ void dodeca_tilde_setup(void)
                                   A_GIMME, // xPos, yPos, zPos, xLen, yLen, zLen
                                   0);
     
-    class_sethelpsymbol(dodeca_tilde_class, gensym("dodeca~"));
+    class_sethelpsymbol(dodeca_tilde_class, gensym("dodecahedron~"));
     
     class_addmethod(dodeca_tilde_class, (t_method)dodeca_tilde_dsp, gensym("dsp"), A_CANT, 0);
     CLASS_MAINSIGNALIN(dodeca_tilde_class, t_dodeca_tilde, f); // dummy arg for singal into first inlet

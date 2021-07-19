@@ -107,7 +107,7 @@ void tri_tilde_setup(void)
                             A_GIMME, // xpos, ypos, size
                             0); // no more args
     
-    class_sethelpsymbol(tri_tilde_class, gensym("tri~")); // links to the help patch
+    class_sethelpsymbol(tri_tilde_class, gensym("triangle~")); // links to the help patch
     
     class_addmethod(tri_tilde_class, (t_method)tri_tilde_dsp, gensym("dsp"), A_CANT, 0); // add a dsp method to data space
     CLASS_MAINSIGNALIN(tri_tilde_class, t_tri_tilde, f); // signal inlet as first inlet

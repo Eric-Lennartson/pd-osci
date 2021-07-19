@@ -145,7 +145,7 @@ void octa_tilde_setup(void)
                                   A_GIMME, // xPos, yPos, zPos, xScale, yScale, zScale
                                   0);
     
-    class_sethelpsymbol(octa_tilde_class, gensym("octa~"));
+    class_sethelpsymbol(octa_tilde_class, gensym("octahedron~"));
     
     class_addmethod(octa_tilde_class, (t_method)octa_tilde_dsp, gensym("dsp"), A_CANT, 0);
     CLASS_MAINSIGNALIN(octa_tilde_class, t_octa_tilde, f); // dummy arg for singal into first inlet

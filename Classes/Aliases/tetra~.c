@@ -149,7 +149,7 @@ void tetra_tilde_setup(void)
                                   A_GIMME, // xPos, yPos, zPos, xLen, yLen, zLen
                                   0);
     
-    class_sethelpsymbol(tetra_tilde_class, gensym("tetra~"));
+    class_sethelpsymbol(tetra_tilde_class, gensym("tetrahedron~"));
     
     class_addmethod(tetra_tilde_class, (t_method)tetra_tilde_dsp, gensym("dsp"), A_CANT, 0);
     CLASS_MAINSIGNALIN(tetra_tilde_class, t_tetra_tilde, f); // dummy arg for singal into first inlet

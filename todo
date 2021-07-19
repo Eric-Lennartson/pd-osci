@@ -7,17 +7,14 @@
 - chris_clip~-g crash when mod was on, moving the min option
     - fix in pd patch? or the source?
 ==== Things to Improve =========================================================
-- update the online documentation, and this version is done!
-COMPLETE THE ABOVE AND PUT OUT A NEW VERSION
-=================================================================================
 - create a dev branch to mess around in, you know, so it's organized
 - mess around with the scan processing from derek's library and get it working
+    - what features are in derek's library that would be useful to have in mine?
 - is there a convienient way to get rid of unused parameter warnings?
 - idea for objs like cuboid, setting certain related args with msgs like -size?
 - vectorize perf functions if possible
 - create lookup tables for cos and sin
     - take a look at how it's done in the pd source
-- fix links to helpfiles in aliases
 - using bool seems to cause problems
 - would having flags for args be helpful for some objects?
     - it seems silly to have to specify all args if you only want
