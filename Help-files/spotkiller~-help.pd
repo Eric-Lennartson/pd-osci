@@ -1,4 +1,4 @@
-#N canvas 168 53 442 602 12;
+#N canvas 65 91 442 602 12;
 #X declare -lib osci;
 #X obj 8 296 osci/out~;
 #X obj 291 10 declare -lib osci;
@@ -6,9 +6,9 @@
 -174938 -203556;
 #X text 5 429 ============================================================inlets
 ;
-#X text 5 519 ============================================================outlets
+#X text 5 539 ============================================================outlets
 ;
-#X text 5 689 ============================================================arguments
+#X text 5 709 ============================================================arguments
 ;
 #X text 15 459 1 signal - x;
 #X text 15 479 2 signal - y;
@@ -21,19 +21,19 @@
 #X restore 175 359 pd docs;
 #X text 204 332 online documentation;
 #X obj 138 237 osci/spotkiller~;
-#X text 15 721 none;
-#X text 15 551 1 signal - brightness;
-#X text 3 739 ========================================================================================================================
+#X text 15 741 none;
+#X text 15 571 1 signal - brightness;
+#X text 3 759 ========================================================================================================================
 ;
-#X text 5 569 ============================================================messages
+#X text 5 589 ============================================================messages
 ;
-#X text 15 601 Optional messages for the first inlet.;
-#X text 25 621 2D - set the expected incoming signal vector to be two
+#X text 15 621 Optional messages for the first inlet.;
+#X text 24 641 2D - set the expected incoming signal vector to be two
 dimensional;
 #X obj 8 168 phasor~ 50;
 #X obj 8 202 osci/circle~;
 #X floatatom 89 168 5 0 0 1 size - -;
-#X text 4 32 [spotkiller~] is an optional brightness control object.
+#X text 3 32 [spotkiller~] is an optional brightness control object.
 It sets a cut off level \, in decibels \, where the brightness of an
 image will be set to 0 This can be useful for avoiding burn out in
 the center of your oscilloscope \, vectrex \, etc. It should come at
@@ -41,8 +41,12 @@ the end of the brightness signal chain. Some scopes have brightness
 inverted \, in which case \, use the invert toggle on [out~]. In order
 to make use of this object \, your scope must have a brightness input
 \, otherwise there will not be anywhere to send the signal.;
-#X text 25 651 3D - set the expected incoming signal vector to be three
+#X text 25 671 3D - set the expected incoming signal vector to be three
 dimensional;
+#X text 15 519 4 signal - brightness;
+#X obj 188 172 loadbang;
+#X msg 188 196 2D;
+#X msg 222 196 3D;
 #X connect 2 0 9 0;
 #X connect 11 0 0 2;
 #X connect 18 0 19 0;
@@ -51,3 +55,6 @@ dimensional;
 #X connect 19 1 0 1;
 #X connect 19 1 11 1;
 #X connect 20 0 19 3;
+#X connect 24 0 25 0;
+#X connect 25 0 11 0;
+#X connect 26 0 11 0;
