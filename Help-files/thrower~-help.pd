@@ -1,10 +1,10 @@
-#N canvas 328 71 444 572 12;
+#N canvas 162 99 444 572 12;
 #X declare -lib osci;
 #X obj 3 218 phasor~ 50;
 #X obj 3 242 osci/circle~ 0 0 2;
-#X obj 145 244 osci/out~;
+#X obj 145 234 osci/out~;
 #X obj 3 286 osci/thrower~ foo;
-#X obj 145 218 osci/catcher~ foo;
+#X obj 145 208 osci/catcher~ foo;
 #X obj 291 -15 declare -lib osci;
 #X obj 15 146 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412 -174938
 -203556;
