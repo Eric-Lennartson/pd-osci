@@ -37,7 +37,7 @@
 ;
 #X text 10 766 none;
 #X obj 10 108 osci/dodeca~;
-#X obj 10 342 osci/rotate~ 20 40 10;
+#X obj 10 342 osci/rotate_e~ 20 40 10;
 #X obj 149 168 sig~ 0.5;
 #X obj 117 90 sig~ 201;
 #X obj 127 114 sig~ 302;
