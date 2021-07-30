@@ -4,9 +4,11 @@
 - could I add in a link to blender via OSC?
 ==== Bugs ======================================================================
 all
-    - some help patches still use old rotate objects
+mac
 linux
     - icosahedron and octahedron look odd, why?
+windows
+    - not trying to compile this unless someone seriously is asking for it.
 ==== Things to Improve =========================================================
 - create a dev branch to mess around in, you know, so it's organized
 - mess around with the scan processing from derek's library and get it working
