@@ -62,7 +62,7 @@ void ball_tilde_free(t_ball_tilde *x)
     inlet_free(x->z_in);
     inlet_free(x->amt_in);
     inlet_free(x->r_in);
-    
+
     outlet_free(x->x_out);
     outlet_free(x->y_out);
     outlet_free(x->z_out);
@@ -74,19 +74,19 @@ void *ball_tilde_new(t_symbol *s, int argc, t_atom *argv)
 
     t_float amt = argc ? atom_getfloat(argv) : 0.f;
     t_float radius = argc > 1 ? atom_getfloat(argv+1) : 1.f;
-    
+
     x->y_in    = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
     x->z_in    = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
     x->amt_in  = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
     x->r_in    = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
-    
+
     pd_float((t_pd*)x->amt_in, amt); // send creation args to inlets, converts float to signal at the inlets
     pd_float((t_pd*)x->r_in, radius);
-    
+
     x->x_out = outlet_new(&x->x_obj, &s_signal);
     x->y_out = outlet_new(&x->x_obj, &s_signal);
     x->z_out = outlet_new(&x->x_obj, &s_signal);
-    
+
     return (void *)x;
 }
 
@@ -101,7 +101,7 @@ void ball_tilde_setup(void)
                                   0);
 
     class_sethelpsymbol(ball_tilde_class, gensym("ball~"));
-    
+
     class_addmethod(ball_tilde_class, (t_method)ball_tilde_dsp, gensym("dsp"), A_CANT, 0);
     CLASS_MAINSIGNALIN(ball_tilde_class, t_ball_tilde, f); // dummy arg for singal into first inlet
 }
