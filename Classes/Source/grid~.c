@@ -36,7 +36,7 @@ t_int *grid_tilde_perform(t_int *w)
     t_sample* y_out     =  (t_sample *)(w[10]);
     t_sample* z_out     =  (t_sample *)(w[11]);
     int       nblock    =         (int)(w[12]);
-    
+
     while (nblock--)
     {
         //init everything
@@ -117,7 +117,7 @@ void *grid_tilde_new(t_floatarg nx, t_floatarg ny, t_floatarg nz, t_floatarg spr
     t_grid_tilde *x = (t_grid_tilde *)pd_new(grid_tilde_class);
 
     x->v = vec3(1,1,1);
-    
+
     // make it an int, and make sure it's greater than 1
     nx = (int)MAX(nx, 1);
     ny = (int)MAX(ny, 1);
@@ -154,9 +154,9 @@ void grid_tilde_setup(void)
                                 A_DEFFLOAT, // nz
                                 A_DEFFLOAT, // spread
                                 0);
-    
+
     class_sethelpsymbol(grid_tilde_class, gensym("grid~"));
-    
+
     class_addmethod(grid_tilde_class, (t_method)grid_tilde_dsp, gensym("dsp"), A_CANT, 0);
     CLASS_MAINSIGNALIN(grid_tilde_class, t_grid_tilde, f); // dummy arg for signal into first inlet
 }

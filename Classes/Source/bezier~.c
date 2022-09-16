@@ -10,7 +10,7 @@ typedef struct _bezier_tilde
     t_outlet *x_out, *y_out;
 } t_bezier_tilde;
 
-t_float bezier(t_float t, t_float v1, t_float v2, t_float v3) 
+t_float bezier(t_float t, t_float v1, t_float v2, t_float v3)
 { // takes all of one type of coordinate, e.g. only x values etc.
     return pow(1 - t, 2) * v1 + (1 - t) * 2 * t * v2 + t * t * v3;
 }
@@ -27,7 +27,7 @@ static t_int *bezier_tilde_perform(t_int *w)
     t_float *x_out      = (t_float *)(w[8]);
     t_float *y_out      = (t_float *)(w[9]);
     int nblock          =       (int)(w[10]);
-    
+
     while (nblock--)
     {
         t_float t  = driver_in[nblock];
@@ -70,24 +70,24 @@ static void *bezier_tilde_free(t_bezier_tilde *x)
     inlet_free(x->y2);
     inlet_free(x->x3);
     inlet_free(x->y3);
-    
+
     outlet_free(x->x_out);
     outlet_free(x->y_out);
-    
+
     return (void *)x;
 }
 
 static void *bezier_tilde_new(t_symbol *s, int argc, t_atom *argv)
 {
     t_bezier_tilde *x = (t_bezier_tilde *)pd_new(bezier_tilde_class);
-    
+
     x->x1  = inlet_new((t_object *)x, (t_pd *)x, &s_signal, &s_signal);
     x->y1  = inlet_new((t_object *)x, (t_pd *)x, &s_signal, &s_signal);
     x->x2  = inlet_new((t_object *)x, (t_pd *)x, &s_signal, &s_signal);
     x->y2  = inlet_new((t_object *)x, (t_pd *)x, &s_signal, &s_signal);
     x->x3  = inlet_new((t_object *)x, (t_pd *)x, &s_signal, &s_signal);
     x->y3  = inlet_new((t_object *)x, (t_pd *)x, &s_signal, &s_signal);
-    
+
     t_float x1 = argc ? atom_getfloat(argv) : 0.f;
     t_float y1 = argc > 1 ? atom_getfloat(argv+1) : 0.f;
     t_float x2 = argc > 2 ? atom_getfloat(argv+2) : 0.f;
@@ -104,7 +104,7 @@ static void *bezier_tilde_new(t_symbol *s, int argc, t_atom *argv)
 
     x->x_out = outlet_new((t_object *)x, &s_signal);
     x->y_out = outlet_new((t_object *)x, &s_signal);
-    
+
     return (x);
 }
 
@@ -117,9 +117,9 @@ void bezier_tilde_setup(void)
                 CLASS_DEFAULT,
                 A_GIMME,
                 0);
-    
+
     class_sethelpsymbol(bezier_tilde_class, gensym("bezier~"));
-    
+
     class_addmethod(bezier_tilde_class, (t_method)bezier_tilde_dsp, gensym("dsp"), A_CANT, 0);
     CLASS_MAINSIGNALIN(bezier_tilde_class, t_bezier_tilde, f); // signal inlet as first inlet
 }

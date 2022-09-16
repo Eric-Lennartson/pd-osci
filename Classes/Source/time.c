@@ -104,7 +104,7 @@ void time_setup(void)
                             CLASS_DEFAULT, // gui apperance
                             A_DEFFLOAT, // gmt or not
                             0); // no more args
-    
+
     class_sethelpsymbol(time_class, gensym("time"));
 
     class_addbang(time_class, time_bang);

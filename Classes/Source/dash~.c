@@ -19,7 +19,7 @@ static t_int *dash_perform(t_int *w)
     t_sample *dash_length_in = (t_sample *)(w[3]);
     t_sample *out            = (t_sample *)(w[4]);
     int      nblock          =        (int)(w[5]); // get block size
-    
+
     while (nblock--)
     {
         t_sample t = *driver++;
@@ -29,15 +29,15 @@ static t_int *dash_perform(t_int *w)
         // bounds checks
         dash_length = (dash_length <= 1) ? dash_length : mod1(dash_length);
         pnts = pnts < 1 ? 1 : pnts; // prevent negative pnts
-        
+
         t_float tn = t * pnts;
         int idx = tn;
         t_float alpha = mod1(tn);
         t_float t2 = (idx + alpha * dash_length ) / pnts;
-        
+
         *out++ = t2;
     }
-    
+
     return (w + 6);
 }
 
@@ -56,25 +56,25 @@ static void *dash_free(t_dash *x)
 {
     inlet_free(x->num_pnts);
     inlet_free(x->dash_length);
-    
+
     return (void *)x;
 }
 
 static void *dash_new(t_symbol *s, int argc, t_atom *argv)
 {
     t_dash *x = (t_dash *)pd_new(dash_class);
-    
+
     int n_points = argc ? atom_getfloat(argv) : 1;
     t_float dash_length = argc > 1 ? atom_getfloat(argv+1) : 0.f;
 
     x->num_pnts    = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
     x->dash_length = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
-    
+
     pd_float((t_pd*)x->num_pnts, n_points);
     pd_float((t_pd*)x->dash_length, dash_length);
 
     outlet_new(&x->x_obj, &s_signal); // default provided outlet
-    
+
     return (x);
 }
 
@@ -87,9 +87,9 @@ void dash_tilde_setup(void)
                             CLASS_DEFAULT, // gui apperance
                             A_GIMME, //n_points, dash_length
                             0); // no more args
-    
+
     class_sethelpsymbol(dash_class, gensym("dash~")); // links to the help patch
-    
+
     class_addmethod(dash_class, (t_method)dash_dsp, gensym("dsp"), A_CANT, 0);
     CLASS_MAINSIGNALIN(dash_class, t_dash, f); // signal inlet as first inlet
 }

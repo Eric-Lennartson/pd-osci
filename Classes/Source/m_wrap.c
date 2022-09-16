@@ -16,10 +16,10 @@ t_float m_wrap(t_float value,  t_float min, t_float max, t_float multiple)
     min = (min <= 0) ? 0.1 : min;
     max = (max < min) ? min : max;
     multiple = (multiple <= 1) ? 1.1 : multiple;
-    
+
     value = (value == 0.f) ? min : value;
     value = fabsf(value);
-    
+
     while( value > max ) { value /= multiple; }
     while( value < min )
     {
@@ -27,7 +27,7 @@ t_float m_wrap(t_float value,  t_float min, t_float max, t_float multiple)
             break;
         value *= multiple;
     }
-    
+
     return value;
 }
 
@@ -44,21 +44,21 @@ static void m_wrap_float(t_m_wrap *x, t_floatarg f)
 static void *m_wrap_new(t_floatarg min, t_floatarg max, t_floatarg multiple)
 {
     t_m_wrap *x = (t_m_wrap *)pd_new(m_wrap_class);
-    
+
     min = (min <= 0) ? 0.1 : min;
     max = (max < min) ? min : max;
     multiple = (multiple <= 1) ? 1.1 : multiple;
-    
+
     x->min = min;
     x->max = max;
     x->multiple = multiple;
-    
+
     floatinlet_new(&x->x_obj, &x->min);
     floatinlet_new(&x->x_obj, &x->max);
     floatinlet_new(&x->x_obj, &x->multiple);
-    
+
     outlet_new(&x->x_obj, &s_float);
-    
+
     return (x);
 }
 
@@ -78,7 +78,7 @@ void m_wrap_setup(void)
                 A_DEFFLOAT, // max
                 A_DEFFLOAT, // multiple
                 0);
-    
+
     class_sethelpsymbol(m_wrap_class, gensym("m_wrap"));
     class_addfloat(m_wrap_class, (t_method)m_wrap_float);
 }

@@ -1,11 +1,15 @@
 ==== Roadmap ===================================================================
+- create a tabreadlin~ obj. I use this alot so it'll definitely be helpful
+- if I end up connecting with blender, I should also have a traveling salesman object
+- turn all the brightness abstractions into objects when finished with them
 - create a helpfile for rot_osc~, later what is a better name for this?
 - update osci/out~ to have a test button
+- have the time stamp on record~ be optional
 - create a master transforms gui
 - create a rotation controller gui
 - finish general improvements then start working on remapping tree.
 - figure out how to add in remapping tree...
-- could I add in a link to blender via OSC?
+- could I add in a link to blender via OSC? YES
 - add a bypass option for all relevant objects
     - that should be most of the library
 ==== Bugs ======================================================================

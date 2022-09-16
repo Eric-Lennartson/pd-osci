@@ -29,7 +29,7 @@ static t_float chris_clip(t_chris_clip_tilde *x, t_floatarg value, t_float min, 
         value = (value > max) ? max :
                 (value < min) ? min : value;
     }
-    
+
     if(x->mod){
         if(value < min){ value = fmodf(value, min); }
         else if(value > max) { value = fmodf(value, max); }
@@ -55,7 +55,7 @@ static t_int *chris_clip_tilde_perform(t_int *w)
     t_float *max_in       =            (t_float *)(w[4]);
     t_float *out          =            (t_float *)(w[5]);
     int nblock            =                  (int)(w[6]);
-    
+
     while (nblock--)
     {
         t_float value = value_in[nblock];
@@ -64,9 +64,9 @@ static t_int *chris_clip_tilde_perform(t_int *w)
 
         if(x->mirror)
             if(max <= 0.f) { max = 0.001; }
-        
+
         t_float result = chris_clip(x, value, min, max);
-        
+
         out[nblock] = result;
     }
     return (w + 7);
@@ -86,12 +86,12 @@ static void chris_clip_tilde_dsp(t_chris_clip_tilde *x, t_signal **sp)
 static void *chris_clip_new(t_symbol *s, int argc, t_atom *argv)
 {
     t_chris_clip_tilde *x = (t_chris_clip_tilde *)pd_new(chris_clip_tilde_class);
-    
+
     float min = argc>0 ? atom_getfloat(argv)   : -1.f;
     float max = argc>1 ? atom_getfloat(argv+1) :  1.f;
     x->mirror = argc>2 ? atom_getfloat(argv+2) :  0;
     x->mod    = argc>3 ? atom_getfloat(argv+3) :  0;
-    
+
     // allocate memory for inlets
     x->min_in  = inlet_new((t_object *)x, (t_pd *)x, &s_signal, &s_signal);
     x->max_in  = inlet_new((t_object *)x, (t_pd *)x, &s_signal, &s_signal);
@@ -99,9 +99,9 @@ static void *chris_clip_new(t_symbol *s, int argc, t_atom *argv)
     // init inlets values
     pd_float((t_pd*)x->min_in, min);
     pd_float((t_pd*)x->max_in, max);
-    
+
     outlet_new(&x->x_obj, &s_signal);
-    
+
     return (x);
 }
 
@@ -120,9 +120,9 @@ void chris_clip_tilde_setup(void)
                             CLASS_DEFAULT, // gui apperance
                             A_GIMME, // min, max, mirror, mod
                             0); // no more args
-    
+
     class_sethelpsymbol(chris_clip_tilde_class, gensym("chris_clip~")); // links to the help patch
-    
+
     class_addmethod(chris_clip_tilde_class, (t_method)onModMsg, gensym("mod"), A_DEFFLOAT, 0);
     class_addmethod(chris_clip_tilde_class, (t_method)onMirrorMsg, gensym("mirror"), A_DEFFLOAT, 0);
     class_addmethod(chris_clip_tilde_class, (t_method)chris_clip_tilde_dsp, gensym("dsp"), A_CANT, 0);

@@ -24,7 +24,7 @@ t_int *ball_tilde_perform(t_int *w)
     t_sample *y_out  =        (t_sample *)(w[8]);
     t_sample *z_out  =        (t_sample *)(w[9]);
     int          n   =               (int)(w[10]); // block size
-      
+
     while (n--)
     {
         t_sample r = *r_in++;

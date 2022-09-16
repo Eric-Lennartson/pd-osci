@@ -33,19 +33,19 @@ static void map_float(t_map *x, t_floatarg f)
 static void *map_new(t_floatarg min_in, t_floatarg max_in, t_floatarg min_out, t_floatarg max_out)
 {
     t_map *x = (t_map *)pd_new(map_class);
-    
+
     x->min_in  = min_in;
     x->max_in  = max_in;
     x->min_out = min_out;
     x->max_out = max_out;
-    
+
     floatinlet_new(&x->x_obj, &x->min_in);
     floatinlet_new(&x->x_obj, &x->max_in);
     floatinlet_new(&x->x_obj, &x->min_out);
     floatinlet_new(&x->x_obj, &x->max_out);
-    
+
     outlet_new(&x->x_obj, &s_float);
-    
+
     return (x);
 }
 
@@ -66,7 +66,7 @@ void map_setup(void)
                 A_DEFFLOAT, // min_out
                 A_DEFFLOAT, // max_out
                 0);
-    
+
     class_sethelpsymbol(map_class, gensym("map"));
     class_addfloat(map_class, (t_method)map_float);
 }

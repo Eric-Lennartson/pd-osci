@@ -8,7 +8,7 @@
 - 1b. Potentially change it be called justify?
 - 2. Fonts will be a fair amount of work, I'll work with them one day over the rainbow...
 - space => _ newline => .
- 
+
 */
 static t_class *text_tilde_class;
 

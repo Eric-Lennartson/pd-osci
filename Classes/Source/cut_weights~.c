@@ -40,7 +40,7 @@ static t_int *cut_weights_perform(t_int *w)
 
     t_float **ivecp = in_vecs+1;
     t_float **ovecp = osums; // osum holds all zeros
-    
+
     int out_idx = x->n_outs;
     while (out_idx--) // from top to bottom
     {
@@ -56,7 +56,7 @@ static t_int *cut_weights_perform(t_int *w)
                 t_float f = ivecp[in_idx][s_idx];
                 x->weights[in_idx] = MAX(f, 0.f); // prevent negative weights
             }
-            
+
             x->cut = cut_weights(x->n_cuts, in[s_idx], x->weights);
 
             if(x->cut.idx == ( (x->n_outs - 1) - out_idx) )
@@ -85,18 +85,18 @@ static t_int *cut_weights_perform(t_int *w)
 static void cut_weights_dsp(t_cut_weights *x, t_signal **sp)
 {
     int i, nblock = sp[0]->s_n;
-    
+
     // dummy vector bs, needed for inlets and outlets
     t_float **vecp = x->in_vecs;
     t_signal **sigp = sp;
-    
+
     for(i = 0; i < x->n_ins; i++)
         *vecp++ = (*sigp++)->s_vec;
-    
+
     vecp = x->out_vecs;
     for(i = 0; i < x->n_outs; i++)
         *vecp++ = (*sigp++)->s_vec;
-    
+
     // is nblock the same size?
     if(nblock != x->nblock)
     {
@@ -104,15 +104,15 @@ static void cut_weights_dsp(t_cut_weights *x, t_signal **sp)
         {
             size_t oldsize = x->maxblock * sizeof(*x->x_osums[i]);
             size_t newsize = nblock * sizeof(*x->x_osums[i]);
-            
+
             for(i = 0; i < x->n_outs; i++)
                 x->x_osums[i] = resizebytes(x->x_osums[i], oldsize, newsize);
             x->maxblock = nblock;
         }
-        
+
         x->nblock = nblock;
     }
-    
+
     dsp_add(cut_weights_perform, 2, x, nblock);
 }
 
@@ -142,10 +142,10 @@ static void *cut_weights_new(t_floatarg n_cuts)
         n_cuts = (int)MIN_CUTS;
     else if(n_cuts > MAX_CUTS)
         n_cuts = (int)MAX_CUTS;
-    
+
     x->n_ins = (int)n_cuts + 1; // +1 b/c first is driver
     x->n_outs = x->n_cuts = (int)n_cuts;
-    
+
     // allocate the memory for all our ptrs, aka arrays
 
     x->in_vecs = getbytes(x->n_ins * sizeof(*x->in_vecs));
@@ -153,28 +153,28 @@ static void *cut_weights_new(t_floatarg n_cuts)
     x->weights = getbytes(x->n_cuts * sizeof(double));
     x->nblock = x->maxblock = sys_getblksize();
     x->x_osums = getbytes(x->n_outs * sizeof(*x->x_osums));
-    
+
     for (int i = 0; i < x->n_outs; i++)
         x->x_osums[i] = getbytes(x->maxblock * sizeof(*x->x_osums[i]));
-    
+
     // create the inlets
     for (int i = 1; i < x->n_ins; i++)
     {
         inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
     }
-    
+
     //create the outlets
     for (int i = 0; i < x->n_outs; i++)
     {
          outlet_new(&x->x_obj, &s_signal);
     }
-    
+
     // init weights with 1
     for(int i = 0; i < x->n_cuts; ++i)
     {
         x->weights[i] = 1.0;
     }
-    
+
     return (x);
 }
 
@@ -186,10 +186,10 @@ void cut_weights_tilde_setup(void){
                              CLASS_DEFAULT,
                              A_DEFFLOAT, // n_cuts
                              0);
-    
+
     // handles float messages, just prevents them from becoming dsp
     class_addfloat(cut_weights_class, cut_weights_float);
-    
+
     class_sethelpsymbol(cut_weights_class, gensym("cut_weights~"));
 
     class_addmethod(cut_weights_class, nullfn, gensym("signal"), 0);

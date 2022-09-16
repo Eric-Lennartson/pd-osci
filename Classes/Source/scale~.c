@@ -25,14 +25,14 @@ t_int *scale_tilde_perform(t_int *w)
     t_sample *y_out      =       (t_sample *)(w[9]);
     t_sample *z_out      =       (t_sample *)(w[10]);
     int       n          =              (int)(w[11]); // block size
-    
+
   while (n--)
   {
       x->v = vec3(*x_in++, *y_in++, *z_in++);
       x->v2 = vec3(*xScalar_in++, *yScalar_in++, *zScalar_in++);
-      
+
       x->v = v3_mult(x->v, x->v2);
-      
+
       *x_out++ = x->v.x;
       *y_out++ = x->v.y;
       *z_out++ = x->v.z;
@@ -64,7 +64,7 @@ void scale_tilde_free(t_scale_tilde *x)
     inlet_free(x->xScalar_in);
     inlet_free(x->yScalar_in);
     inlet_free(x->zScalar_in);
-    
+
     outlet_free(x->x_out);
     outlet_free(x->y_out);
     outlet_free(x->z_out);
@@ -73,21 +73,21 @@ void scale_tilde_free(t_scale_tilde *x)
 void *scale_tilde_new(t_floatarg x_mult, t_floatarg y_mult, t_floatarg z_mult)
 {
     t_scale_tilde *x = (t_scale_tilde *)pd_new(scale_tilde_class);
-    
+
     x->y_in = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
     x->z_in = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
     x->xScalar_in = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
     x->yScalar_in = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
     x->zScalar_in = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
-    
+
     pd_float((t_pd*)x->xScalar_in, x_mult);
     pd_float((t_pd*)x->yScalar_in, y_mult);
     pd_float((t_pd*)x->zScalar_in, z_mult);
-    
+
     x->x_out = outlet_new(&x->x_obj, &s_signal);
     x->y_out = outlet_new(&x->x_obj, &s_signal);
     x->z_out = outlet_new(&x->x_obj, &s_signal);
-    
+
     return (void *)x;
 }
 
@@ -102,7 +102,7 @@ void scale_tilde_setup(void)
                                   A_DEFFLOAT, //y_mult
                                   A_DEFFLOAT, //z_mult
                                   0);
-    
+
     class_addmethod(scale_tilde_class, (t_method)scale_tilde_dsp, gensym("dsp"), A_CANT, 0);
     CLASS_MAINSIGNALIN(scale_tilde_class, t_scale_tilde, f); // dummy arg for singal into first inlet
 }

@@ -17,7 +17,7 @@ int isequals(t_float a, t_float b, t_float rel_epsilon)
     // Check if the numbers are really close -- needed when comparing numbers near zero.
     t_float diff = fabsf(a - b);
     if (diff <= FLT_EPSILON) return 1;
- 
+
     // Otherwise fall back to Knuth's algorithm
     return (diff <= (fmaxf(fabs(a), fabs(b)) * rel_epsilon));
 }
@@ -39,7 +39,7 @@ static t_int *sig_equals_perform(t_int *w)
     t_float *in1 = (t_float *)(w[2]);
     t_float *in2 = (t_float *)(w[3]);
     t_float *out = (t_float *)(w[4]);
-    while (nblock--) 
+    while (nblock--)
     {
         out[nblock] = isequals(in1[nblock], in2[nblock], 1e-8);
     }
@@ -48,7 +48,7 @@ static t_int *sig_equals_perform(t_int *w)
 
 static void sig_equals_dsp(t_sig_equals *x, t_signal **sp)
 {
-	dsp_add(sig_equals_perform, 4, 
+	dsp_add(sig_equals_perform, 4,
         sp[0]->s_n, // nblock
 		sp[0]->s_vec, // in1
         sp[1]->s_vec, // in2
@@ -83,7 +83,7 @@ void sig_equals_setup(void)
     class_addcreator((t_newmethod)sig_equals_new, gensym("osci/==~"), A_DEFFLOAT, 0);
 
     class_sethelpsymbol(sig_equals_class, gensym("binops~"));
-    
+
     class_addmethod(sig_equals_class, (t_method)sig_equals_dsp, gensym("dsp"), A_CANT, 0);
     CLASS_MAINSIGNALIN(sig_equals_class, t_sig_equals, f); // dummy arg for singal into first inlet
 }
@@ -105,7 +105,7 @@ static t_int *sig_notequals_perform(t_int *w)
     t_float *in1 = (t_float *)(w[2]);
     t_float *in2 = (t_float *)(w[3]);
     t_float *out = (t_float *)(w[4]);
-    while (nblock--) 
+    while (nblock--)
     {
         out[nblock] = !isequals(in1[nblock], in2[nblock], 1e-8);
     }
@@ -114,7 +114,7 @@ static t_int *sig_notequals_perform(t_int *w)
 
 static void sig_notequals_dsp(t_sig_notequals *x, t_signal **sp)
 {
-	dsp_add(sig_notequals_perform, 4, 
+	dsp_add(sig_notequals_perform, 4,
         sp[0]->s_n, // nblock
 		sp[0]->s_vec, // in1
         sp[1]->s_vec, // in2
@@ -149,7 +149,7 @@ void sig_notequals_setup(void)
     class_addcreator((t_newmethod)sig_notequals_new, gensym("osci/!=~"), A_DEFFLOAT, 0);
 
     class_sethelpsymbol(sig_notequals_class, gensym("binops~"));
-    
+
     class_addmethod(sig_notequals_class, (t_method)sig_notequals_dsp, gensym("dsp"), A_CANT, 0);
     CLASS_MAINSIGNALIN(sig_notequals_class, t_sig_notequals, f); // dummy arg for singal into first inlet
 }
@@ -171,7 +171,7 @@ static t_int *sig_less_perform(t_int *w)
     t_float *in1 = (t_float *)(w[2]);
     t_float *in2 = (t_float *)(w[3]);
     t_float *out = (t_float *)(w[4]);
-    while (nblock--) 
+    while (nblock--)
     {
         out[nblock] = isless(in1[nblock], in2[nblock]);
     }
@@ -180,7 +180,7 @@ static t_int *sig_less_perform(t_int *w)
 
 static void sig_less_dsp(t_sig_less *x, t_signal **sp)
 {
-	dsp_add(sig_less_perform, 4, 
+	dsp_add(sig_less_perform, 4,
         sp[0]->s_n, // nblock
 		sp[0]->s_vec, // in1
         sp[1]->s_vec, // in2
@@ -215,7 +215,7 @@ void sig_less_setup(void)
     class_addcreator((t_newmethod)sig_less_new, gensym("osci/<~"), A_DEFFLOAT, 0);
 
     class_sethelpsymbol(sig_less_class, gensym("binops~"));
-    
+
     class_addmethod(sig_less_class, (t_method)sig_less_dsp, gensym("dsp"), A_CANT, 0);
     CLASS_MAINSIGNALIN(sig_less_class, t_sig_less, f); // dummy arg for singal into first inlet
 }
@@ -237,7 +237,7 @@ static t_int *sig_greater_perform(t_int *w)
     t_float *in1 = (t_float *)(w[2]);
     t_float *in2 = (t_float *)(w[3]);
     t_float *out = (t_float *)(w[4]);
-    while (nblock--) 
+    while (nblock--)
     {
         out[nblock] = isgreater(in1[nblock], in2[nblock]);
     }
@@ -246,7 +246,7 @@ static t_int *sig_greater_perform(t_int *w)
 
 static void sig_greater_dsp(t_sig_greater *x, t_signal **sp)
 {
-	dsp_add(sig_greater_perform, 4, 
+	dsp_add(sig_greater_perform, 4,
         sp[0]->s_n, // nblock
 		sp[0]->s_vec, // in1
         sp[1]->s_vec, // in2
@@ -281,7 +281,7 @@ void sig_greater_setup(void)
     class_addcreator((t_newmethod)sig_greater_new, gensym("osci/>~"), A_DEFFLOAT, 0);
 
     class_sethelpsymbol(sig_greater_class, gensym("binops~"));
-    
+
     class_addmethod(sig_greater_class, (t_method)sig_greater_dsp, gensym("dsp"), A_CANT, 0);
     CLASS_MAINSIGNALIN(sig_greater_class, t_sig_greater, f); // dummy arg for singal into first inlet
 }
@@ -303,7 +303,7 @@ static t_int *sig_lessequals_perform(t_int *w)
     t_float *in1 = (t_float *)(w[2]);
     t_float *in2 = (t_float *)(w[3]);
     t_float *out = (t_float *)(w[4]);
-    while (nblock--) 
+    while (nblock--)
     {
         out[nblock] = islessequal(in1[nblock], in2[nblock]);
     }
@@ -312,7 +312,7 @@ static t_int *sig_lessequals_perform(t_int *w)
 
 static void sig_lessequals_dsp(t_sig_lessequals *x, t_signal **sp)
 {
-	dsp_add(sig_lessequals_perform, 4, 
+	dsp_add(sig_lessequals_perform, 4,
         sp[0]->s_n, // nblock
 		sp[0]->s_vec, // in1
         sp[1]->s_vec, // in2
@@ -347,7 +347,7 @@ void sig_lessequals_setup(void)
     class_addcreator((t_newmethod)sig_lessequals_new, gensym("osci/<=~"), A_DEFFLOAT, 0);
 
     class_sethelpsymbol(sig_lessequals_class, gensym("binops~"));
-    
+
     class_addmethod(sig_lessequals_class, (t_method)sig_lessequals_dsp, gensym("dsp"), A_CANT, 0);
     CLASS_MAINSIGNALIN(sig_lessequals_class, t_sig_lessequals, f); // dummy arg for singal into first inlet
 }
@@ -369,7 +369,7 @@ static t_int *sig_greaterequals_perform(t_int *w)
     t_float *in1 = (t_float *)(w[2]);
     t_float *in2 = (t_float *)(w[3]);
     t_float *out = (t_float *)(w[4]);
-    while (nblock--) 
+    while (nblock--)
     {
         out[nblock] = isgreaterequal(in1[nblock], in2[nblock]);
     }
@@ -378,7 +378,7 @@ static t_int *sig_greaterequals_perform(t_int *w)
 
 static void sig_greaterequals_dsp(t_sig_greaterequals *x, t_signal **sp)
 {
-	dsp_add(sig_greaterequals_perform, 4, 
+	dsp_add(sig_greaterequals_perform, 4,
         sp[0]->s_n, // nblock
 		sp[0]->s_vec, // in1
         sp[1]->s_vec, // in2
@@ -413,7 +413,7 @@ void sig_greaterequals_setup(void)
     class_addcreator((t_newmethod)sig_greaterequals_new, gensym("osci/>=~"), A_DEFFLOAT, 0);
 
     class_sethelpsymbol(sig_greaterequals_class, gensym("binops~"));
-    
+
     class_addmethod(sig_greaterequals_class, (t_method)sig_greaterequals_dsp, gensym("dsp"), A_CANT, 0);
     CLASS_MAINSIGNALIN(sig_greaterequals_class, t_sig_greaterequals, f); // dummy arg for singal into first inlet
 }
@@ -435,7 +435,7 @@ static t_int *sig_or_perform(t_int *w)
     t_float *in1 = (t_float *)(w[2]);
     t_float *in2 = (t_float *)(w[3]);
     t_float *out = (t_float *)(w[4]);
-    while (nblock--) 
+    while (nblock--)
     {
         out[nblock] = isgreater(fabs(in1[nblock]), 0.f) || isgreater(fabs(in2[nblock]), 0.f);
     }
@@ -444,7 +444,7 @@ static t_int *sig_or_perform(t_int *w)
 
 static void sig_or_dsp(t_sig_or *x, t_signal **sp)
 {
-	dsp_add(sig_or_perform, 4, 
+	dsp_add(sig_or_perform, 4,
         sp[0]->s_n, // nblock
 		sp[0]->s_vec, // in1
         sp[1]->s_vec, // in2
@@ -479,7 +479,7 @@ void sig_or_setup(void)
     class_addcreator((t_newmethod)sig_or_new, gensym("osci/||~"), A_DEFFLOAT, 0);
 
     class_sethelpsymbol(sig_or_class, gensym("binops~"));
-    
+
     class_addmethod(sig_or_class, (t_method)sig_or_dsp, gensym("dsp"), A_CANT, 0);
     CLASS_MAINSIGNALIN(sig_or_class, t_sig_or, f); // dummy arg for singal into first inlet
 }
@@ -501,7 +501,7 @@ static t_int *sig_and_perform(t_int *w)
     t_float *in1 = (t_float *)(w[2]);
     t_float *in2 = (t_float *)(w[3]);
     t_float *out = (t_float *)(w[4]);
-    while (nblock--) 
+    while (nblock--)
     {
         out[nblock] = isgreater(fabs(in1[nblock]), 0.f) && isgreater(fabs(in2[nblock]), 0.f);
     }
@@ -510,7 +510,7 @@ static t_int *sig_and_perform(t_int *w)
 
 static void sig_and_dsp(t_sig_and *x, t_signal **sp)
 {
-	dsp_add(sig_and_perform, 4, 
+	dsp_add(sig_and_perform, 4,
         sp[0]->s_n, // nblock
 		sp[0]->s_vec, // in1
         sp[1]->s_vec, // in2
@@ -545,7 +545,7 @@ void sig_and_setup(void)
     class_addcreator((t_newmethod)sig_and_new, gensym("osci/&&~"), A_DEFFLOAT, 0);
 
     class_sethelpsymbol(sig_and_class, gensym("binops~"));
-    
+
     class_addmethod(sig_and_class, (t_method)sig_and_dsp, gensym("dsp"), A_CANT, 0);
     CLASS_MAINSIGNALIN(sig_and_class, t_sig_and, f); // dummy arg for singal into first inlet
 }
@@ -567,17 +567,17 @@ static t_int *sig_modulo_perform(t_int *w)
     t_float *in1 = (t_float *)(w[2]);
     t_float *in2 = (t_float *)(w[3]);
     t_float *out = (t_float *)(w[4]);
-    while (nblock--) 
+    while (nblock--)
     {
         t_float f = fmodf(in1[nblock], in2[nblock]);
-        out[nblock] =  isnan(f) ? 0.f : f; 
+        out[nblock] =  isnan(f) ? 0.f : f;
     }
     return (w + 5);
 }
 
 static void sig_modulo_dsp(t_sig_modulo *x, t_signal **sp)
 {
-	dsp_add(sig_modulo_perform, 4, 
+	dsp_add(sig_modulo_perform, 4,
         sp[0]->s_n, // nblock
 		sp[0]->s_vec, // in1
         sp[1]->s_vec, // in2
@@ -614,7 +614,7 @@ void sig_modulo_setup(void)
     class_addcreator((t_newmethod)sig_modulo_new, gensym("osci/mod~"), A_DEFFLOAT, 0);
 
     class_sethelpsymbol(sig_modulo_class, gensym("binops~"));
-    
+
     class_addmethod(sig_modulo_class, (t_method)sig_modulo_dsp, gensym("dsp"), A_CANT, 0);
     CLASS_MAINSIGNALIN(sig_modulo_class, t_sig_modulo, f); // dummy arg for singal into first inlet
 }
@@ -656,7 +656,7 @@ static void* osci_new(void)
 {
     t_osci *x = (t_osci*)pd_new(osci_class);
 
-    if(!printed) 
+    if(!printed)
     {
         osci_about(x);
         printed = 1;

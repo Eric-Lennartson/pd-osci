@@ -108,7 +108,7 @@ void date_setup(void)
                             CLASS_DEFAULT, // gui apperance
                             A_DEFFLOAT, // gmt or not
                             0); // no more args
-    
+
     class_sethelpsymbol(date_class, gensym("date")); // links to the help patch
 
     class_addbang(date_class, date_bang);

@@ -26,12 +26,12 @@ static void onlistmsg(t_bezigon_tilde *x, t_symbol *s, int argc, t_atom *argv)
         if(atom_getfloat(argv) < 0 )
             pd_error(x, "warning: [bezigon~] is being passed a negative index, taking the abs value.");
         int idx = fabs( atom_getfloat(argv) );
-        
+
         if(idx < x->n_points)
         {
             t_float x_val = atom_getfloat(argv+1);
             t_float y_val = atom_getfloat(argv+2);
-            
+
             x->x_points[idx] = x_val;
             x->y_points[idx] = y_val;
         }
@@ -44,7 +44,7 @@ static void onlistmsg(t_bezigon_tilde *x, t_symbol *s, int argc, t_atom *argv)
 t_float cubic_interp(t_float t, t_float *points, int n_points, int end)
 {
     t_float a, b, c, d;
-    
+
     t_float tn = t * (n_points - !end);
     int idx = tn;
 
@@ -63,7 +63,7 @@ t_float cubic_interp(t_float t, t_float *points, int n_points, int end)
     p0 = d - a + b - c;
     p1 = a - b - p0;
     p2 = c - a;
-    
+
     t_float frac = mod1(tn);
 
     // copied from wave.c from the cyclone library
@@ -83,7 +83,7 @@ static t_int *bezigon_tilde_perform(t_int *w)
     while (nblock--)
     {
         t_float t = driver_in[nblock];
-        
+
         x_out[nblock] = cubic_interp(t, x->x_points, x->n_points, x->end); // this could be better too?
         y_out[nblock] = cubic_interp(t, x->y_points, x->n_points, x->end);
     }
@@ -106,27 +106,27 @@ static void *bezigon_tilde_free(t_bezigon_tilde *x)
         freebytes(x->x_points, x->n_points * sizeof(t_float) );
     if(x->y_points)
         freebytes(x->y_points, x->n_points * sizeof(t_float) );
-    
+
     return (void *)x;
 }
 
 static void *bezigon_tilde_new(t_floatarg n_points, t_floatarg end)
 {
     t_bezigon_tilde *x = (t_bezigon_tilde *)pd_new(bezigon_tilde_class);
-    
+
     // n_points can't be less than 1 (or maybe 3?)
     x->n_points = (int)n_points > 0 ? (int)n_points : 1;
-    
+
     x->end = end ? 1.f : 0.f; // float to bool
 
     floatinlet_new(&x->x_obj, &x->end);
-    
+
     x->out1 = outlet_new(&x->x_obj, &s_signal);
     x->out2 = outlet_new(&x->x_obj, &s_signal);
 
     x->x_points = getbytes( x->n_points * sizeof(t_float) ); // allocate memory for the array
     x->y_points = getbytes( x->n_points * sizeof(t_float) ); // allocate memory for the array
-    
+
     return (x);
 }
 
@@ -140,9 +140,9 @@ void bezigon_tilde_setup(void)
                 A_DEFFLOAT, // n_points
                 A_DEFFLOAT, // end
                 0);
-    
+
     class_addlist(bezigon_tilde_class, onlistmsg);
-    
+
     class_addmethod(bezigon_tilde_class, (t_method)bezigon_tilde_dsp, gensym("dsp"), A_CANT, 0);
     CLASS_MAINSIGNALIN(bezigon_tilde_class, t_bezigon_tilde, f); // signal inlet as first inlet
 }

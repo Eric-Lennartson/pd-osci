@@ -98,5 +98,5 @@ void v3_rotate_pivot(t_vec3 *v, t_float angle, const t_vec3 *pivot, const t_vec3
 
     v->x += pivot->x;
     v->y += pivot->y;
-    v->z += pivot->z;    
+    v->z += pivot->z;
 }

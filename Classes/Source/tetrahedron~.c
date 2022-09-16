@@ -37,30 +37,30 @@ t_int *tetrahedron_tilde_perform(t_int *w)
     t_sample *y_out          = (t_sample *)(w[11]);
     t_sample *z_out          = (t_sample *)(w[12]);
     int       nblock         = (int)(w[13]); // block size
-    
-  while (nblock--)
-  {
-      t_sample t = mod1(phase_in[nblock]);
-      x->xPos = xPos_in[nblock];
-      x->yPos = yPos_in[nblock];
-      x->zPos = zPos_in[nblock];
-      x->xLen = xLen_in[nblock];
-      x->yLen = yLen_in[nblock];
-      x->zLen = zLen_in[nblock];
-      t_sample amt = interp_amt_in[nblock];
-      t_sample t2 = t * NUM_LINES;
-      int idx = t2;
-      int idx_next = (idx + 1) % NUM_LINES;
-      
-      x->v1 = points[x->lines[idx]];
-      x->v2 = points[x->lines[idx_next]];
-      
-      x_out[nblock] = lerp(mod1(t2 * amt), x->v1.x, x->v2.x) * x->xLen + x->xPos;
-      y_out[nblock] = lerp(mod1(t2 * amt), x->v1.y, x->v2.y) * x->yLen + x->yPos;
-      z_out[nblock] = lerp(mod1(t2 * amt), x->v1.z, x->v2.z) * x->zLen + x->zPos;
-  }
 
-  return (w + 14); // num ptrs + 1
+    while (nblock--)
+    {
+        t_sample t = mod1(phase_in[nblock]);
+        x->xPos = xPos_in[nblock];
+        x->yPos = yPos_in[nblock];
+        x->zPos = zPos_in[nblock];
+        x->xLen = xLen_in[nblock];
+        x->yLen = yLen_in[nblock];
+        x->zLen = zLen_in[nblock];
+        t_sample amt = interp_amt_in[nblock];
+        t_sample t2 = t * NUM_LINES;
+        int idx = t2;
+        int idx_next = (idx + 1) % NUM_LINES;
+
+        x->v1 = points[x->lines[idx]];
+        x->v2 = points[x->lines[idx_next]];
+
+        x_out[nblock] = lerp(mod1(t2 * amt), x->v1.x, x->v2.x) * x->xLen + x->xPos;
+        y_out[nblock] = lerp(mod1(t2 * amt), x->v1.y, x->v2.y) * x->yLen + x->yPos;
+        z_out[nblock] = lerp(mod1(t2 * amt), x->v1.z, x->v2.z) * x->zLen + x->zPos;
+    }
+
+    return (w + 14); // num ptrs + 1
 }
 
 void tetrahedron_tilde_dsp(t_tetrahedron_tilde *x, t_signal **sp)
@@ -93,22 +93,22 @@ void *tetrahedron_tilde_new(t_symbol *s, int argc, t_atom *argv) // this is beca
     x->lines[5] = 3;
     x->lines[6] = 0;
     x->lines[7] = 1;
-    
+
     x->xPos = argc ? atom_getfloat(argv) : 0.f;
     x->yPos = argc > 1 ? atom_getfloat(argv+1) : 0.f;
     x->zPos = argc > 2 ? atom_getfloat(argv+2) : 0.f;
     x->xLen = argc > 3 ? atom_getfloat(argv+3) : 0.5;
     x->yLen = argc > 4 ? atom_getfloat(argv+4) : 0.5;
     x->zLen = argc > 5 ? atom_getfloat(argv+5) : 0.5;
-    
+
     x->xPos_in       = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
-    x->yPos_in       = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal); 
-    x->zPos_in       = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal); 
-    x->xLen_in       = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal); 
-    x->yLen_in       = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal); 
-    x->zLen_in       = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);     
+    x->yPos_in       = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
+    x->zPos_in       = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
+    x->xLen_in       = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
+    x->yLen_in       = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
+    x->zLen_in       = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
     x->interp_amt_in = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
-    
+
     pd_float((t_pd*)x->xPos_in, x->xPos);
     pd_float((t_pd*)x->yPos_in, x->yPos);
     pd_float((t_pd*)x->zPos_in, x->zPos);
@@ -116,7 +116,7 @@ void *tetrahedron_tilde_new(t_symbol *s, int argc, t_atom *argv) // this is beca
     pd_float((t_pd*)x->yLen_in, x->yLen);
     pd_float((t_pd*)x->zLen_in, x->zLen);
     pd_float((t_pd*)x->interp_amt_in, 1);
-    
+
     x->x_out = outlet_new(&x->x_obj, &s_signal);
     x->y_out = outlet_new(&x->x_obj, &s_signal);
     x->z_out = outlet_new(&x->x_obj, &s_signal);
@@ -133,7 +133,7 @@ void tetrahedron_tilde_free(t_tetrahedron_tilde *x)
     inlet_free(x->yLen_in);
     inlet_free(x->zLen_in);
     inlet_free(x->interp_amt_in);
-    
+
     outlet_free(x->x_out);
     outlet_free(x->y_out);
     outlet_free(x->z_out);
@@ -148,9 +148,9 @@ void tetrahedron_tilde_setup(void)
                                   CLASS_DEFAULT,
                                   A_GIMME, // xPos, yPos, zPos, xLen, yLen, zLen
                                   0);
-    
+
     class_sethelpsymbol(tetrahedron_tilde_class, gensym("tetrahedron~"));
-    
+
     class_addmethod(tetrahedron_tilde_class, (t_method)tetrahedron_tilde_dsp, gensym("dsp"), A_CANT, 0);
     CLASS_MAINSIGNALIN(tetrahedron_tilde_class, t_tetrahedron_tilde, f); // dummy arg for singal into first inlet
 }

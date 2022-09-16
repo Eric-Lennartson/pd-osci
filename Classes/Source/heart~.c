@@ -18,20 +18,19 @@ static t_int *heart_tilde_perform(t_int *w)
     t_sample *xChan_out =      (t_sample *)(w[2]);
     t_sample *yChan_out =      (t_sample *)(w[3]);
     int     nblock      =             (int)(w[4]); // get blocksize
-    
-    
+
     while (nblock--) // dsp here
     {
         t_float angle = TWO_PI * driver_in[nblock];
-        
+
         // formula for heart
         t_float x = 16 * pow(sin(angle), 3.0);
         t_float y = 13 * cos(angle) - 5 * cos(2 * angle) - 2 * cos(3 * angle) - cos(4 * angle);
-        
+
         xChan_out[nblock] = x * 0.06;
         yChan_out[nblock] = y * 0.06;
     }
-    
+
     return (w + 5); // return end of the signal vector
 }
 
@@ -50,10 +49,10 @@ static void heart_tilde_dsp(t_heart_tilde *x, t_signal **sp)
 static void *heart_tilde_new( void )
 {
     t_heart_tilde *x = (t_heart_tilde *)pd_new(heart_tilde_class);
-    
+
     outlet_new(&x->x_obj, &s_signal); // default provided outlet
     x->yChan_out = outlet_new(&x->x_obj, &s_signal); // outlet we made
-    
+
     return (x);
 }
 
@@ -61,7 +60,7 @@ static void *heart_tilde_new( void )
 static void *heart_tilde_free(t_heart_tilde *x)
 {
     outlet_free(x->yChan_out);
-    
+
     return (void *)x;
 }
 
@@ -74,9 +73,9 @@ void heart_tilde_setup(void)
                             sizeof(t_heart_tilde), // data space
                             CLASS_DEFAULT, // gui apperance
                             0); // no more args
-    
+
     class_sethelpsymbol(heart_tilde_class, gensym("heart~")); // links to the help patch
-    
+
     class_addmethod(heart_tilde_class, (t_method)heart_tilde_dsp, gensym("dsp"), A_CANT, 0); // add a dsp method to data space
     CLASS_MAINSIGNALIN(heart_tilde_class, t_heart_tilde, f); // signal inlet as first inlet
 }

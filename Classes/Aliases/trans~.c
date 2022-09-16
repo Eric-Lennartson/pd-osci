@@ -23,7 +23,7 @@ static t_int *trans_tilde_perform(t_int *w)
     t_sample *yChan_out    = (t_sample *)(w[8]);
     t_sample *zChan_out    = (t_sample *)(w[9]);
     int      nblock        =        (int)(w[10]); // get block size
-    
+
     while (nblock--) // dsp here
     {
         t_sample xChan      = *xChan_in++;
@@ -32,12 +32,12 @@ static t_int *trans_tilde_perform(t_int *w)
         t_sample xOffset    = *xOffset_in++;
         t_sample yOffset    = *yOffset_in++;
         t_sample zOffset    = *zOffset_in++;
-        
+
         *xChan_out++ = xChan + xOffset;
         *yChan_out++ = yChan + yOffset;
         *zChan_out++ = zChan + zOffset;
     }
-    
+
     return (w + 11);
 }
 
@@ -61,27 +61,27 @@ static void trans_tilde_dsp(t_trans_tilde *x, t_signal **sp)
 static void *trans_tilde_new(t_floatarg xOffset, t_floatarg yOffset, t_floatarg zOffset)
 {
     t_trans_tilde *x = (t_trans_tilde *)pd_new(trans_tilde_class);
-    
+
     //Init inlets and variables
     x->xOffset      = xOffset;
     x->yOffset      = yOffset;
     x->zOffset      = zOffset;
-    
+
     x->yChan_in     = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
     x->zChan_in     = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
     x->xOffset_in   = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
     x->yOffset_in   = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
     x->zOffset_in   = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
-    
+
     pd_float((t_pd*)x->xOffset_in, xOffset); // send creation args to inlets
     pd_float((t_pd*)x->yOffset_in, yOffset);
     pd_float((t_pd*)x->zOffset_in, zOffset);
-    
+
     outlet_new(&x->x_obj, &s_signal); // default provided outlet
-    
+
     x->yChan_out = outlet_new(&x->x_obj, &s_signal);
     x->zChan_out = outlet_new(&x->x_obj, &s_signal);
-    
+
     return (x);
 }
 
@@ -93,10 +93,10 @@ static void *trans_tilde_free(t_trans_tilde *x)
     inlet_free(x->xOffset_in);
     inlet_free(x->yOffset_in);
     inlet_free(x->zOffset_in);
-    
+
     outlet_free(x->yChan_out);
     outlet_free(x->zChan_out);
-    
+
     return (void *)x;
 }
 
@@ -111,9 +111,9 @@ void trans_tilde_setup(void)
                             A_DEFFLOAT, // yOffset
                             A_DEFFLOAT, // zOffset
                             0); // no more args
-    
+
     class_sethelpsymbol(trans_tilde_class, gensym("translate~")); // links to the help patch
-    
+
     class_addmethod(trans_tilde_class, (t_method)trans_tilde_dsp, gensym("dsp"), A_CANT, 0); // add a dsp method to data space
     CLASS_MAINSIGNALIN(trans_tilde_class, t_trans_tilde, f); // signal inlet as first inlet
 }

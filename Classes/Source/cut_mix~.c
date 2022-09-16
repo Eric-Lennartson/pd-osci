@@ -45,7 +45,7 @@ static t_int *cut_mix_perform(t_int *w)
     {
         t_float *in = driver_in; // get the inlet
         t_float *out = *ovecp; // this is a temporary, not the final outlet we're sending to
-        
+
         int sndx = nblock; // sample index
         while (sndx--)
         {
@@ -57,7 +57,7 @@ static t_int *cut_mix_perform(t_int *w)
         }
         ovecp++; // get next osum
     }
-    
+
     // write to the outlets
     int indx = x->n_outs;
     while (indx--)
@@ -70,14 +70,14 @@ static t_int *cut_mix_perform(t_int *w)
             out[sndx] = in[sndx];
         }
     }
-    
+
     return(w + 6);
 }
 
 static void cut_mix_dsp(t_cut_mix *x, t_signal **sp)
 {
     int i = x->n_outs, nblock = sp[0]->s_n;
-    
+
     // dummy vector bs, needed for inlets and outlets
     t_float **vecp = x->out_vecs;
 
@@ -93,15 +93,15 @@ static void cut_mix_dsp(t_cut_mix *x, t_signal **sp)
         {
             size_t oldsize = x->maxblock * sizeof(*x->osums[i]);
             size_t newsize = nblock * sizeof(*x->osums[i]);
-            
+
             for(i = 0; i < x->n_outs; i++)
                 x->osums[i] = resizebytes(x->osums[i], oldsize, newsize);
             x->maxblock = nblock;
         }
-        
+
         x->nblock = nblock;
     }
-    
+
     dsp_add(cut_mix_perform, 5, x,
             sp[0]->s_vec, // driver_in
             sp[1]->s_vec, // which
@@ -114,7 +114,7 @@ static void *cut_mix_free(t_cut_mix *x)
 {
     if (x->out_vecs)
         freebytes(x->out_vecs, x->n_outs * sizeof(*x->out_vecs));
-    
+
     if (x->osums)
     {
         int i;
@@ -132,32 +132,32 @@ static void *cut_mix_new(t_floatarg n_outs)
 
     if(n_outs <= 0) n_outs = MINOUTLETS;
     if(n_outs > MAXOUTLETS) n_outs = MAXOUTLETS;
-    
+
     x->n_outs = n_outs;
     x->n_cuts = n_outs;
-    
+
     // allocate the memory for all our ptrs
     x->out_vecs = getbytes(x->n_outs * sizeof(*x->out_vecs));
     x->nblock = x->maxblock = sys_getblksize();
     x->osums = getbytes(x->n_outs * sizeof(*x->osums));
-    
+
     for (int i = 0; i < x->n_outs; i++)
         x->osums[i] = getbytes(x->maxblock * sizeof(*x->osums[i]));
-    
+
     // our 1 inlet is default provided
     x->which     = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
     x->fadeRatio = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
-    
+
     //create the outlets
     for (int i = 0; i < x->n_outs; i++)
     {
          outlet_new(&x->x_obj, &s_signal);
     }
-    
+
     int i = x->n_outs;
     while(i--)
         x->out_vecs[i] = 0;
-    
+
     return (x);
 }
 
@@ -169,15 +169,15 @@ void cut_mix_tilde_setup(void){
                              CLASS_DEFAULT,
                              A_DEFFLOAT,
                              0);
-    
+
     // handles float messages, just prevents them from becoming dsp
     class_addfloat(cut_mix_class, cut_mix_float);
-    
+
     class_sethelpsymbol(cut_mix_class, gensym("cut_mix~"));
-    
+
     // first inlet to dsp
     class_addmethod(cut_mix_class, nullfn, gensym("signal"), 0);
-    
+
     // declaring the dsp method
     class_addmethod(cut_mix_class, (t_method)cut_mix_dsp, gensym("dsp"), A_CANT, 0);
 }

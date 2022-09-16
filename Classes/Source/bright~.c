@@ -18,19 +18,19 @@ static t_int *bright_perform(t_int *w)
     t_sample *strength_in   = (t_sample *)(w[3]);
     t_sample *out           = (t_sample *)(w[4]);
     int      nblock         =        (int)(w[5]); // get block size
-    
+
     while (nblock--)
     {
         t_sample t        = *driver++;
         t_sample offset   = *offset_in++;
         t_sample strength = *strength_in++;
-        
+
         offset = offset < 0 ? 0 : offset; // prevent strange images from negative offset
         strength = strength < 1 ? 1 : strength; // crashes when given negative values
-        
+
         *out++ = mod1( pow(t,strength) + offset);
     }
-    
+
     return (w + 6);
 }
 
@@ -49,25 +49,25 @@ static void *bright_free(t_bright *x)
 {
     inlet_free(x->offset_in);
     inlet_free(x->strength_in);
-    
+
     return (void *)x;
 }
 
 static void *bright_new(t_symbol *s, int argc, t_atom *argv)
 {
     t_bright *x = (t_bright *)pd_new(bright_class);
-    
+
     t_float offset = argc ? atom_getfloat(argv) : 0.f;
     t_float strength = argc > 1 ? atom_getfloat(argv+1) : 1.f;
 
     x->offset_in   = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
     x->strength_in = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
-    
+
     pd_float((t_pd*)x->offset_in, offset);
     pd_float((t_pd*)x->strength_in, strength);
 
     outlet_new(&x->x_obj, &s_signal); // default provided outlet
-    
+
     return (x);
 }
 

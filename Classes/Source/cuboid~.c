@@ -28,7 +28,7 @@ t_int *cuboid_tilde_perform(t_int *w)
     t_sample *y_out          = (t_sample *)(w[11]);
     t_sample *z_out          = (t_sample *)(w[12]);
     int       nblock         = (int)(w[13]); // block size
-    
+
   while (nblock--)
   {
       t_sample t = mod1(phase_in[nblock]);
@@ -43,10 +43,10 @@ t_int *cuboid_tilde_perform(t_int *w)
       t_sample t2 = t * 16;
       int idx = t2;
       int idx_next = (idx + 1) % 16;
-      
+
       x->v1 = vec3(x->points[idx].x, x->points[idx].y, x->points[idx].z);
       x->v2 = vec3(x->points[idx_next].x, x->points[idx_next].y, x->points[idx_next].z);
-      
+
       x_out[nblock] = lerp(mod1(t2 * amt), x->v1.x, x->v2.x) * x->xLen + x->xPos;
       y_out[nblock] = lerp(mod1(t2 * amt), x->v1.y, x->v2.y) * x->yLen + x->yPos;
       z_out[nblock] = lerp(mod1(t2 * amt), x->v1.z, x->v2.z) * x->zLen + x->zPos;
@@ -81,7 +81,7 @@ void cuboid_tilde_free(t_cuboid_tilde *x)
     inlet_free(x->yLen_in);
     inlet_free(x->zLen_in);
     inlet_free(x->interp_amt_in);
-    
+
     outlet_free(x->x_out);
     outlet_free(x->y_out);
     outlet_free(x->z_out);
@@ -108,7 +108,7 @@ void *cuboid_tilde_new(t_symbol *s, int argc, t_atom *argv) // this is because o
     x->points[13] = vec3( 1, -1,  1);
     x->points[14] = vec3( 1, -1, -1);
     x->points[15] = vec3(-1, -1, -1);
-    
+
     x->xPos = argc ? atom_getfloat(argv)   : 0.f;
     x->yPos = argc > 1 ? atom_getfloat(argv+1) : 0.f;
     x->zPos = argc > 2 ? atom_getfloat(argv+2) : 0.f;
@@ -117,11 +117,11 @@ void *cuboid_tilde_new(t_symbol *s, int argc, t_atom *argv) // this is because o
     x->zLen = argc > 5 ? atom_getfloat(argv+5) : 0.5;
 
     x->xPos_in       = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
-    x->yPos_in       = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal); 
-    x->zPos_in       = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal); 
-    x->xLen_in       = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal); 
-    x->yLen_in       = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal); 
-    x->zLen_in       = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);     
+    x->yPos_in       = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
+    x->zPos_in       = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
+    x->xLen_in       = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
+    x->yLen_in       = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
+    x->zLen_in       = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
     x->interp_amt_in = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
 
     pd_float((t_pd*)x->xPos_in, x->xPos);
@@ -135,7 +135,7 @@ void *cuboid_tilde_new(t_symbol *s, int argc, t_atom *argv) // this is because o
     x->x_out = outlet_new(&x->x_obj, &s_signal);
     x->y_out = outlet_new(&x->x_obj, &s_signal);
     x->z_out = outlet_new(&x->x_obj, &s_signal);
-    
+
     return (void *)x;
 }
 
@@ -151,7 +151,7 @@ void cuboid_tilde_setup(void)
                                   0);
 
     class_sethelpsymbol(cuboid_tilde_class, gensym("cuboid~"));
-    
+
     class_addmethod(cuboid_tilde_class, (t_method)cuboid_tilde_dsp, gensym("dsp"), A_CANT, 0);
     CLASS_MAINSIGNALIN(cuboid_tilde_class, t_cuboid_tilde, f); // dummy arg for singal into first inlet
 }

@@ -25,7 +25,7 @@ static t_float chris_clip(t_zoom_tilde *x, t_floatarg value, t_float min, t_floa
     if (!x->mod && !x->mirror)
     { // standard clipping
         value = (value > max) ? max : (value < min) ? min
-                                                    : value;                     
+                                                    : value;
     }
 
     if (x->mod)

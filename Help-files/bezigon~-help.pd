@@ -30,8 +30,6 @@
 ;
 #X text 13 347 2 float - toggle to close or not close shape (0 or 1)
 ;
-#X text 1 444 ============================================================messsages
-;
 #X text 13 477 Optional messages to send to the first inlet.;
 #X text 33 497 list - list of 3 numbers to set a point on the bezigon
 (index \, x \, y);
@@ -40,6 +38,8 @@
 ;
 #X obj 123 119 tgl 24 0 empty empty empty 30 11 0 12 -91412 -174938
 -203556 0 1;
+#X text 1 444 ============================================================messages
+;
 #X connect 0 0 1 0;
 #X connect 1 0 6 0;
 #X connect 1 1 6 1;
@@ -50,4 +50,4 @@
 #X connect 4 0 1 0;
 #X connect 5 0 1 0;
 #X connect 8 0 10 0;
-#X connect 24 0 1 1;
+#X connect 23 0 1 1;

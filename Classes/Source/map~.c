@@ -21,7 +21,7 @@ static t_int *map_tilde_perform(t_int *w)
     t_float *max_out = (t_float *)(w[5]);
     t_float *out     = (t_float *)(w[6]);
     int nblock       =       (int)(w[7]);
-    
+
     while (nblock--)
     {
         t_float val  = val_in[nblock];
@@ -56,7 +56,7 @@ static void *map_tilde_free(t_map_tilde *x)
     inlet_free(x->max_in);
     inlet_free(x->min_out);
     inlet_free(x->max_out);
-    
+
     outlet_free(x->result_out);
     return (void *)x;
 }
@@ -64,19 +64,19 @@ static void *map_tilde_free(t_map_tilde *x)
 static void *map_tilde_new(t_floatarg min_in, t_floatarg max_in, t_floatarg min_out, t_floatarg max_out)
 {
     t_map_tilde *x = (t_map_tilde *)pd_new(map_tilde_class);
-    
+
     x->min_in  = inlet_new((t_object *)x, (t_pd *)x, &s_signal, &s_signal);
     x->max_in  = inlet_new((t_object *)x, (t_pd *)x, &s_signal, &s_signal);
     x->min_out = inlet_new((t_object *)x, (t_pd *)x, &s_signal, &s_signal);
     x->max_out = inlet_new((t_object *)x, (t_pd *)x, &s_signal, &s_signal);
-    
+
     pd_float((t_pd *)x->min_in, min_in);
     pd_float((t_pd *)x->max_in, max_in);
     pd_float((t_pd *)x->min_out, min_out);
     pd_float((t_pd *)x->max_out, max_out);
 
     x->result_out = outlet_new((t_object *)x, &s_signal);
-    
+
     return (x);
 }
 
@@ -92,9 +92,9 @@ void map_tilde_setup(void)
                 A_DEFFLOAT, // min_out
                 A_DEFFLOAT, // max_out
                 0);
-    
+
     class_sethelpsymbol(map_tilde_class, gensym("map~"));
-    
+
     class_addmethod(map_tilde_class, (t_method)map_tilde_dsp, gensym("dsp"), A_CANT, 0);
     CLASS_MAINSIGNALIN(map_tilde_class, t_map_tilde, f); // signal inlet as first inlet
 }

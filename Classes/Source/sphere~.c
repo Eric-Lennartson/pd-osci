@@ -5,7 +5,7 @@ static t_class *sphere_tilde_class;
 
 // creating a lookup table would probably add some performance benefits
 
-/* 
+/*
 * If I want to mess with the equation to draw the sphere, I'll leave that up to future me.
 * I'm not sure if there's much to be gained by adding that functionality in. How much will
 * I really be using it?
@@ -18,8 +18,8 @@ typedef struct _sphere_tilde
     t_object x_obj;
     t_sample f; // dummy variable for 1st inlet
     int phase_mode;
-    t_inlet *phase2_in, *n_points_in, *radius_in, 
-            *lat_min_in, *lat_max_in, *lon_min_in, 
+    t_inlet *phase2_in, *n_points_in, *radius_in,
+            *lat_min_in, *lat_max_in, *lon_min_in,
             *lon_max_in;     // phase inlet default provided
     t_outlet *y_out, *z_out; // *x_out default provided
 } t_sphere_tilde;
@@ -27,7 +27,7 @@ typedef struct _sphere_tilde
 void set_phase_mode(t_sphere_tilde *x, t_float mode)
 {
     mode = (int)mode;
-    if(mode < 0 || mode > 2) 
+    if(mode < 0 || mode > 2)
         mode = 0;
     x->phase_mode = mode;
 }
@@ -62,7 +62,7 @@ static t_int *sphere_tilde_perform(t_int *w)
 
         t_float tn = t * n_points;
 
-        switch(x->phase_mode) 
+        switch(x->phase_mode)
         {
             case 0:
                 t2 = mod1(tn) * n_points;

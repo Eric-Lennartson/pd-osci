@@ -25,14 +25,14 @@ static t_int *knee_tilde_perform(t_int *w)
         t_float t = mod1( driver_in[nblock] );
         t_float split_point = mod1( phase_split_point_in[nblock] );
         t_float length = mod1( segment_length_in[nblock] );
-        
+
         if(t < split_point) {
             t = map_lin(t, 0, split_point, 0, length, false);
         }
         else {
             t = length + map_lin(t, split_point, 1, 0, 1-length, false);
         }
-        
+
         phase_out[nblock] = t;
     }
     return (w + 6);
@@ -59,21 +59,21 @@ static void *knee_tilde_free(t_knee_tilde *x)
 static void *knee_tilde_new(t_floatarg split_point, t_floatarg length)
 {
     t_knee_tilde *x = (t_knee_tilde *)pd_new(knee_tilde_class);
-    
+
     // bounds checking
     split_point = mod1(split_point);
     length = mod1(length);
-    
+
     // inlet memory alloc
     x->phase_split_point_in = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
     x->segment_length_in    = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
-    
+
     // assign arguments
     pd_float((t_pd*)x->phase_split_point_in, split_point);
     pd_float((t_pd*)x->segment_length_in, length);
-    
+
     outlet_new(&x->x_obj, &s_signal); // default provided outlet
-    
+
     return (x);
 }
 
@@ -87,9 +87,9 @@ void knee_tilde_setup(void)
                                 A_DEFFLOAT, // phase split point
                                 A_DEFFLOAT, // length
                                 0);
-    
+
     class_sethelpsymbol(knee_tilde_class, gensym("knee~")); // links to the help patch
-    
+
     class_addmethod(knee_tilde_class, (t_method)knee_tilde_dsp, gensym("dsp"), A_CANT, 0);
     CLASS_MAINSIGNALIN(knee_tilde_class, t_knee_tilde, f); // signal inlet as first inlet
 }

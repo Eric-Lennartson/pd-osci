@@ -22,20 +22,20 @@ static t_int *circle_perform(t_int *w)
     t_sample *xChan_out  = (t_sample *)(w[5]);
     t_sample *yChan_out  = (t_sample *)(w[6]);
     int      nblock      =        (int)(w[7]); // get block size
-    
+
     while (nblock--)
     {
         t_sample t       = *driver++;
         t_sample xPos    = *xPos_in++;
         t_sample yPos    = *yPos_in++;
         t_sample radius  = *radius_in++;
-        
+
         t_sample angle = 2 * 3.14159 * t;
-        
+
         *xChan_out++ = (radius * cosf(angle)) + xPos;
         *yChan_out++ = (radius * sinf(angle)) + yPos;
     }
-    
+
     return (w + 8);
 }
 
@@ -57,34 +57,33 @@ static void *circle_free(t_circle *x)
     inlet_free(x->xPos_in);
     inlet_free(x->yPos_in);
     inlet_free(x->radius_in);
-    
+
     outlet_free(x->yChan_out);
-    
+
     return (void *)x;
 }
 
 static void *circle_new(t_symbol *s, int argc, t_atom *argv)
 {
     t_circle *x = (t_circle *)pd_new(circle_class);
-    
+
     //Init inlets and variables
     t_float xpos = argc ? atom_getfloat(argv) : 0.f;
     t_float ypos = argc>1 ? atom_getfloat(argv+1) : 0.f;
     t_float radius = argc>2 ? atom_getfloat(argv+2) : 1.f;
-    
+
     x->xPos_in      = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
     x->yPos_in      = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
     x->radius_in    = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
-    
+
     pd_float((t_pd*)x->xPos_in, xpos); // send creation args to inlets
     pd_float((t_pd*)x->yPos_in, ypos);
     pd_float((t_pd*)x->radius_in, radius);
 
-    
     outlet_new(&x->x_obj, &s_signal); // default provided outlet
-    
+
     x->yChan_out = outlet_new(&x->x_obj, &s_signal); // outlet we made
-    
+
     return (x);
 }
 
@@ -97,9 +96,9 @@ void circle_tilde_setup(void)
                             CLASS_DEFAULT, // gui apperance
                             A_GIMME, // xpos, ypos, radius
                             0); // no more args
-    
+
     class_sethelpsymbol(circle_class, gensym("circle~")); // links to the help patch
-    
+
     class_addmethod(circle_class, (t_method)circle_dsp, gensym("dsp"), A_CANT, 0);
     CLASS_MAINSIGNALIN(circle_class, t_circle, f); // signal inlet as first inlet
 }
