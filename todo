@@ -1,5 +1,7 @@
 ==== Roadmap ===================================================================
-- create a tabreadlin~ obj. I use this alot so it'll definitely be helpful
+- tabreadlin~
+    - do I need to make a loop option?
+    - what to do about number of dimensions...
 - if I end up connecting with blender, I should also have a traveling salesman object
 - turn all the brightness abstractions into objects when finished with them
 - create a helpfile for rot_osc~, later what is a better name for this?
