@@ -1,6 +1,8 @@
 #include "m_pd.h"
 #include "Audio_Math.h"
 
+#define NULLSYM &s_ //idk if this is accurate, but it serves the purpose
+
 static t_class *tabreadlin_tilde_class;
 
 typedef struct _tabreadlin_tilde
@@ -85,6 +87,13 @@ static void tabreadlin_tilde_set(t_tabreadlin_tilde *this, t_floatarg which, t_s
             break;
     }
 
+    // update n_dimensions
+    if(this->x_pts_array != NULLSYM)
+        this->n_dimensions = 1;
+    if(this->y_pts_array != NULLSYM)
+        this->n_dimensions = 2;
+    if(this->z_pts_array != NULLSYM)
+        this->n_dimensions = 3;
 }
 
 static t_int *tabreadlin_tilde_perform(t_int *w)
@@ -101,7 +110,7 @@ static t_int *tabreadlin_tilde_perform(t_int *w)
     t_word *y_buf = this->y_vec;
     t_word *z_buf = this->z_vec;
 
-    if(max_idx < 0 || x_buf == NULL || y_buf == NULL || z_buf == NULL)
+    if(this->n_dimensions < 1 || max_idx < 0)
     {
         while(nblock--)
         {
@@ -121,9 +130,17 @@ static t_int *tabreadlin_tilde_perform(t_int *w)
             int idx = CLAMP(idx_in[nblock], 0, max_idx);
             int idx_next = (idx + 1) % this->n_points;
 
+            // no need for checking the first one, we don't get here if there's 0 dimensions
             x_out[nblock] = lerp(mod1(t), x_buf[idx].w_float, x_buf[idx_next].w_float);
-            y_out[nblock] = lerp(mod1(t), y_buf[idx].w_float, y_buf[idx_next].w_float);
-            z_out[nblock] = lerp(mod1(t), z_buf[idx].w_float, z_buf[idx_next].w_float);
+
+            if(this->n_dimensions > 1)
+                y_out[nblock] = lerp(mod1(t), y_buf[idx].w_float, y_buf[idx_next].w_float);
+            else
+                y_out[nblock] = 0;
+            if(this->n_dimensions > 2)
+                z_out[nblock] = lerp(mod1(t), z_buf[idx].w_float, z_buf[idx_next].w_float);
+            else
+                z_out[nblock] = 0;
         }
     }
 
@@ -132,9 +149,12 @@ static t_int *tabreadlin_tilde_perform(t_int *w)
 
 static void tabreadlin_tilde_dsp(t_tabreadlin_tilde *this, t_signal **sp)
 {
-    tabreadlin_tilde_set(this, 0, this->x_pts_array);
-    tabreadlin_tilde_set(this, 1, this->y_pts_array);
-    tabreadlin_tilde_set(this, 2, this->z_pts_array);
+    if(this->n_dimensions > 0)
+        tabreadlin_tilde_set(this, 0, this->x_pts_array);
+    if(this->n_dimensions > 1)
+        tabreadlin_tilde_set(this, 1, this->y_pts_array);
+    if(this->n_dimensions > 2)
+        tabreadlin_tilde_set(this, 2, this->z_pts_array);
 
     dsp_add(tabreadlin_tilde_perform, 6, this,
             sp[0]->s_vec, // phasor input for idx
@@ -144,15 +164,21 @@ static void tabreadlin_tilde_dsp(t_tabreadlin_tilde *this, t_signal **sp)
             sp[0]->s_n); // block size
 }
 
-static void *tabreadlin_tilde_new(t_floatarg n_dimensions, t_symbol *x_array, t_symbol *y_array, t_symbol *z_array)
+static void *tabreadlin_tilde_new(t_symbol *x_array, t_symbol *y_array, t_symbol *z_array)
 {
     t_tabreadlin_tilde *this = (t_tabreadlin_tilde *)pd_new(tabreadlin_tilde_class);
 
-    // figure out what to do when there isn't a need for a third dimension
-    this->n_dimensions = (n_dimensions <= 1) ? 2 : n_dimensions;
+    this->n_dimensions = 0;
     this->x_pts_array = x_array;
     this->y_pts_array = y_array;
     this->z_pts_array = z_array;
+
+    if(this->x_pts_array != NULLSYM)
+        this->n_dimensions++;
+    if(this->y_pts_array != NULLSYM)
+        this->n_dimensions++;
+    if(this->z_pts_array != NULLSYM)
+        this->n_dimensions++;
 
     this->x_vec = NULL;
     this->y_vec = NULL;
@@ -166,6 +192,7 @@ static void *tabreadlin_tilde_new(t_floatarg n_dimensions, t_symbol *x_array, t_
     return this;
 }
 
+// no need to free anything, but included for completeness sake
 static void tabreadlin_tilde_free(t_tabreadlin_tilde *this) {}
 
 void tabreadlin_tilde_setup(void)
@@ -175,11 +202,13 @@ void tabreadlin_tilde_setup(void)
                                         (t_method)tabreadlin_tilde_free,
                                         sizeof(t_tabreadlin_tilde),
                                         CLASS_DEFAULT,
-                                        A_DEFFLOAT,
                                         A_DEFSYMBOL,
                                         A_DEFSYMBOL,
                                         A_DEFSYMBOL, 0);
+
+    class_sethelpsymbol(tabreadlin_tilde_class, gensym("tabreadlin~"));
+    class_addmethod(tabreadlin_tilde_class, (t_method)tabreadlin_tilde_set, gensym("set"), A_FLOAT, A_SYMBOL, 0);
+
     CLASS_MAINSIGNALIN(tabreadlin_tilde_class, t_tabreadlin_tilde, f);
     class_addmethod(tabreadlin_tilde_class, (t_method)tabreadlin_tilde_dsp, gensym("dsp"), A_CANT, 0);
-    class_addmethod(tabreadlin_tilde_class, (t_method)tabreadlin_tilde_set, gensym("set"), A_FLOAT, A_SYMBOL, 0);
 }
