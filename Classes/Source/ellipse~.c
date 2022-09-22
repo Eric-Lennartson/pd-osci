@@ -7,42 +7,50 @@ typedef struct _ellipse_tilde
 {
     t_object x_obj;
     t_sample f; // dummy variable for 1st inlet
+    int bypass;
     t_inlet *xPos_in, *yPos_in, *width_in, *height_in;
-    t_outlet *yChan_out;
+    t_outlet *y_out;
     // in1 for driver and out1 for xChan are automatically provided
 } t_ellipse_tilde;
 
 static t_int *ellipse_tilde_perform(t_int *w)
 {
-    t_sample *driver = (t_sample *)(w[1]);
-    t_sample *xPos_in = (t_sample *)(w[2]);
-    t_sample *yPos_in = (t_sample *)(w[3]);
-    t_sample *width_in = (t_sample *)(w[4]);
-    t_sample *height_in = (t_sample *)(w[5]);
-    t_sample *xChan_out = (t_sample *)(w[6]);
-    t_sample *yChan_out = (t_sample *)(w[7]);
-    int nblock = (int)(w[8]); // get block size
+    t_ellipse_tilde *x  = (t_ellipse_tilde *)(w[1]);
+    t_sample *driver    = (t_sample *)(w[2]);
+    t_sample *xPos_in   = (t_sample *)(w[3]);
+    t_sample *yPos_in   = (t_sample *)(w[4]);
+    t_sample *width_in  = (t_sample *)(w[5]);
+    t_sample *height_in = (t_sample *)(w[6]);
+    t_sample *x_out     = (t_sample *)(w[7]);
+    t_sample *y_out     = (t_sample *)(w[8]);
+    int nblock          = (int)(w[9]); // get block size
 
     while (nblock--) // dsp here
     {
-        t_sample t = *driver++;
-        t_sample xPos = *xPos_in++;
-        t_sample yPos = *yPos_in++;
-        t_sample width = *width_in++;
-        t_sample height = *height_in++;
+        t_sample t = driver[nblock];
+        if(!x->bypass)
+        {
+            t_sample xPos = xPos_in[nblock];
+            t_sample yPos = yPos_in[nblock];
+            t_sample width = width_in[nblock];
+            t_sample height = height_in[nblock];
 
-        t_sample angle = 2 * 3.14159 * t;
+            t_sample angle = 2 * 3.14159 * t;
 
-        *xChan_out++ = (width * cosf(angle)) + xPos;
-        *yChan_out++ = (height * sinf(angle)) + yPos;
+            x_out[nblock] = (width * cosf(angle)) + xPos;
+            y_out[nblock] = (height * sinf(angle)) + yPos;
+        } else {
+            x_out[nblock] = t;
+            y_out[nblock] = 0;
+        }
     }
 
-    return (w + 9);
+    return (w + 10);
 }
 
 static void ellipse_tilde_dsp(t_ellipse_tilde *x, t_signal **sp)
 {
-    dsp_add(ellipse_tilde_perform, 8,
+    dsp_add(ellipse_tilde_perform, 9, x,
             sp[0]->s_vec, // driver
             sp[1]->s_vec, // xPos
             sp[2]->s_vec, // yPos
@@ -53,10 +61,16 @@ static void ellipse_tilde_dsp(t_ellipse_tilde *x, t_signal **sp)
             sp[0]->s_n);  // block size
 }
 
+static void ellipse_tilde_bypass(t_ellipse_tilde *x, t_floatarg bypass) {
+    x->bypass = bypass;
+}
+
 // ctor
 static void *ellipse_tilde_new(t_symbol *s, int argc, t_atom *argv)
 {
     t_ellipse_tilde *x = (t_ellipse_tilde *)pd_new(ellipse_tilde_class);
+
+    x->bypass = 0;
 
     //Init inlets and variables
     t_float xpos = argc ? atom_getfloat(argv) : 0.f;
@@ -76,7 +90,7 @@ static void *ellipse_tilde_new(t_symbol *s, int argc, t_atom *argv)
 
     outlet_new(&x->x_obj, &s_signal); // default provided outlet
 
-    x->yChan_out = outlet_new(&x->x_obj, &s_signal); // outlet we made
+    x->y_out = outlet_new(&x->x_obj, &s_signal); // outlet we made
 
     return (x);
 }
@@ -89,7 +103,7 @@ static void *ellipse_tilde_free(t_ellipse_tilde *x)
     inlet_free(x->width_in);
     inlet_free(x->height_in);
 
-    outlet_free(x->yChan_out);
+    outlet_free(x->y_out);
 
     return (void *)x;
 }
@@ -105,6 +119,7 @@ void ellipse_tilde_setup(void)
                                     0);                             // no more args
 
     class_sethelpsymbol(ellipse_tilde_class, gensym("ellipse~")); // links to the help patch
+    class_addmethod(ellipse_tilde_class, (t_method)ellipse_tilde_bypass, gensym("bypass"), A_DEFFLOAT, 0);
 
     class_addmethod(ellipse_tilde_class, (t_method)ellipse_tilde_dsp, gensym("dsp"), A_CANT, 0);
     CLASS_MAINSIGNALIN(ellipse_tilde_class, t_ellipse_tilde, f); // signal inlet as first inlet

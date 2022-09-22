@@ -1,7 +1,5 @@
 ==== Roadmap ===================================================================
-- tabreadlin~
-    - do I need to make a loop option?
-    - what to do about number of dimensions...
+- update all objects to have a bypass option
 - if I end up connecting with blender, I should also have a traveling salesman object
 - turn all the brightness abstractions into objects when finished with them
 - create a helpfile for rot_osc~, later what is a better name for this?
@@ -14,6 +12,9 @@
 - could I add in a link to blender via OSC? YES
 - add a bypass option for all relevant objects
     - that should be most of the library
+- create tabreadlin helpfile
+- update the following helpfiles with the bypass option
+    - bezier~
 ==== Bugs ======================================================================
 all
 - add [declare -lib osci] to cut_idx~.pd

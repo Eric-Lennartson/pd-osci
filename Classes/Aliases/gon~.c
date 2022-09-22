@@ -8,38 +8,49 @@ static t_class *gon_tilde_class;
 typedef struct _gon_tilde
 {
     t_object x_obj;
-    t_sample f;                                      // dummy variable for 1st inlet
+    t_sample f; // dummy variable for 1st inlet
+    int bypass;
     t_inlet *xPos_in, *yPos_in, *sides_in, *size_in; // phase default provided
-    t_outlet *yChan_out;                             // *xChan_out default provided
+    t_outlet *y_out;                             // *x_out default provided
 } t_gon_tilde;
 
 static t_int *gon_tilde_perform(t_int *w)
 {
-    t_sample *phase_in = (t_sample *)(w[1]);
-    t_sample *xPos_in = (t_sample *)(w[2]);
-    t_sample *yPos_in = (t_sample *)(w[3]);
-    t_sample *sides_in = (t_sample *)(w[4]);
-    t_sample *size_in = (t_sample *)(w[5]);
-    t_sample *xChan_out = (t_sample *)(w[6]);
-    t_sample *yChan_out = (t_sample *)(w[7]);
-    int nblock = (int)(w[8]); // get blocksize
+    t_gon_tilde *x = (t_gon_tilde *)(w[1]);
+    t_sample *phase_in = (t_sample *)(w[2]);
+    t_sample *xpos_in  = (t_sample *)(w[3]);
+    t_sample *ypos_in  = (t_sample *)(w[4]);
+    t_sample *sides_in = (t_sample *)(w[5]);
+    t_sample *size_in  = (t_sample *)(w[6]);
+    t_sample *x_out    = (t_sample *)(w[7]);
+    t_sample *y_out    = (t_sample *)(w[8]);
+    int nblock         = (int)(w[9]); // get blocksize
 
     while (nblock--) // dsp here
     {
-        t_sample size = *size_in++; // gets it's own variable so that I don't have to remember when to increment
+        t_sample t = phase_in[nblock];
+        if(!x->bypass) {
+            t_sample size = size_in[nblock]; // gets it's own variable so that I don't have to remember when to increment
+            t_sample sides = sides_in[nblock];
+            t_sample xpos = xpos_in[nblock];
+            t_sample ypos = ypos_in[nblock];
 
-        v = polygon(mod1(*phase_in++), *sides_in++);
+            v = polygon(mod1(t), sides);
 
-        *xChan_out++ = (v.x + *xPos_in++) * size;
-        *yChan_out++ = (v.y + *yPos_in++) * size;
+            x_out[nblock] = (v.x + xpos) * size;
+            y_out[nblock] = (v.y + ypos) * size;
+        } else {
+            x_out[nblock] = t;
+            y_out[nblock] = 0;
+        }
     }
 
-    return (w + 9);
+    return (w + 10);
 }
 
 static void gon_tilde_dsp(t_gon_tilde *x, t_signal **sp)
 {
-    dsp_add(gon_tilde_perform, 8,
+    dsp_add(gon_tilde_perform, 9, x,
             sp[0]->s_vec, // phase
             sp[1]->s_vec, // xPos
             sp[2]->s_vec, // yPos
@@ -51,12 +62,19 @@ static void gon_tilde_dsp(t_gon_tilde *x, t_signal **sp)
     );
 }
 
+static void gon_tilde_bypass(t_gon_tilde *x, t_floatarg bypass) {
+    x->bypass = (int)bypass;
+}
+
 // ctor
 static void *gon_tilde_new(t_floatarg xPos, t_floatarg yPos, t_floatarg sides, t_floatarg size)
 {
     t_gon_tilde *x = (t_gon_tilde *)pd_new(gon_tilde_class);
 
     sides = (sides <= 0) ? 3 : (int)sides;
+    size = (size <= 0) ? 1 : size; // technically defaulting to a negative size is fine, this is just simpler
+
+    x->bypass = 0;
 
     x->xPos_in = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
     x->yPos_in = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
@@ -70,7 +88,7 @@ static void *gon_tilde_new(t_floatarg xPos, t_floatarg yPos, t_floatarg sides, t
 
     outlet_new(&x->x_obj, &s_signal); // default provided outlet
 
-    x->yChan_out = outlet_new(&x->x_obj, &s_signal); // outlet we made
+    x->y_out = outlet_new(&x->x_obj, &s_signal); // outlet we made
 
     return (x);
 }
@@ -83,7 +101,7 @@ static void *gon_tilde_free(t_gon_tilde *x)
     inlet_free(x->size_in);
     inlet_free(x->sides_in);
 
-    outlet_free(x->yChan_out);
+    outlet_free(x->y_out);
 
     return (void *)x;
 }
@@ -101,7 +119,8 @@ void gon_tilde_setup(void)
                                     A_DEFFLOAT,                     // size
                                     0);                             // no more args
 
-    class_sethelpsymbol(gon_tilde_class, gensym("polygon~")); // links to the help patch
+    class_sethelpsymbol(gon_tilde_class, gensym("gon~")); // links to the help patch
+    class_addmethod(gon_tilde_class, (t_method)gon_tilde_bypass, gensym("bypass"), A_DEFFLOAT, 0);
 
     class_addmethod(gon_tilde_class, (t_method)gon_tilde_dsp, gensym("dsp"), A_CANT, 0); // add a dsp method to data space
     CLASS_MAINSIGNALIN(gon_tilde_class, t_gon_tilde, f);                                 // signal inlet as first inlet

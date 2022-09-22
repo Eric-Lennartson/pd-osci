@@ -10,6 +10,7 @@ typedef struct _triangle_tilde
 {
     t_object x_obj;
     t_sample f; // dummy variable for 1st inlet
+    bool bypass;
     t_float xPos, yPos, size;
     t_inlet *xPos_in, *yPos_in, *size_in; // phase default provided
     t_outlet *x_out, *y_out;
@@ -17,41 +18,47 @@ typedef struct _triangle_tilde
 
 static t_int *triangle_tilde_perform(t_int *w)
 {
-    t_sample *phase_in = (t_sample *)(w[1]);
-    t_sample *xPos_in   = (t_sample *)(w[2]);
-    t_sample *yPos_in   = (t_sample *)(w[3]);
-    t_sample *size_in   = (t_sample *)(w[4]);
-    t_sample *x_out     = (t_sample *)(w[5]);
-    t_sample *y_out     = (t_sample *)(w[6]);
-    int      nblock     =        (int)(w[7]); // get blocksize
+    t_triangle_tilde *x = (t_triangle_tilde *)(w[1]);
+    t_sample *phase_in  = (t_sample *)(w[2]);
+    t_sample *xPos_in   = (t_sample *)(w[3]);
+    t_sample *yPos_in   = (t_sample *)(w[4]);
+    t_sample *size_in   = (t_sample *)(w[5]);
+    t_sample *x_out     = (t_sample *)(w[6]);
+    t_sample *y_out     = (t_sample *)(w[7]);
+    int      nblock     =        (int)(w[8]); // get blocksize
 
     while (nblock--) // dsp here
     {
-        t_sample t    = *phase_in++;
-        t_sample xPos = *xPos_in++;
-        t_sample yPos = *yPos_in++;
-        t_sample size = *size_in++;
+        t_sample t    = phase_in[nblock];
+        if(!x->bypass) {
+            t_sample xPos = xPos_in[nblock];
+            t_sample yPos = yPos_in[nblock];
+            t_sample size = size_in[nblock];
 
-        t_sample t2 = t * 3;
-        int idx = t2;
-        int idx_next = (idx + 1 < 3) ? idx + 1 : 0;
+            t_sample t2 = t * 3;
+            int idx = t2;
+            int idx_next = (idx + 1 < 3) ? idx + 1 : 0;
 
-        // get each point and interpolate between them
-        t_float x1 = points[idx][0];
-        t_float y1 = points[idx][1];
-        t_float x2 = points[idx_next][0];
-        t_float y2 = points[idx_next][1];
+            // get each point and interpolate between them
+            t_float x1 = points[idx][0];
+            t_float y1 = points[idx][1];
+            t_float x2 = points[idx_next][0];
+            t_float y2 = points[idx_next][1];
 
-        *x_out++ = lerp(mod1(t2), x1, x2) * size + xPos;
-        *y_out++ = lerp(mod1(t2), y1, y2) * size + yPos;
+            x_out[nblock] = lerp(mod1(t2), x1, x2) * size + xPos;
+            y_out[nblock] = lerp(mod1(t2), y1, y2) * size + yPos;
+        } else {
+            x_out[nblock] = t;
+            y_out[nblock] = 0;
+        }
     }
 
-    return (w + 8);
+    return (w + 9);
 }
 
 static void triangle_tilde_dsp(t_triangle_tilde *x, t_signal **sp)
 {
-    dsp_add(triangle_tilde_perform, 7,
+    dsp_add(triangle_tilde_perform, 8, x,
             sp[0]->s_vec, // phase
             sp[1]->s_vec, // xPos
             sp[2]->s_vec, // yPos
@@ -62,9 +69,15 @@ static void triangle_tilde_dsp(t_triangle_tilde *x, t_signal **sp)
             );
 }
 
+static void triangle_tilde_bypass(t_triangle_tilde *x, t_floatarg bypass) {
+    x->bypass = (int)bypass;
+}
+
 static void *triangle_tilde_new(t_symbol *s, int argc, t_atom* argv)
 {
     t_triangle_tilde *x = (t_triangle_tilde *)pd_new(triangle_tilde_class);
+
+    x->bypass = 0;
 
     //Init inlets and variables
     t_float xpos = argc ? atom_getfloat(argv) : 0;
@@ -108,6 +121,7 @@ void triangle_tilde_setup(void)
                             0); // no more args
 
     class_sethelpsymbol(triangle_tilde_class, gensym("triangle~")); // links to the help patch
+    class_addmethod(triangle_tilde_class, (t_method)triangle_tilde_bypass, gensym("bypass"), A_DEFFLOAT, 0);
 
     class_addmethod(triangle_tilde_class, (t_method)triangle_tilde_dsp, gensym("dsp"), A_CANT, 0); // add a dsp method to data space
     CLASS_MAINSIGNALIN(triangle_tilde_class, t_triangle_tilde, f); // signal inlet as first inlet

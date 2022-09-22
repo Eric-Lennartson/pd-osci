@@ -15,7 +15,7 @@ typedef struct _ball_tilde
 
 t_int *ball_tilde_perform(t_int *w)
 {
-    t_ball_tilde  *x = (t_ball_tilde *)(w[1]);
+    t_ball_tilde *x  = (t_ball_tilde *)(w[1]);
     t_sample *x_in   = (t_sample *)(w[2]);
     t_sample *y_in   = (t_sample *)(w[3]);
     t_sample *z_in   = (t_sample *)(w[4]);
