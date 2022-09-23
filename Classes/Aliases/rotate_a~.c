@@ -44,7 +44,7 @@ t_int *rotate_a_tilde_perform(t_int *w)
       if (x->angle_mode)
         angle *= DEG_TO_RAD;
 
-      v3_rotate_a(&x->v, angle, &x->axis);
+      v3_rotate_axis(&x->v, angle, &x->axis);
 
       x_out[nblock] = x->v.x;
       y_out[nblock] = x->v.y;

@@ -22,8 +22,6 @@
 - finish general improvements then start working on remapping tree.
 - figure out how to add in remapping tree...
 - could I add in a link to blender via OSC? YES
-- add a bypass option for all relevant objects
-    - that should be most of the library
 - create tabreadlin helpfile
 - update the following helpfiles with the bypass option
     - bezier~ (check if this is still working)

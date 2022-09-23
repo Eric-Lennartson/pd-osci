@@ -49,7 +49,7 @@ t_int *rotate_p_tilde_perform(t_int *w)
         angle *= DEG_TO_RAD;
       }
 
-      v3_rotate_p(&x->v, angle, &x->pivot, &x->axis);
+      v3_rotate_pivot(&x->v, angle, &x->pivot, &x->axis);
 
       x_out[nblock] = x->v.x;
       y_out[nblock] = x->v.y;

@@ -21,14 +21,14 @@ static t_int *bright_perform(t_int *w)
 
     while (nblock--)
     {
-        t_sample t        = *driver++;
-        t_sample offset   = *offset_in++;
-        t_sample strength = *strength_in++;
+        t_sample t        = driver[nblock];
+        t_sample offset   = offset_in[nblock];
+        t_sample strength = strength_in[nblock];
 
         offset = offset < 0 ? 0 : offset; // prevent strange images from negative offset
         strength = strength < 1 ? 1 : strength; // crashes when given negative values
 
-        *out++ = mod1( pow(t,strength) + offset);
+        out[nblock] = mod1( pow(t,strength) + offset);
     }
 
     return (w + 6);
@@ -80,9 +80,9 @@ void bright_tilde_setup(void)
                             CLASS_DEFAULT, // gui apperance
                             A_GIMME, //offset, strength
                             0); // no more args
-    
+
     class_sethelpsymbol(bright_class, gensym("bright~")); // links to the help patch
-    
+
     class_addmethod(bright_class, (t_method)bright_dsp, gensym("dsp"), A_CANT, 0);
     CLASS_MAINSIGNALIN(bright_class, t_bright, f); // signal inlet as first inlet
 }
