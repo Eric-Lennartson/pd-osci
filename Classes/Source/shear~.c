@@ -10,7 +10,7 @@ typedef struct _shear_tilde
 {
     t_object x_obj;
     t_sample f; // dummy arg
-    int angle_mode;
+    int angle_mode, bypass;
     t_vec3 v;
     t_symbol axis;
     t_inlet *y_in, *z_in, *angle_in;
@@ -31,17 +31,24 @@ t_int *shear_tilde_perform(t_int *w)
 
     while (nblock--)
     {
-        x->v = vec3(x_in[nblock], y_in[nblock], z_in[nblock]);
-        t_float angle = angle_in[nblock];
+        if(!x->bypass)
+        {
+            x->v = vec3(x_in[nblock], y_in[nblock], z_in[nblock]);
+            t_float angle = angle_in[nblock];
 
-        if(x->angle_mode)
-            angle *= DEG_TO_RAD;
+            if(x->angle_mode)
+                angle *= DEG_TO_RAD;
 
-        v3_shear(&x->v, angle, x->axis.s_name);
+            v3_shear(&x->v, angle, x->axis.s_name);
 
-        x_out[nblock] = x->v.x;
-        y_out[nblock] = x->v.y;
-        z_out[nblock] = x->v.z;
+            x_out[nblock] = x->v.x;
+            y_out[nblock] = x->v.y;
+            z_out[nblock] = x->v.z;
+        } else {
+            x_out[nblock] = x_in[nblock];
+            y_out[nblock] = y_in[nblock];
+            z_out[nblock] = z_in[nblock];
+        }
     }
 
     return (w + 10); // num ptrs + 1
@@ -84,6 +91,10 @@ void angle_mode(t_shear_tilde *x, t_symbol *mode)
     // postfloat(x->angle_mode);
 }
 
+static void bypass(t_shear_tilde *x, t_floatarg bypass) {
+  x->bypass = (int)bypass;
+}
+
 void shear_tilde_free(t_shear_tilde *x)
 {
     inlet_free(x->y_in);
@@ -102,6 +113,7 @@ void *shear_tilde_new(t_floatarg angle, t_symbol *axis)
     set_axis(x, axis);
     angle_mode(x, gensym("degrees"));
     x->v = vec3(0, 0, 0);
+    x->bypass = 0;
 
     x->y_in = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
     x->z_in = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
@@ -131,6 +143,8 @@ void shear_tilde_setup(void)
 
     class_addmethod(shear_tilde_class, (t_method)set_axis, gensym("axis"), A_DEFSYMBOL, 0);
     class_addmethod(shear_tilde_class, (t_method)angle_mode, gensym("mode"), A_DEFSYMBOL, 0);
+    class_addmethod(shear_tilde_class, (t_method)bypass, gensym("bypass"), A_DEFFLOAT, 0);
+
     class_addmethod(shear_tilde_class, (t_method)shear_tilde_dsp, gensym("dsp"), A_CANT, 0);
     CLASS_MAINSIGNALIN(shear_tilde_class, t_shear_tilde, f); // dummy arg for singal into first inlet
 }

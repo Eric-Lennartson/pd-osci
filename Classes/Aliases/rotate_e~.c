@@ -5,15 +5,13 @@
 // should this header be somewhere else?
 #include "string.h"
 
-// rotate_e, rotate_a, and rotate3 are aliases for euler, axis, and pivot
-
 static t_class *rotate_e_tilde_class;
 
 typedef struct _rotate_e_tilde
 {
   t_object x_obj;
   t_sample f; // dummy arg
-  int angle_mode;
+  int angle_mode, bypass;
   t_vec3 v;
   t_inlet /* *x_in, */ *y_in, *z_in, *xRot_in, *yRot_in, *zRot_in;
   t_outlet *x_out, *y_out, *z_out;
@@ -35,23 +33,30 @@ t_int *rotate_e_tilde_perform(t_int *w)
 
   while (nblock--)
   {
-    x->v = vec3(x_in[nblock], y_in[nblock], z_in[nblock]);
-    t_sample ax = xRot_in[nblock];
-    t_sample ay = yRot_in[nblock];
-    t_sample az = zRot_in[nblock];
-
-    if (x->angle_mode)
+    if(!x->bypass)
     {
-      ax *= DEG_TO_RAD;
-      ay *= DEG_TO_RAD;
-      az *= DEG_TO_RAD;
+      x->v = vec3(x_in[nblock], y_in[nblock], z_in[nblock]);
+      t_sample ax = xRot_in[nblock];
+      t_sample ay = yRot_in[nblock];
+      t_sample az = zRot_in[nblock];
+
+      if (x->angle_mode)
+      {
+        ax *= DEG_TO_RAD;
+        ay *= DEG_TO_RAD;
+        az *= DEG_TO_RAD;
+      }
+
+      v3_rotate(&x->v, ax, ay, az);
+
+      x_out[nblock] = x->v.x;
+      y_out[nblock] = x->v.y;
+      z_out[nblock] = x->v.z;
+    } else {
+      x_out[nblock] = x_in[nblock];
+      y_out[nblock] = y_in[nblock];
+      z_out[nblock] = z_in[nblock];
     }
-
-    v3_rotate(&x->v, ax, ay, az);
-
-    x_out[nblock] = x->v.x;
-    y_out[nblock] = x->v.y;
-    z_out[nblock] = x->v.z;
   }
 
   return (w + 12); // num ptrs + 1
@@ -84,6 +89,10 @@ void angle_mode(t_rotate_e_tilde *x, t_symbol* mode)
   }
 }
 
+static void bypass(t_rotate_e_tilde *x, t_floatarg bypass) {
+  x->bypass = (int)bypass;
+}
+
 void rotate_e_tilde_free(t_rotate_e_tilde *x)
 {
   //    inlet_free(x->x_in);
@@ -104,6 +113,7 @@ void *rotate_e_tilde_new(t_floatarg ax, t_floatarg ay, t_floatarg az)
 
   x->v = vec3(0, 0, 0);
   x->angle_mode = 1;
+  x->bypass = 0;
 
   //    x->x_in = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
   x->y_in = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
@@ -138,6 +148,8 @@ void rotate_e_tilde_setup(void)
   class_sethelpsymbol(rotate_e_tilde_class, gensym("rotate~")); // links to the help patch
 
   class_addmethod(rotate_e_tilde_class, (t_method)angle_mode, gensym("mode"), A_DEFSYMBOL, 0);
+  class_addmethod(rotate_e_tilde_class, (t_method)bypass, gensym("bypass"), A_DEFFLOAT, 0);
+
   class_addmethod(rotate_e_tilde_class, (t_method)rotate_e_tilde_dsp, gensym("dsp"), A_CANT, 0);
   CLASS_MAINSIGNALIN(rotate_e_tilde_class, t_rotate_e_tilde, f); // dummy arg for singal into first inlet
 }
