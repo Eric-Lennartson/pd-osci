@@ -3,11 +3,6 @@
 #include "m_pd.h"
 #include "Phase_Cut.h"
 
-#define MININLETS 1
-#define MAXINLETS 100
-#define MINOUTLETS 1
-#define MAXOUTLETS 100
-
 static t_class *cut_equal_class = NULL;
 
 typedef struct cut_equal
@@ -135,10 +130,7 @@ static void *cut_equal_new(t_floatarg n_outs)
 {
     t_cut_equal *x = (t_cut_equal *)pd_new(cut_equal_class);
 
-    if(n_outs <= 0) n_outs = MINOUTLETS;
-    if(n_outs > MAXOUTLETS) n_outs = MAXOUTLETS;
-
-    x->n_outs = n_outs;
+    x->n_outs = CLAMP(n_outs, MINOUTLETS, MAXOUTLETS);
 
     // allocate the memory for all our ptrs
     x->out_vecs = getbytes(x->n_outs * sizeof(*x->out_vecs));

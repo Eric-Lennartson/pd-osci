@@ -1,6 +1,4 @@
 ==== Roadmap ===================================================================
-- phase cutting objects should default to 2 inlets
-
 - create a master transforms gui
 - add a calibrator gui that performs adjustments at the end?
     - distortion matrix?

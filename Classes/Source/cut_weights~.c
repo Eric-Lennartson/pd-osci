@@ -138,10 +138,7 @@ static void *cut_weights_new(t_floatarg n_cuts)
 {
     t_cut_weights *x = (t_cut_weights *)pd_new(cut_weights_class);
 
-    if(n_cuts < MIN_CUTS)
-        n_cuts = (int)MIN_CUTS;
-    else if(n_cuts > MAX_CUTS)
-        n_cuts = (int)MAX_CUTS;
+    n_cuts = CLAMP(n_cuts, MINOUTLETS, MAXOUTLETS);
 
     x->n_ins = (int)n_cuts + 1; // +1 b/c first is driver
     x->n_outs = x->n_cuts = (int)n_cuts;

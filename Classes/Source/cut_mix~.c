@@ -3,11 +3,6 @@
 #include "m_pd.h"
 #include "Phase_Cut.h"
 
-#define MININLETS 1
-#define MAXINLETS 100
-#define MINOUTLETS 1
-#define MAXOUTLETS 100
-
 static t_class *cut_mix_class = NULL;
 
 typedef struct cut_mix
@@ -130,11 +125,8 @@ static void *cut_mix_new(t_floatarg n_outs)
 {
     t_cut_mix *x = (t_cut_mix *)pd_new(cut_mix_class);
 
-    if(n_outs <= 0) n_outs = MINOUTLETS;
-    if(n_outs > MAXOUTLETS) n_outs = MAXOUTLETS;
-
-    x->n_outs = n_outs;
-    x->n_cuts = n_outs;
+    x->n_outs = CLAMP(n_outs, MINOUTLETS, MAXOUTLETS);
+    x->n_cuts = x->n_outs;
 
     // allocate the memory for all our ptrs
     x->out_vecs = getbytes(x->n_outs * sizeof(*x->out_vecs));

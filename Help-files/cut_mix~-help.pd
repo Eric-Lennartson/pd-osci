@@ -1,8 +1,8 @@
 #N canvas 620 23 446 693 12;
 #X declare -lib osci;
 #X obj 6 105 phasor~ 50;
-#X floatatom 57 145 5 0 0 1 which_cut(1-n) - -;
-#X floatatom 108 192 5 0 1 1 fade_ratio(0-1) - -;
+#X floatatom 57 145 5 0 0 1 which_cut(1-n) - - 0;
+#X floatatom 108 192 5 0 1 1 fade_ratio(0-1) - - 0;
 #X obj 108 215 sig~ 0.6;
 #X obj 6 239 osci/cut_mix~ 2;
 #X obj 57 168 phasor~ 0.1;
@@ -21,8 +21,8 @@
 #X text 1 687 ========================================================================================================================
 ;
 #X text 24 504 1 signal - phase;
-#X obj 183 357 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
--174938 -203556;
+#X obj 183 357 bng 24 250 50 0 empty empty empty 30 11 0 12 #58504c
+#a8b464 #c4b08c;
 #X text 210 360 open online documentation;
 #N canvas 0 23 449 130 docs 0;
 #X obj 3 36 inlet;
@@ -50,7 +50,9 @@ index to use.;
 #X connect 4 1 9 3;
 #X connect 5 0 4 1;
 #X connect 6 0 8 0;
+#X connect 6 1 8 1;
 #X connect 7 0 9 0;
+#X connect 7 1 9 1;
 #X connect 8 0 10 0;
 #X connect 8 1 10 1;
 #X connect 9 0 10 0;

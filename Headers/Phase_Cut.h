@@ -9,6 +9,9 @@
 #include <stdlib.h>
 #include "Audio_Math.h" // for mod1()
 
+#define MINOUTLETS 2
+#define MAXOUTLETS 100
+
 typedef struct PhaseCut
 {
     int idx;
