@@ -1,7 +1,4 @@
 ==== Roadmap ===================================================================
-- objects that need a bypass option
-    - some of the glue objects
-
 - phase cutting objects should default to 2 inlets
 
 - create a master transforms gui

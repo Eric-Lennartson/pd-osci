@@ -10,8 +10,7 @@ typedef struct _skew_tilde
 {
     t_object x_obj;
     t_sample f;      // dummy variable for 1st inlet
-    int symmetric;   // bool 0 or 1
-    int from_center; // bool 0 or 1
+    int symmetric, from_center, bypass; //bool 0 or 1
     t_float start, end, skew;
     t_inlet *start_in, *end_in, *skew_in;
 
@@ -48,6 +47,11 @@ static void onFromCenterMsg(t_skew_tilde *x, t_floatarg f)
     x->from_center = (f > 0) ? 1 : 0;
 }
 
+static void onBypassMsg(t_skew_tilde *x, t_floatarg f)
+{
+    x->bypass = (int)f;
+}
+
 static t_float fromCenter(t_skew_tilde *x, t_floatarg center)
 {
     if (x->start < x->end) // could be refactored to some clamping function
@@ -78,27 +82,31 @@ static t_float skew(t_skew_tilde *x, t_floatarg value)
 
 static t_int *skew_tilde_perform(t_int *w)
 {
-    t_skew_tilde *x = (t_skew_tilde *)(w[1]);
-    t_float *val_in = (t_float *)(w[2]);
+    t_skew_tilde *x   = (t_skew_tilde *)(w[1]);
+    t_float *val_in   = (t_float *)(w[2]);
     t_float *start_in = (t_float *)(w[3]);
-    t_float *end_in = (t_float *)(w[4]);
-    t_float *skew_in = (t_float *)(w[5]);
-    t_float *out = (t_float *)(w[6]);
-    int nblock = (int)(w[7]);
+    t_float *end_in   = (t_float *)(w[4]);
+    t_float *skew_in  = (t_float *)(w[5]);
+    t_float *out      = (t_float *)(w[6]);
+    int nblock        = (int)(w[7]);
 
     while (nblock--)
     {
         t_float value = val_in[nblock];
-        x->start = start_in[nblock];
-        x->end = end_in[nblock];
-        if (x->from_center) // skew is treated as a center point somewhere in the range here
-            x->skew = fromCenter(x, skew_in[nblock]);
-        else
-            x->skew = skew_in[nblock];
 
-        t_float result = skew(x, value);
+        if(!x->bypass)
+        {
+            x->start = start_in[nblock];
+            x->end = end_in[nblock];
+            if (x->from_center) // skew is treated as a center point somewhere in the range here
+                x->skew = fromCenter(x, skew_in[nblock]);
+            else
+                x->skew = skew_in[nblock];
 
-        out[nblock] = result;
+            value = skew(x, value);
+        }
+
+        out[nblock] = value;
     }
     return (w + 8);
 }
@@ -120,6 +128,7 @@ static void *skew_new(t_floatarg start, t_floatarg end, t_floatarg skew, t_float
     t_skew_tilde *x = (t_skew_tilde *)pd_new(skew_tilde_class);
 
     // this could be better with defaults.
+    x->bypass = 0;
     x->start = start;
     x->end = end;
     x->skew = (skew < 0) ? 0 : skew;
@@ -166,6 +175,7 @@ void skew_tilde_setup(void)
 
     class_addmethod(skew_tilde_class, (t_method)onSymmetricMsg, gensym("symmetric"), A_DEFFLOAT, 0);
     class_addmethod(skew_tilde_class, (t_method)onFromCenterMsg, gensym("fromCenter"), A_DEFFLOAT, 0);
+    class_addmethod(skew_tilde_class, (t_method)onBypassMsg, gensym("bypass"), A_DEFFLOAT, 0);
     class_addmethod(skew_tilde_class, (t_method)skew_tilde_dsp, gensym("dsp"), A_CANT, 0);
     CLASS_MAINSIGNALIN(skew_tilde_class, t_skew_tilde, f); // signal inlet as first inlet
 }

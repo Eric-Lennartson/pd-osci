@@ -10,7 +10,7 @@ typedef struct _skew
 {
     t_object x_obj;
     t_sample f;    // dummy variable for 1st inlet
-    int symmetric; // bool 0 or 1
+    int symmetric, bypass; // bool 0 or 1
     t_float start, end, skew;
 } t_skew;
 
@@ -60,6 +60,11 @@ static void onSymmetricMsg(t_skew *x, t_floatarg f)
     x->symmetric = (f > 0) ? 1 : 0;
 }
 
+static void onBypassMsg(t_skew *x, t_floatarg f)
+{
+    x->bypass = (int)f;
+}
+
 static void onFromCenterMsg(t_skew *x, t_floatarg center)
 {
     if (x->start < x->end) // could be refactored to some clamping function
@@ -90,7 +95,7 @@ static void skew_float(t_skew *x, t_floatarg value)
     // could be useful somewhere else, but I'm commenting it out for now.
     //result = convertFrom0to1(x, value);
 
-    outlet_float(x->x_obj.ob_outlet, result);
+    outlet_float(x->x_obj.ob_outlet, !x->bypass ? result : value);
 }
 
 // ctor
@@ -99,6 +104,7 @@ static void *skew_new(t_floatarg start, t_floatarg end, t_floatarg skew, t_float
     t_skew *x = (t_skew *)pd_new(skew_class);
 
     // init and bounds check
+    x->bypass = 0;
     x->start = start;
     x->end = end;
     x->skew = (skew < 0) ? 0 : skew;
@@ -114,7 +120,7 @@ static void *skew_new(t_floatarg start, t_floatarg end, t_floatarg skew, t_float
     return (x);
 }
 
-// dtor
+
 static void *skew_free(t_skew *x)
 {
     return (void *)x;
@@ -138,5 +144,6 @@ void skew_setup(void)
 
     class_addmethod(skew_class, (t_method)onSymmetricMsg, gensym("symmetric"), A_DEFFLOAT, 0);
     class_addmethod(skew_class, (t_method)onFromCenterMsg, gensym("fromCenter"), A_DEFFLOAT, 0);
+    class_addmethod(skew_class, (t_method)onBypassMsg, gensym("bypass"), A_DEFFLOAT, 0);
     class_addfloat(skew_class, (t_method)skew_float); // called when receive float in first inlet
 }

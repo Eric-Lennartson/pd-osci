@@ -6,7 +6,8 @@
 typedef struct _map
 {
     t_object x_obj;
-    t_float  min_in, max_in, min_out, max_out;
+    int bypass;
+    t_float min_in, max_in, min_out, max_out;
 } t_map;
 
 static t_class *map_class;
@@ -26,13 +27,19 @@ t_float map(t_float value,  t_float inputMin,  t_float inputMax,  t_float output
 
 static void map_float(t_map *x, t_floatarg f)
 {
-    t_float result = map(f, x->min_in, x->max_in, x->min_out, x->max_out);
+    t_float result = !x->bypass ? map(f, x->min_in, x->max_in, x->min_out, x->max_out) : f;
     outlet_float(x->x_obj.ob_outlet, result);
+}
+
+static void map_bypass(t_map *x, t_floatarg f) {
+    x->bypass = (int)f;
 }
 
 static void *map_new(t_floatarg min_in, t_floatarg max_in, t_floatarg min_out, t_floatarg max_out)
 {
     t_map *x = (t_map *)pd_new(map_class);
+
+    x->bypass = 0;
 
     x->min_in  = min_in;
     x->max_in  = max_in;
@@ -49,8 +56,7 @@ static void *map_new(t_floatarg min_in, t_floatarg max_in, t_floatarg min_out, t
     return (x);
 }
 
-static void *map_free(t_map *x)
-{
+static void *map_free(t_map *x) {
     return (void *)x;
 }
 
@@ -68,5 +74,8 @@ void map_setup(void)
                 0);
 
     class_sethelpsymbol(map_class, gensym("map"));
+
+    class_addmethod(map_class, (t_method)map_bypass, gensym("bypass"), A_DEFFLOAT, 0);
+
     class_addfloat(map_class, (t_method)map_float);
 }
