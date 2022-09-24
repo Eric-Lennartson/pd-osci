@@ -10,17 +10,20 @@ typedef struct _chris_clip_tilde
 {
     t_object x_obj;
     t_sample f; // dummy variable for 1st inlet
-    int mod;
-    int mirror;
+    int mod, mirror, bypass;
     t_inlet *min_in, *max_in; // signal in and out default provided
 } t_chris_clip_tilde;
 
-static void onModMsg(t_chris_clip_tilde *x, t_floatarg f) {
+static void chris_clip_mod(t_chris_clip_tilde *x, t_floatarg f) {
     x->mod = (f > 0) ? 1 : 0;
 }
 
-static void onMirrorMsg(t_chris_clip_tilde *x, t_floatarg f) {
+static void chris_clip_mirror(t_chris_clip_tilde *x, t_floatarg f) {
     x->mirror = (f > 0) ? 1 : 0;
+}
+
+static void chris_clip_bypass(t_chris_clip_tilde *x, t_floatarg f) {
+    x->bypass = (int)f;
 }
 
 static t_float chris_clip(t_chris_clip_tilde *x, t_floatarg value, t_float min, t_float max)
@@ -50,24 +53,28 @@ static t_float chris_clip(t_chris_clip_tilde *x, t_floatarg value, t_float min, 
 static t_int *chris_clip_tilde_perform(t_int *w)
 {
     t_chris_clip_tilde *x = (t_chris_clip_tilde *)(w[1]);
-    t_float *value_in     =            (t_float *)(w[2]);
-    t_float *min_in       =            (t_float *)(w[3]);
-    t_float *max_in       =            (t_float *)(w[4]);
-    t_float *out          =            (t_float *)(w[5]);
-    int nblock            =                  (int)(w[6]);
+    t_float *value_in     = (t_float *)(w[2]);
+    t_float *min_in       = (t_float *)(w[3]);
+    t_float *max_in       = (t_float *)(w[4]);
+    t_float *out          = (t_float *)(w[5]);
+    int nblock            = (int)(w[6]);
 
     while (nblock--)
     {
         t_float value = value_in[nblock];
-        t_float min   = min_in[nblock];
-        t_float max   = max_in[nblock];
 
-        if(x->mirror)
-            if(max <= 0.f) { max = 0.001; }
+        if(!x->bypass)
+        {
+            t_float min = min_in[nblock];
+            t_float max = max_in[nblock];
 
-        t_float result = chris_clip(x, value, min, max);
+            if(x->mirror)
+                if(max <= 0.f) { max = 0.001; }
 
-        out[nblock] = result;
+            value = chris_clip(x, value, min, max);
+        }
+        out[nblock] = value;
+
     }
     return (w + 7);
 }
@@ -87,8 +94,10 @@ static void *chris_clip_new(t_symbol *s, int argc, t_atom *argv)
 {
     t_chris_clip_tilde *x = (t_chris_clip_tilde *)pd_new(chris_clip_tilde_class);
 
-    float min = argc>0 ? atom_getfloat(argv)   : -1.f;
-    float max = argc>1 ? atom_getfloat(argv+1) :  1.f;
+    x->bypass = 0;
+
+    t_float min = argc>0 ? atom_getfloat(argv)   : -1.f;
+    t_float max = argc>1 ? atom_getfloat(argv+1) :  1.f;
     x->mirror = argc>2 ? atom_getfloat(argv+2) :  0;
     x->mod    = argc>3 ? atom_getfloat(argv+3) :  0;
 
@@ -123,8 +132,9 @@ void chris_clip_tilde_setup(void)
 
     class_sethelpsymbol(chris_clip_tilde_class, gensym("chris_clip~")); // links to the help patch
 
-    class_addmethod(chris_clip_tilde_class, (t_method)onModMsg, gensym("mod"), A_DEFFLOAT, 0);
-    class_addmethod(chris_clip_tilde_class, (t_method)onMirrorMsg, gensym("mirror"), A_DEFFLOAT, 0);
+    class_addmethod(chris_clip_tilde_class, (t_method)chris_clip_mod, gensym("mod"), A_DEFFLOAT, 0);
+    class_addmethod(chris_clip_tilde_class, (t_method)chris_clip_mirror, gensym("mirror"), A_DEFFLOAT, 0);
+    class_addmethod(chris_clip_tilde_class, (t_method)chris_clip_bypass, gensym("bypass"), A_DEFFLOAT, 0);
     class_addmethod(chris_clip_tilde_class, (t_method)chris_clip_tilde_dsp, gensym("dsp"), A_CANT, 0);
     CLASS_MAINSIGNALIN(chris_clip_tilde_class, t_chris_clip_tilde, f); // signal inlet as first inlet
 }

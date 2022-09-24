@@ -17,6 +17,7 @@ typedef struct _grid_tilde
 {
     t_object    x_obj;
     t_sample    f; // dummy arg
+    bool bypass;
     t_vec3 v;
     t_inlet     *nx_in, *ny_in, *nz_in, *spread_in;
     t_outlet    *t2_out, *scale_out, *x_out, *y_out, *z_out;
@@ -24,59 +25,68 @@ typedef struct _grid_tilde
 
 t_int *grid_tilde_perform(t_int *w)
 {
-    t_grid_tilde *x  = (t_grid_tilde *)(w[1]);
-    t_sample* phase    =  (t_sample *)(w[2]);
-    t_sample* nx_in     =  (t_sample *)(w[3]);
-    t_sample* ny_in     =  (t_sample *)(w[4]);
-    t_sample* nz_in     =  (t_sample *)(w[5]);
-    t_sample* spread_in =  (t_sample *)(w[6]);
-    t_sample* t2_out    =  (t_sample *)(w[7]);
-    t_sample* scale_out =  (t_sample *)(w[8]);
-    t_sample* x_out     =  (t_sample *)(w[9]);
-    t_sample* y_out     =  (t_sample *)(w[10]);
-    t_sample* z_out     =  (t_sample *)(w[11]);
-    int       nblock    =         (int)(w[12]);
+    t_grid_tilde *x     = (t_grid_tilde *)(w[1]);
+    t_sample* phase     = (t_sample *)(w[2]);
+    t_sample* nx_in     = (t_sample *)(w[3]);
+    t_sample* ny_in     = (t_sample *)(w[4]);
+    t_sample* nz_in     = (t_sample *)(w[5]);
+    t_sample* spread_in = (t_sample *)(w[6]);
+    t_sample* t2_out    = (t_sample *)(w[7]);
+    t_sample* scale_out = (t_sample *)(w[8]);
+    t_sample* x_out     = (t_sample *)(w[9]);
+    t_sample* y_out     = (t_sample *)(w[10]);
+    t_sample* z_out     = (t_sample *)(w[11]);
+    int nblock          = (int)(w[12]);
 
     while (nblock--)
     {
         //init everything
         t_float t = phase[nblock];
-        t_float spread = spread_in[nblock];
-        int nx = MAX(nx_in[nblock], 1);
-        int ny = MAX(ny_in[nblock], 1);
-        int nz = MAX(nz_in[nblock], 1);
+        if(!x->bypass)
+        {
+            t_float spread = spread_in[nblock];
+            int nx = MAX(nx_in[nblock], 1);
+            int ny = MAX(ny_in[nblock], 1);
+            int nz = MAX(nz_in[nblock], 1);
 
-        int n_total = nx * ny * nz;
+            int n_total = nx * ny * nz;
 
-        // calculate where we are
-        t_float tn = n_total * t;
-        int idx = tn;
-        int idx_x = (idx / nz) % nx;
-        int idx_y = idx / (nx * nz);
-        int idx_z = idx % nz;
-        t_float t2 = mod1(tn);
+            // calculate where we are
+            t_float tn = n_total * t;
+            int idx = tn;
+            int idx_x = (idx / nz) % nx;
+            int idx_y = idx / (nx * nz);
+            int idx_z = idx % nz;
+            t_float t2 = mod1(tn);
 
-        // now compute the locations accordingly
-        t_float space_x = 1/(t_float)nx;
-        t_float space_y = 1/(t_float)ny;
-        t_float space_z = 1/(t_float)nz;
+            // now compute the locations accordingly
+            t_float space_x = 1/(t_float)nx;
+            t_float space_y = 1/(t_float)ny;
+            t_float space_z = 1/(t_float)nz;
 
-        t_float off_x = -1 + space_x * (1 + idx_x * 2);
-        t_float off_y = -1 + space_y * (1 + idx_y * 2);
-        t_float off_z = -1 + space_z * (1 + idx_z * 2);
+            t_float off_x = -1 + space_x * (1 + idx_x * 2);
+            t_float off_y = -1 + space_y * (1 + idx_y * 2);
+            t_float off_z = -1 + space_z * (1 + idx_z * 2);
 
-        t_float scale = MIN(space_x,space_y);
-        scale = MIN(scale,space_z);
+            t_float scale = MIN(space_x,space_y);
+            scale = MIN(scale,space_z);
 
-        //t_vec3 v = input(t2)*scale + t_vec3(off_x, off_y, off_z)*spread; <-- what oscistudio would be
-        x->v = v3_multf(x->v, scale);
-        x->v = v3_add(x->v, (t_vec3){off_x * spread, off_y * spread, off_z * spread} );
+            //t_vec3 v = input(t2)*scale + t_vec3(off_x, off_y, off_z)*spread; <-- what oscistudio would be
+            x->v = v3_multf(x->v, scale);
+            x->v = v3_add(x->v, (t_vec3){off_x * spread, off_y * spread, off_z * spread} );
 
-        t2_out[nblock] = t2;
-        scale_out[nblock] = scale;
-        x_out[nblock] = x->v.x;
-        y_out[nblock] = x->v.y;
-        z_out[nblock] = x->v.z;
+            t2_out[nblock] = t2;
+            scale_out[nblock] = scale;
+            x_out[nblock] = x->v.x;
+            y_out[nblock] = x->v.y;
+            z_out[nblock] = x->v.z;
+        } else {
+            t2_out[nblock] = t;
+            scale_out[nblock] = 1;
+            x_out[nblock] = 0;
+            y_out[nblock] = 0;
+            z_out[nblock] = 0;
+        }
     }
 
    return (w + 13);
@@ -98,6 +108,10 @@ void grid_tilde_dsp(t_grid_tilde *x, t_signal **sp)
             sp[0]->s_n);  // block size
 }
 
+static void grid_tilde_bypass(t_grid_tilde *x, t_floatarg f) {
+    x->bypass = (int)f;
+}
+
 void grid_tilde_free(t_grid_tilde *x)
 {
     inlet_free(x->nx_in);
@@ -117,6 +131,7 @@ void *grid_tilde_new(t_floatarg nx, t_floatarg ny, t_floatarg nz, t_floatarg spr
     t_grid_tilde *x = (t_grid_tilde *)pd_new(grid_tilde_class);
 
     x->v = vec3(1,1,1);
+    x->bypass = false;
 
     // make it an int, and make sure it's greater than 1
     nx = (int)MAX(nx, 1);
@@ -156,6 +171,7 @@ void grid_tilde_setup(void)
                                 0);
 
     class_sethelpsymbol(grid_tilde_class, gensym("grid~"));
+    class_addmethod(grid_tilde_class, (t_method)grid_tilde_bypass, gensym("bypass"), A_DEFFLOAT, 0);
 
     class_addmethod(grid_tilde_class, (t_method)grid_tilde_dsp, gensym("dsp"), A_CANT, 0);
     CLASS_MAINSIGNALIN(grid_tilde_class, t_grid_tilde, f); // dummy arg for signal into first inlet

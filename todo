@@ -1,6 +1,5 @@
 ==== Roadmap ===================================================================
 - objects that need a bypass option
-    - effects
     - some of the glue objects
 
 - phase cutting objects should default to 2 inlets

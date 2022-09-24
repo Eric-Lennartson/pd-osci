@@ -7,17 +7,21 @@ typedef struct _zoom_tilde
 {
     t_object x_obj;
     t_sample f; // dummy variable for 1st inlet
-    int mod, mirror;
+    int mod, mirror, bypass;
     t_inlet *y_in, *z_in, *max_in, *zoom_in; // x_in default provided
     t_outlet *x_out, *y_out, *z_out;
 } t_zoom_tilde;
 
-static void onModMsg(t_zoom_tilde *x, t_floatarg f) {
+static void mod_msg(t_zoom_tilde *x, t_floatarg f) {
     x->mod = (f > 0) ? 1 : 0;
 }
 
-static void onMirrorMsg(t_zoom_tilde *x, t_floatarg f) {
+static void mirror_msg(t_zoom_tilde *x, t_floatarg f) {
     x->mirror = (f > 0) ? 1 : 0;
+}
+
+static void bypass(t_zoom_tilde *x, t_floatarg f) {
+    x->bypass = (int)f;
 }
 
 static t_float chris_clip(t_zoom_tilde *x, t_floatarg value, t_float min, t_float max)
@@ -80,18 +84,21 @@ static t_int *zoom_tilde_perform(t_int *w)
     while (nblock--)
     {
         t_vec3 v = vec3(x_in[nblock], y_in[nblock], z_in[nblock]);
-        t_float maximum = max_in[nblock];
-        t_float zoom = zoom_in[nblock];
+        if(!x->bypass)
+        {
+            t_float maximum = max_in[nblock];
+            t_float zoom = zoom_in[nblock];
 
-        maximum = maximum < 0.001 ? 0.001 : maximum;
-        zoom = CLAMP(zoom, 0.001, maximum);
+            maximum = maximum < 0.001 ? 0.001 : maximum;
+            zoom = CLAMP(zoom, 0.001, maximum);
 
-        // zoom should always be > 0, and <= maximum
-        t_float zoom_factor = maximum / zoom;
+            // zoom should always be > 0, and <= maximum
+            t_float zoom_factor = maximum / zoom;
 
-        v.x = chris_clip(x, v.x, -zoom, zoom) * zoom_factor;
-        v.y = chris_clip(x, v.y, -zoom, zoom) * zoom_factor;
-        v.z = chris_clip(x, v.z, -zoom, zoom) * zoom_factor;
+            v.x = chris_clip(x, v.x, -zoom, zoom) * zoom_factor;
+            v.y = chris_clip(x, v.y, -zoom, zoom) * zoom_factor;
+            v.z = chris_clip(x, v.z, -zoom, zoom) * zoom_factor;
+        }
 
         x_out[nblock] = v.x;
         y_out[nblock] = v.y;
@@ -118,6 +125,8 @@ static void zoom_tilde_dsp(t_zoom_tilde *x, t_signal **sp)
 static void *zoom_tilde_new(t_symbol *s, int argc, t_atom *argv)
 {
     t_zoom_tilde *x = (t_zoom_tilde *)pd_new(zoom_tilde_class);
+
+    x->bypass = 0;
 
     t_float maximum = argc ? atom_getfloat(argv) : 1.f;
     maximum = maximum < 0.001 ? 0.001 : maximum;
@@ -172,8 +181,9 @@ void zoom_tilde_setup(void)
 
     class_sethelpsymbol(zoom_tilde_class, gensym("zoom~")); // links to the help patch
 
-    class_addmethod(zoom_tilde_class, (t_method)onModMsg, gensym("mod"), A_DEFFLOAT, 0);
-    class_addmethod(zoom_tilde_class, (t_method)onMirrorMsg, gensym("mirror"), A_DEFFLOAT, 0);
+    class_addmethod(zoom_tilde_class, (t_method)mod_msg, gensym("mod"), A_DEFFLOAT, 0);
+    class_addmethod(zoom_tilde_class, (t_method)mirror_msg, gensym("mirror"), A_DEFFLOAT, 0);
+    class_addmethod(zoom_tilde_class, (t_method)bypass, gensym("bypass"), A_DEFFLOAT, 0);
     class_addmethod(zoom_tilde_class, (t_method)zoom_tilde_dsp, gensym("dsp"), A_CANT, 0);
     CLASS_MAINSIGNALIN(zoom_tilde_class, t_zoom_tilde, f); // signal inlet as first inlet
 }
