@@ -1,6 +1,5 @@
 ==== Roadmap ===================================================================
 - objects that need a bypass option
-    - phase manipulation
     - effects
     - some of the glue objects
 
@@ -23,14 +22,14 @@
 - figure out how to add in remapping tree...
 - could I add in a link to blender via OSC? YES
 - create tabreadlin helpfile
-- update the following helpfiles with the bypass option
-    - bezier~ (check if this is still working)
-    - all 2D primitives
+- update the helpfiles with the bypass option
+- make sure helpfiles have the defaults of the objects in there!
 ==== Bugs ======================================================================
 all
 - add [declare -lib osci] to cut_idx~.pd
 - figure out the strange radians / degree bug on shear and others.
 - loadbang the current directory for record~
+- trace~ help file needs to have better defaults
 mac
 linux
     - icosahedron and octahedron look odd, why?
