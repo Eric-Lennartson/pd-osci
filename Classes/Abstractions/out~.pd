@@ -1,5 +1,5 @@
 #N canvas 60 112 1128 538 10;
-#X obj 665 90 cnv 15 135 15 empty h1 osci/out~ 3 8 0 11 -16645 -257781
+#X obj 665 90 cnv 15 135 15 empty h1 osci/out~ 3 8 0 11 #101010 #f8ecd0
 0;
 #X obj 13 363 *~;
 #X obj 126 363 *~;
@@ -7,18 +7,18 @@
 #X obj 13 213 *~;
 #X obj 126 213 *~;
 #X obj 28 130 r \$0-volume;
-#X obj 665 106 cnv 15 135 114 empty body empty 20 12 0 14 -99865 -66577
+#X obj 665 106 cnv 15 135 114 empty body empty 20 12 0 14 #606060 #404040
 0;
 #X msg 578 164 \; pd dsp \$1;
-#X obj 28 309 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
-1;
+#X obj 28 309 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
+#000000 0 1;
 #X obj 13 16 inlet~ x;
 #X obj 126 16 inlet~ y;
 #X obj 13 496 outlet~ x;
 #X obj 126 496 outlet~ y;
 #X obj 874 47 r \$0-mute;
-#X obj 874 95 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
-1;
+#X obj 874 95 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
+#000000 0 1;
 #X obj 578 47 r pd;
 #X obj 578 68 route dsp;
 #X obj 578 143 change;
@@ -35,21 +35,21 @@
 #X obj 39 284 loadbang;
 #X obj 882 71 loadbang;
 #X obj 670 128 nbx 3 20 0 100 0 0 \$0-volume \$0-set-volume scope 45
-11 0 11 -91412 -174938 -203556 100 256;
+11 0 11 #58504c #a8b464 #c4b08c 0 256;
 #X obj 670 150 nbx 3 20 0 100 0 0 \$0-speakers \$0-set-speakers speakers
-45 11 0 11 -91412 -174938 -203556 0 256;
+45 11 0 11 #58504c #a8b464 #c4b08c 0 256;
 #X obj 670 195 nbx 3 20 0 100 0 0 \$0-bright \$0-set-bright brightness
-45 11 0 11 -91412 -174938 -203556 20 256;
-#X obj 780 109 bng 15 250 50 0 \$0-mute \$0-set-mute mute -30 8 0 11
--91412 -174938 -203556;
+45 11 0 11 #58504c #a8b464 #c4b08c 0 256;
+#X obj 783 109 bng 15 250 50 0 \$0-mute \$0-set-mute mute -30 8 0 11
+#58504c #a8b464 #c4b08c;
 #X obj 28 151 / 100;
 #X obj 299 188 r \$0-bright;
 #X obj 299 209 / 100;
 #X obj 299 230 osci/ramp~ 30;
 #X obj 284 293 +~;
-#X obj 188 442 dac~ 1 2 3 4 5;
-#X obj 670 109 tgl 15 0 \$0-dsp \$0-set-dsp DSP 18 8 0 11 -91412 -174938
--203556 0 1;
+#X obj 189 466 dac~ 1 2 3 4 5;
+#X obj 670 109 tgl 15 0 \$0-dsp \$0-set-dsp DSP 18 8 0 11 #58504c #a8b464
+#c4b08c 0 1;
 #X obj 411 496 outlet~ left;
 #X obj 518 496 outlet~ right;
 #X obj 427 144 osci/ramp~ 30;
@@ -61,33 +61,33 @@
 #X obj 412 363 *~;
 #X obj 518 363 *~;
 #X obj 427 254 r \$0-mute;
-#X obj 427 305 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
-1;
+#X obj 427 305 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
+#000000 0 1;
 #X obj 427 325 osci/ramp~ 30;
 #X obj 438 280 loadbang;
 #X obj 975 238 s \$0-set-speakers;
-#X obj 665 90 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+#X obj 665 90 cnv 2 7 2 empty empty empty 20 12 0 14 #c08c40 #404040
 0;
-#X obj 793 90 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+#X obj 793 90 cnv 2 7 2 empty empty empty 20 12 0 14 #c08c40 #404040
 0;
-#X obj 729 90 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+#X obj 729 90 cnv 2 7 2 empty empty empty 20 12 0 14 #c08c40 #404040
 0;
-#X obj 665 218 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+#X obj 665 218 cnv 2 7 2 empty empty empty 20 12 0 14 #c08c40 #404040
 0;
-#X obj 793 218 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+#X obj 793 218 cnv 2 7 2 empty empty empty 20 12 0 14 #c08c40 #404040
 0;
-#X obj 697 218 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+#X obj 697 218 cnv 2 7 2 empty empty empty 20 12 0 14 #c08c40 #404040
 0;
-#X obj 729 218 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+#X obj 729 218 cnv 2 7 2 empty empty empty 20 12 0 14 #c08c40 #404040
 0;
-#X obj 761 218 cnv 2 7 2 empty empty empty 20 12 0 14 -198865 -66577
+#X obj 761 218 cnv 2 7 2 empty empty empty 20 12 0 14 #c08c40 #404040
 0;
 #X obj 717 286 else/initmess \; \$0-set-bright 100 \;;
 #X obj 427 124 dbtorms;
 #X obj 578 89 s \$0-set-dsp;
 #X obj 578 116 r \$0-dsp;
 #X obj 670 175 tgl 18 0 \$0-invert \$0-set-invert invert 22 9 0 12
--91412 -174938 -203556 1 1;
+#58504c #a8b464 #c4b08c 0 1;
 #X obj 203 283 r \$0-invert;
 #X obj 203 304 + 1;
 #X obj 285 354 else/xselect~ 2;
@@ -95,6 +95,17 @@
 #X msg 874 158 label speakers;
 #X msg 874 217 label scope;
 #X msg 985 144 label muted;
+#X obj 160 382 osci/catcher~ test;
+#X obj 711 109 tgl 15 0 \$0-test \$0-set-test Test 17 8 0 10 #574f4a
+#9fab5f #c4af8c 0 1;
+#X obj 726 363 phasor~ 30;
+#X obj 726 386 osci/circle~;
+#X obj 726 469 osci/thrower~ test;
+#X obj 809 383 r \$0-test;
+#X obj 809 406 osci/ramp~ 30;
+#X obj 726 439 *~;
+#X obj 786 439 *~;
+#X obj 889 320 else/mtx~;
 #X connect 1 0 12 0;
 #X connect 1 0 40 0;
 #X connect 2 0 13 0;
@@ -162,4 +173,16 @@
 #X connect 75 0 28 0;
 #X connect 76 0 28 0;
 #X connect 76 0 56 0;
+#X connect 77 0 40 0;
+#X connect 77 0 40 3;
+#X connect 77 1 40 1;
+#X connect 77 1 40 4;
+#X connect 79 0 80 0;
+#X connect 80 0 84 0;
+#X connect 80 1 85 0;
+#X connect 82 0 83 0;
+#X connect 83 0 85 1;
+#X connect 83 0 84 1;
+#X connect 84 0 81 0;
+#X connect 85 0 81 1;
 #X coords -1 -1 1 1 137 132 2 664 89;

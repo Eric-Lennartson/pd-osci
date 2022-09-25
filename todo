@@ -5,14 +5,15 @@
     - check out camera distortion matrices
     - distortion effects in general could be SUPER cool
 
+- osci/out~
+    - add a signal routing matrix
+
 - add a rotation using quaternions. that way there is no gimbal lock issues.
 
 - add a traveling salesman object
 - could I add in a link to blender via OSC? YES
 
 - turn all the brightness abstractions into objects when finished with them
-- update osci/out~ to have a test button
-- have the time stamp on record~ be optional
 
 - finish general improvements then start working on remapping tree.
 - figure out how to add in remapping tree...
