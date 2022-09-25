@@ -2,27 +2,27 @@
 - create a master transforms gui
 - add a calibrator gui that performs adjustments at the end?
     - distortion matrix?
+    - check out camera distortion matrices
+    - distortion effects in general could be SUPER cool
 
 - add a rotation using quaternions. that way there is no gimbal lock issues.
 
-- if I end up connecting with blender, I should also have a traveling salesman object
+- add a traveling salesman object
+- could I add in a link to blender via OSC? YES
+
 - turn all the brightness abstractions into objects when finished with them
-- create a helpfile for rot_osc~, later what is a better name for this?
 - update osci/out~ to have a test button
 - have the time stamp on record~ be optional
 
-- create a rotation controller gui
 - finish general improvements then start working on remapping tree.
 - figure out how to add in remapping tree...
-- could I add in a link to blender via OSC? YES
+
 - create tabreadlin helpfile
 - update the helpfiles with the bypass option
 - make sure helpfiles have the defaults of the objects in there!
 ==== Bugs ======================================================================
 all
-- add [declare -lib osci] to cut_idx~.pd
 - figure out the strange radians / degree bug on shear and others.
-- loadbang the current directory for record~
 - trace~ help file needs to have better defaults
 mac
 linux
