@@ -63,7 +63,7 @@ t_vec3 letter_A(float t) { // A
 
 t_vec3 letter_B(float t) { // B
     t_vec3 v = NEW_VEC3;
-    
+
     if (t < 4/16.) {
         v.y = t/.25;
     }
@@ -720,10 +720,10 @@ t_vec3 number_6(float t) { // 6
     return v;
 }
 
- 
+
 t_vec3 number_7(float t) { // 7
     t_vec3 v = NEW_VEC3;
-    
+
     if (t < 1/3.) {
         v.x = .25+t*2.25;
         v.y = t*3;
@@ -736,16 +736,16 @@ t_vec3 number_7(float t) { // 7
         v.x = 1-(t-2/3.)*2.25;
         v.y = 1-(t-2/3.)*3;
     }
-        
+
     return v;
 }
 
- 
+
 t_vec3 number_8(float t) { // 8
     t_vec3 v = NEW_VEC3;
     v.x = sin(t*4*PI)/2+.5;
     v.y = -cos(t*2*PI)/2+.5;
-        
+
     return v;
 }
 

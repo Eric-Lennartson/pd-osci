@@ -32,6 +32,7 @@ time.class.sources 	 := Classes/Source/time.c
 bezier~.class.sources       := Classes/Source/bezier~.c
 bezigon~.class.sources      := Classes/Source/bezigon~.c
 chris_clip~.class.sources   := Classes/Source/chris_clip~.c
+calibrate~.class.sources	:= Classes/Source/calibrate~.c $(A_Math) $(vec3)
 circle~.class.sources       := Classes/Source/circle~.c
 clamp~.class.sources		:= Classes/Source/clamp~.c $(A_Math)
 ellipse~.class.sources      := Classes/Source/ellipse~.c

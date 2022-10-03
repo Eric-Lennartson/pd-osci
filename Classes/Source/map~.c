@@ -33,7 +33,7 @@ static t_int *map_tilde_perform(t_int *w)
             t_float max1 = max_in[nblock];
             t_float min2 = min_out[nblock];
             t_float max2 = max_out[nblock];
-            out[nblock] = map_lin(val, min1, max1, min2, max2, false);;
+            out[nblock] = map_lin(val, min1, max1, min2, max2, false);
         } else {
             out[nblock] = val;
         }

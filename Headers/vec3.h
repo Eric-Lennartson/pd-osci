@@ -9,7 +9,7 @@
 
 typedef struct { t_float x, y, z; } t_vec3;
 
-// TODO rm this macro 
+// TODO rm this macro
 #define NEW_VEC3 (t_vec3){0, 0, 0}
 t_vec3 vec3(t_float x, t_float y, t_float z);
 
