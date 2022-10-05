@@ -2,6 +2,9 @@
 #include "g_canvas.h"
 #include "Audio_Math.h"
 
+#define sqrt_8 2.8284271247
+#define sqrt_2 1.4142135624
+
 static t_class *calibrate_tilde_class;
 static t_widgetbehavior calibrate_tilde_widgetbehavior;
 
@@ -16,7 +19,7 @@ typedef struct _control_point
     int idx;
     t_float max_dist;
     bool has_been_scaled;
-    t_vec3 pos, scale, start;
+    t_vec3 pos, scale, start, origin;
 } t_control_point;
 
 typedef struct _calibrate
@@ -32,14 +35,15 @@ typedef struct _calibrate
     int zoom;
     int grid_size;
     int edge_offset;
-    int bypass;
+    bool selected;
+    bool bypass;
     t_symbol *bindname;
     t_inlet *y_in; // x_in and x_out default provided
     t_outlet *y_out;
 } t_calibrate_tilde;
 
 static t_control_point control_point_new(int type, t_vec3 position, int idx) {
-    return (t_control_point){5, type, idx, 0.f, false, vec3(position.x, position.y, 0), vec3(1,1,1), vec3(position.x, position.y, 1)};
+    return (t_control_point){5, type, idx, 0.f, false, position, vec3(1,1,1), position, position};
 }
 
 
@@ -53,36 +57,40 @@ static bool control_point_check_hover(t_control_point *this, int mousex, int mou
 
 static void control_point_update_scale(t_control_point *this, int size, int edge_offset)
 {
-            t_float dx = 1, dy = 1;
-            int xstart = this->start.x;
-            int ystart = this->start.y;
-            int xpos = this->pos.x;
-            int ypos = this->pos.y;
-            int type = this->type;
-            // scale pos and start so that the top left of the grid returns a scale of 0.
-            if(type > 2 && type != TEDGE && type != LEDGE) {
-                dx = map_lin(xpos, edge_offset, size-edge_offset, 0, 1, false) / map_lin(xstart, edge_offset, size-edge_offset, 0, 1, false);
-                dy = map_lin(ypos, edge_offset, size-edge_offset, 0, 1, false) / map_lin(ystart, edge_offset, size-edge_offset, 0, 1, false);
-            } else if(type != BLCORNER && type != TRCORNER) {
-                // calculate percentage change from the bottom right instead to avoid div by zero
-                dx = map_lin(xpos, edge_offset, size-edge_offset, 1, 0, false) / map_lin(xstart, edge_offset, size-edge_offset, 1, 0, false);
-                dy = map_lin(ypos, edge_offset, size-edge_offset, 1, 0, false) / map_lin(ystart, edge_offset, size-edge_offset, 1, 0, false);
-                dx = 1+(1-dx);
-                dy = 1+(1-dy);
-            } else if(type == BLCORNER) { // calc from top right instead
-                dx = map_lin(xpos, edge_offset, size-edge_offset, 1, 0, false) / map_lin(xstart, edge_offset, size-edge_offset, 1, 0, false);
-                dy = map_lin(ypos, edge_offset, size-edge_offset, 0, 1, false) / map_lin(ystart, edge_offset, size-edge_offset, 0, 1, false);
-                dx = 1+(1-dx);
-            } else if(type == TRCORNER) { // calc from bottom left instead
-                dx = map_lin(xpos, edge_offset, size-edge_offset, 0, 1, false) / map_lin(xstart, edge_offset, size-edge_offset, 0, 1, false);
-                dy = map_lin(ypos, edge_offset, size-edge_offset, 1, 0, false) / map_lin(ystart, edge_offset, size-edge_offset, 1, 0, false);
-                dy = 1+(1-dy);
-            }
+    t_float dx = 1, dy = 1;
+    int xstart = this->start.x;
+    int ystart = this->start.y;
+    int xpos = this->pos.x;
+    int ypos = this->pos.y;
+    int type = this->type;
+    // scale pos and start so that the top left of the grid returns a scale of 0.
+    if(type > 2 && type != TEDGE && type != LEDGE)
+    {
+        dx = map_lin(xpos, edge_offset, size-edge_offset, 0, 1, false) / map_lin(xstart, edge_offset, size-edge_offset, 0, 1, false);
+        dy = map_lin(ypos, edge_offset, size-edge_offset, 0, 1, false) / map_lin(ystart, edge_offset, size-edge_offset, 0, 1, false);
+    } else if(type != BLCORNER && type != TRCORNER)
+    {
+        // calculate percentage change from the bottom right instead to avoid div by zero
+        dx = map_lin(xpos, edge_offset, size-edge_offset, 1, 0, false) / map_lin(xstart, edge_offset, size-edge_offset, 1, 0, false);
+        dy = map_lin(ypos, edge_offset, size-edge_offset, 1, 0, false) / map_lin(ystart, edge_offset, size-edge_offset, 1, 0, false);
+        dx = 1+(1-dx);
+        dy = 1+(1-dy);
+    } else if(type == BLCORNER)
+    { // calc from top right instead
+        dx = map_lin(xpos, edge_offset, size-edge_offset, 1, 0, false) / map_lin(xstart, edge_offset, size-edge_offset, 1, 0, false);
+        dy = map_lin(ypos, edge_offset, size-edge_offset, 0, 1, false) / map_lin(ystart, edge_offset, size-edge_offset, 0, 1, false);
+        dx = 1+(1-dx);
+    } else if(type == TRCORNER)
+    { // calc from bottom left instead
+        dx = map_lin(xpos, edge_offset, size-edge_offset, 0, 1, false) / map_lin(xstart, edge_offset, size-edge_offset, 0, 1, false);
+        dy = map_lin(ypos, edge_offset, size-edge_offset, 1, 0, false) / map_lin(ystart, edge_offset, size-edge_offset, 1, 0, false);
+        dy = 1+(1-dy);
+    }
 
-            this->scale.x = CLAMP(dx, 0, 2);
-            this->scale.y = CLAMP(dy, 0, 2);
+    this->scale.x = CLAMP(dx, 0, 2);
+    this->scale.y = CLAMP(dy, 0, 2);
 
-            this->has_been_scaled = true;
+    this->has_been_scaled = true;
 }
 
 static void control_point_set_max_dist(t_control_point *this, t_control_point *corners) {
@@ -97,14 +105,11 @@ static void control_point_set_max_dist(t_control_point *this, t_control_point *c
     }
 }
 
-static void control_point_reset_start_and_scale(t_control_point *this, int mx, int my) {
-    if(this->has_been_scaled && control_point_check_hover(this, mx, my)) {
-        this->has_been_scaled = false;
-        this->scale = vec3(1,1,1);
-        this->start = this->pos;
-    } else {
-        this->start = this->pos;
-    }
+// what is a better name for this func?
+static void control_point_reset_start_and_scale(t_control_point *this) {
+    this->has_been_scaled = false;
+    this->scale = vec3(1,1,1);
+    this->start = this->pos;
 }
 
 static t_vec3 control_point_calc_offset(t_vec3 start, t_vec3 scale, t_float weight) {
@@ -136,7 +141,7 @@ static void control_point_distort(t_control_point *this, t_control_point *others
             t_float ydist = this->start.y - others[i].start.y;
 
             t_float dist = sqrtf(xdist*xdist + ydist*ydist);
-            t_float weight = powf(map_lin(dist, 0, others[i].max_dist, 1, 0, false) / sqrt(2), 2);
+            t_float weight = powf(map_lin(dist, 0, others[i].max_dist, 1, 0, false) / sqrt_2, 2);
 
             // if I'm a middle i just apply all scales
             if(this->type == MIDDLE) {
@@ -171,6 +176,40 @@ static int control_point_type(int idx, int grid_size)
 int xy_to_idx(int x, int y, int grid_size) { return x + grid_size * y; }
 
 // start dsp functions
+static t_vec3 calibrate_tilde_distort(t_calibrate_tilde *this, t_float x, t_float y)
+{
+    t_float offx = 0, offy = 0;
+    t_vec3 offset = vec3(0, 0, 0);
+    for(int i = 0; i < this->n_cpnts; ++i) {
+
+        t_control_point cp = this->c_pnts[i];
+        // x and y range from -1 to 1, but my distortion math assumes all positive coordinates
+        // also the control points are in a vastly different range (from 0 to size)
+        t_float origin_x = map_lin(cp.origin.x, this->edge_offset, this->size-this->edge_offset, -1, 1, false);
+        t_float origin_y = map_lin(cp.origin.y, this->edge_offset, this->size-this->edge_offset, 1, -1, false);
+        t_float xdist =  x - origin_x; // no abs, we're squaring it next, so we don't need to worry about a neg dist
+        t_float ydist =  y - origin_y;
+
+        t_float dist = sqrtf(xdist*xdist + ydist*ydist); // what is actual max_dist?
+        t_float weight = pow(map_lin(dist, 0, sqrt_8, 1, 0, false) / sqrt_2, 2);
+
+        if (cp.scale.x < 1) {
+            offx = -x*(1-cp.scale.x)*weight;
+        } else if (cp.scale.x > 1) {
+            offx = x*(cp.scale.x-1)*weight;
+        }
+        if (cp.scale.y < 1) {
+            offy = -y*(1-cp.scale.y)*weight;
+        } else if (cp.scale.y > 1) {
+            offy = y*(cp.scale.y-1)*weight;
+        }
+
+        offset.x += offx;
+        offset.y += offy;
+    }
+
+    return offset;
+}
 static t_int *calibrate_tilde_perform(t_int *w)
 {
     t_calibrate_tilde *this = (t_calibrate_tilde *)(w[1]);
@@ -182,12 +221,17 @@ static t_int *calibrate_tilde_perform(t_int *w)
 
     while (nblock--)
     {
+        t_sample x = CLAMP(x_in[nblock], -1, 1);
+        t_sample y = CLAMP(y_in[nblock], -1, 1);
+        t_vec3 out = vec3(x, y, 0);
         if(!this->bypass) {
-            x_out[nblock] = 0;
-            y_out[nblock] = 0;
+            t_vec3 off = calibrate_tilde_distort(this, x, y);
+            out = v3_add(out, off);
+            x_out[nblock] = CLAMP(out.x, -1, 1);
+            y_out[nblock] = CLAMP(out.y, -1, 1);
         } else {
-            x_out[nblock] = 0;
-            y_out[nblock] = 0;
+            x_out[nblock] = out.x;
+            y_out[nblock] = out.y;
         }
     }
 
@@ -348,16 +392,9 @@ static void calibrate_tilde_draw_points(t_calibrate_tilde *this, t_glist *glist)
         sys_vgui(".x%lx.c create oval %d %d %d %d "
                 "-fill grey "
                 "-width 0 "
-                "-tag %lxPOINTS%d\n",
-                canvas, x1, y1, x2, y2, this, i);
+                "-tag %lxPOINTS\n",
+                canvas, x1, y1, x2, y2, this);
     }
-}
-
-static void calibrate_tilde_erase_points(t_calibrate_tilde *this, t_glist *glist)
-{
-    t_canvas *canvas = glist_getcanvas(glist);
-    for(int i = 0; i < this->n_cpnts; ++i)
-       sys_vgui(".x%lx.c delete %lxPOINTS%d\n", canvas, this, i);
 }
 
 static void calibrate_tilde_draw(t_calibrate_tilde *this, t_glist *glist)
@@ -382,17 +419,32 @@ static void calibrate_tilde_erase(t_calibrate_tilde *this, t_glist *glist)
 {
     t_canvas *canvas = glist_getcanvas(glist);
     sys_vgui(".x%lx.c delete %lxBASE\n", canvas, this);
-    calibrate_tilde_erase_points(this, this->glist);
+    sys_vgui(".x%lx.c delete %lxPOINTS\n", canvas, this);
     sys_vgui(".x%lx.c delete %lxLINES\n", canvas, this);
 }
 
 static void calibrate_tilde_update(t_calibrate_tilde *this, t_glist *glist)
 {
     t_canvas *canvas = glist_getcanvas(glist);
-    calibrate_tilde_erase_points(this, this->glist);
+    sys_vgui(".x%lx.c delete %lxPOINTS\n", canvas, this);
     sys_vgui(".x%lx.c delete %lxLINES\n", canvas, this);
     calibrate_tilde_draw_lines(this, this->glist);
     calibrate_tilde_draw_points(this, this->glist);
+}
+
+static void calibrate_tilde_reset(t_calibrate_tilde *this) {
+    for(int x = 0; x < this->grid_size; ++x) {
+        for(int y = 0; y < this->grid_size; ++y) {
+            int i = xy_to_idx(x, y, this->grid_size);
+            t_vec3 pos = vec3(map_lin(x, 0, this->grid_size-1, this->edge_offset, this->size-this->edge_offset, false),
+                              map_lin(y, 0, this->grid_size-1, this->edge_offset, this->size-this->edge_offset, false), 0);
+
+            this->c_pnts[i].pos = pos;
+            this->c_pnts[i].scale = vec3(1,1,1);
+            this->c_pnts[i].start = pos;
+        }
+    }
+    calibrate_tilde_update(this, this->glist);
 }
 // end drawing functions
 
@@ -405,9 +457,33 @@ static void calibrate_tilde_getrect(t_gobj *z, t_glist *glist, int *xp1, int *yp
     *xp2 = *xp1 + this->size;// * zoom_factor?
     *yp2 = *yp1 + this->size;
 }
-static void calibrate_tilde_displace() {}
-static void calibrate_tilde_select() {}
-static void calibrate_tilde_delete() {}
+static void calibrate_tilde_displace(t_gobj *z, t_glist *glist, int dx, int dy)
+{
+    t_calibrate_tilde *this = (t_calibrate_tilde*)z;
+    this->obj.te_xpix += dx, this->obj.te_ypix += dy;
+    t_canvas *canvas = glist_getcanvas(glist);
+
+    sys_vgui(".x%lx.c move %lxBASE %d %d\n", canvas, this, dx, dy);
+    sys_vgui(".x%lx.c move %lxLINES %d %d\n", canvas, this, dx, dy);
+    sys_vgui(".x%lx.c move %lxPOINTS %d %d\n", canvas, this, dx, dy);
+
+    canvas_fixlinesfor(glist, (t_text *)this);
+}
+static void calibrate_tilde_select(t_gobj *z, t_glist *glist, int sel)
+{
+    t_calibrate_tilde *this = (t_calibrate_tilde*)z;
+    t_canvas *canvas = glist_getcanvas(glist);
+
+    if((this->selected = sel)) {
+        sys_vgui(".x%lx.c itemconfigure %lxBASE -outline blue\n",
+            canvas, this);
+    } else
+        sys_vgui(".x%lx.c itemconfigure %lxBASE -outline black\n",
+            canvas, this);
+}
+static void calibrate_tilde_delete(t_gobj *z, t_glist *glist) {
+    canvas_deletelinesfor(glist, (t_text *)z);
+}
 static void calibrate_tilde_vis(t_gobj *z, t_glist *glist, int vis)
 {
     t_calibrate_tilde *this = (t_calibrate_tilde*)z;
@@ -422,8 +498,18 @@ static void calibrate_tilde_vis(t_gobj *z, t_glist *glist, int vis)
     }
 }
 
+static void calibrate_tilde_key(t_calibrate_tilde *this, t_floatarg key)
+{
+    key = (int)key;
+    if(key == 'r' || key == 'R') {
+        calibrate_tilde_reset(this);
+    }
+}
+
 static void calibrate_tilde_mouserelease(t_calibrate_tilde *this) {
-    post("mouse released");
+    for(int i = 0; i < this->n_cpnts; ++i) {
+        control_point_reset_start_and_scale(&this->c_pnts[i]);
+    }
 }
 
 static void calibrate_tilde_follow_mouse(t_calibrate_tilde *this, t_glist *glist)
@@ -438,20 +524,17 @@ static void calibrate_tilde_follow_mouse(t_calibrate_tilde *this, t_glist *glist
             control_point_update_scale(&this->c_pnts[i], this->size, this->edge_offset);
         }
         control_point_distort(&this->c_pnts[i], this->c_pnts, this);
+        this->c_pnts[i].pos.x = CLAMP(this->c_pnts[i].pos.x, 0, this->size);
+        this->c_pnts[i].pos.y = CLAMP(this->c_pnts[i].pos.y, 0, this->size);
     }
 }
 
 static void calibrate_tilde_motion(t_calibrate_tilde *this, t_floatarg dx, t_floatarg dy)
 {
-    this->mousex += (int)(dx/this->zoom);
-    this->mousey += (int)(dy/this->zoom);
-    //post("motion mouse xy: %d, %d", this->mousex, this->mousey);
-    //post("mouse down and moving cursor");
+    this->mousex += (int)(dx);
+    this->mousey += (int)(dy);
     calibrate_tilde_follow_mouse(this, this->glist);
     calibrate_tilde_update(this, this->glist);
-    for(int i = 0; i < this->n_cpnts; ++i) {
-        control_point_reset_start_and_scale(&this->c_pnts[i], this->mousex, this->mousey);
-    }
 }
 static int calibrate_tilde_click(t_gobj *z, struct _glist *glist, int xpix, int ypix, int shift, int alt, int dbl, int doit) {
     dbl = shift = alt = 0;
@@ -469,7 +552,7 @@ static int calibrate_tilde_click(t_gobj *z, struct _glist *glist, int xpix, int 
 
     if(doit) { // same as if(mousePressed) in processing
         // this allows mouse motion to be called. motion allows for adjusting points position and scale
-        glist_grab(this->glist, &this->obj.te_g, (t_glistmotionfn)calibrate_tilde_motion, NULL, xpix, ypix);
+        glist_grab(this->glist, &this->obj.te_g, (t_glistmotionfn)calibrate_tilde_motion, (t_glistkeyfn)calibrate_tilde_key, xpix, ypix);
     } else { // any reason to use this else?
     }
 
@@ -504,8 +587,9 @@ static void *calibrate_tilde_new(t_symbol *s, int argc, t_atom *argv)
     this->bypass = false;
 
     // later have the argrid_size control some of these
+    this->selected = false;
     this->size = 180;
-    this->grid_size = 5;
+    this->grid_size = 4;
     this->edge_offset = 10;
     this->n_cpnts = this->grid_size*this->grid_size;
     this->mousex = this->mousey = 0;
