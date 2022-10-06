@@ -4,7 +4,7 @@ const double PI      = 3.14159265358979323846;
 const double TWO_PI  = 6.28318530717958647693;
 const double HALF_PI = 1.57079632679489661923;
 
-int gcd(int a, int b) 
+int gcd(int a, int b)
 {
     return (b == 0) ? a : gcd(b, a % b);
 }
@@ -24,7 +24,7 @@ t_float map_lin( t_float value,  t_float inputMin,  t_float inputMax,  t_float o
             {
                 if( outVal < outputMax ) outVal = outputMax;
                 else if( outVal > outputMin )outVal = outputMin;
-                
+
             }
             else
             {
@@ -35,7 +35,7 @@ t_float map_lin( t_float value,  t_float inputMin,  t_float inputMax,  t_float o
       return outVal;
    }
 }
- 
+
 t_float map_to_unit(t_float value, t_float inputMin, t_float inputMax, bool clamp)
 {
     return map_lin(value,inputMin,inputMax,0.f,1.f,clamp);

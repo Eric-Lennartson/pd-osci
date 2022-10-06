@@ -3,11 +3,9 @@
 - add some distortion effects
     - swirl
     - randomize?
-- add a calibrator gui that performs adjustments at the end
-    - distortion matrix?
-    - displacement matrix?
-    - check out camera distortion matrices
-    - distortion effects in general could be SUPER cool
+- calibrate~
+    - dark and light mode
+    - finalize distortion grid fixes
 
 - osci/out~
     - add a signal routing matrix

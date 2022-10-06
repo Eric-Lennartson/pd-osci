@@ -2,8 +2,14 @@
 #include "g_canvas.h"
 #include "Audio_Math.h"
 
-#define sqrt_8 2.8284271247
-#define sqrt_2 1.4142135624
+#define SQRT_8 2.8284271247
+#define SQRT_2 1.4142135624
+
+// this is some stuff from my own version of pd next
+// it'll look weird in vanilla, but idk how to do this where It changes based on the compilation
+// and besides most people are getting this from deken, not compiling it.
+#define CORNER_RADIUS 14 /* amount to inset the corners for rounding them */
+#define CORNER_INSET ((CORNER_RADIUS / 2) - 2) /* corner locations after rounding */
 
 static t_class *calibrate_tilde_class;
 static t_widgetbehavior calibrate_tilde_widgetbehavior;
@@ -12,6 +18,9 @@ static t_widgetbehavior calibrate_tilde_widgetbehavior;
 
 enum type {TLCORNER, TRCORNER, BLCORNER, BRCORNER, LEDGE, REDGE, TEDGE, BEDGE, MIDDLE};
 
+typedef enum {D_BG = 0x3D4451, D_BORDER = 0x050505, D_PNTS = 0x98C379, D_LINES = 0x7F848E, D_IOLET = 0xE4C386, D_SEL = 0xdddddd,
+              LBG, LBD, LPNTS, LLINES, LIOLET, LSEL} colors;
+
 typedef struct _control_point
 {
     int radius;
@@ -19,7 +28,7 @@ typedef struct _control_point
     int idx;
     t_float max_dist;
     bool has_been_scaled;
-    t_vec3 pos, scale, start, origin;
+    t_vec3 pos, scale, saved_scale, start, origin;
 } t_control_point;
 
 typedef struct _calibrate
@@ -31,23 +40,21 @@ typedef struct _calibrate
     t_glist *glist;
     int size;
     int n_cpnts;
-    int mousex, mousey;
+    t_float mousex, mousey;
     int zoom;
     int grid_size;
     int edge_offset;
-    bool selected;
-    bool bypass;
+    bool selected, bypass, shift_pressed;
     t_symbol *bindname;
     t_inlet *y_in; // x_in and x_out default provided
     t_outlet *y_out;
 } t_calibrate_tilde;
 
 static t_control_point control_point_new(int type, t_vec3 position, int idx) {
-    return (t_control_point){5, type, idx, 0.f, false, position, vec3(1,1,1), position, position};
+    return (t_control_point){5, type, idx, 0.f, false, position, vec3(1,1,1), vec3(1,1,1), position, position};
 }
 
-
-static bool control_point_check_hover(t_control_point *this, int mousex, int mousey) {
+static bool control_point_check_hover(t_control_point *this, t_float mousex, t_float mousey) {
     t_float xdist = mousex - this->pos.x;
     t_float ydist = mousey - this->pos.y;
 
@@ -58,11 +65,11 @@ static bool control_point_check_hover(t_control_point *this, int mousex, int mou
 static void control_point_update_scale(t_control_point *this, int size, int edge_offset)
 {
     t_float dx = 1, dy = 1;
-    int xstart = this->start.x;
-    int ystart = this->start.y;
-    int xpos = this->pos.x;
-    int ypos = this->pos.y;
-    int type = this->type;
+    t_float xstart = this->start.x;
+    t_float ystart = this->start.y;
+    t_float xpos = this->pos.x;
+    t_float ypos = this->pos.y;
+    t_float type = this->type;
     // scale pos and start so that the top left of the grid returns a scale of 0.
     if(type > 2 && type != TEDGE && type != LEDGE)
     {
@@ -89,6 +96,7 @@ static void control_point_update_scale(t_control_point *this, int size, int edge
 
     this->scale.x = CLAMP(dx, 0, 2);
     this->scale.y = CLAMP(dy, 0, 2);
+    this->saved_scale = this->scale; // for calibrate_tilde_distort, other scale gets set to 1 for gui purposes
 
     this->has_been_scaled = true;
 }
@@ -141,7 +149,7 @@ static void control_point_distort(t_control_point *this, t_control_point *others
             t_float ydist = this->start.y - others[i].start.y;
 
             t_float dist = sqrtf(xdist*xdist + ydist*ydist);
-            t_float weight = powf(map_lin(dist, 0, others[i].max_dist, 1, 0, false) / sqrt_2, 2);
+            t_float weight = powf(map_lin(dist, 0, others[i].max_dist, 1, 0, false) / SQRT_2, 2);
 
             // if I'm a middle i just apply all scales
             if(this->type == MIDDLE) {
@@ -176,6 +184,11 @@ static int control_point_type(int idx, int grid_size)
 int xy_to_idx(int x, int y, int grid_size) { return x + grid_size * y; }
 
 // start dsp functions
+
+/* issues with distort
+    - top and left edges move in the right direction, but don't distort with the proper weights
+*/
+
 static t_vec3 calibrate_tilde_distort(t_calibrate_tilde *this, t_float x, t_float y)
 {
     t_float offx = 0, offy = 0;
@@ -191,17 +204,30 @@ static t_vec3 calibrate_tilde_distort(t_calibrate_tilde *this, t_float x, t_floa
         t_float ydist =  y - origin_y;
 
         t_float dist = sqrtf(xdist*xdist + ydist*ydist); // what is actual max_dist?
-        t_float weight = pow(map_lin(dist, 0, sqrt_8, 1, 0, false) / sqrt_2, 2);
+        t_float weight = pow(map_lin(dist, 0, SQRT_8, 1, 0, false) / 6, 2);
 
-        if (cp.scale.x < 1) {
-            offx = -x*(1-cp.scale.x)*weight;
-        } else if (cp.scale.x > 1) {
-            offx = x*(cp.scale.x-1)*weight;
+        // we don't want to scale the point, we want to scale the point's distance from (-1, 1)
+        // so first we calculate that distance and then calculate the offsets based on that
+        // reusing xdist and ydist here since we're done using them to calculate the weights
+
+        if(x <= -0.9 || y >= 0.9) { // dist is from bot right for top and left edges
+            xdist = -1*(x - 1);
+            ydist = -1*(y + 1);
+            //weight *= 0.07; // this is fiddly and doesn't actually solve the problem
+        } else {
+            xdist = x + 1;
+            ydist = y - 1;
         }
-        if (cp.scale.y < 1) {
-            offy = -y*(1-cp.scale.y)*weight;
-        } else if (cp.scale.y > 1) {
-            offy = y*(cp.scale.y-1)*weight;
+
+        if (cp.saved_scale.x < 1) {
+            offx = -xdist*(1-cp.saved_scale.x)*weight;
+        } else if (cp.saved_scale.x > 1) {
+            offx = xdist*(cp.saved_scale.x-1)*weight;
+        }
+        if (cp.saved_scale.y < 1) {
+            offy = -ydist*(1-cp.saved_scale.y)*weight;
+        } else if (cp.saved_scale.y > 1) {
+            offy = ydist*(cp.saved_scale.y-1)*weight;
         }
 
         offset.x += offx;
@@ -227,8 +253,8 @@ static t_int *calibrate_tilde_perform(t_int *w)
         if(!this->bypass) {
             t_vec3 off = calibrate_tilde_distort(this, x, y);
             out = v3_add(out, off);
-            x_out[nblock] = CLAMP(out.x, -1, 1);
-            y_out[nblock] = CLAMP(out.y, -1, 1);
+            x_out[nblock] = out.x; // no clamp so that if we need to push edges out we can
+            y_out[nblock] = out.y;
         } else {
             x_out[nblock] = out.x;
             y_out[nblock] = out.y;
@@ -273,99 +299,99 @@ static void calibrate_tilde_draw_lines(t_calibrate_tilde *this, t_glist *glist)
                 switch(type) {
                     case TLCORNER:
                         sys_vgui(".x%lx.c create line %d %d %d %d "
-                                    "-fill black "
+                                    "-fill #%06x "
                                     "-width 2 "
                                     "-tag %lxLINES\n",
-                                    canvas, xpos+(int)current.x, ypos+(int)current.y, xpos+(int)right.x, ypos+(int)right.y, this);
+                                    canvas, xpos+(int)current.x, ypos+(int)current.y, xpos+(int)right.x, ypos+(int)right.y, D_LINES, this);
                         sys_vgui(".x%lx.c create line %d %d %d %d "
-                                    "-fill black "
+                                    "-fill #%06x "
                                     "-width 2 "
                                     "-tag %lxLINES\n",
-                                    canvas, xpos+(int)current.x, ypos+(int)current.y, xpos+(int)below.x, ypos+(int)below.y, this);
+                                    canvas, xpos+(int)current.x, ypos+(int)current.y, xpos+(int)below.x, ypos+(int)below.y, D_LINES, this);
                         break;
                     case TRCORNER:
                         sys_vgui(".x%lx.c create line %d %d %d %d "
-                                    "-fill black "
+                                    "-fill #%06x "
                                     "-width 2 "
                                     "-tag %lxLINES\n",
-                                    canvas, xpos+(int)current.x, ypos+(int)current.y, xpos+(int)left.x, ypos+(int)left.y, this);
+                                    canvas, xpos+(int)current.x, ypos+(int)current.y, xpos+(int)left.x, ypos+(int)left.y, D_LINES, this);
                         sys_vgui(".x%lx.c create line %d %d %d %d "
-                                    "-fill black "
+                                    "-fill #%06x "
                                     "-width 2 "
                                     "-tag %lxLINES\n",
-                                    canvas, xpos+(int)current.x, ypos+(int)current.y, xpos+(int)below.x, ypos+(int)below.y, this);
+                                    canvas, xpos+(int)current.x, ypos+(int)current.y, xpos+(int)below.x, ypos+(int)below.y, D_LINES, this);
                         break;
                     case BLCORNER:
                         sys_vgui(".x%lx.c create line %d %d %d %d "
-                                    "-fill black "
+                                    "-fill #%06x "
                                     "-width 2 "
                                     "-tag %lxLINES\n",
-                                    canvas, xpos+(int)current.x, ypos+(int)current.y, xpos+(int)right.x, ypos+(int)right.y, this);
+                                    canvas, xpos+(int)current.x, ypos+(int)current.y, xpos+(int)right.x, ypos+(int)right.y, D_LINES, this);
                         sys_vgui(".x%lx.c create line %d %d %d %d "
-                                    "-fill black "
+                                    "-fill #%06x "
                                     "-width 2 "
                                     "-tag %lxLINES\n",
-                                    canvas, xpos+(int)current.x, ypos+(int)current.y, xpos+(int)above.x, ypos+(int)above.y, this);
+                                    canvas, xpos+(int)current.x, ypos+(int)current.y, xpos+(int)above.x, ypos+(int)above.y, D_LINES, this);
                         break;
                     case BRCORNER:
                         sys_vgui(".x%lx.c create line %d %d %d %d "
-                                    "-fill black "
+                                    "-fill #%06x "
                                     "-width 2 "
                                     "-tag %lxLINES\n",
-                                    canvas, xpos+(int)current.x, ypos+(int)current.y, xpos+(int)left.x, ypos+(int)left.y, this);
+                                    canvas, xpos+(int)current.x, ypos+(int)current.y, xpos+(int)left.x, ypos+(int)left.y, D_LINES, this);
                         sys_vgui(".x%lx.c create line %d %d %d %d "
-                                    "-fill black "
+                                    "-fill #%06x "
                                     "-width 2 "
                                     "-tag %lxLINES\n",
-                                    canvas, xpos+(int)current.x, ypos+(int)current.y, xpos+(int)above.x, ypos+(int)above.y, this);
+                                    canvas, xpos+(int)current.x, ypos+(int)current.y, xpos+(int)above.x, ypos+(int)above.y, D_LINES, this);
                         break;
                     case TEDGE:
                     case BEDGE:
                         sys_vgui(".x%lx.c create line %d %d %d %d "
-                                    "-fill black "
+                                    "-fill #%06x "
                                     "-width 2 "
                                     "-tag %lxLINES\n",
-                                    canvas, xpos+(int)current.x, ypos+(int)current.y, xpos+(int)left.x, ypos+(int)left.y, this);
+                                    canvas, xpos+(int)current.x, ypos+(int)current.y, xpos+(int)left.x, ypos+(int)left.y, D_LINES, this);
                         sys_vgui(".x%lx.c create line %d %d %d %d "
-                                    "-fill black "
+                                    "-fill #%06x "
                                     "-width 2 "
                                     "-tag %lxLINES\n",
-                                    canvas, xpos+(int)current.x, ypos+(int)current.y, xpos+(int)right.x, ypos+(int)right.y, this);
+                                    canvas, xpos+(int)current.x, ypos+(int)current.y, xpos+(int)right.x, ypos+(int)right.y, D_LINES, this);
                         break;
                     case LEDGE:
                     case REDGE:
                         sys_vgui(".x%lx.c create line %d %d %d %d "
-                                    "-fill black "
+                                    "-fill #%06x "
                                     "-width 2 "
                                     "-tag %lxLINES\n",
-                                    canvas, xpos+(int)current.x, ypos+(int)current.y, xpos+(int)above.x, ypos+(int)above.y, this);
+                                    canvas, xpos+(int)current.x, ypos+(int)current.y, xpos+(int)above.x, ypos+(int)above.y, D_LINES, this);
                         sys_vgui(".x%lx.c create line %d %d %d %d "
-                                    "-fill black "
+                                    "-fill #%06x "
                                     "-width 2 "
                                     "-tag %lxLINES\n",
-                                    canvas, xpos+(int)current.x, ypos+(int)current.y, xpos+(int)below.x, ypos+(int)below.y, this);
+                                    canvas, xpos+(int)current.x, ypos+(int)current.y, xpos+(int)below.x, ypos+(int)below.y, D_LINES, this);
                         break;
                     default: // otherwise you're a middle point
                         sys_vgui(".x%lx.c create line %d %d %d %d "
-                                    "-fill black "
+                                    "-fill #%06x "
                                     "-width 2 "
                                     "-tag %lxLINES\n",
-                                    canvas, xpos+(int)current.x, ypos+(int)current.y, xpos+(int)left.x, ypos+(int)left.y, this);
+                                    canvas, xpos+(int)current.x, ypos+(int)current.y, xpos+(int)left.x, ypos+(int)left.y, D_LINES, this);
                         sys_vgui(".x%lx.c create line %d %d %d %d "
-                                    "-fill black "
+                                    "-fill #%06x "
                                     "-width 2 "
                                     "-tag %lxLINES\n",
-                                    canvas, xpos+(int)current.x, ypos+(int)current.y, xpos+(int)right.x, ypos+(int)right.y, this);
+                                    canvas, xpos+(int)current.x, ypos+(int)current.y, xpos+(int)right.x, ypos+(int)right.y, D_LINES, this);
                         sys_vgui(".x%lx.c create line %d %d %d %d "
-                                    "-fill black "
+                                    "-fill #%06x "
                                     "-width 2 "
                                     "-tag %lxLINES\n",
-                                    canvas, xpos+(int)current.x, ypos+(int)current.y, xpos+(int)above.x, ypos+(int)above.y, this);
+                                    canvas, xpos+(int)current.x, ypos+(int)current.y, xpos+(int)above.x, ypos+(int)above.y, D_LINES, this);
                         sys_vgui(".x%lx.c create line %d %d %d %d "
-                                    "-fill black "
+                                    "-fill #%06x "
                                     "-width 2 "
                                     "-tag %lxLINES\n",
-                                    canvas, xpos+(int)current.x, ypos+(int)current.y, xpos+(int)below.x, ypos+(int)below.y, this);
+                                    canvas, xpos+(int)current.x, ypos+(int)current.y, xpos+(int)below.x, ypos+(int)below.y, D_LINES, this);
                         break;
                 }
             }
@@ -390,29 +416,48 @@ static void calibrate_tilde_draw_points(t_calibrate_tilde *this, t_glist *glist)
         // tcl/tk doesn't draw circles from the center, so the formula is this
         // x1,y1 = center-radius x2,y2 = center+radius
         sys_vgui(".x%lx.c create oval %d %d %d %d "
-                "-fill grey "
+                "-fill #%06x "
                 "-width 0 "
                 "-tag %lxPOINTS\n",
-                canvas, x1, y1, x2, y2, this);
+                canvas, x1, y1, x2, y2, D_PNTS, this);
     }
+}
+
+static void calibrate_tilde_draw_iolets(t_calibrate_tilde *this, t_glist *glist)
+{
+    int xpos = text_xpix(&this->obj, glist);
+    int ypos = text_ypix(&this->obj, glist);
+    t_canvas *canvas = glist_getcanvas(glist);
+
+    sys_vgui(".x%lx.c create rectangle %d %d %d %d -fill #%06x -width 0 -tags %lxIOLET\n",
+        canvas, xpos+CORNER_INSET, ypos, xpos+CORNER_INSET+IOWIDTH, ypos+IHEIGHT, D_IOLET, this);
+    sys_vgui(".x%lx.c create rectangle %d %d %d %d -fill #%06x -width 0 -tags %lxIOLET\n",
+        canvas, xpos+this->size-CORNER_INSET, ypos, xpos+this->size-CORNER_INSET-IOWIDTH, ypos+IHEIGHT, D_IOLET, this);
+
+    sys_vgui(".x%lx.c create rectangle %d %d %d %d -fill #%06x -width 0 -tags %lxIOLET\n",
+        canvas, xpos+CORNER_INSET, ypos+this->size-IHEIGHT, xpos+CORNER_INSET+IOWIDTH, ypos+this->size, D_IOLET, this);
+    sys_vgui(".x%lx.c create rectangle %d %d %d %d -fill #%06x -width 0 -tags %lxIOLET\n",
+        canvas,  xpos+this->size-CORNER_INSET, ypos+this->size-IHEIGHT, xpos+this->size-CORNER_INSET-IOWIDTH, ypos+this->size, D_IOLET, this);
 }
 
 static void calibrate_tilde_draw(t_calibrate_tilde *this, t_glist *glist)
 {
+
     int xpos = text_xpix(&this->obj, glist);
     int ypos = text_ypix(&this->obj, glist);
     t_canvas *canvas = glist_getcanvas(glist);
 
     // draw the base
     sys_vgui(".x%lx.c create rectangle %d %d %d %d "
-             "-fill white "
-             "-outline black "
+             "-fill #%06x "
+             "-outline #%06x "
              "-width 2 "
              "-tag %lxBASE\n",
-             canvas, xpos, ypos, xpos+this->size, ypos+this->size, this);
+             canvas, xpos, ypos, xpos+this->size, ypos+this->size, D_BG, D_BORDER, this);
 
     calibrate_tilde_draw_lines(this, this->glist);
     calibrate_tilde_draw_points(this, this->glist);
+    calibrate_tilde_draw_iolets(this, this->glist);
 }
 
 static void calibrate_tilde_erase(t_calibrate_tilde *this, t_glist *glist)
@@ -421,6 +466,8 @@ static void calibrate_tilde_erase(t_calibrate_tilde *this, t_glist *glist)
     sys_vgui(".x%lx.c delete %lxBASE\n", canvas, this);
     sys_vgui(".x%lx.c delete %lxPOINTS\n", canvas, this);
     sys_vgui(".x%lx.c delete %lxLINES\n", canvas, this);
+    sys_vgui(".x%lx.c delete %lxIOLET\n", canvas, this);
+    sys_vgui(".x%lx.c delete %lxIOLET\n", canvas, this);
 }
 
 static void calibrate_tilde_update(t_calibrate_tilde *this, t_glist *glist)
@@ -441,6 +488,7 @@ static void calibrate_tilde_reset(t_calibrate_tilde *this) {
 
             this->c_pnts[i].pos = pos;
             this->c_pnts[i].scale = vec3(1,1,1);
+            this->c_pnts[i].saved_scale = vec3(1,1,1);
             this->c_pnts[i].start = pos;
         }
     }
@@ -466,6 +514,7 @@ static void calibrate_tilde_displace(t_gobj *z, t_glist *glist, int dx, int dy)
     sys_vgui(".x%lx.c move %lxBASE %d %d\n", canvas, this, dx, dy);
     sys_vgui(".x%lx.c move %lxLINES %d %d\n", canvas, this, dx, dy);
     sys_vgui(".x%lx.c move %lxPOINTS %d %d\n", canvas, this, dx, dy);
+    sys_vgui(".x%lx.c move %lxIOLET %d %d\n", canvas, this, dx, dy);
 
     canvas_fixlinesfor(glist, (t_text *)this);
 }
@@ -475,10 +524,10 @@ static void calibrate_tilde_select(t_gobj *z, t_glist *glist, int sel)
     t_canvas *canvas = glist_getcanvas(glist);
 
     if((this->selected = sel)) {
-        sys_vgui(".x%lx.c itemconfigure %lxBASE -outline blue\n",
+        sys_vgui(".x%lx.c itemconfigure -outline blue %lxBASE\n",
             canvas, this);
     } else
-        sys_vgui(".x%lx.c itemconfigure %lxBASE -outline black\n",
+        sys_vgui(".x%lx.c itemconfigure -outline black %lxBASE\n",
             canvas, this);
 }
 static void calibrate_tilde_delete(t_gobj *z, t_glist *glist) {
@@ -493,6 +542,12 @@ static void calibrate_tilde_vis(t_gobj *z, t_glist *glist, int vis)
         calibrate_tilde_draw(this, glist);
         sys_vgui(".x%lx.c bind %lxBASE <ButtonRelease> {pdsend [concat %s _mouserelease \\;]}\n",
             canvas, this, this->bindname->s_name);
+        sys_vgui(".x%lx.c bind %lxLINES <ButtonRelease> {pdsend [concat %s _mouserelease \\;]}\n",
+            canvas, this, this->bindname->s_name);
+        sys_vgui(".x%lx.c bind %lxPOINTS <ButtonRelease> {pdsend [concat %s _mouserelease \\;]}\n",
+            canvas, this, this->bindname->s_name);
+        sys_vgui(".x%lx.c bind %lxIOLET <ButtonRelease> {pdsend [concat %s _mouserelease \\;]}\n",
+            canvas, this, this->bindname->s_name);
     } else {
         calibrate_tilde_erase(this, glist);
     }
@@ -503,6 +558,7 @@ static void calibrate_tilde_key(t_calibrate_tilde *this, t_floatarg key)
     key = (int)key;
     if(key == 'r' || key == 'R') {
         calibrate_tilde_reset(this);
+
     }
 }
 
@@ -531,13 +587,17 @@ static void calibrate_tilde_follow_mouse(t_calibrate_tilde *this, t_glist *glist
 
 static void calibrate_tilde_motion(t_calibrate_tilde *this, t_floatarg dx, t_floatarg dy)
 {
-    this->mousex += (int)(dx);
-    this->mousey += (int)(dy);
+    if(this->shift_pressed) {
+        dx *= 0.1; dy *= 0.1;
+    }
+
+    this->mousex += dx;
+    this->mousey += dy;
     calibrate_tilde_follow_mouse(this, this->glist);
     calibrate_tilde_update(this, this->glist);
 }
 static int calibrate_tilde_click(t_gobj *z, struct _glist *glist, int xpix, int ypix, int shift, int alt, int dbl, int doit) {
-    dbl = shift = alt = 0;
+    dbl = alt = 0;
     t_calibrate_tilde *this = (t_calibrate_tilde *)z;
 
     // xpos and ypos is the top left corner of the widget (global to patch)
@@ -548,12 +608,14 @@ static int calibrate_tilde_click(t_gobj *z, struct _glist *glist, int xpix, int 
     this->mousex = (xpix - xpos) / this->zoom;
     this->mousey = (ypix - ypos) / this->zoom;
 
-    //post("click mouse xy: %d, %d", this->mousex, this->mousey);
-
-    if(doit) { // same as if(mousePressed) in processing
+    if(doit) {
+        this->shift_pressed = shift;
         // this allows mouse motion to be called. motion allows for adjusting points position and scale
         glist_grab(this->glist, &this->obj.te_g, (t_glistmotionfn)calibrate_tilde_motion, (t_glistkeyfn)calibrate_tilde_key, xpix, ypix);
-    } else { // any reason to use this else?
+    }
+
+    for(int i = 0; i < this->n_cpnts; ++i) {
+        control_point_reset_start_and_scale(&this->c_pnts[i]);
     }
 
     return 1; //why 1? idk
@@ -585,15 +647,20 @@ static void *calibrate_tilde_new(t_symbol *s, int argc, t_atom *argv)
     pd_bind(&this->obj.ob_pd, this->bindname); // for mouserelease messages
 
     this->bypass = false;
+    this->shift_pressed = false;
 
     // later have the argrid_size control some of these
     this->selected = false;
-    this->size = 180;
-    this->grid_size = 4;
-    this->edge_offset = 10;
+    this->size = 200;
+    this->grid_size = argc ? atom_getfloat(argv) : 5;
+    this->grid_size = CLAMP(this->grid_size, 3, 11);
+    this->edge_offset = 15;
     this->n_cpnts = this->grid_size*this->grid_size;
     this->mousex = this->mousey = 0;
     this->zoom = this->glist->gl_zoom;
+
+    //t_float offset = argc ? atom_getfloat(argv) : 0.f;
+    //t_float strength = argc > 1 ? atom_getfloat(argv+1) : 1.f;
 
     // allocate memory for the control points and fill the array
     this->c_pnts = (t_control_point*)getbytes(this->n_cpnts*sizeof(t_control_point));
@@ -614,13 +681,8 @@ static void *calibrate_tilde_new(t_symbol *s, int argc, t_atom *argv)
     for(int i = 0; i < this->n_cpnts; ++i)
         control_point_set_max_dist(&this->c_pnts[i], this->corners);
 
-    //t_float offset = argc ? atom_getfloat(argv) : 0.f;
-    //t_float strength = argc > 1 ? atom_getfloat(argv+1) : 1.f;
-
+    // init inlets and outlets
     this->y_in = inlet_new(&this->obj, &this->obj.ob_pd, &s_signal, &s_signal);
-
-    // pd_float((t_pd*)this->offset_in, offset);
-    // pd_float((t_pd*)this->strength_in, strength);
 
     outlet_new(&this->obj, &s_signal); // default provided outlet
     this->y_out = outlet_new(&this->obj, &s_signal);
@@ -634,9 +696,9 @@ void calibrate_tilde_setup(void)
                             (t_newmethod)calibrate_tilde_new,
                             (t_method)calibrate_tilde_free,
                             sizeof(t_calibrate_tilde), // data space
-                            CLASS_DEFAULT, // gui apperance
-                            A_GIMME, // no argrid_size yet
-                            0); // no more argrid_size
+                            CLASS_DEFAULT, // gui apperance, doesn't matter here since we're a gui object
+                            A_GIMME, // no args yet
+                            0); // no more args
 
     class_addmethod(calibrate_tilde_class, (t_method)calibrate_tilde_mouserelease, gensym("_mouserelease"), 0);
     class_addmethod(calibrate_tilde_class, (t_method)calibrate_tilde_bypass, gensym("bypass"), A_DEFFLOAT, 0);
