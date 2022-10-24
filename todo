@@ -8,8 +8,7 @@
     - finalize distortion grid fixes
 
 - osci/out~
-    - add a signal routing matrix
-    - add checks for which out speaker or scope volume controls
+    - update the help file
 
 - tabreadlin~
     - is closed working?
