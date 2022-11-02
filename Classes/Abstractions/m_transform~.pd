@@ -1,0 +1,126 @@
+#N canvas 2 109 958 498 10;
+#X obj 11 12 cnv 10 358 15 empty empty osci/m_transform~ 3 8 0 11 #101010
+#f8ecd0 0;
+#X obj 10 12 cnv 2 7 2 empty empty empty 20 12 0 14 #c08c40 #404040
+0;
+#X obj 360 12 cnv 2 7 2 empty empty empty 20 12 0 14 #c08c40 #404040
+0;
+#X obj 177 12 cnv 2 7 2 empty empty empty 20 12 0 14 #c08c40 #404040
+0;
+#X obj 392 171 osci/translate~, f 28;
+#X obj 392 334 osci/rotate_e~, f 28;
+#X obj 392 427 osci/scale~, f 28;
+#X obj 392 13 inlet~ x;
+#X obj 423 42 inlet~ y;
+#X obj 454 72 inlet~ z;
+#X obj 392 463 outlet~ x;
+#X obj 469 463 outlet~ y;
+#X obj 547 463 outlet~ z;
+#X obj 485 101 r \$0-xoff;
+#X obj 485 124 osci/ramp~ 10;
+#X obj 573 123 osci/ramp~ 10;
+#X obj 573 100 r \$0-yoff;
+#X obj 658 123 osci/ramp~ 10;
+#X obj 658 100 r \$0-zoff;
+#X obj 552 386 osci/ramp~ 10;
+#X obj 639 386 osci/ramp~ 10;
+#X obj 724 386 osci/ramp~ 10;
+#X obj 552 363 r \$0-xscale;
+#X obj 639 363 r \$0-yscale;
+#X obj 724 363 r \$0-zscale;
+#X obj 10 282 else/initmess \; \$0-set-xoff 0 \; \$0-set-yoff 0 \;
+\$0-set-zoff 0 \; \$0-set-xangle 0 \; \$0-set-yangle 0 \; \$0-set-zangle
+0 \; \$0-set-xscale 1 \; \$0-set-yscale 1 \; \$0-set-zscale 1 \;;
+#X obj 11 28 cnv 24 358 237 empty empty empty 20 12 0 14 #5f5f5f #c5b18d
+0;
+#X obj 562 199 r \$0-xangle;
+#X obj 562 222 * 360;
+#X obj 562 275 osci/ramp~ 10;
+#X obj 692 222 * 360;
+#X obj 692 275 osci/ramp~ 10;
+#X obj 822 222 * 360;
+#X obj 822 275 osci/ramp~ 10;
+#X obj 692 199 r \$0-yangle;
+#X obj 822 199 r \$0-zangle;
+#X obj 572 247 s \$0-xangle-display;
+#X obj 702 247 s \$0-yangle-display;
+#X obj 832 247 s \$0-zangle-display;
+#X obj 83 38 hsl 201 18 -2 2 0 0 \$0-xoff \$0-set-xoff x\\\ offset
+-65 9 0 12 #5a524c #a9b665 #c5b18d 0 1;
+#X obj 83 59 hsl 201 18 -2 2 0 0 \$0-yoff \$0-set-yoff y\\\ offset
+-65 9 0 12 #5a524c #a9b665 #c5b18d 0 1;
+#X obj 83 80 hsl 201 18 -2 2 0 0 \$0-zoff \$0-set-zoff z\\\ offset
+-65 9 0 12 #5a524c #a9b665 #c5b18d 0 1;
+#X obj 83 200 hsl 201 18 0 1 0 0 \$0-xscale \$0-set-xscale x\\\ scale
+-65 9 0 12 #5a524c #a9b665 #c5b18d 0 1;
+#X obj 83 221 hsl 201 18 0 1 0 0 \$0-yscale \$0-set-yscale y\\\ scale
+-65 9 0 12 #5a524c #a9b665 #c5b18d 0 1;
+#X obj 83 242 hsl 201 18 0 1 0 0 \$0-zscale \$0-set-zscale z\\\ scale
+-65 9 0 12 #5a524c #a9b665 #c5b18d 0 1;
+#X obj 83 119 hsl 201 18 0 1 0 0 \$0-xangle \$0-set-xangle x\\\ angle
+-65 9 0 12 #5a524c #a9b665 #c5b18d 0 1;
+#X obj 83 140 hsl 201 18 0 1 0 0 \$0-yangle \$0-set-yangle y\\\ angle
+-65 9 0 12 #5a524c #a9b665 #c5b18d 0 1;
+#X obj 83 161 hsl 201 18 0 1 0 0 \$0-zangle \$0-set-zangle z\\\ angle
+-65 9 0 12 #5a524c #a9b665 #c5b18d 0 1;
+#X obj 289 38 nbx 6 18 -1e+37 1e+37 0 0 none \$0-xoff empty 0 -8 0
+12 #5a524c #a9b665 #c5b18d 0 256;
+#X obj 289 59 nbx 6 18 -1e+37 1e+37 0 0 none \$0-yoff empty 0 -8 0
+12 #5a524c #a9b665 #c5b18d 0 256;
+#X obj 289 80 nbx 6 18 -1e+37 1e+37 0 0 none \$0-zoff empty 0 -8 0
+12 #5a524c #a9b665 #c5b18d 0 256;
+#X obj 289 119 nbx 6 18 -1e+37 1e+37 0 0 none \$0-xangle-display empty
+0 -8 0 12 #5a524c #a9b665 #c5b18d 0 256;
+#X obj 289 140 nbx 6 18 -1e+37 1e+37 0 0 none \$0-yangle-display empty
+0 -8 0 12 #5a524c #a9b665 #c5b18d 0 256;
+#X obj 289 161 nbx 6 18 -1e+37 1e+37 0 0 none \$0-zangle-display empty
+0 -8 0 12 #5a524c #a9b665 #c5b18d 0 256;
+#X obj 289 200 nbx 6 18 -1e+37 1e+37 0 0 none \$0-xscale empty 0 -8
+0 12 #5a524c #a9b665 #c5b18d 0 256;
+#X obj 289 221 nbx 6 18 -1e+37 1e+37 0 0 none \$0-yscale empty 0 -8
+0 12 #5a524c #a9b665 #c5b18d 0 256;
+#X obj 289 242 nbx 6 18 -1e+37 1e+37 0 0 none \$0-zscale empty 0 -8
+0 12 #5a524c #a9b665 #c5b18d 0 256;
+#X obj 11 263 cnv 2 7 2 empty empty empty 20 12 0 14 #c08c40 #404040
+0;
+#X obj 361 263 cnv 2 7 2 empty empty empty 20 12 0 14 #c08c40 #404040
+0;
+#X obj 178 263 cnv 2 7 2 empty empty empty 20 12 0 14 #c08c40 #404040
+0;
+#X connect 4 0 5 0;
+#X connect 4 1 5 1;
+#X connect 4 2 5 2;
+#X connect 5 0 6 0;
+#X connect 5 1 6 1;
+#X connect 5 2 6 2;
+#X connect 6 0 10 0;
+#X connect 6 1 11 0;
+#X connect 6 2 12 0;
+#X connect 7 0 4 0;
+#X connect 8 0 4 1;
+#X connect 9 0 4 2;
+#X connect 13 0 14 0;
+#X connect 14 0 4 3;
+#X connect 15 0 4 4;
+#X connect 16 0 15 0;
+#X connect 17 0 4 5;
+#X connect 18 0 17 0;
+#X connect 19 0 6 3;
+#X connect 20 0 6 4;
+#X connect 21 0 6 5;
+#X connect 22 0 19 0;
+#X connect 23 0 20 0;
+#X connect 24 0 21 0;
+#X connect 27 0 28 0;
+#X connect 28 0 29 0;
+#X connect 28 0 36 0;
+#X connect 29 0 5 3;
+#X connect 30 0 31 0;
+#X connect 30 0 37 0;
+#X connect 31 0 5 4;
+#X connect 32 0 33 0;
+#X connect 32 0 38 0;
+#X connect 33 0 5 5;
+#X connect 34 0 30 0;
+#X connect 35 0 32 0;
+#X coords -1 -1 1 1 360 256 2 10 10;

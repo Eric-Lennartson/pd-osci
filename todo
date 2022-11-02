@@ -1,29 +1,36 @@
 ==== Roadmap ===================================================================
-- create a master transforms gui
 - add some distortion effects
     - swirl
     - randomize?
+
 - calibrate~
     - dark and light mode
     - finalize distortion grid fixes
+        - might need to completely rethink how the grid distorts
 
-- osci/out~
-    - update the help file
-
-- tabreadlin~
-    - is closed working?
+- osci/tsp~
+    - figure out what the fastest version of this algorithm is
+    - setup so that it links to blender via OSC?
+    - this requires making an osc abstraction (copy this in from previous patch I made)
 
 - add a rotation using quaternions. that way there is no gimbal lock issues.
 
-- add a traveling salesman object
-- could I add in a link to blender via OSC? YES
+- osci/m_transform~
+    - test out the abstraction
+    - add a helpfile
+    - add to the online docs
+
+- osci/out~
+    - update the online docs
+
+- tabreadlin~
+    - add to the online docs
 
 - turn all the brightness abstractions into objects when finished with them
 
 - finish general improvements then start working on remapping tree.
 - figure out how to add in remapping tree...
 
-- create tabreadlin helpfile
 - update the helpfiles with the bypass option
 - make sure helpfiles have the defaults of the objects in there!
 ==== Bugs ======================================================================

@@ -1,0 +1,60 @@
+#N canvas 567 23 450 755 12;
+#X declare -lib osci;
+#X obj 306 6 declare -lib osci;
+#X text 3 421 ============================================================inlets
+;
+#X text 3 495 ============================================================outlets
+;
+#X text 3 667 ============================================================arguments
+;
+#X text 3 764 ========================================================================================================================
+;
+#X obj 200 156 bng 24 250 50 0 empty empty empty 30 11 0 12 #58504c
+#a8b464 #c4b08c;
+#X text 228 158 open online documentation;
+#N canvas 0 23 372 90 docs 0;
+#X obj 7 17 inlet;
+#X obj 7 41 else/openfile https://eric-lennartson.github.io/pd-osci/#/dash~
+;
+#X connect 0 0 1 0;
+#X restore 200 195 pd docs;
+#X text 4 30 Read through a set of wavetables using linear interpolation.
+;
+#X obj 197 231 array define x 4;
+#X obj 197 257 array define y 4;
+#X msg 197 283 -1 1 1 -1;
+#X obj 197 309 array set x;
+#X msg 197 335 1 1 -1 -1;
+#X obj 197 361 array set y;
+#X obj 12 184 osci/out~;
+#X obj 12 148 osci/tabreadlin~ x y;
+#X obj 12 95 *~ 4;
+#X obj 12 59 phasor~ 30;
+#X obj 70 88 tgl 24 0 empty empty empty 30 11 0 12 #5a524c #a9b665
+#c5b18d 0 1;
+#X msg 70 117 closed \$1;
+#X floatatom 164 85 8 0 0 1 interp_amount - - 0;
+#X obj 164 110 sig~ 1;
+#X text 20 704 1 symbol - first array name;
+#X text 20 455 1 signal - index;
+#X text 20 475 2 signal - interpolation amount (0-1);
+#X text 20 533 1 signal - x;
+#X text 20 553 2 signal - y;
+#X text 20 573 3 signal - z;
+#X text 20 724 2 symbol - second array name;
+#X text 20 744 3 symbol - third array name;
+#X text 3 594 ============================================================messages
+;
+#X text 20 633 Optional messages to send to the first inlet.;
+#X text 30 653 closed - toggle if loop is closed or not;
+#X connect 5 0 7 0;
+#X connect 11 0 12 0;
+#X connect 13 0 14 0;
+#X connect 16 0 15 0;
+#X connect 16 1 15 1;
+#X connect 17 0 16 0;
+#X connect 18 0 17 0;
+#X connect 19 0 20 0;
+#X connect 20 0 16 0;
+#X connect 21 0 22 0;
+#X connect 22 0 16 1;

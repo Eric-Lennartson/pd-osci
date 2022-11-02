@@ -1,42 +1,39 @@
-#N canvas 723 81 433 651 12;
+#N canvas 405 -901 433 723 12;
 #X declare -lib osci;
-#X obj 7 197 osci/out~;
-#X obj 7 143 phasor~ 50;
-#X obj 7 167 osci/circle~ 0 0 1;
-#X obj 303 9 declare -lib osci;
-#X text 2 315 ============================================================inlets
+#X obj 7 228 osci/out~;
+#X obj 7 175 phasor~ 50;
+#X obj 7 199 osci/circle~ 0 0 1;
+#X obj 293 9 declare -lib osci;
+#X text 2 466 ============================================================inlets
 ;
-#X text 2 415 ============================================================outlets
+#X text 2 566 ============================================================outlets
 ;
-#X text 2 555 ============================================================arguments
+#X text 2 619 ============================================================arguments
 ;
-#X text 1 613 ========================================================================================================================
+#X text 1 677 ========================================================================================================================
 ;
-#X text 24 370 2 signal - right channel (y);
-#X text 24 390 3 signal - brightness;
-#X text 24 450 1 signal - x (to scope);
-#X text 24 470 2 signal - y (to scope);
-#X text 24 490 3 signal - brightness (to scope);
-#X text 24 510 4 signal - left channel (to speakers);
-#X text 24 530 5 signal - right channel (to speakers);
-#X text 22 589 none;
-#X obj 198 159 bng 24 250 50 0 empty empty empty 30 11 0 12 -91412
--174938 -203556;
-#X text 225 162 open online documentation;
+#X text 24 521 2 signal - right channel (y);
+#X text 24 541 3 signal - brightness;
+#X text 22 653 none;
+#X obj 198 191 bng 24 250 50 0 empty empty empty 30 11 0 12 #58504c
+#a8b464 #c4b08c;
+#X text 225 194 open online documentation;
 #N canvas 0 23 449 130 docs 0;
 #X obj 3 36 inlet;
 #X obj 3 76 else/openfile https://eric-lennartson.github.io/pd-osci/#/out~
 ;
 #X connect 0 0 1 0;
-#X restore 198 193 pd docs;
+#X restore 198 225 pd docs;
+#X text 24 501 1 signal - left channel (x);
 #X text 2 34 [out~] is used to send audio to both speakers and oscilloscope.
-It takes 3 inputs \, (x \, y \, and bright). It has 5 outlets \, (x
-\, y \, bright \, speaker left \, and speaker right). It also has internal
-[catch~]objects named m-out-x \, m-out-y \, and m-out-bright which
-can be useful for removing patch cables and keeping your patches clean.
-The scope level is linear \, while the speaker level is in db.;
-#X text 24 350 1 signal - left channel (x);
+It takes 3 inputs \, (x \, y \, and bright). The Test button will draw
+a circle in order to test that the scope is working. The number boxes
+labeld scope and speakers control the output volume. Scope is linear
+while speakers are in db. A routing matrix at the bottom choose which
+channels x \, y \, brightness \, left speaker \, and right speaker
+are assigned to.;
+#X text 24 601 none;
 #X connect 1 0 2 0;
 #X connect 2 0 0 0;
 #X connect 2 1 0 1;
-#X connect 16 0 18 0;
+#X connect 11 0 13 0;
