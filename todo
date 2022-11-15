@@ -1,17 +1,20 @@
 ==== Roadmap ===================================================================
+- trace~
+    - fix this, not sure why it is so bad now
+
 - add some distortion effects
     - swirl
     - randomize?
+    - work on this when I get tired of figuring out how to implement tsp
+
+- osci/tsp~
+    - this requires making an osc abstraction (copy this in from previous patch I made)
+    - working on implementing the algo in c. lot's to figure out. currently strtok business is done!
 
 - calibrate~
     - dark and light mode
     - finalize distortion grid fixes
         - might need to completely rethink how the grid distorts
-
-- osci/tsp~
-    - figure out what the fastest version of this algorithm is
-    - setup so that it links to blender via OSC?
-    - this requires making an osc abstraction (copy this in from previous patch I made)
 
 - add a rotation using quaternions. that way there is no gimbal lock issues.
 
