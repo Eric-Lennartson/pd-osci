@@ -3,10 +3,11 @@
 #include <string.h>
 #include <stdlib.h>
 #include "vec3.h"
+#include <ctype.h> // isnumber
 
 // these are global up here for now, but will later be moved to be members of t_tsp
 // The final change will be to integrate an array library
-t_vec3 vertices[8];
+t_vec3 vertices[2000];
 
 // reverse strstr
 char *rev_strstr(const char *s, const char *m)
@@ -19,6 +20,21 @@ char *rev_strstr(const char *s, const char *m)
                 return ptr;
     }
     return NULL;
+}
+
+// this has issues, BUT this should work for the specific use case I have for it.
+// assumptions I've made:
+// strings don't have e in them, . only occurs once,
+int isnum(const char *s) {
+    while(*s != '\0') {
+        if(isdigit(*s) || *s == '-' || *s == '.') {
+            s++;
+            continue;
+        }
+        else
+            return 0;
+    }
+    return 1;
 }
 
 static t_class *tsp_class;
@@ -44,7 +60,7 @@ Other random thoughts:
 
 void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
 {
-    post("calling tsp_symbol method\n");
+    // post("calling tsp_symbol method\n");
 
     // read in the data, chopping off all the earlier bits
     char *tmp_v = rev_strstr(mesh_data->s_name, "vert");
@@ -63,19 +79,17 @@ void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
     strncpy(verts, tmp_v, verts_len);
     strncpy(edges, tmp_e, edges_len);
 
-    post("verts string: %s", verts);
-    post("edges string: %s", edges);
+    // post("verts string: %s", verts);
+    // post("edges string: %s", edges);
 
     char *token = strtok(verts, "[");
-
-    post("token: %s", token);
 
     //get the vertices
     t_float x, y, z;
     int i = 0; // later change all arrays to be something from a library
     while(token != NULL) {
         token = strtok(NULL, ",{}");
-        if(token == NULL)
+        if(token == NULL || !isnum(token))
             break;
         x = atof(token);
         token = strtok(NULL, ",{}");
@@ -85,7 +99,8 @@ void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
         vertices[i++] = vec3(x,y,z);
     }
 
-    for(i = 0; i < 8; ++i) {
+    int len = i;
+    for(i = 0; i < len; ++i) {
         post("x: %.2f y: %.2f z: %.2f", vertices[i].x, vertices[i].y, vertices[i].z);
     }
 
@@ -94,7 +109,7 @@ void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
     int v1, v2;
     while(token != NULL) {
         token = strtok(NULL, " {}");
-        if(token == NULL || strlen(token) > 1)
+        if(token == NULL || !isnum(token))
             break;
         v1 = atof(token);
         token = strtok(NULL, " {}");
