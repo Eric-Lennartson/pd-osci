@@ -27,7 +27,7 @@ map.class.sources    := Classes/Source/map.c
 skew.class.sources   := Classes/Source/skew.c
 date.class.sources   := Classes/Source/date.c
 time.class.sources 	 := Classes/Source/time.c
-tsp.class.sources    := Classes/Source/tsp.c
+tsp.class.sources    := Classes/Source/tsp.c $(vec3)
 
 # signal:
 bezier~.class.sources       := Classes/Source/bezier~.c
