@@ -9,7 +9,7 @@
 
 - osci/tsp~
     - this requires making an osc abstraction (copy this in from previous patch I made)
-    - working on implementing the algo in c. lot's to figure out. currently strtok business is done!
+    - crashes on the same objects as the js code does. My algorithm is expensive when there's lots of even to odd conversions
 
 - calibrate~
     - dark and light mode

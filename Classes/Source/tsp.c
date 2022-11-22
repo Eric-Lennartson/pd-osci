@@ -74,7 +74,7 @@ char *rev_strstr(const char *s, const char *m)
 // strings don't have e in them, . only occurs once,
 int isnum(const char *s) {
     while(*s != '\0') {
-        if(isdigit(*s) || *s == '-' || *s == '.') {
+        if(isdigit(*s) || *s == '-' || *s == '.' || *s == 'e') {
             s++;
             continue;
         }
@@ -189,7 +189,7 @@ bool graph_check_connection(t_int_arr *xnet, int elem) {
     for(size_t i=0; i < xnet->len; ++i) {
         if(xnet->data[i] == elem) {
             count++;
-            post("count = %d", count);
+            //post("count = %d", count);
             if(count > 2) return false;
         }
     }
@@ -253,7 +253,7 @@ bool is_valid_edge(t_graph *g, int v, int u) {
 
 void euler_circuit(t_graph *g, t_int_arr *path, int v) {
     arr_push(path, v);
-    postfloat(v);
+    //postfloat(v);
 
     if(g->edges[v].len == 0) {// no edges left
         return;
@@ -279,7 +279,10 @@ void euler_circuit(t_graph *g, t_int_arr *path, int v) {
 
 void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
 {
-    // post("calling tsp_symbol method\n");
+    if(mesh_data->s_name[0] != 'a') {
+        pd_error(&this->obj, "[osci/tsp]: invalid format for mesh_data, check the symbol you are sending to [osci/tsp]");
+        return;
+    }
     t_int_arr path = int_arr(0);
 
     // read in the data, chopping off all the earlier bits
@@ -321,12 +324,12 @@ void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
 
     this->g = graph(i);
 
-    //int len = i;
+    // int len = i;
     // for(i = 0; i < len; ++i) {
     //     post("x: %.2f y: %.2f z: %.2f", this->vertices[i].x, this->vertices[i].y, this->vertices[i].z);
     // }
 
-    // build the graph
+    //build the graph
     token = strtok(edges, "[");
     int u, v;
     while(token != NULL) {
@@ -340,11 +343,11 @@ void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
         add_edge(&this->g, u, v);
     }
 
-    post("finished building graph!");
-    graph_post(&this->g);
+    // post("finished building graph!");
+    // graph_post(&this->g);
 
     // sort nodes connections by distance
-        // sorting properly is actually going to be quite tricky!
+    //     sorting properly is actually going to be quite tricky!
 
     // build an array containing all the odd nodes
 
@@ -355,8 +358,8 @@ void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
         }
     }
 
-    post("members of odds");
-    arr_post(&odds);
+    // post("members of odds");
+    // arr_post(&odds);
     // turn all odd nodes into even nodes
 
     while(odds.len > 0)
@@ -378,17 +381,21 @@ void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
             }
         }
 
-        // TODO CHECK THAT THE EVEN NODE ONLY PORTION OF THE CODE IS WORKING!
-
-        // no odd nodes found, connecting to our first node
+        // no odd nodes found, connecting to the first even node, we're not double connected to
         if(no_odds) {
-            post("no odds, connecting to first even");
+            // post("no odds, connecting to first even");
+            // I believe it is impossible for a triple connect to happen, but I'll leave this here in case it does matter and I need to add it back in
+            //if( graph_check_connection(other, odds.data[0]) ) {
+            add_edge(&this->g, n.data[0], odds.data[0]);
+            arr_remove(&odds, 0);
+            arr_push(&odds, n.data[0]); // the even node is now odd, add it to odds
+            //}
         }
         //arr_post(&odds);
     }
 
-    post("graph only has even connections now!");
-    graph_post(&this->g);
+    // post("graph only has even connections now!");
+    // graph_post(&this->g);
 
     // run fleury's algorithm and build the path
     euler_circuit(&this->g, &path, 0);
@@ -416,6 +423,8 @@ void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
     free_and_null(&xpts);
     free_and_null(&ypts);
     free_and_null(&zpts);
+
+    broken: return;
 }
 
 static void tsp_set_max(t_tsp *this, t_floatarg max) {
@@ -432,23 +441,6 @@ static void *tsp_new(t_floatarg max)
                       (max > MAX) ? MAX : (int)max;
 
     this->vertices = (t_vec3*)getbytes(this->max_verts * sizeof(t_vec3));
-
-    // t_graph g = graph(7);
-
-	// add_edge(&g, 0, 1);
-	// add_edge(&g, 0, 2);
-	// add_edge(&g, 0, 3);
-	// add_edge(&g, 0, 5);
-	// add_edge(&g, 1, 2);
-	// add_edge(&g, 1, 4);
-	// add_edge(&g, 1, 6);
-	// add_edge(&g, 4, 5);
-	// add_edge(&g, 5, 6);
-    // add_edge(&g, 3, 5);
-
-    // euler_circuit(&g, 5);
-
-    // graph_free(&g);
 
     this->xpts_out = outlet_new(&this->obj, &s_list);
     this->ypts_out = outlet_new(&this->obj, &s_list);
