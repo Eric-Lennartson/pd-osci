@@ -23,7 +23,9 @@ t_vec3  v3_multf  (t_vec3 a, t_float f);
 t_vec3  v3_div    (t_vec3 a, t_vec3 b);
 t_vec3  v3_divf   (t_vec3 a, t_float f);
 t_float v3_len    (t_vec3 v);
+t_float v3_len_sqrd(t_vec3 v);
 t_vec3  v3_norm   (t_vec3 v);
+t_float v3_dist_sqrd (t_vec3 a, t_vec3 b);
 
 // boolean comparison
 bool v3_equal (t_vec3 a, t_vec3 b);

@@ -12,6 +12,8 @@ t_vec3 v3_multf(t_vec3 a, t_float f) { return (t_vec3){a.x * f, a.y * f, a.z * f
 t_vec3 v3_div(t_vec3 a, t_vec3 b) { return (t_vec3){a.x / b.x, a.y / b.y, a.z / b.z}; }
 t_vec3 v3_divf(t_vec3 a, t_float f) { return (t_vec3){a.x / f, a.y / f, a.z / f}; }
 t_float v3_len(t_vec3 v) { return sqrtf(v.x * v.x + v.y * v.y + v.z * v.z); }
+t_float v3_len_sqrd(t_vec3 v) { return (v.x * v.x + v.y * v.y + v.z * v.z); }
+t_float v3_dist_sqrd(t_vec3 a, t_vec3 b) { return pow(a.x-b.x, 2) + pow(a.y-b.y, 2) + pow(a.z-b.z, 2); };
 
 // boolean comparison
 bool v3_equal(t_vec3 a, t_vec3 b) { return (a.x == b.x) && (a.y == b.y) && (a.z == b.z); }
