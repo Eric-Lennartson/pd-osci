@@ -41,7 +41,6 @@ static t_class *tsp_class;
 typedef struct _tsp
 {
     t_object obj;
-    t_graph g; // maybe this should be a pointer?
     int max_verts;
     t_vec3 *vertices;
     t_outlet *xpts_out, *ypts_out, *zpts_out, *size_out;
@@ -117,8 +116,14 @@ void arr_remove(t_int_arr *arr, int idx) {
 }
 
 // find an element in the array, returns the idx
-// if not found, returns -1
+// on fail or not found, returns -1
 int arr_find(t_int_arr *arr, int elem) {
+    if(arr == NULL || arr->len < 0) {
+        error("[osci/tsp] null pointer or 0 length array passed to arr_find()");
+        error("*arr = %p, arr->len = %lu", arr, arr ? arr->len : -1);
+        return -1;
+    }
+
     int idx = -1;
 
     // later see what the average number of connections are
@@ -134,7 +139,7 @@ int arr_find(t_int_arr *arr, int elem) {
 // swaps element with the last element in the array
 void arr_swap_last(t_int_arr *arr, int elem) {
     int idx = arr_find(arr, elem);
-    if(idx != -1 || idx == arr->len-1) {
+    if(idx != -1 || idx == (int)arr->len-1) {
         int tmp = arr->data[arr->len-1];
         arr->data[arr->len-1] = arr->data[idx];
         arr->data[idx] = tmp;
@@ -277,13 +282,61 @@ void euler_circuit(t_graph *g, t_int_arr *path, int v) {
     }
 }
 
+// turns all odd degree nodes in the graph into evens
+void graph_fix_odds(t_graph *g) {
+    // build an array containing all the odd nodes
+    t_int_arr odds = int_arr(0);
+    for(int i=0; i < g->n_vertices; ++i) {
+        if(g->edges[i].len % 2 != 0) {
+            arr_push(&odds, i);
+        }
+    }
+
+    // post("members of odds");
+    // arr_post(&odds);
+    int n_switches = 0;
+
+    while(odds.len > 0)
+    {
+        t_int_arr n = g->edges[ odds.data[0] ];
+        bool no_odds = true;
+        for(size_t i = 0; i < n.len; ++i) {
+            int xnet = n.data[i];
+            int idx = arr_find(&odds, xnet); // is the node we want to connect in odds?
+            t_int_arr *other = &g->edges[xnet];
+
+            if( idx != -1 && graph_check_connection(other, odds.data[0]) ) {
+                //post("connection from %d to %d is good!", odds.data[0], xnet);
+                no_odds = false;
+                add_edge(g, xnet, odds.data[0]);
+                arr_remove(&odds, 0);
+                arr_remove(&odds, idx-1); // idx has been shifted one to the left now
+                break;
+            }
+        }
+
+        // no odd nodes found, connecting to the first even node, we're not double connected to
+        if(no_odds) {
+            n_switches++;
+            // I believe it is impossible for a triple connect to happen, but I'll leave this here in case it does matter and I need to add it back in
+            //if( graph_check_connection(other, odds.data[0]) ) {
+            add_edge(g, n.data[0], odds.data[0]);
+            arr_remove(&odds, 0);
+            arr_push(&odds, n.data[0]); // the even node is now odd, add it to odds
+            //}
+        }
+        //arr_post(&odds);
+    }
+    arr_free(&odds);
+    post("even to odd switches performed: %d", n_switches);
+}
+
 void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
 {
     if(mesh_data->s_name[0] != 'a') {
         pd_error(&this->obj, "[osci/tsp]: invalid format for mesh_data, check the symbol you are sending to [osci/tsp]");
         return;
     }
-    t_int_arr path = int_arr(0);
 
     // read in the data, chopping off all the earlier bits
     char *tmp_v = rev_strstr(mesh_data->s_name, "vert");
@@ -309,7 +362,7 @@ void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
 
     //get the vertices
     t_float x, y, z;
-    int i = 0; // WARNING: I need to keep track of the end of the vertices array somehow if may not be where I stopped allocating memory
+    int idx = 0;
     while(token != NULL) {
         token = strtok(NULL, ",{}");
         if(token == NULL || !isnum(token))
@@ -319,10 +372,14 @@ void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
         y = atof(token);
         token = strtok(NULL, ",{}");
         z = atof(token);
-        this->vertices[i++] = vec3(x,y,z);
+        this->vertices[idx++] = vec3(x,y,z);
+        if(idx >= this->max_verts) {
+            pd_error(this, "[osci/tsp] too many verts. max_verts is currently set to %d", this->max_verts);
+            goto err;
+        }
     }
 
-    this->g = graph(i);
+    post("vert count = %d", idx);
 
     // int len = i;
     // for(i = 0; i < len; ++i) {
@@ -330,6 +387,7 @@ void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
     // }
 
     //build the graph
+    t_graph g = graph(idx);
     token = strtok(edges, "[");
     int u, v;
     while(token != NULL) {
@@ -340,65 +398,27 @@ void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
         token = strtok(NULL, " {}");
         v = atof(token);
         //post("v1: %d, v2: %d", u, v);
-        add_edge(&this->g, u, v);
+        add_edge(&g, u, v);
     }
 
     // post("finished building graph!");
-    // graph_post(&this->g);
+    // graph_post(&g);
 
     // sort nodes connections by distance
     //     sorting properly is actually going to be quite tricky!
 
-    // build an array containing all the odd nodes
+    graph_fix_odds(&g);
 
-    t_int_arr odds = int_arr(0);
-    for(int i=0; i < this->g.n_vertices; ++i) {
-        if(this->g.edges[i].len % 2 != 0) {
-            arr_push(&odds, i);
-        }
-    }
+    //return;
 
-    // post("members of odds");
-    // arr_post(&odds);
-    // turn all odd nodes into even nodes
-
-    while(odds.len > 0)
-    {
-        t_int_arr n = this->g.edges[ odds.data[0] ];
-        bool no_odds = true;
-        for(size_t i = 0; i < n.len; ++i) {
-            int xnet_to_check = n.data[i];
-            int idx = arr_find(&odds, xnet_to_check);
-            t_int_arr *other = &this->g.edges[xnet_to_check];
-
-            if( idx != -1 && graph_check_connection(other, odds.data[0]) ) {
-                //post("connection from %d to %d is good!", odds.data[0], xnet_to_check);
-                no_odds = false;
-                add_edge(&this->g, xnet_to_check, odds.data[0]);
-                arr_remove(&odds, 0);
-                arr_remove(&odds, idx-1); // idx has been shifted one to the left now
-                break;
-            }
-        }
-
-        // no odd nodes found, connecting to the first even node, we're not double connected to
-        if(no_odds) {
-            // post("no odds, connecting to first even");
-            // I believe it is impossible for a triple connect to happen, but I'll leave this here in case it does matter and I need to add it back in
-            //if( graph_check_connection(other, odds.data[0]) ) {
-            add_edge(&this->g, n.data[0], odds.data[0]);
-            arr_remove(&odds, 0);
-            arr_push(&odds, n.data[0]); // the even node is now odd, add it to odds
-            //}
-        }
-        //arr_post(&odds);
-    }
-
-    // post("graph only has even connections now!");
-    // graph_post(&this->g);
+    post("graph only has even connections now!");
+    graph_post(&g);
 
     // run fleury's algorithm and build the path
-    euler_circuit(&this->g, &path, 0);
+    t_int_arr path = int_arr(0);
+    euler_circuit(&g, &path, 0);
+
+    post("path length is %d", path.len);
 
     // take that path and build up the x, y, and z arrays
     t_atom *xpts = (t_atom*)getbytes(path.len * sizeof(t_atom));
@@ -417,14 +437,13 @@ void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
     outlet_list(this->ypts_out, &s_list, path.len, ypts);
     outlet_list(this->zpts_out, &s_list, path.len, zpts);
 
-    arr_free(&odds);
     arr_free(&path);
-    graph_free(&this->g);
+    graph_free(&g);
     free_and_null(&xpts);
     free_and_null(&ypts);
     free_and_null(&zpts);
 
-    broken: return;
+    err: return;
 }
 
 static void tsp_set_max(t_tsp *this, t_floatarg max) {
