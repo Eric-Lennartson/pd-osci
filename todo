@@ -9,7 +9,9 @@
 
 - osci/tsp~
     - this requires making an osc abstraction (copy this in from previous patch I made)
-    - crashes on the same objects as the js code does. My algorithm is expensive when there's lots of even to odd conversions
+    - what would it take to implement the ability to handle disconnected meshes?
+    - figure out the sorting bit, and then on to testing!
+    - see how far I can go with realtime stuff
 
 - calibrate~
     - dark and light mode

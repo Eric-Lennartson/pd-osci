@@ -6,7 +6,7 @@
 #include "vec3.h"
 #include "stdbool.h"
 
-#define MAX 2000
+#define MAX 5000
 
 /*
 todo
@@ -108,6 +108,11 @@ void arr_resize(t_int_arr *arr, size_t newsize) {
 
 // remove an element from an array at the specified index and shift everything after over
 void arr_remove(t_int_arr *arr, int idx) {
+    if(arr == NULL || arr->len < 1) {
+        error("[osci/tsp] arr_remove() passed a null pointer or arr has length 0");
+        error("*arr = %p, arr->len = %lu", arr, arr ? arr->len : -1);
+        return;
+    }
     arr->len--;
     for(size_t i=idx; i < arr->len; ++i) {
         arr->data[i] = arr->data[i+1];
@@ -118,7 +123,7 @@ void arr_remove(t_int_arr *arr, int idx) {
 // find an element in the array, returns the idx
 // on fail or not found, returns -1
 int arr_find(t_int_arr *arr, int elem) {
-    if(arr == NULL || arr->len < 0) {
+    if(arr == NULL || arr->len < 1) {
         error("[osci/tsp] null pointer or 0 length array passed to arr_find()");
         error("*arr = %p, arr->len = %lu", arr, arr ? arr->len : -1);
         return -1;
@@ -150,8 +155,12 @@ void arr_swap_last(t_int_arr *arr, int elem) {
 
 // push element to the end of the array
 void arr_push(t_int_arr *arr, int elem) {
-    arr->data = (int*)realloc(arr->data, ++arr->len * sizeof(int));
-    arr->data[arr->len-1] = elem;
+    if(arr != NULL) {
+        arr->data = (int*)realloc(arr->data, ++arr->len * sizeof(int));
+        arr->data[arr->len-1] = elem;
+    } else {
+        error("arr_push() arr is null pointer: %p", arr);
+    }
 }
 
 // remove last element and reduce size of array by one
@@ -189,6 +198,11 @@ void graph_post(t_graph *g) {
 
 // check for double connections, false for double or no connections, true for one
 bool graph_check_connection(t_int_arr *xnet, int elem) {
+    if(xnet == NULL) {
+        error("graph_check_connection() xnet is null pointer: %p", xnet);
+        return false;
+    }
+
     int count = 0;
 
     for(size_t i=0; i < xnet->len; ++i) {
@@ -282,6 +296,10 @@ void euler_circuit(t_graph *g, t_int_arr *path, int v) {
     }
 }
 
+void graph_sort(t_graph *g) {
+    // sort the nodes connections based on their distance from each other
+}
+
 // turns all odd degree nodes in the graph into evens
 void graph_fix_odds(t_graph *g) {
     // build an array containing all the odd nodes
@@ -292,8 +310,8 @@ void graph_fix_odds(t_graph *g) {
         }
     }
 
-    // post("members of odds");
-    // arr_post(&odds);
+    //post("members of odds");
+    //arr_post(&odds);
     int n_switches = 0;
 
     while(odds.len > 0)
@@ -303,10 +321,8 @@ void graph_fix_odds(t_graph *g) {
         for(size_t i = 0; i < n.len; ++i) {
             int xnet = n.data[i];
             int idx = arr_find(&odds, xnet); // is the node we want to connect in odds?
-            t_int_arr *other = &g->edges[xnet];
 
-            if( idx != -1 && graph_check_connection(other, odds.data[0]) ) {
-                //post("connection from %d to %d is good!", odds.data[0], xnet);
+            if( idx != -1 && graph_check_connection(&g->edges[xnet], odds.data[0]) ) {
                 no_odds = false;
                 add_edge(g, xnet, odds.data[0]);
                 arr_remove(&odds, 0);
@@ -317,18 +333,18 @@ void graph_fix_odds(t_graph *g) {
 
         // no odd nodes found, connecting to the first even node, we're not double connected to
         if(no_odds) {
-            n_switches++;
-            // I believe it is impossible for a triple connect to happen, but I'll leave this here in case it does matter and I need to add it back in
-            //if( graph_check_connection(other, odds.data[0]) ) {
-            add_edge(g, n.data[0], odds.data[0]);
-            arr_remove(&odds, 0);
-            arr_push(&odds, n.data[0]); // the even node is now odd, add it to odds
-            //}
+            for(size_t i = 0; i < n.len; ++i) {
+                int xnet = n.data[i];
+                if( graph_check_connection(&g->edges[xnet], odds.data[0]) ) {
+                    add_edge(g, xnet, odds.data[0]);
+                    arr_remove(&odds, 0);
+                    arr_push(&odds, xnet); // the even node is now odd, add it to odds
+                }
+            }
         }
         //arr_post(&odds);
     }
     arr_free(&odds);
-    post("even to odd switches performed: %d", n_switches);
 }
 
 void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
@@ -373,7 +389,7 @@ void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
         token = strtok(NULL, ",{}");
         z = atof(token);
         this->vertices[idx++] = vec3(x,y,z);
-        if(idx >= this->max_verts) {
+        if(idx > this->max_verts) {
             pd_error(this, "[osci/tsp] too many verts. max_verts is currently set to %d", this->max_verts);
             goto err;
         }
@@ -401,18 +417,18 @@ void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
         add_edge(&g, u, v);
     }
 
-    // post("finished building graph!");
+    // post("initial graph ===");
+    // post("=================");
     // graph_post(&g);
 
-    // sort nodes connections by distance
-    //     sorting properly is actually going to be quite tricky!
+    graph_sort(&g);
 
+    // post("===\n===\n===\n===\n====\n");
     graph_fix_odds(&g);
 
-    //return;
-
-    post("graph only has even connections now!");
-    graph_post(&g);
+    // post("fixed graph result ===");
+    // post("======================");
+    // graph_post(&g);
 
     // run fleury's algorithm and build the path
     t_int_arr path = int_arr(0);
@@ -450,13 +466,14 @@ static void tsp_set_max(t_tsp *this, t_floatarg max) {
     this->max_verts = (max <= 0) ? MAX :
                       (max > MAX) ? MAX : (int)max;
     this->vertices = (t_vec3*)realloc(this->vertices, this->max_verts * sizeof(t_vec3));
+    post("max_verts set to %d", this->max_verts);
 }
 
 static void *tsp_new(t_floatarg max)
 {
     t_tsp *this = (t_tsp *)pd_new(tsp_class);
 
-    this->max_verts = (max <= 0) ? MAX :
+    this->max_verts = (max <= 0) ? 2000 :
                       (max > MAX) ? MAX : (int)max;
 
     this->vertices = (t_vec3*)getbytes(this->max_verts * sizeof(t_vec3));
@@ -470,7 +487,7 @@ static void *tsp_new(t_floatarg max)
 }
 
 static void *tsp_free(t_tsp *this) {
-    // need to free our arrays and other things here, deal with this later.
+    free_and_null(&this->vertices);
     return (void *)this;
 }
 
