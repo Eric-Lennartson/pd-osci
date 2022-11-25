@@ -6,6 +6,12 @@
 #include "vec3.h"
 #include "stdbool.h"
 
+#define DEBUG
+
+#ifdef DEBUG
+    #include <time.h>
+#endif
+
 #define MAX 5000
 
 /*
@@ -13,17 +19,24 @@ todo
 
 potential points for opto
 - graph_check_connection and finding in odds, maybe that can become one connection?
-- does t_tsp need to own a graph? (we only use it in one function...)
+- add a function to put nodes we've connected to to the back of the array
+    - test this to see if this is actually faster than what the current method is.
+    - is more for loops faster or slower?
 
 Other random thoughts:
 - what happens when the number of vertices gets really high?
+- read through that guy's null pointer check thing I found, and see if I should be fixing,
+  the free_and_null method I found.
 - Is there a faster way to check if a node is in the odds array?
-- I need to check the js code, what happens for meshes that are disconnected?
-- how do I solve that particular problem?
+    - each node could get a tag, called isodd, that would be faster to check than searching the entire array
+- when meshes are not completely connected... how do I solve that problem?
+    - check if the graph is connected (i.e. all nodes can be reached)
+    - if it is it's all one graph
+    - if NOT, then we can see which nodes we didn't visit and pick one of those.
+    - check if this other graph is connected to the remaining nodes
+    - if it is we're done
+    - Otherwise keep repeating, each time building up a new graph.
 */
-
-// these are global up here for now, but will later be moved to be members of t_tsp
-// The final change will be to integrate an array library
 
 typedef struct _int_arr {
     size_t len;
@@ -314,6 +327,8 @@ void graph_fix_odds(t_graph *g) {
     //arr_post(&odds);
     int n_switches = 0;
 
+    // add a method to push elements to the back of the array once connected
+    // this should speed the algorithm up (test this)
     while(odds.len > 0)
     {
         t_int_arr n = g->edges[ odds.data[0] ];
@@ -349,7 +364,11 @@ void graph_fix_odds(t_graph *g) {
 
 void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
 {
-    if(mesh_data->s_name[0] != 'a') {
+    #ifdef DEBUG
+        int start = clock();
+    #endif
+
+    if(mesh_data->s_name[0] != 'a') { // todo is the best way of doing this? we could also just check for null on vert, edge, and face char *
         pd_error(&this->obj, "[osci/tsp]: invalid format for mesh_data, check the symbol you are sending to [osci/tsp]");
         return;
     }
@@ -390,7 +409,7 @@ void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
         z = atof(token);
         this->vertices[idx++] = vec3(x,y,z);
         if(idx > this->max_verts) {
-            pd_error(this, "[osci/tsp] too many verts. max_verts is currently set to %d", this->max_verts);
+            pd_error(this, "[osci/tsp] Too many vertices. The maximum # of vertices is currently set to %d", this->max_verts);
             goto err;
         }
     }
@@ -416,6 +435,10 @@ void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
         //post("v1: %d, v2: %d", u, v);
         add_edge(&g, u, v);
     }
+
+    // check to see if the graph is connected
+        // might want to refactor count_connected
+        // or write a similarly named function?
 
     // post("initial graph ===");
     // post("=================");
@@ -458,6 +481,12 @@ void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
     free_and_null(&xpts);
     free_and_null(&ypts);
     free_and_null(&zpts);
+
+    #ifdef DEBUG
+        int end = clock();
+        int ticks = end-start;
+        post("\nelapsed ticks: %d\nelapsed time: %.6f ms", ticks, ((float)ticks/CLOCKS_PER_SEC)*1000 );
+    #endif
 
     err: return;
 }
