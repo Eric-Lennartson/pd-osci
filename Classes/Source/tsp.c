@@ -17,7 +17,12 @@
 /*
 todo
 
+- get the setup in place for dealing with multiple graphs
+    - turning things into arrays of arrays
+    - adding an interpolation list as an output
+
 potential points for opto
+- when completely finished check to see if the speed is good enough for me.
 - graph_check_connection and finding in odds, maybe that can become one connection?
 - add a function to put nodes we've connected to to the back of the array
     - test this to see if this is actually faster than what the current method is.
@@ -154,6 +159,12 @@ int arr_find(t_int_arr *arr, int elem) {
     return idx;
 }
 
+static void arr_swap_idx(t_int_arr *arr, int a, int b) {
+    int tmp = arr->data[a];
+    arr->data[a] = arr->data[b];
+    arr->data[b] = tmp;
+}
+
 // swaps element with the last element in the array
 void arr_swap_last(t_int_arr *arr, int elem) {
     int idx = arr_find(arr, elem);
@@ -229,6 +240,22 @@ bool graph_check_connection(t_int_arr *xnet, int elem) {
     return count == 1;
 }
 
+// push a new node onto the edges array in t_graph
+void add_node(t_graph *g, t_int_arr *node) {
+    if(g == NULL || node == NULL) {
+        error("osci/tsp: add_node() bad pointers: g %p | node %p", g, node);
+        return;
+    }
+    g->edges = (t_int_arr*)realloc(g->edges, ++g->n_vertices * sizeof(t_int_arr));
+    g->edges[g->n_vertices-1] = *node;
+}
+
+// resize edges so that graph is complete
+void graph_resize_to_connected(t_graph *g, int new_size) {
+    g->n_vertices = new_size;
+    g->edges = (t_int_arr*)realloc(g->edges, g->n_vertices * sizeof(t_int_arr));
+}
+
 void add_edge(t_graph *g, int u, int v) {
     arr_push(&g->edges[u], v);
     arr_push(&g->edges[v], u);
@@ -264,6 +291,11 @@ int count_connected(t_graph *g, int u, bool *visited) {
         }
     }
     return count;
+}
+
+bool is_connected(t_graph *g, bool *visited) {
+    int c = count_connected(g, 0, visited);
+    return c == g->n_vertices;
 }
 
 bool is_valid_edge(t_graph *g, int v, int u) {
@@ -309,8 +341,21 @@ void euler_circuit(t_graph *g, t_int_arr *path, int v) {
     }
 }
 
-void graph_sort(t_graph *g) {
+void graph_sort(t_graph *g, t_vec3 *verts) {
     // sort the nodes connections based on their distance from each other
+    for(int i=0; i < g->n_vertices; ++i) {
+        t_int_arr *n = &g->edges[i];
+        t_vec3 v = verts[i];
+        // iterate over the connections and sort them here
+
+        for(size_t j=0; j < n->len; ++j) {
+            for(size_t k = j+1; k < n->len; ++k) {
+                t_float d1 = v3_dist_sqrd(v, verts[n->data[j]]);
+                t_float d2 = v3_dist_sqrd(v, verts[n->data[k]]);
+                if(d1 > d2) { arr_swap_idx(n, j, k); }
+            }
+        }
+    }
 }
 
 // turns all odd degree nodes in the graph into evens
@@ -325,7 +370,6 @@ void graph_fix_odds(t_graph *g) {
 
     //post("members of odds");
     //arr_post(&odds);
-    int n_switches = 0;
 
     // add a method to push elements to the back of the array once connected
     // this should speed the algorithm up (test this)
@@ -368,8 +412,8 @@ void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
         int start = clock();
     #endif
 
-    if(mesh_data->s_name[0] != 'a') { // todo is the best way of doing this? we could also just check for null on vert, edge, and face char *
-        pd_error(&this->obj, "[osci/tsp]: invalid format for mesh_data, check the symbol you are sending to [osci/tsp]");
+    if(mesh_data == NULL) {
+        pd_error(&this->obj, "[osci/tsp]: bad symbol pointer to mesh_data | %p", mesh_data);
         return;
     }
 
@@ -377,6 +421,12 @@ void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
     char *tmp_v = rev_strstr(mesh_data->s_name, "vert");
     char *tmp_e = rev_strstr(mesh_data->s_name, "edge");
     char *faces = rev_strstr(mesh_data->s_name, "face");
+
+    if(tmp_v == NULL || tmp_e == NULL || faces == NULL) {
+        pd_error(&this->obj, "[osci/tsp]: invalid format for mesh_data");
+        error("mesh data: %s", mesh_data->s_name);
+        return;
+    }
 
     int verts_len = (int)(tmp_e-2-tmp_v);
     int edges_len = (int)(faces-2-tmp_e);
@@ -410,14 +460,13 @@ void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
         this->vertices[idx++] = vec3(x,y,z);
         if(idx > this->max_verts) {
             pd_error(this, "[osci/tsp] Too many vertices. The maximum # of vertices is currently set to %d", this->max_verts);
-            goto err;
+            return;
         }
     }
 
-    post("vert count = %d", idx);
+    // post("vert count = %d", idx);
 
-    // int len = i;
-    // for(i = 0; i < len; ++i) {
+    // for(int i = 0; i < idx; ++i) {
     //     post("x: %.2f y: %.2f z: %.2f", this->vertices[i].x, this->vertices[i].y, this->vertices[i].z);
     // }
 
@@ -436,15 +485,43 @@ void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
         add_edge(&g, u, v);
     }
 
+    //graph_post(&g);
+
+    graph_sort(&g, this->vertices);
+
+    //graph_post(&g);
+
     // check to see if the graph is connected
-        // might want to refactor count_connected
-        // or write a similarly named function?
+    // if not, build up new graphs until it is.
+    bool visited[g.n_vertices];
+    for(int i=0; i < g.n_vertices; ++i) {
+        visited[i] = false;
+    }
 
-    // post("initial graph ===");
-    // post("=================");
-    // graph_post(&g);
+    // later change this to an array of graphs, which we cycle through until is_connected returns true
+    // also turn this into a function of some kind
+    if(!is_connected(&g, visited)) {
+        post("not connected");
 
-    graph_sort(&g);
+        t_graph g2 = graph(0);
+
+        for(int i=0; i < g.n_vertices; ++i) {
+            //post("idx: %d, %s", i, visited[i] ? "true" : "false");
+            if( !visited[i] ) {
+                // adjust the verts array
+                // fill in the new graph
+                add_node(&g2, &g.edges[i]);
+                /* potential error! node indices in the graph don't match the real value of the node they hold!
+                    Solution: change the vertices array to be a 2d array. Then I can chop of vertices and drop them in new arrays as needed to keep things making sense index wise.
+                */
+            }
+        }
+
+        graph_resize_to_connected(&g, g.n_vertices - g2.n_vertices);
+
+        graph_post(&g2);
+        graph_post(&g);
+    }
 
     // post("===\n===\n===\n===\n====\n");
     graph_fix_odds(&g);
@@ -455,7 +532,7 @@ void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
 
     // run fleury's algorithm and build the path
     t_int_arr path = int_arr(0);
-    euler_circuit(&g, &path, 0);
+    euler_circuit(&g, &path, 3);
 
     post("path length is %d", path.len);
 
@@ -487,8 +564,6 @@ void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
         int ticks = end-start;
         post("\nelapsed ticks: %d\nelapsed time: %.6f ms", ticks, ((float)ticks/CLOCKS_PER_SEC)*1000 );
     #endif
-
-    err: return;
 }
 
 static void tsp_set_max(t_tsp *this, t_floatarg max) {
