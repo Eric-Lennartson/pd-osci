@@ -20,6 +20,7 @@ todo
 - get the setup in place for dealing with multiple graphs
     - turning things into arrays of arrays
     - adding an interpolation list as an output
+- get the parsing fixed for having multiple meshes sent to pd
 
 potential points for opto
 - when completely finished check to see if the speed is good enough for me.
@@ -54,6 +55,11 @@ typedef struct _graph
     t_int_arr *edges;
 } t_graph;
 
+typedef struct _graph_arr {
+    size_t len;
+    t_graph *graphs;
+} t_graph_arr;
+
 static t_class *tsp_class;
 
 typedef struct _tsp
@@ -67,7 +73,7 @@ typedef struct _tsp
 
 /* Miscellanous Functions */
 void free_and_null(void **ptr) {
-    if(ptr && *ptr) {
+    if(ptr != NULL && *ptr != NULL) {
         free(*ptr);
         *ptr = NULL;
     }
@@ -108,7 +114,6 @@ t_int_arr int_arr(size_t len) {
 
 void arr_free(t_int_arr *arr) {
     free_and_null(&arr->data);
-    arr->data = NULL;
 }
 
 // print out the array
@@ -254,6 +259,20 @@ void add_node(t_graph *g, t_int_arr *node) {
 void graph_resize_to_connected(t_graph *g, int new_size) {
     g->n_vertices = new_size;
     g->edges = (t_int_arr*)realloc(g->edges, g->n_vertices * sizeof(t_int_arr));
+}
+
+/*
+adjust node connections since node indices will be off
+when we build the new graph
+*/
+void graph_fix_indices(t_graph *g, int amt) {
+    for(int i=0; i < g->n_vertices; ++i) {
+        t_int_arr* node = &g->edges[i];
+        for(size_t j=0; j < node->len; ++j) {
+            // post("%d - %d = %d", node->data[j], amt, node->data[j] - amt);
+            node->data[j] -= amt;
+        }
+    }
 }
 
 void add_edge(t_graph *g, int u, int v) {
@@ -406,6 +425,77 @@ void graph_fix_odds(t_graph *g) {
     arr_free(&odds);
 }
 
+/* Graph Array Functions */
+
+// create a graph arr
+t_graph_arr graph_arr() {
+    return (t_graph_arr){0, (t_graph*)getbytes(0 * sizeof(t_graph)) };
+}
+
+void ga_free(t_graph_arr *ga) {
+    for(size_t i=0; i < ga->len; ++i) {
+        graph_free(&ga->graphs[i]);
+    }
+    free_and_null(&ga->graphs);
+}
+
+// add a copy of g to the ga
+void ga_push(t_graph_arr *ga, t_graph *g) {
+    if(ga == NULL || g == NULL) { return; }
+
+    ga->graphs = (t_graph *)realloc(ga->graphs, ++ga->len * sizeof(t_graph));
+    post("adding graph to position %lu", ga->len-1);
+    ga->graphs[ga->len-1] = *g; // maybe it should hold pointers to graphs instead?
+}
+
+void ga_post(t_graph_arr *ga) {
+    for(size_t i=0; i < ga->len; ++i) {
+        post("graph [%d]", i);
+        graph_post(&ga->graphs[i]);
+    }
+}
+
+//todo this function name is horrible
+//take an input graph, and return a graph_array of only connected graphs
+t_graph_arr ga_generate_connected_graphs(t_graph g) {
+    t_graph_arr ga = graph_arr();
+
+    bool doit = true;
+    while(doit) {
+        bool visited[g.n_vertices];
+        for(int i=0; i < g.n_vertices; ++i) {
+            visited[i] = false;
+        }
+
+        doit = !is_connected(&g, visited);
+        if(doit) {
+            post("not connected, generating a new graph");
+            t_graph tmp = graph(0);
+            // fill new graph with nodes from old graph that weren't visited
+            for(int i=0; i < g.n_vertices; ++i) {
+                if( !visited[i] ) {
+                    // later: adjust the verts array
+                    add_node(&tmp, &g.edges[i]);
+                    /* potential error! node indices in the graph don't match the real value of the node they hold!
+                        Solution: change the vertices array to be a 2d array. Then I can chop of vertices and drop them in new arrays as needed to keep things making sense index wise.
+                    */
+                }
+            }
+
+            // must be first otherwise g.n_vertices will be wrong
+            graph_fix_indices(&tmp, g.n_vertices - tmp.n_vertices);
+            graph_resize_to_connected(&g, g.n_vertices - tmp.n_vertices);
+            ga_push(&ga, &g);
+            g = tmp;
+        }
+    }
+
+    ga_push(&ga, &g); // push the final graph onto the array
+
+    ga_post(&ga);
+    return ga;
+}
+
 void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
 {
     #ifdef DEBUG
@@ -472,6 +562,7 @@ void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
 
     //build the graph
     t_graph g = graph(idx);
+
     token = strtok(edges, "[");
     int u, v;
     while(token != NULL) {
@@ -491,40 +582,12 @@ void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
 
     //graph_post(&g);
 
-    // check to see if the graph is connected
-    // if not, build up new graphs until it is.
-    bool visited[g.n_vertices];
-    for(int i=0; i < g.n_vertices; ++i) {
-        visited[i] = false;
-    }
-
-    // later change this to an array of graphs, which we cycle through until is_connected returns true
-    // also turn this into a function of some kind
-    if(!is_connected(&g, visited)) {
-        post("not connected");
-
-        t_graph g2 = graph(0);
-
-        for(int i=0; i < g.n_vertices; ++i) {
-            //post("idx: %d, %s", i, visited[i] ? "true" : "false");
-            if( !visited[i] ) {
-                // adjust the verts array
-                // fill in the new graph
-                add_node(&g2, &g.edges[i]);
-                /* potential error! node indices in the graph don't match the real value of the node they hold!
-                    Solution: change the vertices array to be a 2d array. Then I can chop of vertices and drop them in new arrays as needed to keep things making sense index wise.
-                */
-            }
-        }
-
-        graph_resize_to_connected(&g, g.n_vertices - g2.n_vertices);
-
-        graph_post(&g2);
-        graph_post(&g);
-    }
+    t_graph_arr ga = ga_generate_connected_graphs(g);
 
     // post("===\n===\n===\n===\n====\n");
-    graph_fix_odds(&g);
+    for(size_t i= 0; i<ga.len; ++i) {
+        graph_fix_odds(&ga.graphs[i]);
+    }
 
     // post("fixed graph result ===");
     // post("======================");
@@ -532,7 +595,7 @@ void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
 
     // run fleury's algorithm and build the path
     t_int_arr path = int_arr(0);
-    euler_circuit(&g, &path, 3);
+    euler_circuit(&ga.graphs[0], &path, 3);
 
     post("path length is %d", path.len);
 
@@ -586,6 +649,24 @@ static void *tsp_new(t_floatarg max)
     this->ypts_out = outlet_new(&this->obj, &s_list);
     this->zpts_out = outlet_new(&this->obj, &s_list);
     this->size_out = outlet_new(&this->obj, &s_float);
+
+    // testing out our graph array
+
+    // t_graph g = graph(10);
+    // add_edge(&g, 0, 1);
+    // add_edge(&g, 0, 2);
+    // add_edge(&g, 1, 2);
+
+    // add_edge(&g, 3, 4);
+
+    // add_edge(&g, 5, 6);
+    // add_edge(&g, 5, 8);
+    // add_edge(&g, 7, 6);
+    // add_edge(&g, 7, 8);
+
+    // t_graph_arr ga = ga_generate_connected_graphs(g);
+
+    // ga_free(&ga);
 
     return this;
 }
