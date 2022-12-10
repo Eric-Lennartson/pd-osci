@@ -17,9 +17,6 @@
 /*
 todo
 
-- get the setup in place for dealing with multiple graphs
-    - turning things into arrays of arrays
-    - adding an interpolation list as an output
 - get the parsing fixed for having multiple meshes sent to pd
 
 potential points for opto
@@ -67,7 +64,7 @@ typedef struct _tsp
     t_object obj;
     int max_verts;
     t_vec3 *vertices;
-    t_outlet *xpts_out, *ypts_out, *zpts_out, *size_out;
+    t_outlet *xpts_out, *ypts_out, *zpts_out, *interp_out, *size_out;
 } t_tsp;
 
 
@@ -184,12 +181,12 @@ void arr_swap_last(t_int_arr *arr, int elem) {
 
 // push element to the end of the array
 void arr_push(t_int_arr *arr, int elem) {
-    if(arr != NULL) {
-        arr->data = (int*)realloc(arr->data, ++arr->len * sizeof(int));
-        arr->data[arr->len-1] = elem;
-    } else {
+    if(arr == NULL) {
         error("arr_push() arr is null pointer: %p", arr);
+        return;
     }
+    arr->data = (int*)realloc(arr->data, ++arr->len * sizeof(int));
+    arr->data[arr->len-1] = elem;
 }
 
 // remove last element and reduce size of array by one
@@ -335,6 +332,15 @@ bool is_valid_edge(t_graph *g, int v, int u) {
 }
 
 void euler_circuit(t_graph *g, t_int_arr *path, int v) {
+    if(g == NULL) {
+        error("[osci/tsp]: bad graph pointer");
+        return;
+    }
+    if(path == NULL) {
+        error("[osci/tsp]: bad path pointer");
+        return;
+    }
+
     arr_push(path, v);
     //postfloat(v);
 
@@ -444,7 +450,7 @@ void ga_push(t_graph_arr *ga, t_graph *g) {
     if(ga == NULL || g == NULL) { return; }
 
     ga->graphs = (t_graph *)realloc(ga->graphs, ++ga->len * sizeof(t_graph));
-    post("adding graph to position %lu", ga->len-1);
+    // post("adding graph to position %lu", ga->len-1);
     ga->graphs[ga->len-1] = *g; // maybe it should hold pointers to graphs instead?
 }
 
@@ -455,8 +461,7 @@ void ga_post(t_graph_arr *ga) {
     }
 }
 
-//todo this function name is horrible
-//take an input graph, and return a graph_array of only connected graphs
+//take an input graph, and return a graph_array where each graph is a connected graph
 t_graph_arr ga_generate_connected_graphs(t_graph g) {
     t_graph_arr ga = graph_arr();
 
@@ -469,15 +474,16 @@ t_graph_arr ga_generate_connected_graphs(t_graph g) {
 
         doit = !is_connected(&g, visited);
         if(doit) {
-            post("not connected, generating a new graph");
+            // post("not connected, generating a new graph");
             t_graph tmp = graph(0);
             // fill new graph with nodes from old graph that weren't visited
             for(int i=0; i < g.n_vertices; ++i) {
                 if( !visited[i] ) {
                     // later: adjust the verts array
                     add_node(&tmp, &g.edges[i]);
-                    /* potential error! node indices in the graph don't match the real value of the node they hold!
-                        Solution: change the vertices array to be a 2d array. Then I can chop of vertices and drop them in new arrays as needed to keep things making sense index wise.
+                    /* ERROR: node indices in the graph don't match the index of the vertex they refer to now!
+                        Solution: change the vertices array to be a jagged 2d array. Then I can chop of vertices and drop
+                        them in new arrays as needed to keep things making sense index wise.
                     */
                 }
             }
@@ -492,8 +498,45 @@ t_graph_arr ga_generate_connected_graphs(t_graph g) {
 
     ga_push(&ga, &g); // push the final graph onto the array
 
-    ga_post(&ga);
+    // ga_post(&ga);
     return ga;
+}
+
+// create a path and it's interp array
+void ga_create_path(t_graph_arr *ga, t_int_arr *p, t_int_arr *interp) {
+    t_int_arr *paths = (t_int_arr*)getbytes(ga->len * sizeof(t_int_arr));
+
+    // generate the paths
+    for(size_t i=0; i < ga->len; ++i) {
+        paths[i] = int_arr(0);
+        euler_circuit(&ga->graphs[i], &paths[i], 0);
+    }
+
+    // flatten the paths
+    int offset = 0;
+    for(size_t i=0; i < ga->len; ++i) {
+        if(i > 0) offset += ga->graphs[i-1].n_vertices;
+        for(size_t j=0; j < paths[i].len; ++j) {
+            arr_push(p, paths[i].data[j] + offset);
+            arr_push(interp, (j < paths[i].len-1) ? 1 : 0);
+        }
+    }
+}
+
+void ga_flatten_paths(t_graph_arr *ga, t_int_arr *paths) {
+    int offset = 0;
+    for(size_t i=1; i < ga->len; ++i) {
+        offset += ga->graphs[i-1].n_vertices;
+        for(size_t j=0; j < paths[i].len; ++j) {
+            paths[i].data[j] += offset;
+        }
+    }
+}
+
+void ga_fix_odds(t_graph_arr *ga) {
+    for(size_t i=0; i < ga->len; ++i) {
+        graph_fix_odds(&ga->graphs[i]);
+    }
 }
 
 void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
@@ -502,12 +545,14 @@ void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
         int start = clock();
     #endif
 
+    // update the mesh data parsing algo to handle multiple meshes
+
     if(mesh_data == NULL) {
         pd_error(&this->obj, "[osci/tsp]: bad symbol pointer to mesh_data | %p", mesh_data);
         return;
     }
 
-    // read in the data, chopping off all the earlier bits
+    // read in the data from the end, chopping off all the earlier bits
     char *tmp_v = rev_strstr(mesh_data->s_name, "vert");
     char *tmp_e = rev_strstr(mesh_data->s_name, "edge");
     char *faces = rev_strstr(mesh_data->s_name, "face");
@@ -539,25 +584,27 @@ void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
     t_float x, y, z;
     int idx = 0;
     while(token != NULL) {
+        if(idx > this->max_verts) {
+            pd_error(this, "[osci/tsp] Too many vertices. The maximum # of vertices is currently set to %d", this->max_verts);
+            return;
+        }
+
         token = strtok(NULL, ",{}");
         if(token == NULL || !isnum(token))
             break;
+
         x = atof(token);
         token = strtok(NULL, ",{}");
         y = atof(token);
         token = strtok(NULL, ",{}");
         z = atof(token);
         this->vertices[idx++] = vec3(x,y,z);
-        if(idx > this->max_verts) {
-            pd_error(this, "[osci/tsp] Too many vertices. The maximum # of vertices is currently set to %d", this->max_verts);
-            return;
-        }
     }
 
-    // post("vert count = %d", idx);
+    post("vert count = %d", idx);
 
     // for(int i = 0; i < idx; ++i) {
-    //     post("x: %.2f y: %.2f z: %.2f", this->vertices[i].x, this->vertices[i].y, this->vertices[i].z);
+    //     post("verts[%d], x: %.2f y: %.2f z: %.2f", i, this->vertices[i].x, this->vertices[i].y, this->vertices[i].z);
     // }
 
     //build the graph
@@ -585,29 +632,31 @@ void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
     t_graph_arr ga = ga_generate_connected_graphs(g);
 
     // post("===\n===\n===\n===\n====\n");
-    for(size_t i= 0; i<ga.len; ++i) {
-        graph_fix_odds(&ga.graphs[i]);
-    }
+    ga_fix_odds(&ga);
 
     // post("fixed graph result ===");
     // post("======================");
     // graph_post(&g);
 
-    // run fleury's algorithm and build the path
+    // run fleury's algorithm and build the path(s)
     t_int_arr path = int_arr(0);
-    euler_circuit(&ga.graphs[0], &path, 3);
-
-    post("path length is %d", path.len);
+    t_int_arr interp = int_arr(0);
+    ga_create_path(&ga, &path, &interp);
+    // post("path length is %d", path.len);
+    // post("interp lengh is %d", interp.len);
 
     // take that path and build up the x, y, and z arrays
     t_atom *xpts = (t_atom*)getbytes(path.len * sizeof(t_atom));
     t_atom *ypts = (t_atom*)getbytes(path.len * sizeof(t_atom));
     t_atom *zpts = (t_atom*)getbytes(path.len * sizeof(t_atom));
+    t_atom *interp_vals = (t_atom*)getbytes(path.len * sizeof(t_atom));
 
     for(size_t i=0; i < path.len; ++i) {
+        postfloat(path.data[i]);
         SETFLOAT(xpts+i, this->vertices[path.data[i]].x);
         SETFLOAT(ypts+i, this->vertices[path.data[i]].y);
         SETFLOAT(zpts+i, this->vertices[path.data[i]].z);
+        SETFLOAT(interp_vals+i, interp.data[i]);
     }
 
     // return the arrays, making sure to output the size of the path first
@@ -615,12 +664,18 @@ void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
     outlet_list(this->xpts_out, &s_list, path.len, xpts);
     outlet_list(this->ypts_out, &s_list, path.len, ypts);
     outlet_list(this->zpts_out, &s_list, path.len, zpts);
+    outlet_list(this->interp_out, &s_list, path.len, interp_vals);
 
-    arr_free(&path);
-    graph_free(&g);
+    // cleanup
     free_and_null(&xpts);
     free_and_null(&ypts);
     free_and_null(&zpts);
+    free_and_null(&interp_vals);
+
+    arr_free(&path);
+    arr_free(&interp);
+
+    //graph_free(&g); todo take a look at graph and ga free methods something is causing them to crash
 
     #ifdef DEBUG
         int end = clock();
@@ -648,25 +703,8 @@ static void *tsp_new(t_floatarg max)
     this->xpts_out = outlet_new(&this->obj, &s_list);
     this->ypts_out = outlet_new(&this->obj, &s_list);
     this->zpts_out = outlet_new(&this->obj, &s_list);
+    this->interp_out = outlet_new(&this->obj, &s_list);
     this->size_out = outlet_new(&this->obj, &s_float);
-
-    // testing out our graph array
-
-    // t_graph g = graph(10);
-    // add_edge(&g, 0, 1);
-    // add_edge(&g, 0, 2);
-    // add_edge(&g, 1, 2);
-
-    // add_edge(&g, 3, 4);
-
-    // add_edge(&g, 5, 6);
-    // add_edge(&g, 5, 8);
-    // add_edge(&g, 7, 6);
-    // add_edge(&g, 7, 8);
-
-    // t_graph_arr ga = ga_generate_connected_graphs(g);
-
-    // ga_free(&ga);
 
     return this;
 }
