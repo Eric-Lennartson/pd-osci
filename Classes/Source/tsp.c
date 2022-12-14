@@ -17,7 +17,10 @@
 /*
 todo
 
-- get the parsing fixed for having multiple meshes sent to pd
+it works... mostly, now for optomizing and crash reducing
+    - go through and get all the freeing methods worked out
+    - make sure that every instance of a pointer is checked for null
+        - make sure that a good option for when null happens is implemented
 
 potential points for opto
 - when completely finished check to see if the speed is good enough for me.
@@ -28,17 +31,13 @@ potential points for opto
 
 Other random thoughts:
 - what happens when the number of vertices gets really high?
-- read through that guy's null pointer check thing I found, and see if I should be fixing,
-  the free_and_null method I found.
+- read through that guy's null pointer check thing I found, and see if I should be fixing, the free_and_null method I found.
 - Is there a faster way to check if a node is in the odds array?
     - each node could get a tag, called isodd, that would be faster to check than searching the entire array
-- when meshes are not completely connected... how do I solve that problem?
-    - check if the graph is connected (i.e. all nodes can be reached)
-    - if it is it's all one graph
-    - if NOT, then we can see which nodes we didn't visit and pick one of those.
-    - check if this other graph is connected to the remaining nodes
-    - if it is we're done
-    - Otherwise keep repeating, each time building up a new graph.
+
+After opto and freeing of arrays is all fixed up
+    - implement a save feature where pd remembers the data for the graph
+
 */
 
 typedef struct _int_arr {
@@ -74,6 +73,25 @@ void free_and_null(void **ptr) {
         free(*ptr);
         *ptr = NULL;
     }
+}
+
+// count occurrences of a substring in a string
+int count_substring(const char *s, char *sub) {
+    int found, count = 0;
+    int slen = strlen(s), sublen = strlen(sub);
+
+    for(int i=0; i <= slen - sublen; ++i) {
+        found = 1;
+        for(int j=0; j < sublen; ++j) {
+            if(s[i+j] != sub[j]) {
+                found = 0;
+                break;
+            }
+        }
+        if(found) count++;
+    }
+
+    return count;
 }
 
 // reverse strstr
@@ -118,7 +136,7 @@ void arr_post(t_int_arr *arr) {
     for(size_t i=0; i < arr->len; ++i) {
         postfloat(arr->data[i]);
     }
-    post(" length is %lu", arr->len);
+    post("length is %lu", arr->len);
 }
 
 void arr_resize(t_int_arr *arr, size_t newsize) {
@@ -243,19 +261,22 @@ bool graph_check_connection(t_int_arr *xnet, int elem) {
 }
 
 // push a new node onto the edges array in t_graph
-void add_node(t_graph *g, t_int_arr *node) {
+void graph_add_node(t_graph *g, t_int_arr *node) {
     if(g == NULL || node == NULL) {
-        error("osci/tsp: add_node() bad pointers: g %p | node %p", g, node);
+        error("osci/tsp: graph_add_node() bad pointers: g %p | node %p", g, node);
         return;
     }
     g->edges = (t_int_arr*)realloc(g->edges, ++g->n_vertices * sizeof(t_int_arr));
     g->edges[g->n_vertices-1] = *node;
 }
 
-// resize edges so that graph is complete
-void graph_resize_to_connected(t_graph *g, int new_size) {
+void graph_resize(t_graph *g, int new_size) {
+    int old_size = g->n_vertices;
     g->n_vertices = new_size;
     g->edges = (t_int_arr*)realloc(g->edges, g->n_vertices * sizeof(t_int_arr));
+    // make sure that any new nodes are initalized
+    for(int i = old_size; i < g->n_vertices; ++i)
+        g->edges[i] = int_arr(0);
 }
 
 /*
@@ -480,7 +501,7 @@ t_graph_arr ga_generate_connected_graphs(t_graph g) {
             for(int i=0; i < g.n_vertices; ++i) {
                 if( !visited[i] ) {
                     // later: adjust the verts array
-                    add_node(&tmp, &g.edges[i]);
+                    graph_add_node(&tmp, &g.edges[i]);
                     /* ERROR: node indices in the graph don't match the index of the vertex they refer to now!
                         Solution: change the vertices array to be a jagged 2d array. Then I can chop of vertices and drop
                         them in new arrays as needed to keep things making sense index wise.
@@ -490,7 +511,7 @@ t_graph_arr ga_generate_connected_graphs(t_graph g) {
 
             // must be first otherwise g.n_vertices will be wrong
             graph_fix_indices(&tmp, g.n_vertices - tmp.n_vertices);
-            graph_resize_to_connected(&g, g.n_vertices - tmp.n_vertices);
+            graph_resize(&g, g.n_vertices - tmp.n_vertices);
             ga_push(&ga, &g);
             g = tmp;
         }
@@ -523,20 +544,125 @@ void ga_create_path(t_graph_arr *ga, t_int_arr *p, t_int_arr *interp) {
     }
 }
 
-void ga_flatten_paths(t_graph_arr *ga, t_int_arr *paths) {
-    int offset = 0;
-    for(size_t i=1; i < ga->len; ++i) {
-        offset += ga->graphs[i-1].n_vertices;
-        for(size_t j=0; j < paths[i].len; ++j) {
-            paths[i].data[j] += offset;
-        }
-    }
-}
-
 void ga_fix_odds(t_graph_arr *ga) {
     for(size_t i=0; i < ga->len; ++i) {
         graph_fix_odds(&ga->graphs[i]);
     }
+}
+
+/*
+* Parses the mesh data being sent in from blender.
+* Data takes the following form
+*   1. Begins with the string "animation frames"
+*   2. Then comes the name of the mesh (skipping some non important pieces)
+*   3. Then comes Vertices, followed by Edges, and it ends with Faces
+*       a. Vertices are displayed like this {1,1,1}
+*       b. Edges are displayed like this {1, 0}
+*       c. We don't care about faces, we just use that to mark the end of the data we care about
+*   7. If there is multiple meshes the next mesh will then follow after faces
+*   8. Sometimes we get multiple set of animation frames, so make sure to only read in the last
+*      one using the function rev_strstr()
+*/
+t_graph tsp_parse_mesh_data(t_tsp *this, t_symbol *mesh_data) {
+    t_graph g = graph(0);
+    int idx = 0, offset = 0;
+
+    if(mesh_data == NULL) {
+        pd_error(&this->obj, "[osci/tsp]: bad symbol pointer to mesh_data | %p", mesh_data);
+        return g;
+    } else if( strlen(mesh_data->s_name) < 100) {
+        pd_error(&this->obj, "[osci/tsp]: Blender has no meshes!");
+        return g;
+    }
+
+    // remove duplicate sets of mesh_data
+    char *data = rev_strstr(mesh_data->s_name, "frames");
+
+    int n_meshes = count_substring(data, "mesh");
+    // post("n_meshes = %d", n_meshes);
+
+    for(int i=0; i < n_meshes; ++i) {
+        if(data == NULL) return g;
+        // post("round %d", i);
+
+        char *tmp_v = strstr(data, "vert");
+        char *tmp_e = strstr(data, "edge");
+        char *faces = strstr(data, "face");
+
+        if(tmp_v == NULL || tmp_e == NULL || faces == NULL) {
+            pd_error(&this->obj, "[osci/tsp]: invalid format for mesh data");
+            error("mesh data: %s", data);
+            return g;
+        }
+
+        int verts_len = (int)(tmp_e-2-tmp_v);
+        int edges_len = (int)(faces-2-tmp_e);
+
+        // post("verts len %d", verts_len);
+        // post("edges len %d", edges_len);
+
+        char verts[verts_len];
+        char edges[edges_len];
+
+        memset(verts, '\0', sizeof(verts));
+        memset(edges, '\0', sizeof(edges));
+
+        strncpy(verts, tmp_v, verts_len);
+        strncpy(edges, tmp_e, edges_len);
+
+        // post("verts string:\n%s", verts);
+        // post("edges string:\n%s", edges);
+        // post("faces string:\n%s", faces);
+        // post("");
+        // post("data string:\n%s", data);
+
+        char *token = strtok(verts, "[");
+
+        //get the vertices
+        t_float x, y, z;
+        while(token != NULL) {
+            if(idx > this->max_verts) {
+                pd_error(this, "[osci/tsp] Too many vertices. The maximum # of vertices is currently set to %d", this->max_verts);
+                return g;
+            }
+
+            token = strtok(NULL, ",{}");
+            if(token == NULL || !isnum(token))
+                break;
+
+            x = atof(token);
+            token = strtok(NULL, ",{}");
+            y = atof(token);
+            token = strtok(NULL, ",{}");
+            z = atof(token);
+            this->vertices[idx++] = vec3(x,y,z);
+        }
+
+        offset = (i < 1) ? 0 : g.n_vertices;
+        // post("offset: %d", offset);
+        graph_resize(&g, idx);
+        // add the edges to graph
+        token = strtok(edges, "[");
+        int u, v;
+        while(token != NULL) {
+            token = strtok(NULL, " {}");
+            if(token == NULL || !isnum(token))
+                break;
+            u = atof(token);
+            token = strtok(NULL, " {}");
+            v = atof(token);
+
+            //post("u: %d, v: %d", u, v);
+            //post("u+off: %d, v+off: %d", u+offset, v+offset);
+            add_edge(&g, u+offset, v+offset);
+        }
+
+        // from here faces is the only string that isn't mangled
+        // we reset data to start from the next of vertices
+        data = strstr(faces, "vert");
+    }
+
+    return g;
 }
 
 void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
@@ -545,85 +671,10 @@ void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
         int start = clock();
     #endif
 
-    // update the mesh data parsing algo to handle multiple meshes
+    t_graph g = tsp_parse_mesh_data(this, mesh_data);
 
-    if(mesh_data == NULL) {
-        pd_error(&this->obj, "[osci/tsp]: bad symbol pointer to mesh_data | %p", mesh_data);
-        return;
-    }
-
-    // read in the data from the end, chopping off all the earlier bits
-    char *tmp_v = rev_strstr(mesh_data->s_name, "vert");
-    char *tmp_e = rev_strstr(mesh_data->s_name, "edge");
-    char *faces = rev_strstr(mesh_data->s_name, "face");
-
-    if(tmp_v == NULL || tmp_e == NULL || faces == NULL) {
-        pd_error(&this->obj, "[osci/tsp]: invalid format for mesh_data");
-        error("mesh data: %s", mesh_data->s_name);
-        return;
-    }
-
-    int verts_len = (int)(tmp_e-2-tmp_v);
-    int edges_len = (int)(faces-2-tmp_e);
-
-    char verts[verts_len];
-    char edges[edges_len];
-
-    memset(verts, '\0', sizeof(verts));
-    memset(edges, '\0', sizeof(edges));
-
-    strncpy(verts, tmp_v, verts_len);
-    strncpy(edges, tmp_e, edges_len);
-
-    // post("verts string: %s", verts);
-    // post("edges string: %s", edges);
-
-    char *token = strtok(verts, "[");
-
-    //get the vertices
-    t_float x, y, z;
-    int idx = 0;
-    while(token != NULL) {
-        if(idx > this->max_verts) {
-            pd_error(this, "[osci/tsp] Too many vertices. The maximum # of vertices is currently set to %d", this->max_verts);
-            return;
-        }
-
-        token = strtok(NULL, ",{}");
-        if(token == NULL || !isnum(token))
-            break;
-
-        x = atof(token);
-        token = strtok(NULL, ",{}");
-        y = atof(token);
-        token = strtok(NULL, ",{}");
-        z = atof(token);
-        this->vertices[idx++] = vec3(x,y,z);
-    }
-
-    post("vert count = %d", idx);
-
-    // for(int i = 0; i < idx; ++i) {
-    //     post("verts[%d], x: %.2f y: %.2f z: %.2f", i, this->vertices[i].x, this->vertices[i].y, this->vertices[i].z);
-    // }
-
-    //build the graph
-    t_graph g = graph(idx);
-
-    token = strtok(edges, "[");
-    int u, v;
-    while(token != NULL) {
-        token = strtok(NULL, " {}");
-        if(token == NULL || !isnum(token))
-            break;
-        u = atof(token);
-        token = strtok(NULL, " {}");
-        v = atof(token);
-        //post("v1: %d, v2: %d", u, v);
-        add_edge(&g, u, v);
-    }
-
-    //graph_post(&g);
+    if(g.n_vertices == 0) { return; }
+    // graph_post(&g);
 
     graph_sort(&g, this->vertices);
 
@@ -652,7 +703,7 @@ void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
     t_atom *interp_vals = (t_atom*)getbytes(path.len * sizeof(t_atom));
 
     for(size_t i=0; i < path.len; ++i) {
-        postfloat(path.data[i]);
+        // postfloat(path.data[i]);
         SETFLOAT(xpts+i, this->vertices[path.data[i]].x);
         SETFLOAT(ypts+i, this->vertices[path.data[i]].y);
         SETFLOAT(zpts+i, this->vertices[path.data[i]].z);
@@ -706,7 +757,7 @@ static void *tsp_new(t_floatarg max)
     this->interp_out = outlet_new(&this->obj, &s_list);
     this->size_out = outlet_new(&this->obj, &s_float);
 
-    return this;
+    return (void *)this;
 }
 
 static void *tsp_free(t_tsp *this) {
