@@ -579,11 +579,11 @@ t_graph tsp_parse_mesh_data(t_tsp *this, t_symbol *mesh_data) {
     char *data = rev_strstr(mesh_data->s_name, "frames");
 
     int n_meshes = count_substring(data, "mesh");
-    // post("n_meshes = %d", n_meshes);
+    post("n_meshes = %d", n_meshes);
 
     for(int i=0; i < n_meshes; ++i) {
         if(data == NULL) return g;
-        // post("round %d", i);
+        post("round %d", i);
 
         char *tmp_v = strstr(data, "vert");
         char *tmp_e = strstr(data, "edge");
@@ -598,8 +598,8 @@ t_graph tsp_parse_mesh_data(t_tsp *this, t_symbol *mesh_data) {
         int verts_len = (int)(tmp_e-2-tmp_v);
         int edges_len = (int)(faces-2-tmp_e);
 
-        // post("verts len %d", verts_len);
-        // post("edges len %d", edges_len);
+        post("verts len %d", verts_len);
+        post("edges len %d", edges_len);
 
         char verts[verts_len];
         char edges[edges_len];
@@ -611,7 +611,12 @@ t_graph tsp_parse_mesh_data(t_tsp *this, t_symbol *mesh_data) {
         strncpy(edges, tmp_e, edges_len);
 
         // post("verts string:\n%s", verts);
-        // post("edges string:\n%s", edges);
+        //post("edges string:\n%s", edges);
+
+        edges[edges_len] = '\0'; // sometimes the edges string's end is malformed idk why.
+
+        // post("%c", edges[edges_len]);
+
         // post("faces string:\n%s", faces);
         // post("");
         // post("data string:\n%s", data);
@@ -639,27 +644,36 @@ t_graph tsp_parse_mesh_data(t_tsp *this, t_symbol *mesh_data) {
         }
 
         offset = (i < 1) ? 0 : g.n_vertices;
-        // post("offset: %d", offset);
+        post("offset: %d", offset);
         graph_resize(&g, idx);
+        post("new g len %d", g.n_vertices);
         // add the edges to graph
         token = strtok(edges, "[");
         int u, v;
+
+        // edges come in pairs, but sometimes random fluff is added on the end
         while(token != NULL) {
             token = strtok(NULL, " {}");
             if(token == NULL || !isnum(token))
                 break;
+            // post("round %d | u: %s", i, token);
             u = atof(token);
             token = strtok(NULL, " {}");
             v = atof(token);
+            // post("round %d | v: %s", i, token);
 
             //post("u: %d, v: %d", u, v);
-            //post("u+off: %d, v+off: %d", u+offset, v+offset);
+            // if(u+offset >= g.n_vertices || v+offset >= g.n_vertices) {
+            //     post("u+off: %d, v+off: %d", u+offset, v+offset);
+            //     return g;
+            // }
             add_edge(&g, u+offset, v+offset);
         }
 
         // from here faces is the only string that isn't mangled
         // we reset data to start from the next of vertices
         data = strstr(faces, "vert");
+
     }
 
     return g;
@@ -672,6 +686,8 @@ void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
     #endif
 
     t_graph g = tsp_parse_mesh_data(this, mesh_data);
+
+    return;
 
     if(g.n_vertices == 0) { return; }
     // graph_post(&g);
