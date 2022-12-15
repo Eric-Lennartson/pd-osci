@@ -21,6 +21,7 @@ it works... mostly, now for optomizing and crash reducing
     - go through and get all the freeing methods worked out
     - make sure that every instance of a pointer is checked for null
         - make sure that a good option for when null happens is implemented
+    - crash on a vamped sphere, check this out later
 
 potential points for opto
 - when completely finished check to see if the speed is good enough for me.
@@ -68,7 +69,7 @@ typedef struct _tsp
 
 
 /* Miscellanous Functions */
-void free_and_null(void **ptr) {
+static void free_and_null(void **ptr) {
     if(ptr != NULL && *ptr != NULL) {
         free(*ptr);
         *ptr = NULL;
@@ -76,7 +77,7 @@ void free_and_null(void **ptr) {
 }
 
 // count occurrences of a substring in a string
-int count_substring(const char *s, char *sub) {
+static int count_substring(const char *s, char *sub) {
     int found, count = 0;
     int slen = strlen(s), sublen = strlen(sub);
 
@@ -95,9 +96,9 @@ int count_substring(const char *s, char *sub) {
 }
 
 // reverse strstr
-char *rev_strstr(const char *s, const char *m)
+static char *rev_strstr(const char *s, const char *m)
 {
-    char *ptr = s + strlen(s);
+    char *ptr = (char *)(s + strlen(s)); // cast to remove compiler warning
     size_t mlen = strlen(m);
     while(ptr-- != s) { // until ptr reaches the beginning of s
         if(*ptr == *m) // single char match first
@@ -108,9 +109,7 @@ char *rev_strstr(const char *s, const char *m)
 }
 
 // this has issues, BUT this should work for the specific use case I have for it.
-// assumptions I've made:
-// strings don't have e in them, . only occurs once,
-int isnum(const char *s) {
+static int isnum(const char *s) {
     while(*s != '\0') {
         if(isdigit(*s) || *s == '-' || *s == '.' || *s == 'e') {
             s++;
@@ -123,29 +122,29 @@ int isnum(const char *s) {
 }
 
 /* Array Functions */
-t_int_arr int_arr(size_t len) {
+static t_int_arr int_arr(size_t len) {
     return (t_int_arr){len, (int*)getbytes(len * sizeof(int)) };
 }
 
-void arr_free(t_int_arr *arr) {
-    free_and_null(&arr->data);
+static void arr_free(t_int_arr *arr) {
+    free_and_null( (void**)&arr->data );
 }
 
 // print out the array
-void arr_post(t_int_arr *arr) {
+static void arr_post(t_int_arr *arr) {
     for(size_t i=0; i < arr->len; ++i) {
         postfloat(arr->data[i]);
     }
     post("length is %lu", arr->len);
 }
 
-void arr_resize(t_int_arr *arr, size_t newsize) {
+static void arr_resize(t_int_arr *arr, size_t newsize) {
     arr->len = newsize;
     arr->data = (int*)realloc(arr->data, arr->len * sizeof(int));
 }
 
 // remove an element from an array at the specified index and shift everything after over
-void arr_remove(t_int_arr *arr, int idx) {
+static void arr_remove(t_int_arr *arr, int idx) {
     if(arr == NULL || arr->len < 1) {
         error("[osci/tsp] arr_remove() passed a null pointer or arr has length 0");
         error("*arr = %p, arr->len = %lu", arr, arr ? arr->len : -1);
@@ -160,7 +159,7 @@ void arr_remove(t_int_arr *arr, int idx) {
 
 // find an element in the array, returns the idx
 // on fail or not found, returns -1
-int arr_find(t_int_arr *arr, int elem) {
+static int arr_find(t_int_arr *arr, int elem) {
     if(arr == NULL || arr->len < 1) {
         error("[osci/tsp] null pointer or 0 length array passed to arr_find()");
         error("*arr = %p, arr->len = %lu", arr, arr ? arr->len : -1);
@@ -186,7 +185,7 @@ static void arr_swap_idx(t_int_arr *arr, int a, int b) {
 }
 
 // swaps element with the last element in the array
-void arr_swap_last(t_int_arr *arr, int elem) {
+static void arr_swap_last(t_int_arr *arr, int elem) {
     int idx = arr_find(arr, elem);
     if(idx != -1 || idx == (int)arr->len-1) {
         int tmp = arr->data[arr->len-1];
@@ -198,7 +197,7 @@ void arr_swap_last(t_int_arr *arr, int elem) {
 }
 
 // push element to the end of the array
-void arr_push(t_int_arr *arr, int elem) {
+static void arr_push(t_int_arr *arr, int elem) {
     if(arr == NULL) {
         error("arr_push() arr is null pointer: %p", arr);
         return;
@@ -208,12 +207,12 @@ void arr_push(t_int_arr *arr, int elem) {
 }
 
 // remove last element and reduce size of array by one
-void arr_pop(t_int_arr *arr) {
+static void arr_pop(t_int_arr *arr) {
     arr->data = (int*)realloc(arr->data, --arr->len * sizeof(int));
 }
 
 /* Graph Functions */
-t_graph graph(int N) { // when we build a graph, we will always know how many total verts there are
+static t_graph graph(int N) { // when we build a graph, we will always know how many total verts there are
     t_graph g = (t_graph){N, (t_int_arr*)getbytes(N * sizeof(t_int_arr) )};
 
     for(int i = 0; i < N; ++i) {
@@ -223,14 +222,14 @@ t_graph graph(int N) { // when we build a graph, we will always know how many to
     return g;
 }
 
-void graph_free(t_graph *g) {
+static void graph_free(t_graph *g) {
     for(int i = 0; i < g->n_vertices; ++i) {
         arr_free(&g->edges[i]);
     }
     free_and_null(&g->edges);
 }
 
-void graph_post(t_graph *g) {
+static void graph_post(t_graph *g) {
     for(int i=0; i < g->n_vertices; ++i) {
         post("Connections for node [%d]", i);
         for(size_t j=0; j < g->edges[i].len; ++j) {
@@ -241,7 +240,7 @@ void graph_post(t_graph *g) {
 }
 
 // check for double connections, false for double or no connections, true for one
-bool graph_check_connection(t_int_arr *xnet, int elem) {
+static bool graph_check_connection(t_int_arr *xnet, int elem) {
     if(xnet == NULL) {
         error("graph_check_connection() xnet is null pointer: %p", xnet);
         return false;
@@ -261,7 +260,7 @@ bool graph_check_connection(t_int_arr *xnet, int elem) {
 }
 
 // push a new node onto the edges array in t_graph
-void graph_add_node(t_graph *g, t_int_arr *node) {
+static void graph_add_node(t_graph *g, t_int_arr *node) {
     if(g == NULL || node == NULL) {
         error("osci/tsp: graph_add_node() bad pointers: g %p | node %p", g, node);
         return;
@@ -270,7 +269,7 @@ void graph_add_node(t_graph *g, t_int_arr *node) {
     g->edges[g->n_vertices-1] = *node;
 }
 
-void graph_resize(t_graph *g, int new_size) {
+static void graph_resize(t_graph *g, int new_size) {
     int old_size = g->n_vertices;
     g->n_vertices = new_size;
     g->edges = (t_int_arr*)realloc(g->edges, g->n_vertices * sizeof(t_int_arr));
@@ -283,7 +282,7 @@ void graph_resize(t_graph *g, int new_size) {
 adjust node connections since node indices will be off
 when we build the new graph
 */
-void graph_fix_indices(t_graph *g, int amt) {
+static void graph_fix_indices(t_graph *g, int amt) {
     for(int i=0; i < g->n_vertices; ++i) {
         t_int_arr* node = &g->edges[i];
         for(size_t j=0; j < node->len; ++j) {
@@ -293,12 +292,12 @@ void graph_fix_indices(t_graph *g, int amt) {
     }
 }
 
-void add_edge(t_graph *g, int u, int v) {
+static void graph_add_edge(t_graph *g, int u, int v) {
     arr_push(&g->edges[u], v);
     arr_push(&g->edges[v], u);
 }
 
-void remove_edge(t_graph *g, int v, int u) {
+static void graph_rm_edge(t_graph *g, int v, int u) {
     t_int_arr *node_v = &g->edges[v];
     t_int_arr *node_u = &g->edges[u];
 
@@ -319,40 +318,40 @@ void remove_edge(t_graph *g, int v, int u) {
     }
 }
 
-int count_connected(t_graph *g, int u, bool *visited) {
+static int graph_count_connected(t_graph *g, int u, bool *visited) {
     visited[u] = true;
     int count = 1;
     for(size_t i=0; i < g->edges[u].len; ++i) {
         if(!visited[ g->edges[u].data[i] ]){
-            count += count_connected(g,  g->edges[u].data[i], visited);
+            count += graph_count_connected(g,  g->edges[u].data[i], visited);
         }
     }
     return count;
 }
 
-bool is_connected(t_graph *g, bool *visited) {
-    int c = count_connected(g, 0, visited);
+static bool is_connected(t_graph *g, bool *visited) {
+    int c = graph_count_connected(g, 0, visited);
     return c == g->n_vertices;
 }
 
-bool is_valid_edge(t_graph *g, int v, int u) {
+static bool is_valid_edge(t_graph *g, int v, int u) {
     int c1 = 0, c2 = 0;
     bool visited[g->n_vertices];
 
-    remove_edge(g, v, u);
+    graph_rm_edge(g, v, u);
     for(int i=0; i < g->n_vertices; ++i)
         visited[i] = false;
-    c1 = count_connected(g, u, visited);
+    c1 = graph_count_connected(g, u, visited);
 
-    add_edge(g, v, u);
+    graph_add_edge(g, v, u);
     for(int i=0; i < g->n_vertices; ++i)
         visited[i] = false;
-    c2 = count_connected(g, u, visited);
+    c2 = graph_count_connected(g, u, visited);
 
     return c1 == c2;
 }
 
-void euler_circuit(t_graph *g, t_int_arr *path, int v) {
+static void euler_circuit(t_graph *g, t_int_arr *path, int v) {
     if(g == NULL) {
         error("[osci/tsp]: bad graph pointer");
         return;
@@ -371,7 +370,7 @@ void euler_circuit(t_graph *g, t_int_arr *path, int v) {
 
     if(g->edges[v].len == 1) { // only one to choose
         int u = g->edges[v].data[0];
-        remove_edge(g, v, u);
+        graph_rm_edge(g, v, u);
         euler_circuit(g, path, u);
         return;
     }
@@ -380,14 +379,15 @@ void euler_circuit(t_graph *g, t_int_arr *path, int v) {
     for(size_t i=0; i < g->edges[v].len; ++i) {
         int u = g->edges[v].data[i];
         if( is_valid_edge(g, v, u) ) {
-            remove_edge(g, v, u);
+            graph_rm_edge(g, v, u);
             euler_circuit(g, path, u);
             return;
         }
     }
 }
 
-void graph_sort(t_graph *g, t_vec3 *verts) {
+static void graph_sort(t_graph *g, t_vec3 *verts) {
+    if(g == NULL || verts == NULL) return;
     // sort the nodes connections based on their distance from each other
     for(int i=0; i < g->n_vertices; ++i) {
         t_int_arr *n = &g->edges[i];
@@ -405,7 +405,7 @@ void graph_sort(t_graph *g, t_vec3 *verts) {
 }
 
 // turns all odd degree nodes in the graph into evens
-void graph_fix_odds(t_graph *g) {
+static void graph_fix_odds(t_graph *g) {
     // build an array containing all the odd nodes
     t_int_arr odds = int_arr(0);
     for(int i=0; i < g->n_vertices; ++i) {
@@ -429,7 +429,7 @@ void graph_fix_odds(t_graph *g) {
 
             if( idx != -1 && graph_check_connection(&g->edges[xnet], odds.data[0]) ) {
                 no_odds = false;
-                add_edge(g, xnet, odds.data[0]);
+                graph_add_edge(g, xnet, odds.data[0]);
                 arr_remove(&odds, 0);
                 arr_remove(&odds, idx-1); // idx has been shifted one to the left now
                 break;
@@ -441,7 +441,7 @@ void graph_fix_odds(t_graph *g) {
             for(size_t i = 0; i < n.len; ++i) {
                 int xnet = n.data[i];
                 if( graph_check_connection(&g->edges[xnet], odds.data[0]) ) {
-                    add_edge(g, xnet, odds.data[0]);
+                    graph_add_edge(g, xnet, odds.data[0]);
                     arr_remove(&odds, 0);
                     arr_push(&odds, xnet); // the even node is now odd, add it to odds
                 }
@@ -455,11 +455,11 @@ void graph_fix_odds(t_graph *g) {
 /* Graph Array Functions */
 
 // create a graph arr
-t_graph_arr graph_arr() {
+static t_graph_arr graph_arr() {
     return (t_graph_arr){0, (t_graph*)getbytes(0 * sizeof(t_graph)) };
 }
 
-void ga_free(t_graph_arr *ga) {
+static void ga_free(t_graph_arr *ga) {
     for(size_t i=0; i < ga->len; ++i) {
         graph_free(&ga->graphs[i]);
     }
@@ -467,7 +467,7 @@ void ga_free(t_graph_arr *ga) {
 }
 
 // add a copy of g to the ga
-void ga_push(t_graph_arr *ga, t_graph *g) {
+static void ga_push(t_graph_arr *ga, t_graph *g) {
     if(ga == NULL || g == NULL) { return; }
 
     ga->graphs = (t_graph *)realloc(ga->graphs, ++ga->len * sizeof(t_graph));
@@ -475,7 +475,7 @@ void ga_push(t_graph_arr *ga, t_graph *g) {
     ga->graphs[ga->len-1] = *g; // maybe it should hold pointers to graphs instead?
 }
 
-void ga_post(t_graph_arr *ga) {
+static void ga_post(t_graph_arr *ga) {
     for(size_t i=0; i < ga->len; ++i) {
         post("graph [%d]", i);
         graph_post(&ga->graphs[i]);
@@ -483,7 +483,7 @@ void ga_post(t_graph_arr *ga) {
 }
 
 //take an input graph, and return a graph_array where each graph is a connected graph
-t_graph_arr ga_generate_connected_graphs(t_graph g) {
+static t_graph_arr ga_generate_connected_graphs(t_graph g) {
     t_graph_arr ga = graph_arr();
 
     bool doit = true;
@@ -524,7 +524,7 @@ t_graph_arr ga_generate_connected_graphs(t_graph g) {
 }
 
 // create a path and it's interp array
-void ga_create_path(t_graph_arr *ga, t_int_arr *p, t_int_arr *interp) {
+static void ga_create_path(t_graph_arr *ga, t_int_arr *p, t_int_arr *interp) {
     t_int_arr *paths = (t_int_arr*)getbytes(ga->len * sizeof(t_int_arr));
 
     // generate the paths
@@ -544,7 +544,7 @@ void ga_create_path(t_graph_arr *ga, t_int_arr *p, t_int_arr *interp) {
     }
 }
 
-void ga_fix_odds(t_graph_arr *ga) {
+static void ga_fix_odds(t_graph_arr *ga) {
     for(size_t i=0; i < ga->len; ++i) {
         graph_fix_odds(&ga->graphs[i]);
     }
@@ -563,7 +563,7 @@ void ga_fix_odds(t_graph_arr *ga) {
 *   8. Sometimes we get multiple set of animation frames, so make sure to only read in the last
 *      one using the function rev_strstr()
 */
-t_graph tsp_parse_mesh_data(t_tsp *this, t_symbol *mesh_data) {
+static t_graph tsp_parse_mesh_data(t_tsp *this, t_symbol *mesh_data) {
     t_graph g = graph(0);
     int idx = 0, offset = 0;
 
@@ -579,11 +579,9 @@ t_graph tsp_parse_mesh_data(t_tsp *this, t_symbol *mesh_data) {
     char *data = rev_strstr(mesh_data->s_name, "frames");
 
     int n_meshes = count_substring(data, "mesh");
-    post("n_meshes = %d", n_meshes);
 
     for(int i=0; i < n_meshes; ++i) {
         if(data == NULL) return g;
-        post("round %d", i);
 
         char *tmp_v = strstr(data, "vert");
         char *tmp_e = strstr(data, "edge");
@@ -598,9 +596,6 @@ t_graph tsp_parse_mesh_data(t_tsp *this, t_symbol *mesh_data) {
         int verts_len = (int)(tmp_e-2-tmp_v);
         int edges_len = (int)(faces-2-tmp_e);
 
-        post("verts len %d", verts_len);
-        post("edges len %d", edges_len);
-
         char verts[verts_len];
         char edges[edges_len];
 
@@ -610,16 +605,8 @@ t_graph tsp_parse_mesh_data(t_tsp *this, t_symbol *mesh_data) {
         strncpy(verts, tmp_v, verts_len);
         strncpy(edges, tmp_e, edges_len);
 
-        // post("verts string:\n%s", verts);
-        //post("edges string:\n%s", edges);
-
-        edges[edges_len] = '\0'; // sometimes the edges string's end is malformed idk why.
-
-        // post("%c", edges[edges_len]);
-
-        // post("faces string:\n%s", faces);
-        // post("");
-        // post("data string:\n%s", data);
+        verts[verts_len] = '\0'; // sometimes the end isn't null terminated, idk why.
+        edges[edges_len] = '\0';
 
         char *token = strtok(verts, "[");
 
@@ -644,9 +631,7 @@ t_graph tsp_parse_mesh_data(t_tsp *this, t_symbol *mesh_data) {
         }
 
         offset = (i < 1) ? 0 : g.n_vertices;
-        post("offset: %d", offset);
         graph_resize(&g, idx);
-        post("new g len %d", g.n_vertices);
         // add the edges to graph
         token = strtok(edges, "[");
         int u, v;
@@ -654,20 +639,11 @@ t_graph tsp_parse_mesh_data(t_tsp *this, t_symbol *mesh_data) {
         // edges come in pairs, but sometimes random fluff is added on the end
         while(token != NULL) {
             token = strtok(NULL, " {}");
-            if(token == NULL || !isnum(token))
-                break;
-            // post("round %d | u: %s", i, token);
+            if(token == NULL || !isnum(token)) break;
             u = atof(token);
             token = strtok(NULL, " {}");
             v = atof(token);
-            // post("round %d | v: %s", i, token);
-
-            //post("u: %d, v: %d", u, v);
-            // if(u+offset >= g.n_vertices || v+offset >= g.n_vertices) {
-            //     post("u+off: %d, v+off: %d", u+offset, v+offset);
-            //     return g;
-            // }
-            add_edge(&g, u+offset, v+offset);
+            graph_add_edge(&g, u+offset, v+offset);
         }
 
         // from here faces is the only string that isn't mangled
@@ -679,7 +655,7 @@ t_graph tsp_parse_mesh_data(t_tsp *this, t_symbol *mesh_data) {
     return g;
 }
 
-void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
+static void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
 {
     #ifdef DEBUG
         int start = clock();
@@ -687,30 +663,23 @@ void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
 
     t_graph g = tsp_parse_mesh_data(this, mesh_data);
 
-    return;
-
     if(g.n_vertices == 0) { return; }
-    // graph_post(&g);
 
     graph_sort(&g, this->vertices);
 
-    //graph_post(&g);
-
     t_graph_arr ga = ga_generate_connected_graphs(g);
 
-    // post("===\n===\n===\n===\n====\n");
-    ga_fix_odds(&ga);
+    // it should be safe to free the graph here?
+    // graph_free(&g);
 
-    // post("fixed graph result ===");
-    // post("======================");
-    // graph_post(&g);
+    // return;
+
+    ga_fix_odds(&ga);
 
     // run fleury's algorithm and build the path(s)
     t_int_arr path = int_arr(0);
     t_int_arr interp = int_arr(0);
     ga_create_path(&ga, &path, &interp);
-    // post("path length is %d", path.len);
-    // post("interp lengh is %d", interp.len);
 
     // take that path and build up the x, y, and z arrays
     t_atom *xpts = (t_atom*)getbytes(path.len * sizeof(t_atom));
@@ -734,10 +703,10 @@ void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
     outlet_list(this->interp_out, &s_list, path.len, interp_vals);
 
     // cleanup
-    free_and_null(&xpts);
-    free_and_null(&ypts);
-    free_and_null(&zpts);
-    free_and_null(&interp_vals);
+    free_and_null( (void**)&xpts ); // void cast just to remove compiler warnings
+    free_and_null( (void**)&ypts );
+    free_and_null( (void**)&zpts );
+    free_and_null( (void**)&interp_vals );
 
     arr_free(&path);
     arr_free(&interp);
@@ -777,7 +746,14 @@ static void *tsp_new(t_floatarg max)
 }
 
 static void *tsp_free(t_tsp *this) {
-    free_and_null(&this->vertices);
+    free_and_null( (void**)&this->vertices );
+
+    outlet_free(this->xpts_out);
+    outlet_free(this->ypts_out);
+    outlet_free(this->zpts_out);
+    outlet_free(this->interp_out);
+    outlet_free(this->size_out);
+
     return (void *)this;
 }
 
