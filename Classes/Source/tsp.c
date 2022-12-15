@@ -18,7 +18,7 @@
 todo
 
 it works... mostly, now for optomizing and crash reducing
-    - go through and get all the freeing methods worked out
+    - crash with on greater than 3 objects
     - make sure that every instance of a pointer is checked for null
         - make sure that a good option for when null happens is implemented
     - crash on a vamped sphere, check this out later
@@ -130,6 +130,16 @@ static void arr_free(t_int_arr *arr) {
     free_and_null( (void**)&arr->data );
 }
 
+static t_int_arr arr_copy(t_int_arr *arr) {
+    t_int_arr copy = int_arr(arr->len);
+
+    for(size_t i=0; i < arr->len; ++i) {
+        copy.data[i] = arr->data[i];
+    }
+
+    return copy;
+}
+
 // print out the array
 static void arr_post(t_int_arr *arr) {
     for(size_t i=0; i < arr->len; ++i) {
@@ -226,10 +236,21 @@ static void graph_free(t_graph *g) {
     for(int i = 0; i < g->n_vertices; ++i) {
         arr_free(&g->edges[i]);
     }
-    free_and_null(&g->edges);
+    free_and_null( (void**)&g->edges );
+}
+
+static t_graph graph_copy(t_graph *g) {
+    t_graph copy = graph(g->n_vertices);
+
+    for(int i = 0; i < copy.n_vertices; ++i) {
+        copy.edges[i] = arr_copy(&g->edges[i]);
+    }
+
+    return copy;
 }
 
 static void graph_post(t_graph *g) {
+    if(g == NULL) {return;}
     for(int i=0; i < g->n_vertices; ++i) {
         post("Connections for node [%d]", i);
         for(size_t j=0; j < g->edges[i].len; ++j) {
@@ -406,6 +427,15 @@ static void graph_sort(t_graph *g, t_vec3 *verts) {
 
 // turns all odd degree nodes in the graph into evens
 static void graph_fix_odds(t_graph *g) {
+    if(g == NULL) {
+        error("graph_fix_odds() null pointer to graph");
+        return;
+    }
+    if(g->edges == NULL) {
+        error("graph_fix_odds() null pointer to edges");
+        return;
+    }
+
     // build an array containing all the odd nodes
     t_int_arr odds = int_arr(0);
     for(int i=0; i < g->n_vertices; ++i) {
@@ -463,16 +493,16 @@ static void ga_free(t_graph_arr *ga) {
     for(size_t i=0; i < ga->len; ++i) {
         graph_free(&ga->graphs[i]);
     }
-    free_and_null(&ga->graphs);
+    free_and_null( (void**)&ga->graphs );
 }
 
 // add a copy of g to the ga
-static void ga_push(t_graph_arr *ga, t_graph *g) {
-    if(ga == NULL || g == NULL) { return; }
+static void ga_push(t_graph_arr *ga, t_graph g) {
+    if(ga == NULL) { return; }
 
     ga->graphs = (t_graph *)realloc(ga->graphs, ++ga->len * sizeof(t_graph));
     // post("adding graph to position %lu", ga->len-1);
-    ga->graphs[ga->len-1] = *g; // maybe it should hold pointers to graphs instead?
+    ga->graphs[ga->len-1] = g;
 }
 
 static void ga_post(t_graph_arr *ga) {
@@ -512,12 +542,12 @@ static t_graph_arr ga_generate_connected_graphs(t_graph g) {
             // must be first otherwise g.n_vertices will be wrong
             graph_fix_indices(&tmp, g.n_vertices - tmp.n_vertices);
             graph_resize(&g, g.n_vertices - tmp.n_vertices);
-            ga_push(&ga, &g);
+            ga_push(&ga, graph_copy(&g));
             g = tmp;
         }
     }
 
-    ga_push(&ga, &g); // push the final graph onto the array
+    ga_push(&ga, graph_copy(&g)); // push the final graph onto the array
 
     // ga_post(&ga);
     return ga;
@@ -669,11 +699,6 @@ static void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
 
     t_graph_arr ga = ga_generate_connected_graphs(g);
 
-    // it should be safe to free the graph here?
-    // graph_free(&g);
-
-    // return;
-
     ga_fix_odds(&ga);
 
     // run fleury's algorithm and build the path(s)
@@ -703,15 +728,15 @@ static void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
     outlet_list(this->interp_out, &s_list, path.len, interp_vals);
 
     // cleanup
+    arr_free(&path);
+    arr_free(&interp);
+    graph_free(&g);
+    ga_free(&ga);
+
     free_and_null( (void**)&xpts ); // void cast just to remove compiler warnings
     free_and_null( (void**)&ypts );
     free_and_null( (void**)&zpts );
     free_and_null( (void**)&interp_vals );
-
-    arr_free(&path);
-    arr_free(&interp);
-
-    //graph_free(&g); todo take a look at graph and ga free methods something is causing them to crash
 
     #ifdef DEBUG
         int end = clock();
