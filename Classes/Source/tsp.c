@@ -18,10 +18,8 @@
 todo
 
 it works... mostly, now for optomizing and crash reducing
-    - crash with on greater than 3 objects
     - make sure that every instance of a pointer is checked for null
         - make sure that a good option for when null happens is implemented
-    - crash on a vamped sphere, check this out later
 
 potential points for opto
 - when completely finished check to see if the speed is good enough for me.
@@ -141,12 +139,12 @@ static t_int_arr arr_copy(t_int_arr *arr) {
 }
 
 // print out the array
-static void arr_post(t_int_arr *arr) {
-    for(size_t i=0; i < arr->len; ++i) {
-        postfloat(arr->data[i]);
-    }
-    post("length is %lu", arr->len);
-}
+// static void arr_post(t_int_arr *arr) {
+//     for(size_t i=0; i < arr->len; ++i) {
+//         postfloat(arr->data[i]);
+//     }
+//     post("length is %lu", arr->len);
+// }
 
 static void arr_resize(t_int_arr *arr, size_t newsize) {
     arr->len = newsize;
@@ -233,7 +231,13 @@ static t_graph graph(int N) { // when we build a graph, we will always know how 
 }
 
 static void graph_free(t_graph *g) {
+    // post("graph_free diagnostic");
+    // post("g->edges %p", g->edges);
+
     for(int i = 0; i < g->n_vertices; ++i) {
+        // void *p = g->edges[i].data;
+        // if(p == NULL) error("why is this null before we freed it???");
+        // post("g->edges[%d].data %p", i, p);
         arr_free(&g->edges[i]);
     }
     free_and_null( (void**)&g->edges );
@@ -249,16 +253,16 @@ static t_graph graph_copy(t_graph *g) {
     return copy;
 }
 
-static void graph_post(t_graph *g) {
-    if(g == NULL) {return;}
-    for(int i=0; i < g->n_vertices; ++i) {
-        post("Connections for node [%d]", i);
-        for(size_t j=0; j < g->edges[i].len; ++j) {
-            postfloat(g->edges[i].data[j]);
-        }
-        post("");
-    }
-}
+// static void graph_post(t_graph *g) {
+//     if(g == NULL) {return;}
+//     for(int i=0; i < g->n_vertices; ++i) {
+//         post("Connections for node [%d]", i);
+//         for(size_t j=0; j < g->edges[i].len; ++j) {
+//             postfloat(g->edges[i].data[j]);
+//         }
+//         post("");
+//     }
+// }
 
 // check for double connections, false for double or no connections, true for one
 static bool graph_check_connection(t_int_arr *xnet, int elem) {
@@ -281,13 +285,13 @@ static bool graph_check_connection(t_int_arr *xnet, int elem) {
 }
 
 // push a new node onto the edges array in t_graph
-static void graph_add_node(t_graph *g, t_int_arr *node) {
-    if(g == NULL || node == NULL) {
-        error("osci/tsp: graph_add_node() bad pointers: g %p | node %p", g, node);
+static void graph_add_node(t_graph *g, t_int_arr node) {
+    if(g == NULL) {
+        error("osci/tsp: graph_add_node() bad pointer to graph: g %p ", g);
         return;
     }
     g->edges = (t_int_arr*)realloc(g->edges, ++g->n_vertices * sizeof(t_int_arr));
-    g->edges[g->n_vertices-1] = *node;
+    g->edges[g->n_vertices-1] = node;
 }
 
 static void graph_resize(t_graph *g, int new_size) {
@@ -299,10 +303,9 @@ static void graph_resize(t_graph *g, int new_size) {
         g->edges[i] = int_arr(0);
 }
 
-/*
-adjust node connections since node indices will be off
-when we build the new graph
-*/
+
+// adjust node connections since node indices will be off
+// when we build the new graph
 static void graph_fix_indices(t_graph *g, int amt) {
     for(int i=0; i < g->n_vertices; ++i) {
         t_int_arr* node = &g->edges[i];
@@ -505,16 +508,18 @@ static void ga_push(t_graph_arr *ga, t_graph g) {
     ga->graphs[ga->len-1] = g;
 }
 
-static void ga_post(t_graph_arr *ga) {
-    for(size_t i=0; i < ga->len; ++i) {
-        post("graph [%d]", i);
-        graph_post(&ga->graphs[i]);
-    }
-}
+// static void ga_post(t_graph_arr *ga) {
+//     for(size_t i=0; i < ga->len; ++i) {
+//         post("graph [%d]", i);
+//         graph_post(&ga->graphs[i]);
+//     }
+// }
 
 //take an input graph, and return a graph_array where each graph is a connected graph
 static t_graph_arr ga_generate_connected_graphs(t_graph g) {
     t_graph_arr ga = graph_arr();
+
+    g = graph_copy(&g);
 
     bool doit = true;
     while(doit) {
@@ -525,29 +530,23 @@ static t_graph_arr ga_generate_connected_graphs(t_graph g) {
 
         doit = !is_connected(&g, visited);
         if(doit) {
-            // post("not connected, generating a new graph");
             t_graph tmp = graph(0);
             // fill new graph with nodes from old graph that weren't visited
             for(int i=0; i < g.n_vertices; ++i) {
                 if( !visited[i] ) {
-                    // later: adjust the verts array
-                    graph_add_node(&tmp, &g.edges[i]);
-                    /* ERROR: node indices in the graph don't match the index of the vertex they refer to now!
-                        Solution: change the vertices array to be a jagged 2d array. Then I can chop of vertices and drop
-                        them in new arrays as needed to keep things making sense index wise.
-                    */
+                    graph_add_node(&tmp, g.edges[i]);
                 }
             }
 
             // must be first otherwise g.n_vertices will be wrong
             graph_fix_indices(&tmp, g.n_vertices - tmp.n_vertices);
             graph_resize(&g, g.n_vertices - tmp.n_vertices);
-            ga_push(&ga, graph_copy(&g));
+            ga_push(&ga, g);
             g = tmp;
         }
     }
 
-    ga_push(&ga, graph_copy(&g)); // push the final graph onto the array
+    ga_push(&ga, g); // push the final graph onto the array
 
     // ga_post(&ga);
     return ga;
@@ -696,8 +695,8 @@ static void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
     if(g.n_vertices == 0) { return; }
 
     graph_sort(&g, this->vertices);
-
     t_graph_arr ga = ga_generate_connected_graphs(g);
+    graph_free(&g);
 
     ga_fix_odds(&ga);
 
@@ -713,7 +712,6 @@ static void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
     t_atom *interp_vals = (t_atom*)getbytes(path.len * sizeof(t_atom));
 
     for(size_t i=0; i < path.len; ++i) {
-        // postfloat(path.data[i]);
         SETFLOAT(xpts+i, this->vertices[path.data[i]].x);
         SETFLOAT(ypts+i, this->vertices[path.data[i]].y);
         SETFLOAT(zpts+i, this->vertices[path.data[i]].z);
@@ -730,7 +728,6 @@ static void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
     // cleanup
     arr_free(&path);
     arr_free(&interp);
-    graph_free(&g);
     ga_free(&ga);
 
     free_and_null( (void**)&xpts ); // void cast just to remove compiler warnings
