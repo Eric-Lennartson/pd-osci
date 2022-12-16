@@ -76,6 +76,8 @@ static void free_and_null(void **ptr) {
 
 // count occurrences of a substring in a string
 static int count_substring(const char *s, char *sub) {
+    if(s == NULL || sub == NULL) return 0;
+
     int found, count = 0;
     int slen = strlen(s), sublen = strlen(sub);
 
@@ -96,6 +98,8 @@ static int count_substring(const char *s, char *sub) {
 // reverse strstr
 static char *rev_strstr(const char *s, const char *m)
 {
+    if(s == NULL || m == NULL) return NULL;
+
     char *ptr = (char *)(s + strlen(s)); // cast to remove compiler warning
     size_t mlen = strlen(m);
     while(ptr-- != s) { // until ptr reaches the beginning of s
@@ -107,16 +111,18 @@ static char *rev_strstr(const char *s, const char *m)
 }
 
 // this has issues, BUT this should work for the specific use case I have for it.
-static int isnum(const char *s) {
+static bool isnum(const char *s) {
+    if(s == NULL) return false;
+
     while(*s != '\0') {
         if(isdigit(*s) || *s == '-' || *s == '.' || *s == 'e') {
             s++;
             continue;
         }
         else
-            return 0;
+            return false;
     }
-    return 1;
+    return true;
 }
 
 /* Array Functions */
@@ -129,6 +135,8 @@ static void arr_free(t_int_arr *arr) {
 }
 
 static t_int_arr arr_copy(t_int_arr *arr) {
+    if(arr == NULL) return int_arr(0);
+
     t_int_arr copy = int_arr(arr->len);
 
     for(size_t i=0; i < arr->len; ++i) {
@@ -147,6 +155,8 @@ static t_int_arr arr_copy(t_int_arr *arr) {
 // }
 
 static void arr_resize(t_int_arr *arr, size_t newsize) {
+    if(arr == NULL) return;
+
     arr->len = newsize;
     arr->data = (int*)realloc(arr->data, arr->len * sizeof(int));
 }
@@ -165,8 +175,7 @@ static void arr_remove(t_int_arr *arr, int idx) {
     arr_resize(arr, arr->len);
 }
 
-// find an element in the array, returns the idx
-// on fail or not found, returns -1
+// find an element in the array, returns the idx, on fail or not found, returns -1
 static int arr_find(t_int_arr *arr, int elem) {
     if(arr == NULL || arr->len < 1) {
         error("[osci/tsp] null pointer or 0 length array passed to arr_find()");
@@ -187,6 +196,7 @@ static int arr_find(t_int_arr *arr, int elem) {
 }
 
 static void arr_swap_idx(t_int_arr *arr, int a, int b) {
+    if(!arr) return;
     int tmp = arr->data[a];
     arr->data[a] = arr->data[b];
     arr->data[b] = tmp;
@@ -194,6 +204,7 @@ static void arr_swap_idx(t_int_arr *arr, int a, int b) {
 
 // swaps element with the last element in the array
 static void arr_swap_last(t_int_arr *arr, int elem) {
+    if(!arr) return;
     int idx = arr_find(arr, elem);
     if(idx != -1 || idx == (int)arr->len-1) {
         int tmp = arr->data[arr->len-1];
@@ -216,6 +227,7 @@ static void arr_push(t_int_arr *arr, int elem) {
 
 // remove last element and reduce size of array by one
 static void arr_pop(t_int_arr *arr) {
+    if(!arr) return;
     arr->data = (int*)realloc(arr->data, --arr->len * sizeof(int));
 }
 
@@ -231,19 +243,15 @@ static t_graph graph(int N) { // when we build a graph, we will always know how 
 }
 
 static void graph_free(t_graph *g) {
-    // post("graph_free diagnostic");
-    // post("g->edges %p", g->edges);
-
+    if(!g) return;
     for(int i = 0; i < g->n_vertices; ++i) {
-        // void *p = g->edges[i].data;
-        // if(p == NULL) error("why is this null before we freed it???");
-        // post("g->edges[%d].data %p", i, p);
         arr_free(&g->edges[i]);
     }
     free_and_null( (void**)&g->edges );
 }
 
 static t_graph graph_copy(t_graph *g) {
+    if(!g) return graph(0);
     t_graph copy = graph(g->n_vertices);
 
     for(int i = 0; i < copy.n_vertices; ++i) {
@@ -295,6 +303,7 @@ static void graph_add_node(t_graph *g, t_int_arr node) {
 }
 
 static void graph_resize(t_graph *g, int new_size) {
+    if(!g) return;
     int old_size = g->n_vertices;
     g->n_vertices = new_size;
     g->edges = (t_int_arr*)realloc(g->edges, g->n_vertices * sizeof(t_int_arr));
@@ -307,6 +316,7 @@ static void graph_resize(t_graph *g, int new_size) {
 // adjust node connections since node indices will be off
 // when we build the new graph
 static void graph_fix_indices(t_graph *g, int amt) {
+    if(!g) return;
     for(int i=0; i < g->n_vertices; ++i) {
         t_int_arr* node = &g->edges[i];
         for(size_t j=0; j < node->len; ++j) {
@@ -317,11 +327,13 @@ static void graph_fix_indices(t_graph *g, int amt) {
 }
 
 static void graph_add_edge(t_graph *g, int u, int v) {
+    if(!g) return;
     arr_push(&g->edges[u], v);
     arr_push(&g->edges[v], u);
 }
 
 static void graph_rm_edge(t_graph *g, int v, int u) {
+    if(!g) return;
     t_int_arr *node_v = &g->edges[v];
     t_int_arr *node_u = &g->edges[u];
 
@@ -343,6 +355,7 @@ static void graph_rm_edge(t_graph *g, int v, int u) {
 }
 
 static int graph_count_connected(t_graph *g, int u, bool *visited) {
+    if(!g || !visited) return 0;
     visited[u] = true;
     int count = 1;
     for(size_t i=0; i < g->edges[u].len; ++i) {
@@ -354,11 +367,13 @@ static int graph_count_connected(t_graph *g, int u, bool *visited) {
 }
 
 static bool is_connected(t_graph *g, bool *visited) {
+    if(!g || !visited) return false;
     int c = graph_count_connected(g, 0, visited);
     return c == g->n_vertices;
 }
 
 static bool is_valid_edge(t_graph *g, int v, int u) {
+    if(!g) return false;
     int c1 = 0, c2 = 0;
     bool visited[g->n_vertices];
 
@@ -493,6 +508,7 @@ static t_graph_arr graph_arr() {
 }
 
 static void ga_free(t_graph_arr *ga) {
+    if(!ga) return;
     for(size_t i=0; i < ga->len; ++i) {
         graph_free(&ga->graphs[i]);
     }
@@ -501,7 +517,7 @@ static void ga_free(t_graph_arr *ga) {
 
 // add a copy of g to the ga
 static void ga_push(t_graph_arr *ga, t_graph g) {
-    if(ga == NULL) { return; }
+    if(!ga) return;
 
     ga->graphs = (t_graph *)realloc(ga->graphs, ++ga->len * sizeof(t_graph));
     // post("adding graph to position %lu", ga->len-1);
@@ -554,6 +570,8 @@ static t_graph_arr ga_generate_connected_graphs(t_graph g) {
 
 // create a path and it's interp array
 static void ga_create_path(t_graph_arr *ga, t_int_arr *p, t_int_arr *interp) {
+    if(!ga || !p || !interp) return;
+
     t_int_arr *paths = (t_int_arr*)getbytes(ga->len * sizeof(t_int_arr));
 
     // generate the paths
@@ -571,9 +589,12 @@ static void ga_create_path(t_graph_arr *ga, t_int_arr *p, t_int_arr *interp) {
             arr_push(interp, (j < paths[i].len-1) ? 1 : 0);
         }
     }
+
+    arr_free(paths);
 }
 
 static void ga_fix_odds(t_graph_arr *ga) {
+    if(!ga) return;
     for(size_t i=0; i < ga->len; ++i) {
         graph_fix_odds(&ga->graphs[i]);
     }
@@ -593,6 +614,7 @@ static void ga_fix_odds(t_graph_arr *ga) {
 *      one using the function rev_strstr()
 */
 static t_graph tsp_parse_mesh_data(t_tsp *this, t_symbol *mesh_data) {
+    if(!this) return graph(0);
     t_graph g = graph(0);
     int idx = 0, offset = 0;
 
@@ -686,6 +708,7 @@ static t_graph tsp_parse_mesh_data(t_tsp *this, t_symbol *mesh_data) {
 
 static void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
 {
+    if(!this || !mesh_data) return;
     #ifdef DEBUG
         int start = clock();
     #endif
@@ -743,6 +766,7 @@ static void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
 }
 
 static void tsp_set_max(t_tsp *this, t_floatarg max) {
+    if(!this) return;
     this->max_verts = (max <= 0) ? MAX :
                       (max > MAX) ? MAX : (int)max;
     this->vertices = (t_vec3*)realloc(this->vertices, this->max_verts * sizeof(t_vec3));
@@ -768,6 +792,7 @@ static void *tsp_new(t_floatarg max)
 }
 
 static void *tsp_free(t_tsp *this) {
+    if(!this) return NULL;
     free_and_null( (void**)&this->vertices );
 
     outlet_free(this->xpts_out);
