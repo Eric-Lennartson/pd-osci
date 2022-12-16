@@ -6,38 +6,13 @@
 #include "vec3.h"
 #include "stdbool.h"
 
-#define DEBUG
+//#define DEBUG
 
 #ifdef DEBUG
     #include <time.h>
 #endif
 
 #define MAX 5000
-
-/*
-todo
-
-it works... mostly, now for optomizing and crash reducing
-    - make sure that every instance of a pointer is checked for null
-        - make sure that a good option for when null happens is implemented
-
-potential points for opto
-- when completely finished check to see if the speed is good enough for me.
-- graph_check_connection and finding in odds, maybe that can become one connection?
-- add a function to put nodes we've connected to to the back of the array
-    - test this to see if this is actually faster than what the current method is.
-    - is more for loops faster or slower?
-
-Other random thoughts:
-- what happens when the number of vertices gets really high?
-- read through that guy's null pointer check thing I found, and see if I should be fixing, the free_and_null method I found.
-- Is there a faster way to check if a node is in the odds array?
-    - each node could get a tag, called isodd, that would be faster to check than searching the entire array
-
-After opto and freeing of arrays is all fixed up
-    - implement a save feature where pd remembers the data for the graph
-
-*/
 
 typedef struct _int_arr {
     size_t len;
@@ -462,9 +437,6 @@ static void graph_fix_odds(t_graph *g) {
         }
     }
 
-    //post("members of odds");
-    //arr_post(&odds);
-
     // add a method to push elements to the back of the array once connected
     // this should speed the algorithm up (test this)
     while(odds.len > 0)
@@ -710,23 +682,62 @@ static void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
 {
     if(!this || !mesh_data) return;
     #ifdef DEBUG
-        int start = clock();
+        int total_start = clock();
+        int local_start = total_start;
+        int end, ticks;
+        t_float parse_time, sort_time, ga_gen_time, odds_time, path_time, total_time;
     #endif
 
     t_graph g = tsp_parse_mesh_data(this, mesh_data);
 
+    #ifdef DEBUG
+        end = clock();
+        ticks = end-local_start;
+        parse_time = ((float)ticks/CLOCKS_PER_SEC)*1000;
+        local_start = clock();
+    #endif
+
     if(g.n_vertices == 0) { return; }
 
     graph_sort(&g, this->vertices);
+
+    #ifdef DEBUG
+        end = clock();
+        ticks = end-local_start;
+        sort_time = ((float)ticks/CLOCKS_PER_SEC)*1000;
+        local_start = clock();
+    #endif
+
     t_graph_arr ga = ga_generate_connected_graphs(g);
+
+    #ifdef DEBUG
+        end = clock();
+        ticks = end-local_start;
+        ga_gen_time = ((float)ticks/CLOCKS_PER_SEC)*1000;
+        local_start = clock();
+    #endif
+
     graph_free(&g);
 
     ga_fix_odds(&ga);
+
+    #ifdef DEBUG
+        end = clock();
+        ticks = end-local_start;
+        odds_time = ((float)ticks/CLOCKS_PER_SEC)*1000;
+        local_start = clock();
+    #endif
 
     // run fleury's algorithm and build the path(s)
     t_int_arr path = int_arr(0);
     t_int_arr interp = int_arr(0);
     ga_create_path(&ga, &path, &interp);
+
+    #ifdef DEBUG
+        end = clock();
+        ticks = end-local_start;
+        path_time = ((float)ticks/CLOCKS_PER_SEC)*1000;
+    #endif
 
     // take that path and build up the x, y, and z arrays
     t_atom *xpts = (t_atom*)getbytes(path.len * sizeof(t_atom));
@@ -759,9 +770,15 @@ static void tsp_symbol(t_tsp *this, t_symbol *mesh_data)
     free_and_null( (void**)&interp_vals );
 
     #ifdef DEBUG
-        int end = clock();
-        int ticks = end-start;
-        post("\nelapsed ticks: %d\nelapsed time: %.6f ms", ticks, ((float)ticks/CLOCKS_PER_SEC)*1000 );
+        end = clock();
+        ticks = end-total_start;
+        total_time = ((float)ticks/CLOCKS_PER_SEC)*1000;
+        post("parse time: %.6fms  percent: %.3f", parse_time, (parse_time / total_time)*100);
+        post("sort time: %.6fms  percent: %.3f", sort_time, (sort_time / total_time)*100);
+        post("ga_gen time: %.6fms  percent: %.3f", ga_gen_time, (ga_gen_time / total_time)*100);
+        post("odds time: %.6fms  percent: %.3f", odds_time, (odds_time / total_time)*100);
+        post("path time: %.6fms  percent: %.3f", path_time, (path_time / total_time)*100);
+        post("total time: %.6f ms", total_time);
     #endif
 }
 
