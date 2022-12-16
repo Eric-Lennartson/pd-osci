@@ -612,7 +612,9 @@ static t_graph tsp_parse_mesh_data(t_tsp *this, t_symbol *mesh_data) {
 
         if(tmp_v == NULL || tmp_e == NULL || faces == NULL) {
             pd_error(&this->obj, "[osci/tsp]: invalid format for mesh data");
-            error("mesh data: %s", data);
+            error("tmp_v: %p", tmp_v);
+            error("tmp_e: %p", tmp_e);
+            error("faces: %p", faces);
             return g;
         }
 
