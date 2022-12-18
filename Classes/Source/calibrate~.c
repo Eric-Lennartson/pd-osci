@@ -5,8 +5,16 @@
 #define SQRT_8 2.8284271247
 #define SQRT_2 1.4142135624
 
+/* todo
+    - redo how calibrate~ adjusts the image
+        - instead of having points effect other points, each point is independent
+        - then the image will find what points it is in between, and move based on
+          the weighted average of the points it's between (before the control points got moved)
+        - the closer it is a to a certain control point, the more it'll move towards that cp.
+*/
+
 // this is some stuff from my own version of pd next
-// it'll look weird in vanilla, but idk how to do this where It changes based on the compilation
+// it'll look weird in vanilla, but idk how to do this where it changes based on the compilation
 // and besides most people are getting this from deken, not compiling it.
 #define CORNER_RADIUS 14 /* amount to inset the corners for rounding them */
 #define CORNER_INSET ((CORNER_RADIUS / 2) - 2) /* corner locations after rounding */

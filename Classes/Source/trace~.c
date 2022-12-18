@@ -29,7 +29,7 @@ static t_int *trace_perform(t_int *w)
             t_sample offset = offset_in[nblock];
             t_sample length = length_in[nblock];
             offset = offset < 0 ? 0 : offset; // prevent strange images from negative offset_in
-            out[nblock] = (length <= 1) ? t * length + offset : mod1(t * length + offset);
+            out[nblock] = mod1(t * length + offset);
         } else {
             out[nblock] = t;
         }
@@ -63,6 +63,7 @@ static void *trace_free(t_trace *x)
 
 static void *trace_new(t_symbol *s, int argc, t_atom *argv)
 {
+    s = NULL; // silence compiler warning
     t_trace *x = (t_trace *)pd_new(trace_class);
 
     x->bypass = false;

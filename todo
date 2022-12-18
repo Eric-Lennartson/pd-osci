@@ -5,18 +5,20 @@
 - add some distortion effects
     - swirl
     - randomize?
-    - work on this when I get tired of figuring out how to implement tsp
 
 - osci/tsp~
     - this requires making an osc abstraction (copy this in from previous patch I made)
-    - what would it take to implement the ability to handle disconnected meshes?
-    - figure out the sorting bit, and then on to testing!
-    - see how far I can go with realtime stuff
+    - turn the various bits into abstractions that are more user friendly
+    - make an abstraction that saves that points in its arrays, with a name provided by the user
+        - this way, meshes can be saved to the patch.
 
 - calibrate~
     - dark and light mode
-    - finalize distortion grid fixes
-        - might need to completely rethink how the grid distorts
+    - redo how calibrate works
+    - polish the gui
+        - dynamic cp size,
+        - dialog for settings
+        - etc.
 
 - add a rotation using quaternions. that way there is no gimbal lock issues.
 
