@@ -69,10 +69,8 @@ static void *trace_new(t_symbol *s, int argc, t_atom *argv)
 
     x->bypass = false;
 
-    t_float offset = 0, length = 0.999; // 1 mod 1 is 0
-
-    offset = argc ? mod1( atom_getfloat(argv) ) : 0;
-    length = argc > 1 ? atom_getfloat(argv+1) : 1;
+    t_float offset = argc ? mod1( atom_getfloat(argv) ) : 0;
+    t_float length = argc > 1 ? atom_getfloat(argv+1) : 0.999;
     length = length <= 1 ? length : mod1(length);
 
     x->offset_in = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal);
