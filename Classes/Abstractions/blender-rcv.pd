@@ -1,0 +1,86 @@
+#N canvas 436 72 709 509 12;
+#X obj 15 199 netreceive -b;
+#X msg 15 225 append \$1;
+#X obj 15 313 list store;
+#X obj 91 280 t b b;
+#X obj 15 339 list tosymbol;
+#X floatatom 93 225 8 0 0 0 - - \$0-connected 0;
+#X text 115 313 build the message;
+#X text 122 339 convert ascii numbers for chars to text;
+#X msg 15 169 listen \$1 127.0.0.1;
+#X obj 15 140 r \$0-port;
+#X obj 91 253 r \$0-go;
+#X obj 42 397 spigot;
+#X obj 42 423 print;
+#X obj 80 370 r \$0-print;
+#X obj 15 452 outlet mesh_data;
+#X obj 230 193 r \$0-silence;
+#X msg 230 219 0;
+#X obj 230 245 s \$0-port-set;
+#X obj 383 93 r \$0-connected;
+#X obj 383 301 s \$0-connected-cnv;
+#X obj 383 119 sel 1;
+#X obj 11 27 cnv 24 180 104 empty empty empty 20 12 0 14 #f2f1ea #c5b18d
+0;
+#X floatatom 100 34 8 0 0 1 Port \$0-port-set \$0-port 0;
+#X obj 100 58 tgl 24 0 \$0-print \$0-print-set Print 30 12 0 12 #57595e
+#d0f895 #617273 0 1;
+#X obj 16 32 bng 24 250 50 0 \$0-silence \$0-none Silence 30 12 0 12
+#595b5e #d0f895 #627273;
+#X obj 16 58 bng 24 50 10 0 \$0-go \$0-update Update 30 13 0 12 #585a5e
+#d0f895 #617273;
+#X obj 16 110 cnv 15 170 15 empty \$0-connected-cnv disconnected 4
+8 0 10 #273031 #9ca0ad 0;
+#X obj 11 11 cnv 15 180 15 empty empty osci/blender-rcv 5 7 0 10 #283031
+#f2f1e9 0;
+#X msg 522 145 label disconnected;
+#X msg 383 148 label connected;
+#X obj 15 129 cnv 2 7 2 empty empty empty 20 12 0 14 #273031 #c5b18d
+0;
+#X obj 16 84 tgl 24 0 \$0-auto \$0-auto-set Auto 30 12 0 12 #57595e
+#d0f895 #617273 0 1;
+#X floatatom 98 86 8 50 10000 1 Rate \$0-rate-set \$0-rate 0;
+#X obj 231 103 else/initmess \; \$0-port-set 11995 \; \$0-print-set
+0 \; \$0-auto-set 0 \; \$0-rate-set 100 \;;
+#X obj 395 248 pack s s s;
+#X msg 395 274 color \$1 \$2 \$3;
+#X msg 395 192 list #273031 #000000 #9ca0ad;
+#X msg 407 219 list #273031 #000000 #d0f985;
+#X obj 202 402 r \$0-auto;
+#X obj 202 428 metro;
+#X obj 300 416 r \$0-rate;
+#X obj 202 454 s \$0-update;
+#X obj 146 12 bng 12 250 50 0 \$0-reset \$0-none reset 14 5 0 10 #f1f0e8
+#262f30 #f2f1e8;
+#X obj 231 76 r \$0-reset;
+#X connect 0 0 1 0;
+#X connect 0 1 5 0;
+#X connect 1 0 2 0;
+#X connect 2 0 4 0;
+#X connect 3 0 2 1;
+#X connect 3 1 2 0;
+#X connect 4 0 11 0;
+#X connect 4 0 14 0;
+#X connect 8 0 0 0;
+#X connect 9 0 8 0;
+#X connect 10 0 3 0;
+#X connect 11 0 12 0;
+#X connect 13 0 11 1;
+#X connect 15 0 16 0;
+#X connect 16 0 17 0;
+#X connect 18 0 20 0;
+#X connect 20 0 29 0;
+#X connect 20 0 37 0;
+#X connect 20 1 28 0;
+#X connect 20 1 36 0;
+#X connect 28 0 19 0;
+#X connect 29 0 19 0;
+#X connect 34 0 35 0;
+#X connect 35 0 19 0;
+#X connect 36 0 34 0;
+#X connect 37 0 34 0;
+#X connect 38 0 39 0;
+#X connect 39 0 41 0;
+#X connect 40 0 39 1;
+#X connect 43 0 33 0;
+#X coords 0 -1 1 1 182 122 1 10 10;

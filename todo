@@ -1,16 +1,21 @@
 ==== Roadmap ===================================================================
-- trace~
-    - fix this, not sure why it is so bad now
-
 - add some distortion effects
     - swirl
     - randomize?
 
+All of the tsp related plugins will have one help patch that documents everything
+
 - osci/tsp~
-    - this requires making an osc abstraction (copy this in from previous patch I made)
-    - turn the various bits into abstractions that are more user friendly
-    - make an abstraction that saves that points in its arrays, with a name provided by the user
-        - this way, meshes can be saved to the patch.
+    - write Documentation
+
+- osci/blender-rcv
+    - write Documentation
+
+- osci/blender-tsp
+    - write Documentation
+
+- osci/blender-tabread~
+    - write documentation
 
 - calibrate~
     - dark and light mode
@@ -31,6 +36,7 @@
     - update the online docs
 
 - tabreadlin~
+    - pd crashes when dsp is started and there is no arrays to read from
     - add to the online docs
 
 - turn all the brightness abstractions into objects when finished with them
