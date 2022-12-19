@@ -1,4 +1,15 @@
 ==== Roadmap ===================================================================
+- redo gui color scheme using my website colors
+    dark: #293132;
+    light: #f3f1eb;
+    txt on dark: #ece6d0;
+    txt on light: #5A6C6E;
+    gui elements: #595c5f;
+    accent: #b1d483;
+
+    58504c -> gui elements?
+    a8b464 -> accent
+
 - add some distortion effects
     - swirl
     - randomize?
