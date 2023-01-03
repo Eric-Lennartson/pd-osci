@@ -1,14 +1,11 @@
 ==== Roadmap ===================================================================
-- redo gui color scheme using my website colors
+- gui color scheme
     dark: #293132;
     light: #f3f1eb;
     txt on dark: #ece6d0;
     txt on light: #5A6C6E;
     gui elements: #595c5f;
     accent: #b1d483;
-
-    58504c -> gui elements?
-    a8b464 -> accent
 
 - add some distortion effects
     - swirl
@@ -45,6 +42,10 @@ All of the tsp related plugins will have one help patch that documents everythin
 
 - osci/out~
     - update the online docs
+
+- osci/record~
+    - remove annoying print statements
+    - check that the documentation is good
 
 - tabreadlin~
     - pd crashes when dsp is started and there is no arrays to read from

@@ -1,11 +1,11 @@
-#N canvas 2 109 958 498 10;
-#X obj 11 12 cnv 10 358 15 empty empty osci/m_transform~ 3 8 0 11 #101010
+#N canvas 454 104 958 498 10;
+#X obj 11 11 cnv 15 358 15 empty empty osci/m_transform~ 3 8 0 11 #283032
 #f8ecd0 0;
-#X obj 10 12 cnv 2 7 2 empty empty empty 20 12 0 14 #c08c40 #404040
+#X obj 10 11 cnv 2 7 2 empty empty empty 20 12 0 14 #f3f1eb #404040
 0;
-#X obj 360 12 cnv 2 7 2 empty empty empty 20 12 0 14 #c08c40 #404040
+#X obj 360 11 cnv 2 7 2 empty empty empty 20 12 0 14 #f3f1eb #404040
 0;
-#X obj 177 12 cnv 2 7 2 empty empty empty 20 12 0 14 #c08c40 #404040
+#X obj 177 11 cnv 2 7 2 empty empty empty 20 12 0 14 #f3f1eb #404040
 0;
 #X obj 392 171 osci/translate~, f 28;
 #X obj 392 334 osci/rotate_e~, f 28;
@@ -31,7 +31,7 @@
 #X obj 10 282 else/initmess \; \$0-set-xoff 0 \; \$0-set-yoff 0 \;
 \$0-set-zoff 0 \; \$0-set-xangle 0 \; \$0-set-yangle 0 \; \$0-set-zangle
 0 \; \$0-set-xscale 1 \; \$0-set-yscale 1 \; \$0-set-zscale 1 \;;
-#X obj 11 28 cnv 24 358 237 empty empty empty 20 12 0 14 #5f5f5f #c5b18d
+#X obj 11 27 cnv 24 358 238 empty empty empty 20 12 0 14 #f3f1eb #5a6c6e
 0;
 #X obj 562 199 r \$0-xangle;
 #X obj 562 222 * 360;
@@ -46,46 +46,46 @@
 #X obj 702 247 s \$0-yangle-display;
 #X obj 832 247 s \$0-zangle-display;
 #X obj 83 38 hsl 201 18 -2 2 0 0 \$0-xoff \$0-set-xoff x\\\ offset
--65 9 0 12 #5a524c #a9b665 #c5b18d 0 1;
+-65 9 0 12 #595c5f #b1d383 #596c6e 0 1;
 #X obj 83 59 hsl 201 18 -2 2 0 0 \$0-yoff \$0-set-yoff y\\\ offset
--65 9 0 12 #5a524c #a9b665 #c5b18d 0 1;
+-65 9 0 12 #595c5f #b1d483 #5a6c6e 0 1;
 #X obj 83 80 hsl 201 18 -2 2 0 0 \$0-zoff \$0-set-zoff z\\\ offset
--65 9 0 12 #5a524c #a9b665 #c5b18d 0 1;
+-65 9 0 12 #595c5f #b1d483 #5a6c6e 0 1;
 #X obj 83 200 hsl 201 18 0 1 0 0 \$0-xscale \$0-set-xscale x\\\ scale
--65 9 0 12 #5a524c #a9b665 #c5b18d 0 1;
+-65 9 0 12 #595c5f #b1d483 #5a6c6e 0 1;
 #X obj 83 221 hsl 201 18 0 1 0 0 \$0-yscale \$0-set-yscale y\\\ scale
--65 9 0 12 #5a524c #a9b665 #c5b18d 0 1;
+-65 9 0 12 #595c5f #b1d483 #5a6c6e 0 1;
 #X obj 83 242 hsl 201 18 0 1 0 0 \$0-zscale \$0-set-zscale z\\\ scale
--65 9 0 12 #5a524c #a9b665 #c5b18d 0 1;
+-65 9 0 12 #595c5f #b1d483 #5a6c6e 0 1;
 #X obj 83 119 hsl 201 18 0 1 0 0 \$0-xangle \$0-set-xangle x\\\ angle
--65 9 0 12 #5a524c #a9b665 #c5b18d 0 1;
+-65 9 0 12 #595c5f #b1d483 #5a6c6e 0 1;
 #X obj 83 140 hsl 201 18 0 1 0 0 \$0-yangle \$0-set-yangle y\\\ angle
--65 9 0 12 #5a524c #a9b665 #c5b18d 0 1;
+-65 9 0 12 #595c5f #b1d483 #5a6c6e 0 1;
 #X obj 83 161 hsl 201 18 0 1 0 0 \$0-zangle \$0-set-zangle z\\\ angle
--65 9 0 12 #5a524c #a9b665 #c5b18d 0 1;
+-65 9 0 12 #595c5f #b1d483 #5a6c6e 0 1;
 #X obj 289 38 nbx 6 18 -1e+37 1e+37 0 0 none \$0-xoff empty 0 -8 0
-12 #5a524c #a9b665 #c5b18d 0 256;
+12 #595c5f #b1d483 #5a6c6e 0 256;
 #X obj 289 59 nbx 6 18 -1e+37 1e+37 0 0 none \$0-yoff empty 0 -8 0
-12 #5a524c #a9b665 #c5b18d 0 256;
+12 #595c5f #b1d483 #5a6c6e 0 256;
 #X obj 289 80 nbx 6 18 -1e+37 1e+37 0 0 none \$0-zoff empty 0 -8 0
-12 #5a524c #a9b665 #c5b18d 0 256;
+12 #595c5f #b1d483 #5a6c6e 0 256;
 #X obj 289 119 nbx 6 18 -1e+37 1e+37 0 0 none \$0-xangle-display empty
-0 -8 0 12 #5a524c #a9b665 #c5b18d 0 256;
+0 -8 0 12 #595c5f #b1d483 #5a6c6e 0 256;
 #X obj 289 140 nbx 6 18 -1e+37 1e+37 0 0 none \$0-yangle-display empty
-0 -8 0 12 #5a524c #a9b665 #c5b18d 0 256;
+0 -8 0 12 #595c5f #b1d483 #5a6c6e 0 256;
 #X obj 289 161 nbx 6 18 -1e+37 1e+37 0 0 none \$0-zangle-display empty
-0 -8 0 12 #5a524c #a9b665 #c5b18d 0 256;
+0 -8 0 12 #595c5f #b1d483 #5a6c6e 0 256;
 #X obj 289 200 nbx 6 18 -1e+37 1e+37 0 0 none \$0-xscale empty 0 -8
-0 12 #5a524c #a9b665 #c5b18d 0 256;
+0 12 #595c5f #b1d483 #5a6c6e 0 256;
 #X obj 289 221 nbx 6 18 -1e+37 1e+37 0 0 none \$0-yscale empty 0 -8
-0 12 #5a524c #a9b665 #c5b18d 0 256;
+0 12 #595c5f #b1d483 #5a6c6e 0 256;
 #X obj 289 242 nbx 6 18 -1e+37 1e+37 0 0 none \$0-zscale empty 0 -8
-0 12 #5a524c #a9b665 #c5b18d 0 256;
-#X obj 11 263 cnv 2 7 2 empty empty empty 20 12 0 14 #c08c40 #404040
+0 12 #595c5f #b1d483 #5a6c6e 0 256;
+#X obj 11 263 cnv 2 7 2 empty empty empty 20 12 0 14 #293132 #404040
 0;
-#X obj 361 263 cnv 2 7 2 empty empty empty 20 12 0 14 #c08c40 #404040
+#X obj 361 263 cnv 2 7 2 empty empty empty 20 12 0 14 #293132 #404040
 0;
-#X obj 178 263 cnv 2 7 2 empty empty empty 20 12 0 14 #c08c40 #404040
+#X obj 178 263 cnv 2 7 2 empty empty empty 20 12 0 14 #293132 #404040
 0;
 #X connect 4 0 5 0;
 #X connect 4 1 5 1;
