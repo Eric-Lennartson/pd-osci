@@ -15,6 +15,10 @@ All of the tsp related plugins will have one help patch that documents everythin
 
 - osci/tsp~
     - write Documentation
+    - For next update cycle
+        - add ability to read in obj files
+        - add ability to read in svg files
+        - other file types to try and parse?
 
 - osci/blender-rcv
     - write Documentation
@@ -37,6 +41,7 @@ All of the tsp related plugins will have one help patch that documents everythin
 
 - osci/m_transform~
     - test out the abstraction
+    - has a bug with out~ where it activates all the toggles
     - add a helpfile
     - add to the online docs
 
@@ -68,7 +73,6 @@ linux
 windows
     - not trying to compile this unless someone seriously is asking for it.
 ==== Things to Improve =========================================================
-- create a dev branch to mess around in, you know, so it's organized
 - mess around with the scan processing from derek's library and get it working
     - what features are in derek's library that would be useful to have in mine?
 - is there a convienient way to get rid of unused parameter warnings?
