@@ -20,6 +20,9 @@ All of the tsp related plugins will have one help patch that documents everythin
         - add ability to read in svg files
         - other file types to try and parse?
 
+- osci/catcher~ and osci/thrower~
+    - add snake~ now that it's available?
+
 - osci/blender-rcv
     - write Documentation
 
@@ -41,16 +44,22 @@ All of the tsp related plugins will have one help patch that documents everythin
 
 - osci/m_transform~
     - test out the abstraction
-    - has a bug with out~ where it activates all the toggles
+    - has a bug with osci/out~ where it activates all the toggles
     - add a helpfile
     - add to the online docs
 
 - osci/out~
+    - when pressing the dsp off button, have it first mute the audio, then turn dsp off. The reverse should happen when turning the audio back on
+    - when test is turned on, it should bypass the incoming audio so that the test image is not messed up
     - update the online docs
+
 
 - osci/record~
     - remove annoying print statements
     - check that the documentation is good
+
+- osci/splitter~
+    - update the docs to reflect the gui changes
 
 - tabreadlin~
     - pd crashes when dsp is started and there is no arrays to read from
@@ -63,6 +72,12 @@ All of the tsp related plugins will have one help patch that documents everythin
 
 - update the helpfiles with the bypass option
 - make sure helpfiles have the defaults of the objects in there!
+
+Do all of the above before adding this stuff in
+- Create an oscillator abstraction that is useful to plug into things when I want to control them with oscillators, that way there's less random duplicate oscillator code running around
+
+
+
 ==== Bugs ======================================================================
 all
 - figure out the strange radians / degree bug on shear and others.

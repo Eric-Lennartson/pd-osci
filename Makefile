@@ -12,7 +12,6 @@ A_Math  := Headers/audio_math.c
 A_Funcs := Headers/audio_functions.c
 cut     := Headers/phase_cut.c
 vec3    := Headers/vec3.c
-text    := Headers/text.c
 
 #########################################################################
 # Sources: ##############################################################
@@ -76,7 +75,6 @@ tetra~.class.sources  		:= Classes/Aliases/tetra~.c $(A_Math)
 trace~.class.sources        := Classes/Source/trace~.c $(A_Math)
 triangle~.class.sources     := Classes/Source/triangle~.c $(A_Math)
 tri~.class.sources     		:= Classes/Aliases/tri~.c $(A_Math)
-text~.class.sources         := Classes/Source/text~.c $(text) $(A_Math)
 polygon~.class.sources      := Classes/Source/polygon~.c $(A_Math) $(A_Funcs) $(cut)
 gon~.class.sources      	:= Classes/Aliases/gon~.c $(A_Math) $(A_Funcs) $(cut)
 cut_equal~.class.sources    := Classes/Source/cut_equal~.c $(A_Math) $(cut)

@@ -119,7 +119,6 @@
 #X obj 73 1849 osci/skew, f 15;
 #X obj 73 1879 osci/skew~, f 15;
 #X obj 73 2537 osci/m_wrap;
-#X obj 73 2627 osci/text~, f 12;
 #X obj 73 2657 osci/bezier~;
 #X obj 73 2687 osci/bezigon~;
 #X obj 73 1059 osci/bright~;

@@ -78,6 +78,8 @@ static t_int *sphere_tilde_perform(t_int *w)
                 break;
         }
 
+        //lat range defaults to 0 -> pi, we go vertically up the sphere (half a circle)
+        //lon range defaults to 0 -> 2pi, we go around each belt (a whole circle)
         t_float lat = map_lin(tn, 0, n_points, lat_min, lat_max, false);
         t_float lon = map_lin(t2, 0, n_points, lon_min, lon_max, false);
 
@@ -139,7 +141,7 @@ static void *sphere_tilde_new(t_symbol *s, int argc, t_atom *argv)
     pd_float((t_pd *)x->radius_in, radius);
 
     outlet_new(&x->x_obj, &s_signal); // default provided outlet
-    x->y_out = outlet_new(&x->x_obj, &s_signal); 
+    x->y_out = outlet_new(&x->x_obj, &s_signal);
     x->z_out = outlet_new(&x->x_obj, &s_signal);
 
     return (x);

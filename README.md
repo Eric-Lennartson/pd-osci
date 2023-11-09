@@ -161,14 +161,13 @@ Pd Community/Dev-list, For answering my questions which may or may not have made
 - [snd~]
 - [rcv~]
 
-**Misc: [11]**
+**Misc: [10]**
 
 - [n~]
 - [n]
 - [m_wrap]
 - [date]
 - [time]
-- [text~]
 - [bezier~]
 - [bezigon~]
 - [shroom~]
